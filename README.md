@@ -8,6 +8,8 @@ cd tipi
 curl https://install.meteor.com | /bin/sh
 ```
 
+Copy *settings.json.example* and rename it as *settings.json*
+
 Note: Probably you need to install nodejs, npm and MongoDB.
 
 ## Run
@@ -16,4 +18,4 @@ Note: Probably you need to install nodejs, npm and MongoDB.
 meteor --settings=settings.json
 ```
 
-Open a browser and type localhost:3000
+Open a browser and type [localhost:3000](localhost:3000)
