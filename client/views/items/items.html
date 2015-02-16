@@ -1,0 +1,9 @@
+<template name="items">
+  <h3>Items: </h3>
+  <ul>
+    {{#each items}}
+      <li><a href="{{pathFor "item" _id=this._id._str}}">{{title}}</a></li>
+    {{/each}}
+  </ul>
+	{{> reactiveTable collection=items}}
+</template>

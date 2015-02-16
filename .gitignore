@@ -1,0 +1,4 @@
+.DS_Store
+.meteor/.id
+.meteor/local/*
+settings.json

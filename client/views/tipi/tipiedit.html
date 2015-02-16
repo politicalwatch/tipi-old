@@ -1,0 +1,63 @@
+<template name="tipiedit">
+	<h2>Editar iniciativa TiPi</h2>
+	{{#with tipiini}}
+	<form class="form-horizonal" role="form">
+		<div class="form-group">
+			<label class="col-sm-2 control-label" for="titulo">Título</label>
+			<div class="col-sm-10">
+				<input class="form-control" type="text" id="titulo" name="titulo" value="{{titulo}}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label" for="ref">Referencia</label>
+			<div class="col-sm-4">
+				<input class="form-control" type="text" id="ref" name="ref" value="{{ref}}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label" for="fechapub">Fecha publicación</label>
+			<div class="col-sm-4">
+				<input class="form-control" type="date" id="fechapub" name="fechapub" value="{{fechaPub}}">
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-2 control-label" for="autor">Autor</label>
+			<div class="col-sm-4">
+				<input class="form-control" type="text" id="autor" name="autor" value="{{autor}}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label" for="grupopar">G. Parlamentario</label>
+			<div class="col-sm-4">
+				<input class="form-control" type="text" id="grupopar" name="grupopar" value="{{grupoPar}}">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-2 control-label" for="desc">Descripción</label>
+			<div class="col-sm-10">
+				<textarea class="form-control" id="desc" name="desc" rows=5>{{desc}}</textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label" for="observaciones">Observaciones</label>
+			<div class="col-sm-10">
+				<textarea class="form-control" id="observaciones" name="observaciones" rows=5>{{observaciones}}</textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+				<br/><br/>
+				<button class="btn btn-primary" id="submit"><i class="fa fa-save"></i> Guardar</button>
+				<button class="btn btn-default" id="reset"><i class="fa fa-repeat"></i> Restablecer</button>
+				<button class="btn btn-default" id="cancel"><a href="/tipi"> Cancelar</a></button> 
+				<button class="btn btn-danger pull-right" id="delete"><i class="fa fa-eraser"></i> Eliminar</button> 
+				<br/>
+				<br/>
+			</div>
+		</div>
+	</form>
+	{{/with}}
+	
+</template>

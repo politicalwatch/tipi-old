@@ -1,0 +1,45 @@
+<template name="ref">
+  {{#with ref}}
+    <div class="ref">
+			<p class="lead">{{bol}} - {{ref}} - {{titulo}}</p>
+			<dl class="dl-horizontal">
+				<dt>Fecha</dt>
+					<dd>{{fecha}}</dd>
+				<dt>Autor</dt>
+					<dd>{{autor}}</dd>
+				<dt>Grupo Par.</dt>
+					<dd>{{grupos}}</dd>
+				<dt>Diccionarios</dt>
+					<dd>
+					{{#if dicts}}
+						{{dicts}}
+						<p>{{dictsWords}}</P>
+					{{else}}
+						No encaja en ningún diccionario
+					{{/if}}
+					</dd>
+				<dt>Contenido</dt>
+					<dd>
+					{{#if content}}
+						{{#each content}}
+							<p>{{this}}</p>
+						{{/each}}
+					{{else}}
+						<p>Sin contenido</p>
+					{{/if}}
+					</dd>
+				<dt>Sigue...</dt>
+					<dd><small>{{contentpost}}</small></dd>
+				<dt>Línea final</dt>
+					<dd><small>{{contentend}}</small></dd>
+			</dl>
+		</div>
+		<div class="col-sm-10 col-sm-offset-2">
+				<button class="btn btn-default" id="back">← Volver</button>
+				<button class="btn btn-default" id="verencongreso"><i class="fa fa-institution"></i> Ver en el Congreso</button> 
+			{{#if currentUser}}
+				<button class="btn btn-warning pull-right" id="seguirentipi">Seguir en TiPi</button>
+			{{/if}}
+		</div>
+		{{/with}}
+</template>

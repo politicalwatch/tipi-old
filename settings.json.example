@@ -1,0 +1,26 @@
+{
+	"public": {
+		"blog": {
+			"name": "Blog de TiPi",
+			"Description": ".",
+			"prettify": {
+				"syntax-highlighting": true,
+				"element-classes": [
+				{
+					"locator": "img",
+					"classes": [""]
+				},
+				{
+					"locator": "button",
+					"classes": ["btn", "btn-default"]
+				}
+				]
+			},
+			"sortBy": {"date": -1}
+		}
+	},
+	"kadira": {
+    	"appId": "",
+    	"appSecret": ""
+  	}
+}

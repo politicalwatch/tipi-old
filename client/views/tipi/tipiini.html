@@ -1,0 +1,37 @@
+<template name="tipiini">
+	{{#with tipiini}}
+	<div class="tipiini">
+			<p class="lead">{{numActo}} - {{titulo}}</p>
+			<dl class="dl-horizontal">
+				<dt>Referencia</dt>
+					<dd>{{ref}}</dd>
+				<dt>Fecha publicación</dt>
+					<dd>{{fechaPub}}</dd>
+				<dt>Ámbito</dt>
+					<dd>{{ambito}}</dd>
+				<dt>Autor</dt>
+					<dd>{{autor}}</dd>
+				<dt>Grupo Parlamentario</dt>
+					<dd>{{grupoPar}}</dd>
+				<dt>Lugar</dt>
+					<dd>{{lugar}}</dd>
+				<dt>Situación</dt>
+					<dd>{{situacion}}</dd>
+				<dt>Actualizado</dt>
+					<dd>{{ultActBy}} ({{fechaActualiz}})</dd>
+				<dt>Última revisión</dt>
+					<dd>{{ultRevBy}} ({{fechaUltRev}})</dd>
+				{{#if currentUser}}
+				<dt>Observaciones</dt>
+					<dd>{{observaciones}}</dd>
+				<dt>Más información</dt>
+					<dd>{{masinfo}}</dd>
+				{{/if}}
+			</dl>
+	</div>
+  {{/with}}
+	<button class="btn btn-default" id="back">← Volver</button>
+	{{#if currentUser}}
+		<button class="btn btn-default" id="editartipi">Editar</button> <button class="btn btn-default" id="borrartipi">Borrar</button>
+	{{/if}}
+</template>
