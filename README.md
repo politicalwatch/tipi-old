@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-git clone origin git@bitbucket.org:enreda/tipi.git
+git clone git@bitbucket.org:enreda/tipi.git
 cd tipi
 curl https://install.meteor.com | /bin/sh
 ```
