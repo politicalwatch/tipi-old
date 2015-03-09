@@ -1,7 +1,15 @@
 <template name="blogListLayout">
-  {{> yield}}
+    {{> header}}
+    <div class="container">
+        {{> yield}}
+    </div>
+    {{> footer}}
 </template>
 
 <template name="blogPostLayout">
-  {{> yield}}
+    {{> header}}
+    <div class="container">
+        {{> yield}}
+    </div>
+    {{> footer}}
 </template>
