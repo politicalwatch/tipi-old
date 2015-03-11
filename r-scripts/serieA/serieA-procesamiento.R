@@ -9,7 +9,7 @@
 # Salida: ninguna; se alimenta bbdd mongo
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
 
-source("funciones-procesamiento.R")
+# source("funciones-procesamiento.R")
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
 #      Procesamiento Boletines Serie A: Proyectos de Ley      #
@@ -34,26 +34,29 @@ for(i in 1:length(proy_listA)){#i=1
                 #Procesamiento según tipo de trámite
                 if(bol_listA[[d]]$tramite == tramitesA[3]){
                         # procesar trámite "Enmiendas e índice de enmiendas al articulado"
-                        resul <- proc_serieA_enmiendas(lines)
+                        lcont <- proc_serieA_enmiendas(lines, codigo=bol_listA[[d]]$codigo)
                         #boletin procesado, enviar a MongoDB
-                        #TODO. Adaptar al caso de lista de listas
+                        if(length(lcont)>0){
+                                if (!mongo.is.connected(mg)) mg <- mongo.create(host="ds043447.mongolab.com:43447")
+                                mongo.remove(mg, "tipi_debug.serieA", criteria=list(bol=bol_listA[[d]]$codigo))
+                                lcontb <- lapply(lcont, function(x) {
+                                        return(mongo.bson.from.list(x))
+                                })
+                                mongo.insert.batch(mg, "tipi_debug.serieA", lcontb)
+                        }
                 } else {
-                        resul <- proc_serieA(lines)
+                        lcont <- proc_serieA(lines, codigo=bol_listA[[d]]$codigo)
                         #boletin procesado, enviar a MongoDB
-#                         if (length(resul) > 0) {
-#                                 if (!mongo.is.connected(mg)) mg <- mongo.create(host="grserrano.net")
-#                                 mongo.remove(mg, "pdfs.depuracionesInes", criteria=list(bol=bol))
-#                                 lcontb <- lapply(lcont, function(x) {
-#                                         x$ndx <- NULL
-#                                         x$cnt <- NULL
-#                                         return(mongo.bson.from.list(x))
-#                                 })
-#                                 cat(" ", length(lcontb), "\n")
-#                                 mongo.insert.batch(mg, "pdfs.depuracionesInes", lcontb)
-#                         }
+                        if (length(lcont) > 0) {
+                                if (!mongo.is.connected(mg)) mg <- mongo.create(host="ds043447.mongolab.com:43447")
+                                mongo.remove(mg, "tipi_debug.serieA", criteria=list(bol=bol_listA[[d]]$codigo))
+                                lcontb <- lapply(list(lcont), function(x) {
+                                        return(mongo.bson.from.list(lcont))
+                                })
+                                cat(" ", length(lcontb), "\n")
+                                mongo.insert.batch(mg, "tipi_debug.serieA", lcontb)
+                        }
                 }
-                #Boletin procesado, enviar a mongo
-
         }
 }
 

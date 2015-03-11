@@ -44,7 +44,7 @@ dir <- "./bocgs-proc"
 ##################
 
 # Cargar código procesamiento
-source("serieD-procesamiento.R")
+source("funciones-procesamiento.R")
 
 # Presupone ficheros locales guardados: 
 ## bocgs-proc/BOCG-D-num.rd : siendo num un parámetro (número de boletín)

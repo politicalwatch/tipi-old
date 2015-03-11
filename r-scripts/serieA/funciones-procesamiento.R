@@ -44,9 +44,10 @@ load("diputados-mongo.rd")
 
 ## Procesamiento serie A, todos los trámites excepto enmiendas
 ## argumentos: lines que se carga con load(fichero .rd que contiene boletin)
+##             codigo: A-X-X que identifica el boletin
 ## devuelve: lista tmp() con los campos procesados:
-# [1] "bol"     "ref"     "tipo"    "tramite" "titulo"  "cnt"     "fecha"   "cntpre" 
-proc_serieA <- function(lines){
+# [1] "bol"     "ref"     "tipo"    "tramite" "titulo"  "content"     "fecha"   "contentpre" 
+proc_serieA <- function(lines, codigo){
         #limpiar lines
         lines <- lines[lines!=""]
         lp  <- grep("^Página", lines)
@@ -83,8 +84,7 @@ proc_serieA <- function(lines){
         # lcont <- list() #no es necesario pues solo tenemos 1 referencia
         tmp <- list()
         ## A1-1 o algo asi...
-        #codigo='A-1-10'
-#         tmp$bol <- codigo
+        tmp$bol <- codigo
         tmp$ref  <- str_extract(lines[reflin[1]], "^[0-9]{3}\\/[0-9]{5,6}")
         tmp$tipo <- str_split(tmp$ref, "/")[[1]][1]
         #tramite
@@ -109,11 +109,11 @@ proc_serieA <- function(lines){
                                 cntini <- c #el primer match-->corresponde al fin del indice
                 }
         }
-        tmp$cnt <- lines[cntini:cntend] #seguido de indice/comienzo del informe
-        tmp$cnt <- str_replace_all(tmp$cnt, "^[0-9]{3}\\/[0-9]{5,6}", "")
-        tmp$cnt <- str_trim(tmp$cnt)
-        tmp$cnt <- tmp$cnt[tmp$cnt != ""]
-        tmp$cnt <- str_replace_all(tmp$cnt, '\\"', "")
+        tmp$content <- lines[cntini:cntend] #seguido de indice/comienzo del informe
+        tmp$content <- str_replace_all(tmp$content, "^[0-9]{3}\\/[0-9]{5,6}", "")
+        tmp$content <- str_trim(tmp$content)
+        tmp$content <- tmp$content[tmp$content != ""]
+        tmp$content <- str_replace_all(tmp$content, '\\"', "")
         
         # Campo fecha: se saca del indice
         detfecha <- str_detect(ndx, "([0-9]+) de ([a-z]+) de ([0-9]+)")
@@ -124,11 +124,11 @@ proc_serieA <- function(lines){
         }
         # contentpre
         ## contenido entre indice y el Informe, si lo hay
-        tmp$cntpre = ""
-        if(ndxend < cntini){ tmp$cntpre <- lines[(ndxend+1):(cntini-1)] }
+        tmp$contentpre = ""
+        if(ndxend < cntini){ tmp$contentpre <- lines[(ndxend+1):(cntini-1)] }
         
         ## Búsqueda de comisiones/comisión en contentpre
-        detcomis <- str_detect(string = tmp$cntpre, pattern = ignore.case('^A la comisi[óo]n'))
+        detcomis <- str_detect(string = tmp$contentpre, pattern = ignore.case('^A la comisi[óo]n'))
         if(any(detcomis)){
                 linescomis <- tmp$cntpre[detcomis]
                 tmp$comision <- try(extraer.comision(linescomis))
@@ -139,9 +139,10 @@ proc_serieA <- function(lines){
 
 ## Procesamiento serie A, trámite excepto enmiendas
 ## argumentos: lines que se carga con load(fichero .rd que contiene boletin)
+##             codigo: A-X-X que identifica el boletin
 ## devuelve: lista tmp() con los campos procesados:
-# [1] "bol"     "ref"     "tipo"    "tramite" "titulo"  "cnt"     "fecha"   "cntpre" 
-proc_serieA_enmiendas <- function(lines){
+# [1] "bol"     "ref"     "tipo"    "tramite" "titulo"  "cnt"     "fecha"   "contentpre" 
+proc_serieA_enmiendas <- function(lines, codigo){
         ##### Procesamiento trámite 'Enmiendas'
         lines <- lines[lines!=""]
         lp  <- grep("^Página", lines)
@@ -175,7 +176,7 @@ proc_serieA_enmiendas <- function(lines){
         ## A1-1 o algo asi...
         #codigo='A-1-1'
         ###para emnmienda=1
-#         tmp$bol <- codigo
+        tmp$bol <- codigo
         tmp$ref  <- str_extract(lines[reflin[1]], "^[0-9]{3}\\/[0-9]{5,6}")
         tmp$tipo <- str_split(tmp$ref, "/")[[1]][1]
         #tramite
@@ -219,14 +220,14 @@ proc_serieA_enmiendas <- function(lines){
                 if(!is.na(n <- str_split_fixed(lines[inienmi], pattern = " ", 3)[,3])){
                         tmp1$numenmienda <- n
                 }
-                tmp1$cnt <- lines[(inienmi+1):finenmi]
-                tmp1$cnt <- str_trim(tmp1$cnt)
-                tmp1$cnt <- tmp1$cnt[tmp1$cnt != ""]
-                tmp1$cnt <- str_replace_all(tmp1$cnt, '\\"', "")
+                tmp1$content <- lines[(inienmi+1):finenmi]
+                tmp1$content <- str_trim(tmp1$content)
+                tmp1$content <- tmp1$content[tmp1$content != ""]
+                tmp1$content <- str_replace_all(tmp1$content, '\\"', "")
                 
                 #Diputados tras 'FIRMANTE'??? CONSULTAR ALBA; MIRAR CASOS.
-                if(any(s <- str_detect(string = tmp1$cnt, pattern = "^FIRMANTE"))){
-                        lindiputado <- tmp1$cnt[(1:length(tmp1$cnt))[s]+1]
+                if(any(s <- str_detect(string = tmp1$content, pattern = "^FIRMANTE"))){
+                        lindiputado <- tmp1$content[(1:length(tmp1$content))[s]+1]
                         ## Busco diputados en lindiputado
                         if (length(lindiputado)>0) {
                                 dipdet <- str_detect(string = lindiputado, pattern = as.character(diputados$nomapre))
@@ -238,8 +239,8 @@ proc_serieA_enmiendas <- function(lines){
                 }
                 
                 #Grupo parlamentario: del mismo sitio
-                if(any(s <- str_detect(string = tmp1$cnt, pattern = "^FIRMANTE"))){
-                        lindiputado <- tmp1$cnt[(1:length(tmp1$cnt))[s]+1]
+                if(any(s <- str_detect(string = tmp1$content, pattern = "^FIRMANTE"))){
+                        lindiputado <- tmp1$content[(1:length(tmp1$content))[s]+1]
                         ## Busco diputados en lindiputado
                         if (length(lindiputado)>0) {
                                 gpdet <- str_detect(string = lindiputado, pattern = as.character(gparlam$gparlams))
@@ -249,7 +250,7 @@ proc_serieA_enmiendas <- function(lines){
                                 } 
                         }
                         #actualizamos contenido para eliminar diputado
-                        tmp1$cnt <- tmp1$cnt[3:length(tmp1$cnt)]
+                        tmp1$content <- tmp1$content[3:length(tmp1$content)]
                 }
                 lcont[[i]] <- tmp1 
         }
