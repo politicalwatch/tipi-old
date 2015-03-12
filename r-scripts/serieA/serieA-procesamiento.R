@@ -21,7 +21,7 @@ i=1
 names(proy_listA[[i]])
 
 # proy_listA[[i]]$codigo
-for(i in 1:length(proy_listA)){#i=1
+for(i in 15:20){#i=1 #for(i in 1:length(proy_listA))
         filename <- paste0("dir-", proy_listA[[i]]$codigo, ".rd")
         load(filename) # se carga bol_listA
 #         length(bol_listA) # hay 15 documentos asociados

@@ -85,6 +85,14 @@ proc_serieA <- function(lines, codigo){
         tmp <- list()
         ## A1-1 o algo asi...
         tmp$bol <- codigo
+        #Algunos casos en que no hay una referencia todo el texto junto. Ej A-15-5
+        #y salir del bucle
+        if(!any(iref)){ 
+                tmp$tramite <- tolower(lines[1])
+                tmp$content <- lines[2:length(lines)]  
+                return(tmp)
+                break() 
+        }
         tmp$ref  <- str_extract(lines[reflin[1]], "^[0-9]{3}\\/[0-9]{5,6}")
         tmp$tipo <- str_split(tmp$ref, "/")[[1]][1]
         #tramite
@@ -130,7 +138,7 @@ proc_serieA <- function(lines, codigo){
         ## Búsqueda de comisiones/comisión en contentpre
         detcomis <- str_detect(string = tmp$contentpre, pattern = ignore.case('^A la comisi[óo]n'))
         if(any(detcomis)){
-                linescomis <- tmp$cntpre[detcomis]
+                linescomis <- tmp$contentpre[detcomis]
                 tmp$comision <- try(extraer.comision(linescomis))
                 if (any(class(tmp$comision) == "try-error")) tmp$comision <- NULL
         }
@@ -202,6 +210,7 @@ proc_serieA_enmiendas <- function(lines, codigo){
         #lo siguiente iria en un bucle
         count <- 0
         for(i in 1:length(nenmi)){#i=46
+#                 browser()
                 count <- count + 1
                 #Campos comunes. 
                 #Añadimos los de cada enmienda en tmp1.
@@ -230,7 +239,7 @@ proc_serieA_enmiendas <- function(lines, codigo){
                         lindiputado <- tmp1$content[(1:length(tmp1$content))[s]+1]
                         ## Busco diputados en lindiputado
                         if (length(lindiputado)>0) {
-                                dipdet <- str_detect(string = lindiputado, pattern = as.character(diputados$nomapre))
+                                dipdet <- str_detect(string = lindiputado[1], pattern = as.character(diputados$nomapre))
                                 if (any(dipdet)) {
                                         ##cat("\n", pres[i], "\n *", paste(diputados[dipdet, "apnom"], collapse=";"), "\n")
                                         tmp1$diputados <- diputados[dipdet, "apnom"]
@@ -243,7 +252,7 @@ proc_serieA_enmiendas <- function(lines, codigo){
                         lindiputado <- tmp1$content[(1:length(tmp1$content))[s]+1]
                         ## Busco diputados en lindiputado
                         if (length(lindiputado)>0) {
-                                gpdet <- str_detect(string = lindiputado, pattern = as.character(gparlam$gparlams))
+                                gpdet <- str_detect(string = lindiputado[1], pattern = as.character(gparlam$gparlams))
                                 if (any(gpdet)) {
                                         ##cat("\n", pres[i], "\n *", paste(diputados[dipdet, "apnom"], collapse=";"), "\n")
                                         tmp1$grupos <- gparlam[gpdet, "gparlamab"]

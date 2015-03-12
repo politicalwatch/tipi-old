@@ -15,7 +15,6 @@
 
 #paquetes
 library("XML")
-library("XML")
 library("RCurl")
 library("plyr")
 library("stringr")
@@ -42,7 +41,7 @@ browseURL(firstURL)
 ## Crear un directorio de proyectos*URLS
 doc  <- htmlTreeParse(getURL(firstURL), encoding="UTF-8", useInternalNodes=TRUE)
 f1 <- getNodeSet(doc, '//*[@class="resultados_encontrados"]')
-length(f1) #131 documentos??
+length(f1) #134 documentos
 
 #llamamos a la función propia construir_dir_serieA
 proy_listA <- construir_dir_serieA(f1 = f1, proy_listA = proy_listA)
@@ -61,8 +60,8 @@ proy_listA[[1]] #ej. primer proyecto de ley de la lista
 
 ### para probar solo descargamos los dos primeros
 
-length(proy_listA) #131 Proyectos en total
-for(i in 1:2){#i=90 para descargar uno de ellos; for(i in 1:length(proy_listA)) para descargar todos
+length(proy_listA) #134 Proyectos
+for(i in 9:20){#i=90 para descargar uno de ellos; for(i in 1:length(proy_listA)) para descargar todos
         secURL <- proy_listA[[i]]$url
         browseURL(secURL) #para comprobar
         #escrapeamos
@@ -77,7 +76,7 @@ for(i in 1:2){#i=90 para descargar uno de ellos; for(i in 1:length(proy_listA)) 
         #inicializamos la lista
         bol_listA <- list()
         #NOTA. Si guardarlocal = TRUE genera un fichero local que después se procesará.
-        bol_listA <- construir_dir_bolA(f2 = f2, guardarlocal = FALSE, bol_list = bol_listA)
+        bol_listA <- construir_dir_bolA(f2 = f2, guardarlocal = TRUE, bol_list = bol_listA)
         #guardamos bol_listA para mantener un recuento
         if(length(bol_listA)>1 & length(bol_listA[[1]]$codigo)>0){
                 e <- str_extract(string = bol_listA[[1]]$codigo, pattern = "A-.*-")
