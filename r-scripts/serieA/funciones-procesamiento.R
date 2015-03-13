@@ -155,7 +155,7 @@ proc_serieA_enmiendas <- function(lines, codigo){
         lines <- lines[lines!=""]
         lp  <- grep("^Página", lines)
         ##lpp <- grep("^\\(Página", lines)
-        lines <- lines[-c(lp)]
+        if(length(lp)>1){ lines <- lines[-c(lp)] }
         lines <- cleanBN(lines)
         names(lines) <- NULL
         
@@ -173,7 +173,8 @@ proc_serieA_enmiendas <- function(lines, codigo){
         
         # delimitar indice
         ndxini <- reflin[1]
-        ndxend <- nenmi[1]-1 #ultima antes de comenzar primera enmienda
+        ndxend <- length(lines) #hasta el final, si no hay enmiendas
+        if(any(ienmi)) { ndxend <- nenmi[1]-1 } #ultima antes de comenzar primera enmienda
         # extraer lineas del indice
         ndx <- lines[ndxini:ndxend] 
         ndx <- str_replace_all(ndx, "^[0-9]{3}\\/[0-9]{5,6}", "")
@@ -185,6 +186,14 @@ proc_serieA_enmiendas <- function(lines, codigo){
         #codigo='A-1-1'
         ###para emnmienda=1
         tmp$bol <- codigo
+        #Algunos casos en que no hay una referencia todo el texto junto. Ej A-15-5
+        #y salir del bucle
+        if(!any(iref)){ 
+          tmp$tramite <- tolower(lines[1])
+          tmp$content <- lines[2:length(lines)]  
+          return(tmp)
+          break() 
+        }
         tmp$ref  <- str_extract(lines[reflin[1]], "^[0-9]{3}\\/[0-9]{5,6}")
         tmp$tipo <- str_split(tmp$ref, "/")[[1]][1]
         #tramite
@@ -207,6 +216,13 @@ proc_serieA_enmiendas <- function(lines, codigo){
         # y ademas los campos comunes: bol, fecha (para todas la misma), titulo...
         lcont <- list() #para almacenar las enmiendas, todas con la misma referencia y distinto numero
         
+        #si no hay enmiendas se envia un unico documento
+        if(!length(nenmi)>0){ #enviar lo basico: codigo, tramite, content, referencia
+          lcont <- tmp
+          lcont$bol <- codigo
+          return(list(lcont))
+          break()
+        }
         #lo siguiente iria en un bucle
         count <- 0
         for(i in 1:length(nenmi)){#i=46
@@ -221,9 +237,12 @@ proc_serieA_enmiendas <- function(lines, codigo){
                 finenmi <- nenmi[i+1]-1
                 #considerar el caso de ser la ultima
                 if(i == length(nenmi)){
-                        if(any(s <- str_detect( lines, "^ÍNDICE DE ENMIENDAS AL ARTICULADO")))
-                                ifin <- (1:length(lines))[s]
-                        finenmi <- ifin-1
+                        if(any(s <- str_detect( lines, "^ÍNDICE DE ENMIENDAS AL ARTICULADO"))){
+                          ifin <- (1:length(lines))[s]
+                          finenmi <- ifin-1
+                        } else {
+                          finenmi <- length(lines) #vamos al final
+                        }
                 }
                 #número de enmienda
                 if(!is.na(n <- str_split_fixed(lines[inienmi], pattern = " ", 3)[,3])){
@@ -435,4 +454,3 @@ cleanBN <- function(x) { return( gsub(" +", " ", gsub("[[:cntrl:]]", "", x)) )}
 
 #extrae primera y ultima lineas
 prult <- function(x){ print(c('primero'=head(x, n=1), 'ultimo'=tail(x, n=1))) }
-

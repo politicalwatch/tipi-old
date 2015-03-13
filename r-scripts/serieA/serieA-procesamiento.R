@@ -9,7 +9,7 @@
 # Salida: ninguna; se alimenta bbdd mongo
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
 
-# source("funciones-procesamiento.R")
+source("funciones-procesamiento.R")
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
 #      Procesamiento Boletines Serie A: Proyectos de Ley      #
@@ -21,8 +21,9 @@ i=1
 names(proy_listA[[i]])
 
 # proy_listA[[i]]$codigo
-for(i in 15:20){#i=1 #for(i in 1:length(proy_listA))
+for(i in 1:length(proy_listA)){#i=1 #for(i in 1:length(proy_listA))
         filename <- paste0("dir-", proy_listA[[i]]$codigo, ".rd")
+        if(!file.exists(filename)){ next() }
         load(filename) # se carga bol_listA
 #         length(bol_listA) # hay 15 documentos asociados
         # names(bol_listA[[i]]) #campos para cada tramite del Proyecto
@@ -34,10 +35,19 @@ for(i in 15:20){#i=1 #for(i in 1:length(proy_listA))
                 #Procesamiento según tipo de trámite
                 if(bol_listA[[d]]$tramite == tramitesA[3]){
                         # procesar trámite "Enmiendas e índice de enmiendas al articulado"
-                        lcont <- proc_serieA_enmiendas(lines, codigo=bol_listA[[d]]$codigo)
+                        lcont <- try(proc_serieA_enmiendas(lines, codigo = bol_listA[[d]]$codigo))
+#                         lcont <- proc_serieA_enmiendas(lines, codigo=bol_listA[[d]]$codigo)
+                        #caso de error al procesar: imprimir mensaje y enviar vacio.
+                        if(class(lcont) == "try-error"){
+                          lcont <- vector("list")
+                          lcont$bol <- bol_listA[[d]]$codigo
+                          print(paste("falla el boletin:", bol_listA[[d]]$codigo))
+                          next()
+                        }
                         #boletin procesado, enviar a MongoDB
-                        if(length(lcont)>0){
+                        if(class(lcont) != "try-error" & length(lcont)>0){
                                 if (!mongo.is.connected(mg)) mg <- mongo.create(host="ds043447.mongolab.com:43447")
+                                mongo.authenticate(mg, username = "ines", password = "#ines15+?", db = "tipi_debug")
                                 mongo.remove(mg, "tipi_debug.serieA", criteria=list(bol=bol_listA[[d]]$codigo))
                                 lcontb <- lapply(lcont, function(x) {
                                         return(mongo.bson.from.list(x))
@@ -45,10 +55,19 @@ for(i in 15:20){#i=1 #for(i in 1:length(proy_listA))
                                 mongo.insert.batch(mg, "tipi_debug.serieA", lcontb)
                         }
                 } else {
-                        lcont <- proc_serieA(lines, codigo=bol_listA[[d]]$codigo)
+#                         lcont <- proc_serieA(lines, codigo=bol_listA[[d]]$codigo)
+                        lcont <- try(proc_serieA(lines, codigo = bol_listA[[d]]$codigo))
+                        #caso de error al procesar: imprimir mensaje y enviar vacio.
+                        if(class(lcont) == "try-error"){
+                          lcont <- vector("list")
+                          lcont$bol <- bol_listA[[d]]$codigo
+                          print(paste("falla el boletin:", bol_listA[[d]]$codigo))
+                          next()
+                        }
                         #boletin procesado, enviar a MongoDB
-                        if (length(lcont) > 0) {
+                        if (class(lcont) != "try-error" & length(lcont) > 0) {
                                 if (!mongo.is.connected(mg)) mg <- mongo.create(host="ds043447.mongolab.com:43447")
+                                mongo.authenticate(mg, username = "ines", password = "#ines15+?", db = "tipi_debug")
                                 mongo.remove(mg, "tipi_debug.serieA", criteria=list(bol=bol_listA[[d]]$codigo))
                                 lcontb <- lapply(list(lcont), function(x) {
                                         return(mongo.bson.from.list(lcont))
@@ -59,6 +78,5 @@ for(i in 15:20){#i=1 #for(i in 1:length(proy_listA))
                 }
         }
 }
-
 
 

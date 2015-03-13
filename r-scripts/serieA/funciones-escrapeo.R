@@ -294,4 +294,3 @@ flattenXML <- function(nodelist, minsize=2) {
         print(table(sapply(nodelist, xmlSize)))
         return(nodelist)
 }
-

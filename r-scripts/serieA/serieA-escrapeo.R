@@ -32,7 +32,7 @@ source("funciones-procesamiento.R")
 
 # firstURL: es fija
 firstURL <- "http://www.congreso.es/portal/page/portal/Congreso/Congreso/Publicaciones/IndPub?_piref73_1340068_73_1340059_1340059.next_page=/wc/indicePublicaciones&letra=a"
-browseURL(firstURL)
+# browseURL(firstURL)
 
 ###################################################
 # Paso 1) Escrapeo firstURL (='directorio' Serie A)
@@ -61,9 +61,9 @@ proy_listA[[1]] #ej. primer proyecto de ley de la lista
 ### para probar solo descargamos los dos primeros
 
 length(proy_listA) #134 Proyectos
-for(i in 9:20){#i=90 para descargar uno de ellos; for(i in 1:length(proy_listA)) para descargar todos
+for(i in 101:134){#i=90 para descargar uno de ellos; for(i in 1:length(proy_listA)) para descargar todos
         secURL <- proy_listA[[i]]$url
-        browseURL(secURL) #para comprobar
+#         browseURL(secURL) #para comprobar
         #escrapeamos
         doc  <- htmlTreeParse(getURL(secURL), encoding="UTF-8", useInternalNodes=TRUE)
         f2 <- getNodeSet(doc, '//*[@class="resultados_encontrados"]')
@@ -78,7 +78,7 @@ for(i in 9:20){#i=90 para descargar uno de ellos; for(i in 1:length(proy_listA))
         #NOTA. Si guardarlocal = TRUE genera un fichero local que después se procesará.
         bol_listA <- construir_dir_bolA(f2 = f2, guardarlocal = TRUE, bol_list = bol_listA)
         #guardamos bol_listA para mantener un recuento
-        if(length(bol_listA)>1 & length(bol_listA[[1]]$codigo)>0){
+        if(length(bol_listA)>0 & length(bol_listA[[1]]$codigo)>0){
                 e <- str_extract(string = bol_listA[[1]]$codigo, pattern = "A-.*-")
                 filename <- paste0("dir-",substr(e, start=0,stop=nchar(e)-1),".rd")
                 save(bol_listA, file=filename)
@@ -103,5 +103,4 @@ for(i in 9:20){#i=90 para descargar uno de ellos; for(i in 1:length(proy_listA))
 # ..$ url     : chr "http://www.congreso.es/portal/page/portal/Congreso/PopUpCGI?CMD=VERLST&CONF=BRSPUB.cnf&BASE=PU10&DOCS=1-1&FMT=PUWTXDTS.fmt&OPDE"| __truncated__
 # ..$ proc    : num 0
 # ..$ filename: chr "BOCG-A-1-1.rd"
-
 
