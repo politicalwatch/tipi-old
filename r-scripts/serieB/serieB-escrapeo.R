@@ -38,6 +38,9 @@ firstURL <- "http://www.congreso.es/portal/page/portal/Congreso/Congreso/Publica
 # Paso 1) Escrapeo firstURL (='directorio' Serie B)
 ###################################################
 
+#-------------------------------#
+#     Primera (y única) vez     #
+#-------------------------------#
 ## Crear un directorio de proyectos*URLS
 doc  <- htmlTreeParse(getURL(firstURL), encoding="UTF-8", useInternalNodes=TRUE)
 f1 <- getNodeSet(doc, '//*[@class="resultados_encontrados"]')
@@ -49,9 +52,32 @@ proy_listB <- construir_dir_serieB(f1 = f1, proy_listB = proy_listB)
 
 #Guardar el directorio
 save(proy_listB, file = "dir-serieB.rd")
-# load("dir-serieB.rd") #para cargarlo
 
 proy_listB[[1]] #ej. primer proyecto de ley de la lista
+
+#----------------------------#
+#         Siguientes         #
+#----------------------------#
+#Cargamos el directorio con toda la serie hasta la fecha
+load("dir-serieB.rd")
+
+#escrapeamos para ver los nuevos
+doc  <- htmlTreeParse(getURL(firstURL), encoding="UTF-8", useInternalNodes=TRUE)
+f1 <- getNodeSet(doc, '//*[@class="resultados_encontrados"]')
+length(f1) #222 documentos)
+
+#creamos directorio actualizado, y contrastamos
+proy_listB_updated <- construir_dir_serieB(f1 = f1, proy_listB = proy_listB)
+
+proy_listB_pdte <- setdiff(x = proy_listB_updated, y = proy_listB)
+
+#guardamos pendientes
+save(proy_listB_pdte, file="abl.rd")
+#actualizamos directorio completo
+rm(proy_listB)
+proy_listB <- proy_listB_updated
+save(proy_listB, file = "dir-serieB.rd")
+rm(proy_listB_updated)
 
 #######################################################################
 # Paso 2) Escrapeo secURL (='directorio' de cada boletin de la Serie A)
@@ -59,31 +85,62 @@ proy_listB[[1]] #ej. primer proyecto de ley de la lista
 
 ### Bucle FOR para descargar todos los boletines para as Proposiciones de ley dadas
 
-### para probar solo descargamos los dos primeros
-
+#-------------------------------#
+#     Primera (y única) vez     #
+#-------------------------------#
 length(proy_listB) #222 proposiciones en total
 for(i in 1:length(proy_listB)){#i=90 para descargar uno de ellos; for(i in 1:length(proy_listB)) para descargar todos
-  secURL <- proy_listB[[i]]$url
-#   browseURL(secURL) #para comprobar
-  #escrapeamos
-  doc  <- htmlTreeParse(getURL(secURL), encoding="UTF-8", useInternalNodes=TRUE)
-  f2 <- getNodeSet(doc, '//*[@class="resultados_encontrados"]')
-  
-  ## almacenar todos los boletines del Proyecto de Ley en cuestión
-  #va guardando ficheros locales, si no se desea guardar fichero local ponemos guardarlocal=FALSE.
-  #         length(f2) #19 documentos
-  
-  #llamamos a la función propia construir_dir_bolA
-  #inicializamos la lista
-  bol_listB <- list()
-  #NOTA. Si guardarlocal = TRUE genera un fichero local que después se procesará.
-  bol_listB <- construir_dir_bolB(f2 = f2, guardarlocal = TRUE, bol_list = bol_listB)
-  #guardamos bol_listA para mantener un recuento
-  if(length(bol_listB)>0 & length(bol_listB[[1]]$codigo)>0){
-    e <- str_extract(string = bol_listB[[1]]$codigo, pattern = "B-.*-")
-    filename <- paste0("dir-",substr(e, start=0,stop=nchar(e)-1),".rd")
-    save(bol_listB, file=filename)
-  }
+        secURL <- proy_listB[[i]]$url
+        #   browseURL(secURL) #para comprobar
+        #escrapeamos
+        doc  <- htmlTreeParse(getURL(secURL), encoding="UTF-8", useInternalNodes=TRUE)
+        f2 <- getNodeSet(doc, '//*[@class="resultados_encontrados"]')
+        
+        ## almacenar todos los boletines del Proyecto de Ley en cuestión
+        #va guardando ficheros locales, si no se desea guardar fichero local ponemos guardarlocal=FALSE.
+        #         length(f2) #19 documentos
+        
+        #llamamos a la función propia construir_dir_bolA
+        #inicializamos la lista
+        bol_listB <- list()
+        #NOTA. Si guardarlocal = TRUE genera un fichero local que después se procesará.
+        bol_listB <- construir_dir_bolB(f2 = f2, guardarlocal = TRUE, bol_list = bol_listB)
+        #guardamos bol_listA para mantener un recuento
+        if(length(bol_listB)>0 & length(bol_listB[[1]]$codigo)>0){
+                e <- str_extract(string = bol_listB[[1]]$codigo, pattern = "B-.*-")
+                filename <- paste0("dir-",substr(e, start=0,stop=nchar(e)-1),".rd")
+                if(!file.exists(filename)){ save(bol_listB, file=filename) }
+        }
+}
+
+#----------------------------#
+#         Siguientes         #
+#----------------------------#
+# Cargar la lista de boletines pendientes
+load("abl.rd") # se carga la lista proy_listB_pdte
+length(proy_listB_pdte) #pendientes de descarga
+for(i in 1:length(proy_listB_pdte)){#i=90 para descargar uno de ellos; for(i in 1:length(proy_listB)) para descargar todos
+        secURL <- proy_listB_pdte[[i]]$url
+        #   browseURL(secURL) #para comprobar
+        #escrapeamos
+        doc  <- htmlTreeParse(getURL(secURL), encoding="UTF-8", useInternalNodes=TRUE)
+        f2 <- getNodeSet(doc, '//*[@class="resultados_encontrados"]')
+        
+        ## almacenar todos los boletines del Proyecto de Ley en cuestión
+        #va guardando ficheros locales, si no se desea guardar fichero local ponemos guardarlocal=FALSE.
+        #         length(f2) #19 documentos
+        
+        #llamamos a la función propia construir_dir_bolA
+        #inicializamos la lista
+        bol_listB <- list()
+        #NOTA. Si guardarlocal = TRUE genera un fichero local que después se procesará.
+        bol_listB <- construir_dir_bolB(f2 = f2, guardarlocal = TRUE, bol_list = bol_listB)
+        #guardamos bol_listA para mantener un recuento
+        if(length(bol_listB)>0 & length(bol_listB[[1]]$codigo)>0){
+                e <- str_extract(string = bol_listB[[1]]$codigo, pattern = "B-.*-")
+                filename <- paste0("dir-",substr(e, start=0,stop=nchar(e)-1),".rd")
+                if(!file.exists(filename)){ save(bol_listB, file=filename) }
+        }
 }
 
 
