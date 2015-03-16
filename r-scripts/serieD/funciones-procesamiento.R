@@ -266,8 +266,11 @@ cleanBN <- function(x) { return( gsub(" +", " ", gsub("[[:cntrl:]]", "", x)) )}
 ###---- Procesamiento de un boletin concreto ---###
 # Dado un número de boletin cargamos objeto lines con las líneas del documento
 # y se lo pasamos a la funcion
+## Parámetros:
+# lines: texto del boletin organizado porlineas
+# num: código de boletin
 
-proc_boletin <- function(lines){
+proc_boletin <- function(lines, num){
         ## Limpieza inicial
         lines <- lines[lines!=""]
         lp  <- grep("^Página", lines)
@@ -333,7 +336,7 @@ proc_boletin <- function(lines){
                         count <- count + 1    ## para ir guardando en la lista
                         if (!is.na(ndxend) & nref[i] <= ndxend) {
                                 tmp <- list()
-                                tmp$bol  <- sprintf("%03d", as.numeric(bol))
+                                tmp$bol  <- sprintf("%03d", as.numeric(num))
                                 tmp$ref  <- str_extract(lines[nref[i]], "^[0-9]{3}\\/[0-9]{5,6}")
                                 tmp$tipo <- str_split(tmp$ref, "/")[[1]][1]
                                 tmp$ndx  <- lines[nref[i]:(nref[i+1]-1)] #Contenido del índice.

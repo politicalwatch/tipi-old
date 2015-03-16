@@ -25,6 +25,7 @@
 # diputados <- data.frame(apnom=diputadosan, nomapre=sapply(diputadosan, apn2nap))
 # rownames(diputados) <- NULL
 # if (any(duplicated(diputados$diputadosnc))) stop("Cadenas no únicas en diputadosnc")
+load("diputados-mongo.rd")
 
 #++++++++++++++++++++++++++++++#
 # Listado boletines a procesar #
@@ -37,6 +38,7 @@ load("abl.rd")
 # obtener numeros de boletin
 nums <- as.character(abl$num)
 
+#directorio para ficheros locales
 dir <- "./bocgs-proc"
 
 ##################
@@ -50,33 +52,34 @@ source("funciones-procesamiento.R")
 ## bocgs-proc/BOCG-D-num.rd : siendo num un parámetro (número de boletín)
 
 # bucle
-for(i in 1:length(nums)){ 
-        # i <- 2; 
+for(i in 1:length(nums)){ #i=630
         #suponemos .rd ya existe
         num <- nums[i] #num=555
         load(paste0(dir, "/BOCG-D-", num, ".rd")) #esto carga lines
         #
         # Procesar contenido
-        resul <- try(proc_boletin(lines))
+        resul <- try(proc_boletin(lines, num))
         if(class(resul) == "try-error"){
                 lcont <- vector("list")
                 lcont$bol <- "num"
                 print(paste("falla el boletin:", num))
                 next()
         } else {
-                lcont <- proc_boletin(lines)
+                lcont <- resul
         }
         #enviar a bbdd
-        if (length(linesdf) > 0) {
-                if (!mongo.is.connected(mg)) mg <- mongo.create(host="grserrano.net")
-                mongo.remove(mg, "pdfs.depuracionesInes", criteria=list(bol=bol))
+        if (length(lcont) > 0) {
+                if (!mongo.is.connected(mg)) mg <- mongo.create(host="ds043447.mongolab.com:43447")
+                mongo.authenticate(mg, username = "ines", password = "#ines15+?", db = "tipi_debug")
+                mongo.remove(mg, "tipi_debug.serieD", criteria=list(bol=num))
                 lcontb <- lapply(lcont, function(x) {
+                        #campos que no interesa enviar
                         x$ndx <- NULL
                         x$cnt <- NULL
                         return(mongo.bson.from.list(x))
                 })
                 cat(" ", length(lcontb), "\n")
-                mongo.insert.batch(mg, "pdfs.depuracionesInes", lcontb)
+                mongo.insert.batch(mg, "tipi_debug.serieD", lcontb)
         }
 }
 
