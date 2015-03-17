@@ -485,9 +485,9 @@ proc_boletin <- function(lines, num){
                         }             
                 }
         } else {
-                tmp$bol <- bol
-                tmp$special <- TRUE
-                tmp$created <- as.POSIXct(Sys.time(), tz="CET")
+                lcont$bol <- sprintf("%03d", as.numeric(num))
+                lcont$special <- TRUE
+                lcont$created <- as.POSIXct(Sys.time(), tz="CET")
                 lcont[[1]]  <- lines    
         }
         return(lcont)
