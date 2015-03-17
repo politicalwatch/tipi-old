@@ -21,7 +21,7 @@ i=1
 names(proy_listA[[i]])
 
 # proy_listA[[i]]$codigo
-for(i in 1:length(proy_listA)){#i=1 #for(i in 1:length(proy_listA))
+for(i in 1:20){#i=1 #for(i in 1:length(proy_listA))
         filename <- paste0("dir-", proy_listA[[i]]$codigo, ".rd")
         if(!file.exists(filename)){ next() }
         load(filename) # se carga bol_listA
