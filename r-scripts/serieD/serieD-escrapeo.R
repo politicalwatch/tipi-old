@@ -97,7 +97,7 @@ for(num in 1:nrow(abl)){#i=1
         if (file.exists(paste0("bocgs-proc/BOCG-D-", num, ".rd"))) {
                 load(paste0("bocgs-proc/BOCG-D-", num, ".rd"))
         } else {
-                url <- paste0("http://www.congreso.es", abl[i, "url"])
+                url <- paste0("http://www.congreso.es", abl[num, "url"])
                 tst   <- flattenXML(getBOCG(num, url, browse=TRUE), 0)
                 lines <- unlist(lapply(tst, function(x) str_trim(xmlValue(x))))
                 save(lines, file=paste0("bocgs-proc/BOCG-D-", num, ".rd"))
