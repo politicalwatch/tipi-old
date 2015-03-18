@@ -45,6 +45,7 @@ dir <- "./bocgs-proc"
 #  Carga masiva  #
 ##################
 
+source("../mongodb-conn.R")
 # Cargar código procesamiento
 source("funciones-procesamiento.R")
 
@@ -69,9 +70,8 @@ for(i in 1:length(nums)){ #i=630
         }
         #enviar a bbdd
         if (length(lcont) > 0) {
-                if (!mongo.is.connected(mg)) mg <- mongo.create(host="ds043447.mongolab.com:43447")
-                mongo.authenticate(mg, username = "ines", password = "#ines15+?", db = "tipi_debug")
-                mongo.remove(mg, "tipi_debug.serieD", criteria=list(bol=num))
+
+                mongo.remove(mongo, mongo_collection("serieD"), criteria=list(bol=num))
                 lcontb <- lapply(lcont, function(x) {
                         #campos que no interesa enviar
                         x$ndx <- NULL
@@ -79,7 +79,7 @@ for(i in 1:length(nums)){ #i=630
                         return(mongo.bson.from.list(x))
                 })
                 cat(" ", length(lcontb), "\n")
-                mongo.insert.batch(mg, "tipi_debug.serieD", lcontb)
+                mongo.insert.batch(mongo, mongo_collection("serieD"), lcontb)
         }
 }
 
