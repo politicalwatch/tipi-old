@@ -9,6 +9,7 @@
 # Salida: ninguna; se alimenta bbdd mongo
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
 
+source("../mongodb-conn.R")
 source("funciones-procesamiento.R")
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
@@ -21,7 +22,7 @@ i=1
 names(proy_listA[[i]])
 
 # proy_listA[[i]]$codigo
-for(i in 1:20){#i=1 #for(i in 1:length(proy_listA))
+for(i in 1:4){#i=1 #for(i in 1:length(proy_listA))
         filename <- paste0("dir-", proy_listA[[i]]$codigo, ".rd")
         if(!file.exists(filename)){ next() }
         load(filename) # se carga bol_listA
@@ -46,13 +47,11 @@ for(i in 1:20){#i=1 #for(i in 1:length(proy_listA))
                         }
                         #boletin procesado, enviar a MongoDB
                         if(class(lcont) != "try-error" & length(lcont)>0){
-                                if (!mongo.is.connected(mg)) mg <- mongo.create(host="ds043447.mongolab.com:43447")
-                                mongo.authenticate(mg, username = "ines", password = "#ines15+?", db = "tipi_debug")
-                                mongo.remove(mg, "tipi_debug.serieA", criteria=list(bol=bol_listA[[d]]$codigo))
+                                mongo.remove(mongo, mongo_collection("serieA"), criteria=list(bol=bol_listA[[d]]$codigo))
                                 lcontb <- lapply(lcont, function(x) {
                                         return(mongo.bson.from.list(x))
                                 })
-                                mongo.insert.batch(mg, "tipi_debug.serieA", lcontb)
+                                mongo.insert.batch(mongo, mongo_collection("serieA"), lcontb)
                         }
                 } else {
 #                         lcont <- proc_serieA(lines, codigo=bol_listA[[d]]$codigo)
@@ -66,14 +65,12 @@ for(i in 1:20){#i=1 #for(i in 1:length(proy_listA))
                         }
                         #boletin procesado, enviar a MongoDB
                         if (class(lcont) != "try-error" & length(lcont) > 0) {
-                                if (!mongo.is.connected(mg)) mg <- mongo.create(host="ds043447.mongolab.com:43447")
-                                mongo.authenticate(mg, username = "ines", password = "#ines15+?", db = "tipi_debug")
-                                mongo.remove(mg, "tipi_debug.serieA", criteria=list(bol=bol_listA[[d]]$codigo))
+                                mongo.remove(mongo, mongo_collection("serieA"), criteria=list(bol=bol_listA[[d]]$codigo))
                                 lcontb <- lapply(list(lcont), function(x) {
                                         return(mongo.bson.from.list(lcont))
                                 })
                                 cat(" ", length(lcontb), "\n")
-                                mongo.insert.batch(mg, "tipi_debug.serieA", lcontb)
+                                mongo.insert.batch(mongo, mongo_collection("serieA"), lcontb)
                         }
                 }
         }
