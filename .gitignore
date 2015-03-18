@@ -1,8 +1,11 @@
 .DS_Store
 .meteor/.id
 .meteor/local/*
-settings.json
 *.sw*
 .RData
 .Rhistory
 bocgs-proc
+BOCG-*
+dir-*
+abl.rd
+allbollinks.rd
