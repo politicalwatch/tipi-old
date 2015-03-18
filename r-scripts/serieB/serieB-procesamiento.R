@@ -9,6 +9,7 @@
 # Salida: ninguna; se alimenta bbdd mongo
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
 
+source("../mongodb-conn.R")
 source("funciones-procesamiento.R")
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
@@ -45,24 +46,21 @@ for(i in 1:length(proy_listB)){#i=1 #for(i in 1:length(proy_listB))
       #boletin procesado, enviar a MongoDB
       #caso de boletin 'normal' (i.e. sin enmiendas)
       if ( class(lcont) != "try-error" & length(lcont[[1]]) == 1 ) {
-        if (!mongo.is.connected(mg)) mg <- mongo.create(host="ds043447.mongolab.com:43447")
-        mongo.authenticate(mg, username = "ines", password = "#ines15+?", db = "tipi_debug")
-        mongo.remove(mg, "tipi_debug.serieB", criteria=list(bol=bol_listB[[d]]$codigo))
+        mongo.remove(mongo, mongo_collection("serieB"), criteria=list(bol=bol_listB[[d]]$codigo))
         lcontb <- lapply(list(lcont), function(x) {
           return(mongo.bson.from.list(lcont))
         })
         cat(" ", length(lcontb), "\n")
-        mongo.insert.batch(mg, "tipi_debug.serieB", lcontb)
+        mongo.insert.batch(mongo, mongo_collection("serieB"), lcontb)
       }
     #caso de boletin con enmiendas. Ej B-157-5.
     #el primer elemento seria a su vez una lista (con mas de 1 elemento), luego length()>1
     if ( class(lcont) != "try-error" & length(lcont[[1]]) > 1 ){
-        if (!mongo.is.connected(mg)) mg <- mongo.create(host="ds043447.mongolab.com:43447")
-        mongo.remove(mg, "tipi_debug.serieB", criteria=list(bol=bol_listB[[d]]$codigo))
+        mongo.remove(mongo, mongo_collection("serieB"), criteria=list(bol=bol_listB[[d]]$codigo))
         lcontb <- lapply(lcont, function(x) {
           return(mongo.bson.from.list(x))
         })
-        mongo.insert.batch(mg, "tipi_debug.serieB", lcontb)
+        mongo.insert.batch(mg, mongo_collection("serieB"), lcontb)
       }
     }
 }
