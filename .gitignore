@@ -9,3 +9,4 @@ BOCG-*
 dir-*
 abl.rd
 allbollinks.rd
+r-scripts/mongodb-creds.R
