@@ -9,6 +9,7 @@
 # Salida: ninguna; se alimenta bbdd mongo
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
 
+source("../common.R")
 source("../mongodb-conn.R")
 source("funciones-procesamiento.R")
 
@@ -16,14 +17,14 @@ source("funciones-procesamiento.R")
 #      Procesamiento Boletines Serie A: Proyectos de Ley      #
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
 
-load("dir-serieB.rd") # se carga proy_listB
+load(paste0(GENERATED_BASE_DIR, "dir-serieB.rd")) # se carga proy_listB
 length(proy_listB)
 i=1
 names(proy_listB[[i]])
 
 # proy_listB[[i]]$codigo
 for(i in 1:length(proy_listB)){#i=1 #for(i in 1:length(proy_listB))
-    filename <- paste0("dir-", proy_listB[[i]]$codigo, ".rd")
+    filename <- paste0(GENERATED_BASE_DIR, "dir-", proy_listB[[i]]$codigo, ".rd")
     if(!file.exists(filename)){ next() }
     load(filename) # se carga bol_listB
     #         length(bol_listB) # hay 15 documentos asociados
