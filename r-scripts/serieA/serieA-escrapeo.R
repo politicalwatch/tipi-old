@@ -23,6 +23,7 @@ library("RSQLite")
 library("rmongodb")
 
 #funciones propias.
+source("../common.R")
 source("funciones-escrapeo.R")
 source("funciones-procesamiento.R")
 
@@ -51,7 +52,7 @@ proy_listA <- construir_dir_serieA(f1 = f1, proy_listA = proy_listA)
 #NOTA. hasta que mejoremos el escrapeo esto es inestable, algunas URLS no son correctas.
 
 #Guardar el directorio
-save(proy_listA, file = "dir-serieA.rd")
+save(proy_listA, file = paste0(GENERATED_BASE_DIR, "dir-serieA.rd"))
 
 proy_listA[[1]] #ej. primer proyecto de ley de la lista
 
@@ -59,7 +60,7 @@ proy_listA[[1]] #ej. primer proyecto de ley de la lista
 #         Siguientes         #
 #----------------------------#
 #Cargamos el directorio con toda la serie hasta la fecha
-load("dir-serieA.rd")
+load(paste0(GENERATED_BASE_DIR, "dir-serieA.rd"))
 
 #escrapeamos para ver los nuevos
 doc  <- htmlTreeParse(getURL(firstURL), encoding="UTF-8", useInternalNodes=TRUE)
@@ -72,11 +73,11 @@ proy_listA_updated <- construir_dir_serieA(f1 = f1, proy_listA = proy_listA)
 proy_listA_pdte <- setdiff(x = proy_listA_updated, y = proy_listA)
 
 #guardamos pendientes
-save(proy_listA_pdte, file="abl.rd")
+save(proy_listA_pdte, file=paste0(GENERATED_BASE_DIR, "abl.rd"))
 #actualizamos directorio completo
 rm(proy_listA)
 proy_listA <- proy_listA_updated
-save(proy_listA, file = "dir-serieA.rd")
+save(proy_listA, file = paste0(GENERATED_BASE_DIR, "dir-serieA.rd"))
 rm(proy_listA_updated)
 
 #######################################################################
@@ -108,7 +109,7 @@ for(i in 1:length(proy_listA)){#i=90 para descargar uno de ellos; for(i in 1:len
         #guardamos bol_listA para mantener un recuento
         if(length(bol_listA)>0 & length(bol_listA[[1]]$codigo)>0){
                 e <- str_extract(string = bol_listA[[1]]$codigo, pattern = "A-.*-")
-                filename <- paste0("dir-",substr(e, start=0,stop=nchar(e)-1),".rd")
+                filename <- paste0(GENERATED_BASE_DIR, "dir-",substr(e, start=0,stop=nchar(e)-1),".rd")
                 if(!file.exists(filename)){ save(bol_listA, file=filename) }
         }
 }
@@ -117,7 +118,7 @@ for(i in 1:length(proy_listA)){#i=90 para descargar uno de ellos; for(i in 1:len
 #         Siguientes         #
 #----------------------------#
 # Cargar la lista de boletines pendientes
-load("abl.rd") # se carga la lista proy_listA_pdte
+load(paste0(GENERATED_BASE_DIR, "abl.rd")) # se carga la lista proy_listA_pdte
 length(proy_listA_pdte) #pendientes de descarga
 for(i in 1:length(proy_listA_pdte)){#i=90 para descargar uno de ellos; for(i in 1:length(proy_listA)) para descargar todos
         secURL <- proy_listA_pdte[[i]]$url
@@ -138,7 +139,7 @@ for(i in 1:length(proy_listA_pdte)){#i=90 para descargar uno de ellos; for(i in 
         #guardamos bol_listA para mantener un recuento
         if(length(bol_listA)>0 & length(bol_listA[[1]]$codigo)>0){
                 e <- str_extract(string = bol_listA[[1]]$codigo, pattern = "A-.*-")
-                filename <- paste0("dir-",substr(e, start=0,stop=nchar(e)-1),".rd")
+                filename <- paste0(GENERATED_BASE_DIR, "dir-",substr(e, start=0,stop=nchar(e)-1),".rd")
                 if(!file.exists(filename)){ save(bol_listA, file=filename) }
         }
 }
