@@ -19,3 +19,8 @@ meteor --settings=settings.json
 ```
 
 Open a browser and type [localhost:3000](localhost:3000)
+
+
+## MongoDB credentials
+
+Create a copy of `r-scripts/mongodb-creds.R.example` as `r-scripts/mongodb-creds.R` and change credentials there.
