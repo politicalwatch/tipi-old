@@ -23,6 +23,7 @@ library("RSQLite")
 library("rmongodb")
 
 #funciones propias.
+source("../common.R")
 source("funciones-escrapeo.R")
 source("funciones-procesamiento.R")
 
@@ -51,7 +52,7 @@ proy_listB <- construir_dir_serieB(f1 = f1, proy_listB = proy_listB)
 #NOTA. hasta que mejoremos el escrapeo esto es inestable, algunas URLS no son correctas.
 
 #Guardar el directorio
-save(proy_listB, file = "dir-serieB.rd")
+save(proy_listB, file = paste0(GENERATED_BASE_DIR, "dir-serieB.rd"))
 
 proy_listB[[1]] #ej. primer proyecto de ley de la lista
 
@@ -59,7 +60,7 @@ proy_listB[[1]] #ej. primer proyecto de ley de la lista
 #         Siguientes         #
 #----------------------------#
 #Cargamos el directorio con toda la serie hasta la fecha
-load("dir-serieB.rd")
+load(paste0(GENERATED_BASE_DIR, "dir-serieB.rd"))
 
 #escrapeamos para ver los nuevos
 doc  <- htmlTreeParse(getURL(firstURL), encoding="UTF-8", useInternalNodes=TRUE)
@@ -108,7 +109,7 @@ for(i in 1:length(proy_listB)){#i=90 para descargar uno de ellos; for(i in 1:len
         #guardamos bol_listA para mantener un recuento
         if(length(bol_listB)>0 & length(bol_listB[[1]]$codigo)>0){
                 e <- str_extract(string = bol_listB[[1]]$codigo, pattern = "B-.*-")
-                filename <- paste0("dir-",substr(e, start=0,stop=nchar(e)-1),".rd")
+                filename <- paste0(GENERATED_BASE_DIR, "dir-",substr(e, start=0,stop=nchar(e)-1),".rd")
                 if(!file.exists(filename)){ save(bol_listB, file=filename) }
         }
 }
@@ -138,7 +139,7 @@ for(i in 1:length(proy_listB_pdte)){#i=90 para descargar uno de ellos; for(i in 
         #guardamos bol_listA para mantener un recuento
         if(length(bol_listB)>0 & length(bol_listB[[1]]$codigo)>0){
                 e <- str_extract(string = bol_listB[[1]]$codigo, pattern = "B-.*-")
-                filename <- paste0("dir-",substr(e, start=0,stop=nchar(e)-1),".rd")
+                filename <- paste0(GENERATED_BASE_DIR, "dir-",substr(e, start=0,stop=nchar(e)-1),".rd")
                 if(!file.exists(filename)){ save(bol_listB, file=filename) }
         }
 }

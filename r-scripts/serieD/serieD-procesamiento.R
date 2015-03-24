@@ -30,16 +30,17 @@ load("diputados-mongo.rd")
 #++++++++++++++++++++++++++++++#
 # Listado boletines a procesar #
 #++++++++++++++++++++++++++++++#
+source("../common.R")
 
 ### obtener listado completo boletines
 # cargar fichero abl.rd
-load("abl.rd")
+load(paste0(GENERATED_BASE_DIR, "abl.rd"))
 
 # obtener numeros de boletin
 nums <- as.character(abl$num)
 
 #directorio para ficheros locales
-dir <- "./bocgs-proc"
+dir <- paste0(GENERATED_BASE_DIR, "bocgs-proc")
 
 ##################
 #  Carga masiva  #

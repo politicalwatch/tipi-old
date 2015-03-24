@@ -100,7 +100,7 @@ construir_dir_bolB <- function(f2, guardarlocal = FALSE, bol_list=list()){
                 lines <- unlist(lapply(tst, function(x) str_trim(xmlValue(x))))
                 
                 #guardar en un fichero temporal
-                filename <- paste0("BOCG-", codigo1, ".rd")
+                filename <- paste0(GENERATED_BASE_DIR, "BOCG-", codigo1, ".rd")
                 if(guardarlocal){ save(lines, file=filename) }
                 
                 #almacenar boletin en el directorio

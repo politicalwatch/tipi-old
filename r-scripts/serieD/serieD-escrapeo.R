@@ -20,6 +20,7 @@ library("RSQLite")
 library("rmongodb")
 
 ### Cargar funciones propias
+source("../common.R")
 source("funciones-extraccion.R")
 
 #################################
@@ -57,10 +58,10 @@ for (pag in pags) {
                 allbollinks <- c(allbollinks, lapply(bollinks, extractlink))
         }
         # Por si se corta a medias, saber por dónde vamos
-         save(allbollinks, file="allbollinks.rd") 
+         save(allbollinks, file=paste0(GENERATED_BASE_DIR, "allbollinks.rd"))
 }
 
-load("allbollinks.rd")
+load(paste0(GENERATED_BASE_DIR, "allbollinks.rd"))
 #info [1] "url"     "texto"   "serie"   "num"     "datestr" "date"   
 
 #++++++++++++++++++++++++++++++++++++++++++++++++#
@@ -69,18 +70,18 @@ load("allbollinks.rd")
 # Si ya tenemos un boletín descargado se marca en allbollinks
 # Nota: se sobreescribe allbollinks.rd
 for (i in 1:length(allbollinks)) {
-        fname <- paste0("bocgs-proc/BOCG-D-", allbollinks[[i]]$num, ".rd")
+        fname <- paste0(GENERATED_BASE_DIR, "bocgs-proc/BOCG-D-", allbollinks[[i]]$num, ".rd")
         allbollinks[[i]]$filexists <- file.exists(fname)
         
 }
-save(allbollinks, file="allbollinks.rd") 
+save(allbollinks, file=paste0(GENERATED_BASE_DIR, "allbollinks.rd")) 
 
 # Creamos una estructura de data frame con todos pendientes y la guardamos.
 abl <- ldply(allbollinks, data.frame)
 
 # Filtrar las pendientes de descarga y guardar.
 abl <- subset(abl, !filexists)
-save(abl, file="abl.rd")  ## Fichero con los boletines pendientes de descargar/procesar
+save(abl, file=paste0(GENERATED_BASE_DIR, "abl.rd"))  ## Fichero con los boletines pendientes de descargar/procesar
 
 str(abl) #tantas filas como boletines pendientes de descargar y 7 campos.
 
@@ -91,16 +92,16 @@ str(abl) #tantas filas como boletines pendientes de descargar y 7 campos.
 
 # Para cada boletin pendiente generamos un fichero bocgs-proc/BOCG-D-num.rd : siendo num el número de boletín
 
-load("abl.rd")
+load(paste0(GENERATED_BASE_DIR, "abl.rd"))
 
 for(num in 1:nrow(abl)){#i=1
-        if (file.exists(paste0("bocgs-proc/BOCG-D-", num, ".rd"))) {
-                load(paste0("bocgs-proc/BOCG-D-", num, ".rd"))
+        if (file.exists(paste0(GENERATED_BASE_DIR, "bocgs-proc/BOCG-D-", num, ".rd"))) {
+                load(paste0(GENERATED_BASE_DIR, "bocgs-proc/BOCG-D-", num, ".rd"))
         } else {
                 url <- paste0("http://www.congreso.es", abl[num, "url"])
                 tst   <- flattenXML(getBOCG(num, url, browse=FALSE), 0)
                 lines <- unlist(lapply(tst, function(x) str_trim(xmlValue(x))))
-                save(lines, file=paste0("bocgs-proc/BOCG-D-", num, ".rd"))
+                save(lines, file=paste0(GENERATED_BASE_DIR, "bocgs-proc/BOCG-D-", num, ".rd"))
         }
 }
 

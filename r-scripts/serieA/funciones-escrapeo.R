@@ -82,7 +82,7 @@ construir_dir_bolA <- function(f2, guardarlocal = FALSE, bol_list=list()){
                 
                 url <- urlhtml(num = codigoAnumero(codigo1), fecha = fechanum(f1))
                 #si aparece expresamente BOCG-10-A-90-1... hay que construir URL de otra forma
-                if(!is.na(scod <- str_extract(string = x1, pattern = 'BOCG-.*-A-.*'))){
+                if(!is.na(scod <- str_extract(string = x1, pattern = paste0(GENERATED_BASE_DIR, 'BOCG-.*-A-.*')))){
                         url <- paste0("http://www.congreso.es/portal/page/portal/Congreso/PopUpCGI?CMD=VERLST&CONF=BRSPUB.cnf&BASE=PU10&DOCS=1-1&FMT=PUWTXDTS.fmt&OPDEF=Y&QUERY=",
                                       str_trim(scod), ".CODI.")
                 }
@@ -95,7 +95,7 @@ construir_dir_bolA <- function(f2, guardarlocal = FALSE, bol_list=list()){
                 lines <- unlist(lapply(tst, function(x) str_trim(xmlValue(x))))
                 
                 #guardar en un fichero temporal
-                filename <- paste0("BOCG-", codigo1, ".rd")
+                filename <- paste0(GENERATED_BASE_DIR, "BOCG-", codigo1, ".rd")
                 if(guardarlocal){ save(lines, file=filename) }
                 
                 #almacenar boletin en el directorio
