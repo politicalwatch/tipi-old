@@ -1,0 +1,322 @@
+/*fonts*/
+@font-face {
+	font-family: 'Abril Fatface';
+	font-style: normal;
+	font-weight: 400;
+	src: local('Abril Fatface'), local('AbrilFatface-Regular'), url(http://fonts.gstatic.com/s/abrilfatface/v7/X1g_KwGeBV3ajZIXQ9VnDokaQb-UsZVONjobs91YQtw.woff) format('woff');}
+
+@font-face {
+	font-family: 'Oswald';
+	font-style: normal;
+	font-weight: 400;
+	src: local('Oswald Regular'), local('Oswald-Regular'), url(http://fonts.gstatic.com/s/oswald/v9/qpy-UiLNKP-VfOdbcs6r6-vvDin1pK8aKteLpeZ5c0A.woff) format('woff');
+}
+
+.oswald{font-family: 'Oswald';}
+
+@font-face {
+	font-family: 'PT Serif';
+	font-style: normal;
+	font-weight: 400;
+	src: local('PT Serif'), local('PTSerif-Regular'), url(http://fonts.gstatic.com/s/ptserif/v7/sDRi4fY9bOiJUbgq53yZCXYhjbSpvc47ee6xR_80Hnw.woff) format('woff');
+}
+
+.serif {font-family: 'PT Serif';}
+
+@font-face {
+	font-family: 'PT Mono';
+	font-style: normal;
+	font-weight: 400;
+	src: local('PT Mono'), local('PTMono-Regular'), url(Mono.woff) format('woff');
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;}
+
+@font-face {
+	font-family: 'Lato';
+	font-style: normal;
+	font-weight: 100;
+	src: local('Lato Regular'), local('Lato-Regular'), url(http://fonts.gstatic.com/s/lato/v8/qIIYRU-oROkIk8vfvxw6QvesZW2xOQ-xsNqO47m55DA.woff) format('woff');}
+
+
+.lato h1{font-family: 'Lato';
+	font-weight:100;
+
+}
+
+.old{font-family: 'Old Standard TT';}
+
+@font-face {
+	font-family: 'Old Standard TT';
+	font-style: normal;
+	font-weight: 400;
+	src: local('Old Standard TT Regular'), local('OldStandardTT-Regular'),url(http://fonts.gstatic.com/s/oldstandardtt/v6/n6RTCDcIPWSE8UNBa4k-DOeKpinAksS0bOq9o5QARNc.woff) format('woff');
+}
+.old h1 {font-family: 'Old Standard TT';
+	font-size:60px;
+	font-weight:100;
+	text-align:right;}
+.old h2 {font-family: 'Old Standard TT';
+	font-size:22px;
+	font-weight:100;}
+.old h3 {font-family: 'Old Standard TT';
+	font-size:16px;
+	font-weight:100;}
+.oldleft h1 {font-family: 'Old Standard TT';
+	font-size:60px;
+	font-weight:100;}
+.oldleft h2 {font-family: 'Old Standard TT';
+	font-size:22px;
+	font-weight:100;}
+.oldleft h3 {font-family: 'Old Standard TT';
+	font-size:16px;
+	font-weight:100;}
+.oldleft h1::first-letter {font-family:'Abril Fatface';
+	font-size:130px;
+	font-weight:100;
+	color: black;}
+
+.old h1::first-letter
+{font-family:'Abril Fatface';
+	font-size:150px;
+	font-weight:100;
+	color: black;
+
+}
+
+.oldwhite h1{font-family: 'Old Standard TT';
+	font-size:60px;
+	font-weight:100;
+	text-align:right;
+	color:white}
+.oldwhite h1::first-letter
+{font-family:'Abril Fatface';
+	font-size:150px;
+	font-weight:100;
+	color: #fed26f;
+
+}
+
+
+
+
+
+.container { padding-top: 50px; }
+.containerglob { 
+	/* Do something with fullscreen images */
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.containerglob > .row:first-of-type { padding-top:30px; }
+
+.navbar li a {
+	font-weight: bold;
+}
+
+.navbar-custom {
+	margin-bottom: 0;
+	border-bottom: 1px solid rgba(255,255,255,.3);
+	text-transform: uppercase;
+	font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+	background-color: #000;
+}
+
+.navbar-custom .navbar-brand {
+	font-weight: 700; color: #ffc741;
+}
+
+.navbar-custom .navbar-brand:focus {
+	outline: 0;
+}
+
+.navbar-custom .navbar-brand .navbar-toggle {
+	padding: 4px 6px;
+	font-size: 16px;
+	color: grey;
+}
+
+.navbar-custom .navbar-brand .navbar-toggle:focus,
+.navbar-custom .navbar-brand .navbar-toggle:active {
+	outline: 0;
+}
+
+.navbar-custom a {
+	color: ;
+}
+
+.navbar-custom .nav li.active {
+	outline: nonte;
+	background-color: rgba(255,255,255,.3);
+}
+
+.navbar-custom .nav li a {
+	-webkit-transition: background .3s ease-in-out;
+	-moz-transition: background .3s ease-in-out;
+	transition: background .3s ease-in-out;
+}
+
+.navbar-custom .nav li a:hover,
+.navbar-custom .nav li a:focus,
+.navbar-custom .nav li a.active {
+	outline: 0;
+	color: black;
+	font-weight:900;
+	background-color: rgba(255,255,255,.3);
+}
+
+@media(min-width:767px) {
+	/*.navbar {
+		padding: 20px 0;
+		border-bottom: 0;
+		letter-spacing: 1px;
+		background: 0 0;
+		-webkit-transition: background .5s ease-in-out,padding .5s ease-in-out;
+		-moz-transition: background .5s ease-in-out,padding .5s ease-in-out;
+		transition: background .5s ease-in-out,padding .5s ease-in-out;
+	}*/
+
+	.top-nav-collapse {
+		padding: 0;
+		background-color: #000;
+	}
+
+	.navbar-custom.top-nav-collapse {
+		border-bottom: 1px solid rgba(255,255,255,.3);
+	}
+
+	/*mis estilos-------------------------------------------------------------*/
+	
+	/*posiciones generales-------------------------------------------------------------*/
+.center{
+	text-align:center;
+	padding:30px;}
+	.right{
+		text-align:right;}
+.footer h1{background-color: #4ECDC4 }
+p {color: grey}
+mark{background-color: black; color: white;text-align: right;}
+	
+	/*cajas inicio-------------------------------------------------------------*/	
+#cajaca{
+	background-image: url("../images/fotomanos.jpg");
+	color: white;
+}
+#cajainiciativas{
+	background-color: #CFFFDD   ;/*#fed26f*/
+	
+}
+	#cajaca p{
+		color: lightgrey;
+		font-family: 'Old Standard TT';
+	}
+#qpc{
+	background-color: #ECE136   ;
+	
+	color: white;
+}
+
+#cajablog{
+	background-color: #E3FAB9   ;
+	
+	color: black;
+}
+
+#cajaparticipa{
+	background-color: #5C5863   ;/**/
+	color: white;
+	
+}
+	
+#cajaparticipa h1::first-letter
+	{
+		color: white;
+
+	}
+
+
+#cajaagenda{
+	background-color: white   ;
+		color: black;
+		
+	}
+#cajacontacto{
+	background-color: black ;
+		color: white;
+		
+	}
+	#cajacontacto h1::first-letter
+	{
+		color: white;
+
+	}
+
+.footer h1{ background-color: #4ECDC4; }
+
+.cajacontainer{padding:30px;}
+
+
+
+/*articulos----------------------------------------------------------*/
+#tituloart h1{
+
+font-family:  'Old Standard TT';
+	font-weight: 900;
+}
+#textoart p{
+	padding-left:0px;
+	padding-right:50px;
+	font-family: 'PT Serif';
+	
+}
+#tituloart h3{
+text-align:center;
+	font-family: 'PT Serif';
+	color: grey;
+}
+
+/*participa---------------------------------------------------------*/
+.participapregunta{
+	background-color: black; 
+	color: white;
+}
+.participarespuesta{
+	background-color: white ;
+	color: black;
+}
+		
+.center{text-align: center;}
+
+
+/*blog---------------------------------------------------------------*/
+.blog-post {
+	font-family: 'PT Serif';
+	color: grey;
+}
+.blog-post h2 a {
+	font-family: 'Old Standard TT';
+	color: #000;
+	font-size: 30px;
+}
+.blog-post summary a, .blog-post header .info .author {
+	font-weight: bold;
+	color: #ffc741;
+}
+
+#mdblog-new { color: #000; background-color: #ffc741; border-color: #000; }
+#mdblog-publish { color: #fff; background-color: green; }
+#mdblog-unpublish, #mdblog-delete { color: #fff; background-color: red; }
+#mdblog-archive { color: #000; background-color: lightgrey; }
+	
+/*otros-------*/
+
+a { color: green; }
+img{width: 100%; height: 100%}
+.btn{background: black;  color: white; border-color: none}
+.btn h5 {font-family: 'Lato'}
+.btn:hover{background:#fed26f }
+.btn{margin:5px; border-radius: 0px;}
+.btnotro{background: grey; border-color: black; margin: 1px;color: black}
+
+.nube {background-image: url("../images/fotomanos.jpg"); color: white; height:600px}
+.nube2{background-image: url("../images/fotomanos.jpg"); color: white; height:400px}
+.grey {background-color: grey;}
+.grey h1 {color: #ffc741;}
+.grey h3 {color: #fff;}

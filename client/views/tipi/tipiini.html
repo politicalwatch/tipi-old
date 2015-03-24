@@ -1,6 +1,7 @@
 <template name="tipiini">
-	{{#with tipiini}}
-	<div class="tipiini">
+	<div class="container">
+		{{#with tipiini}}
+		<div class="tipiini">
 			<p class="lead">{{numActo}} - {{titulo}}</p>
 			<dl class="dl-horizontal">
 				<dt>Referencia</dt>
@@ -28,10 +29,11 @@
 					<dd>{{masinfo}}</dd>
 				{{/if}}
 			</dl>
+		</div>
+	  {{/with}}
+		<button class="btn btn-default" id="back">← Volver</button>
+		{{#if currentUser}}
+			<button class="btn btn-default" id="editartipi">Editar</button> <button class="btn btn-default" id="borrartipi">Borrar</button>
+		{{/if}}
 	</div>
-  {{/with}}
-	<button class="btn btn-default" id="back">← Volver</button>
-	{{#if currentUser}}
-		<button class="btn btn-default" id="editartipi">Editar</button> <button class="btn btn-default" id="borrartipi">Borrar</button>
-	{{/if}}
 </template>

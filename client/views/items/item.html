@@ -1,10 +1,12 @@
 <template name="item">
-  <a href="{{pathFor 'items'}}">← Back</a>
-  {{#with item}}
-    <div class="item">
-      <h3>{{title}}</h3>
-      <p>{{body}}</p>
-      <h5><a href="#" class="delete">Delete</a></h5>
+    <div class="container">
+        <a href="{{pathFor 'items'}}">← Back</a>
+        {{#with item}}
+        <div class="item">
+            <h3>{{title}}</h3>
+            <p>{{body}}</p>
+            <h5><a href="#" class="delete">Delete</a></h5>
+        </div>
+        {{/with}}
     </div>
-  {{/with}}
 </template>

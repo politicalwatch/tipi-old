@@ -222,8 +222,9 @@ Router.map(function() {
     path: '/'
   });
 
-  //this.route('content');
 	this.route('about');
+
+  this.route('scanner');
 
   // Users
   this.route('login');

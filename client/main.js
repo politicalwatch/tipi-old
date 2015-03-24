@@ -6,8 +6,6 @@ Global client-side code. Loads last.
 
 /+ ---------------------------------------------------- */
 
-//
-
 i18n.setLanguage('es');
 i18n.map('es', {
     reactiveTable: {
