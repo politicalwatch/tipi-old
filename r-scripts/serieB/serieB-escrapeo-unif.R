@@ -78,116 +78,11 @@ for(i in 1:length(all_serieB)){#i=90 para descargar uno de ellos; for(i in 1:len
       if(!file.exists(filename)){ save(bol_listB, file=filename) }
     }
     proy_listB <- c(proy_listB, all_serieB[[i]])
+    save(proy_listB, file=paste0(GENERATED_BASE_DIR, "dir-serieB.rd"))
   } else {
-    cat("elemento procesado!")
+    cat("elemento procesado previamente!")
   }
 }
-
-save(proy_listB, file=paste0(GENERATED_BASE_DIR, "dir-serieB.rd"))
-
-
-
-
-
-
-
-#-------------------------------#
-#     Primera (y única) vez     #
-#-------------------------------#
-## Crear un directorio de proyectos*URLS
-#llamamos a la función propia construir_dir_serieB
-proy_listB <- construir_dir_serieB(f1 = f1, proy_listB = proy_listB)
-#NOTA. hasta que mejoremos el escrapeo esto es inestable, algunas URLS no son correctas.
-
-#Guardar el directorio
-save(proy_listB, file = paste0(GENERATED_BASE_DIR, "dir-serieB.rd"))
-
-proy_listB[[1]] #ej. primer proyecto de ley de la lista
-
-#----------------------------#
-#         Siguientes         #
-#----------------------------#
-#Cargamos el directorio con toda la serie hasta la fecha
-
-#creamos directorio actualizado, y contrastamos
-proy_listB_updated <- construir_dir_serieB(f1 = f1, proy_listB = proy_listB)
-
-proy_listB_pdte <- setdiff(x = proy_listB_updated, y = proy_listB)
-
-#guardamos pendientes
-save(proy_listB_pdte, file="abl.rd")
-#actualizamos directorio completo
-rm(proy_listB)
-proy_listB <- proy_listB_updated
-save(proy_listB, file = "dir-serieB.rd")
-rm(proy_listB_updated)
-
-#######################################################################
-# Paso 2) Escrapeo secURL (='directorio' de cada boletin de la Serie A)
-#######################################################################
-
-### Bucle FOR para descargar todos los boletines para as Proposiciones de ley dadas
-
-procesados <- list()
-#-------------------------------#
-#     Primera (y única) vez     #
-#-------------------------------#
-length(proy_listB) #222 proposiciones en total
-for(i in 1:length(proy_listB)){#i=90 para descargar uno de ellos; for(i in 1:length(proy_listB)) para descargar todos
-  secURL <- proy_listB[[i]]$url
-  #   browseURL(secURL) #para comprobar
-  #escrapeamos
-  doc  <- htmlTreeParse(getURL(secURL), encoding="UTF-8", useInternalNodes=TRUE)
-  f2 <- getNodeSet(doc, '//*[@class="resultados_encontrados"]')
-  
-  ## almacenar todos los boletines del Proyecto de Ley en cuestión
-  #va guardando ficheros locales, si no se desea guardar fichero local ponemos guardarlocal=FALSE.
-  #         length(f2) #19 documentos
-  
-  #llamamos a la función propia construir_dir_bolA
-  #inicializamos la lista
-  bol_listB <- list()
-  #NOTA. Si guardarlocal = TRUE genera un fichero local que después se procesará.
-  bol_listB <- construir_dir_bolB(f2 = f2, guardarlocal = TRUE, bol_list = bol_listB)
-  #guardamos bol_listA para mantener un recuento
-  if(length(bol_listB)>0 & length(bol_listB[[1]]$codigo)>0){
-    e <- str_extract(string = bol_listB[[1]]$codigo, pattern = "B-.*-")
-    filename <- paste0(GENERATED_BASE_DIR, "dir-",substr(e, start=0,stop=nchar(e)-1),".rd")
-    if(!file.exists(filename)){ save(bol_listB, file=filename) }
-  }
-  
-}
-
-#----------------------------#
-#         Siguientes         #
-#----------------------------#
-# Cargar la lista de boletines pendientes
-load("abl.rd") # se carga la lista proy_listB_pdte
-length(proy_listB_pdte) #pendientes de descarga
-for(i in 1:length(proy_listB_pdte)){#i=90 para descargar uno de ellos; for(i in 1:length(proy_listB)) para descargar todos
-  secURL <- proy_listB_pdte[[i]]$url
-  #   browseURL(secURL) #para comprobar
-  #escrapeamos
-  doc  <- htmlTreeParse(getURL(secURL), encoding="UTF-8", useInternalNodes=TRUE)
-  f2 <- getNodeSet(doc, '//*[@class="resultados_encontrados"]')
-  
-  ## almacenar todos los boletines del Proyecto de Ley en cuestión
-  #va guardando ficheros locales, si no se desea guardar fichero local ponemos guardarlocal=FALSE.
-  #         length(f2) #19 documentos
-  
-  #llamamos a la función propia construir_dir_bolA
-  #inicializamos la lista
-  bol_listB <- list()
-  #NOTA. Si guardarlocal = TRUE genera un fichero local que después se procesará.
-  bol_listB <- construir_dir_bolB(f2 = f2, guardarlocal = TRUE, bol_list = bol_listB)
-  #guardamos bol_listA para mantener un recuento
-  if(length(bol_listB)>0 & length(bol_listB[[1]]$codigo)>0){
-    e <- str_extract(string = bol_listB[[1]]$codigo, pattern = "B-.*-")
-    filename <- paste0(GENERATED_BASE_DIR, "dir-",substr(e, start=0,stop=nchar(e)-1),".rd")
-    if(!file.exists(filename)){ save(bol_listB, file=filename) }
-  }
-}
-
 
 ### ACLARACIONES.
 ### Por cada Proposición de Ley (B-X) se crea una lista con campos:
