@@ -39,15 +39,14 @@ load("diputados-mongo.rd")
 
 
 #+++++++++++++++++++++++++++++++#
-#  Funciones propias - Serie A  #
+#  Funciones propias - Serie B  #
 #+++++++++++++++++++++++++++++++#
 
-## Procesamiento serie A, todos los trámites excepto enmiendas
+## Procesamiento serie B, todos los trámites excepto enmiendas
 ## argumentos: lines que se carga con load(fichero .rd que contiene boletin)
-##             codigo: A-X-X que identifica el boletin
 ## devuelve: lista tmp() con los campos procesados:
-# [1] "bol"     "ref"     "tipo"    "tramite" "titulo"  "content"     "fecha"   "contentpre" 
-proc_serieA <- function(lines, codigo){
+# [1] "bol"     "ref"     "tipo"    "tramite" "titulo"  "cnt"     "fecha"   "cntpre" 
+proc_serieB <- function(lines, codigo){
         #limpiar lines
         lines <- lines[lines!=""]
         lp  <- grep("^Página", lines)
@@ -104,11 +103,54 @@ proc_serieA <- function(lines, codigo){
         ndx <- str_replace_all(ndx, "^[0-9]{3}\\/[0-9]{5,6}", "")
         ndx <- str_trim(ndx)
         
+        #Afinar trámite.
+        #a veces la primera linea es 'Proposición de Ley' pero en realidad hay más matices
+        if(tmp$tramite %in% c("proposición de ley", "proposicion de ley")){
+          tmp$tramite <- extraer.tramiteB(ndx, tramitesBamp)
+        }
+        tmp$tramite <- unique(tmp$tramite)
+        
         #titulo
         tmp$titulo <- ndx[1]
         tmp$titulo <- str_replace_all(tmp$titulo, " +", " ") ## Quito espacios duplicados
         tmp$titulo <- str_trim(tmp$titulo) ## Quito espacios en los extremos
         
+        #Campo fecha: se saca del indice
+        detfecha <- str_detect(ndx, "([0-9]+) de ([a-z]+) de ([0-9]+)")
+        if (any(detfecha)) {
+          linesfecha <- ndx[detfecha]
+          tmp$fecha <- try(extraer.fecha(linesfecha[length(linesfecha)]))
+          if (any(class(tmp$fecha) == "try-error")) tmp$fecha <- NULL
+        }
+        
+        #Si es de enmiendas llamamos a la funcion proc_serieB_enmiendas y devolvemos resultado.
+        #ej. B-157-5
+        if(tmp$tramite == "enmiendas"){
+          tmp <- proc_serieB_enmiendas(tmp, lines)
+          return(tmp)
+          break()
+        }
+        
+        #NOTA. Específico serie B.
+        #Autor de la Proposición de ley: grupo parlamentario (uno o varios).
+        #Solamente para tramite = Proposición de ley o Iniciativa
+        # alimentamos el campo "autor" con el nombre abreviado de un grupo
+        if(tmp$tramite %in% (c(tramitesB[1],tramitesB[2]))){
+          if(any(s <- str_detect(string = ndx, pattern = ignore.case("^Autor:")))){
+            lingrupo <- ndx[s]
+            ## valor por defecto (por si no encuentra Grupos)
+            tmp$autor <- "" 
+            ## Busco grupos parlamentarios en lingrupo
+            if (length(lingrupo)>0) {
+              gpdet <- str_detect(string = lingrupo[1], pattern = as.character(gparlam$gparlams))
+              if (any(gpdet)) {
+                ##cat("\n", pres[i], "\n *", paste(diputados[dipdet, "apnom"], collapse=";"), "\n")
+                tmp$autor <- unique(gparlam[gpdet, "gparlamab"])
+              } 
+            }
+          }
+        }
+          
         #lineas del contenido: seguido de indice
         # excepto si hay alguna linea que comienza en 'Informe'; entonces vamos hasta allí
         if(any(e <- str_detect(string = lines, pattern = ignore.case('^Informe')))){
@@ -123,13 +165,8 @@ proc_serieA <- function(lines, codigo){
         tmp$content <- tmp$content[tmp$content != ""]
         tmp$content <- str_replace_all(tmp$content, '\\"', "")
         
-        # Campo fecha: se saca del indice
-        detfecha <- str_detect(ndx, "([0-9]+) de ([a-z]+) de ([0-9]+)")
-        if (any(detfecha)) {
-                linesfecha <- ndx[detfecha]
-                tmp$fecha <- try(extraer.fecha(linesfecha[length(linesfecha)]))
-                if (any(class(tmp$fecha) == "try-error")) tmp$fecha <- NULL
-        }
+        ##++++++nota. antes fecha estaba aqui. si OK eliminar esta linea.+++++###
+
         # contentpre
         ## contenido entre indice y el Informe, si lo hay
         tmp$contentpre = ""
@@ -145,88 +182,35 @@ proc_serieA <- function(lines, codigo){
         return(tmp)
 }
 
-## Procesamiento serie A, trámite excepto enmiendas
+## Procesamiento serie B, trámite enmiendas. VER SI ES NECESARIO.
 ## argumentos: lines que se carga con load(fichero .rd que contiene boletin)
-##             codigo: A-X-X que identifica el boletin
 ## devuelve: lista tmp() con los campos procesados:
-# [1] "bol"     "ref"     "tipo"    "tramite" "titulo"  "cnt"     "fecha"   "contentpre" 
-proc_serieA_enmiendas <- function(lines, codigo){
+# [1] "bol"     "ref"     "tipo"    "tramite" "titulo"  "cnt"     "fecha"   "cntpre" 
+proc_serieB_enmiendas <- function(tmp, lines){
         ##### Procesamiento trámite 'Enmiendas'
-        lines <- lines[lines!=""]
-        lp  <- grep("^Página", lines)
-        ##lpp <- grep("^\\(Página", lines)
-        if(length(lp)>1){ lines <- lines[-c(lp)] }
-        lines <- cleanBN(lines)
-        names(lines) <- NULL
+        #Extraemos las enmiendas del texto tmp$content y generamos una lista de listas, lcont.
         
-        ## T/F si la línea empieza por una referencia
-        iref <- str_detect(lines, "^[0-9]{3}\\/[0-9]{5,6}")
-        nref <- c(1:length(lines))[iref]
-        ## La  referencia
-        ref <- str_extract(lines[iref][1], "^[0-9]{3}\\/[0-9]{5,6}")
-        ## Busco las líneas donde aparece, la segunda será el inicio del contenido
-        reflin <- grep(paste0("^", ref), lines)
+        ## Vamos añadiendo a una lista el contenido de cada enmienda
+        # y ademas los campos comunes de tmp: bol, fecha (para todas la misma), titulo...
+        lcont <- list() #para almacenar las enmiendas, todas con la misma referencia y distinto numero
         
+        #Detectar y enumerar enmiendas.
         ## T/F si la linea empieza por 'Enmienda'
         ienmi <- str_detect(lines, "^ENMIENDA N[ÚU]M")
         nenmi <- c(1:length(lines))[ienmi]
         
-        # delimitar indice
-        ndxini <- reflin[1]
-        ndxend <- length(lines) #hasta el final, si no hay enmiendas
-        if(any(ienmi)) { ndxend <- nenmi[1]-1 } #ultima antes de comenzar primera enmienda
-        # extraer lineas del indice
-        ndx <- lines[ndxini:ndxend] 
-        ndx <- str_replace_all(ndx, "^[0-9]{3}\\/[0-9]{5,6}", "")
-        ndx <- str_trim(ndx)
-        
-        ## Campos comunes para todas las enmiendas
-        tmp <- list()
-        ## A1-1 o algo asi...
-        #codigo='A-1-1'
-        ###para emnmienda=1
-        tmp$bol <- codigo
-        #Algunos casos en que no hay una referencia todo el texto junto. Ej A-15-5
-        #y salir del bucle
-        if(!any(iref)){ 
-          tmp$tramite <- tolower(lines[1])
-          tmp$content <- lines[2:length(lines)]  
-          return(tmp)
-          break() 
-        }
-        tmp$ref  <- str_extract(lines[reflin[1]], "^[0-9]{3}\\/[0-9]{5,6}")
-        tmp$tipo <- str_split(tmp$ref, "/")[[1]][1]
-        #tramite
-        tmp$tramite <- tolower(lines[1])
-        #titulo
-        tmp$titulo <- ndx[1]
-        tmp$titulo <- str_replace_all(tmp$titulo, " +", " ") ## Quito espacios duplicados
-        tmp$titulo <- str_trim(tmp$titulo) ## Quito espacios en los extremos
-        #Extraer la PRIMERA FECHA QUE APARECE ---ACORDADO CON ALBA, 19/02/2015
-        ## Campo fecha
-        # se busca en el indice, en principio igual para todas las enmiendas
-        detfecha <- str_detect(ndx, "([0-9]+) de ([a-z]+) de ([0-9]+)")
-        if (any(detfecha)) {
-                linesfecha <- ndx[detfecha][1] ## la primera
-                tmp$fecha <- try(extraer.fecha(linesfecha[length(linesfecha)]))
-                if (any(class(tmp$fecha) == "try-error")) tmp$fecha <- NULL
-        }
-        
-        ## Vamos añadiendo a una lista el contenido de cada enmienda
-        # y ademas los campos comunes: bol, fecha (para todas la misma), titulo...
-        lcont <- list() #para almacenar las enmiendas, todas con la misma referencia y distinto numero
-        
         #si no hay enmiendas se envia un unico documento
         if(!length(nenmi)>0){ #enviar lo basico: codigo, tramite, content, referencia
-          lcont <- tmp
-          lcont$bol <- codigo
-          return(list(lcont))
-          break()
+                lcont <- tmp
+                lcont$bol <- codigo
+                return(list(lcont))
+                break()
         }
+        
         #lo siguiente iria en un bucle
         count <- 0
-        for(i in 1:length(nenmi)){#i=46
-#                 browser()
+        for(i in 1:length(nenmi)){#i=34
+                #                 browser()
                 count <- count + 1
                 #Campos comunes. 
                 #Añadimos los de cada enmienda en tmp1.
@@ -238,10 +222,10 @@ proc_serieA_enmiendas <- function(lines, codigo){
                 #considerar el caso de ser la ultima
                 if(i == length(nenmi)){
                         if(any(s <- str_detect( lines, "^ÍNDICE DE ENMIENDAS AL ARTICULADO"))){
-                          ifin <- (1:length(lines))[s]
-                          finenmi <- ifin-1
+                                ifin <- (1:length(lines))[s]
+                                finenmi <- ifin-1
                         } else {
-                          finenmi <- length(lines) #vamos al final
+                                finenmi <- length(lines) #vamos al final
                         }
                 }
                 #número de enmienda
@@ -290,27 +274,36 @@ proc_serieA_enmiendas <- function(lines, codigo){
 # Diccionarios - Listas propias #
 #+++++++++++++++++++++++++++++++#
 
-#tipos de serie A
-# tiposA <- c("(121) Proyecto de Ley.$",
-#             "(121) Proyecto de Ley$",
-#             "Ampliación del plazo de enmiendas.$",
-#             "Ampliación del plazo de enmiendas$",
-#             "Correcci[óo]n de error.$",
-#             "Correcci[óo]n de error$",
-#             "Correcci[óo]n de errores.$",
-#             "Correcci[óo]n de errores$",
-#             "ENMIENDAS E ÍNDICE DE ENMIENDAS AL ARTICULADO$",
-#### NOTA. Comprobar con Alba.
-tramitesA <- c("Proyecto de Ley",
-            "Ampliación del plazo de enmiendas",
-            "Enmiendas e índice de enmiendas al articulado",
-            "Informe de la Ponencia",
-            "Dictamen de la Comisión",
-            "Escritos de mantenimiento de enmiendas para su defensa ante el Pleno",
-            "Aprobación definitiva por el Congreso",
-            "Aprobación por el Pleno"
+#Trámites para la serie B.
+#Lista reducida para la serieB. el resto de casos son 'otro'.
+tramitesB <- c("Proposición de Ley",
+               "Iniciativa",#CONSULTAR ALBA: EQUIVALENTE A PL?
+               "Rechazada",
+               "Retirada"
 )
-
+#Lista ampliada
+tramitesBamp <- c("Proposición de Ley",
+               "Iniciativa",#CONSULTAR ALBA: EQUIVALENTE A PL?
+               "Rechazada",
+               "Retirada",
+               "Caducidad de la iniciativa", #--->"Caducidad"
+               "Modificación del título", #--->'Modificacion'B-36
+               "Toma en consideración", #B-39, 
+               "Proposición de reforma del Reglamento del Congreso", #B-39
+               "Proposición de reforma constitucional", #B-55
+               "Texto de la Proposición", #B58
+               "Acuerdo subsiguiente a la toma en consideración",#B-70
+               "Enmiendas e índice de enmiendas al articulado",#B-70
+               "Informe de la Ponencia", #B-70
+               "Dictamen de la Comisión", #B-112
+               "Aprobación por la Comisión con competencia legislativa plena",
+               "Votación favorable en debate de totalidad",#B-112
+               "Acuerdo subsiguiente a la toma en consideración", #B-112
+               "Aprobación por la Comisión con competencia legislativa plena", #B-119
+               "Tramitación en lectura única", #B-157
+               "Enmiendas", #B-157
+               "Aprobación por el Pleno" #B-157
+)
 
 ##[INES 22-12-2014] Grupos parlamentarios, nombres alternativos
 gparlam <- data.frame( gparlam = c("Grupo Parlamentario Popular en el Congreso",
@@ -445,6 +438,17 @@ extraer.comision <- function(x){#x=tmp$cntpre[e]
         paste0("Comisión ", s[(s1+1)])
 }
 
+extraer.tramiteB <- function(ndx, tramitesBamp){
+        if(!(length(ndx)>0)){ stop('texto erroneo para busqueda') }
+        tramite <- ""
+        for(s in tramitesBamp){
+          if(any(det <- str_detect(ndx, s))){ 
+            lintramite <- ndx[det] 
+            tramite <- str_extract(string = lintramite, s)
+          }
+        }
+        return(tramite)
+}
 
 ### Limpieza de blancos en cadenas
 cleanBN <- function(x) { return( gsub(" +", " ", gsub("[[:cntrl:]]", "", x)) )}

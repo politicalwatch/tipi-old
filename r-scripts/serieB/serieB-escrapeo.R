@@ -4,14 +4,14 @@
 # Entrada: 
 ## URL fija congreso + funciones propias
 ## Salida: 
-# ----- ficheros locales que contienen directorios: dir general dir-serieA.rd + un dir por proyecto de ley dir-A-X.rd
-# ----- ficheros locales (opcional) con el texto a procesar para cada boletin (A-X-X.rd) en cada proyecto de ley (A-X)
+# ----- ficheros locales que contienen directorios: dir general dir-serieB.rd + un dir por proyecto de ley dir-B-X.rd
+# ----- ficheros locales (opcional) con el texto a procesar para cada boletin (B-X-X.rd) en cada proyecto de ley (B-X)
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
 
 
-#++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
-#      Escrapeo Boletines Serie A: Proyectos de Ley      #
-#++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
+#      Escrapeo Boletines Serie B: Proposiciones de Ley      #
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
 
 #paquetes
 library("XML")
@@ -26,16 +26,16 @@ library("rmongodb")
 source("funciones-escrapeo.R")
 source("funciones-procesamiento.R")
 
-###################################################
-#   URL fija Congreso - Serie A: Proyectos de ley  #
-###################################################
+########################################################
+#   URL fija Congreso - Serie B: Proposiciones de ley  #
+########################################################
 
 # firstURL: es fija
-firstURL <- "http://www.congreso.es/portal/page/portal/Congreso/Congreso/Publicaciones/IndPub?_piref73_1340068_73_1340059_1340059.next_page=/wc/indicePublicaciones&letra=a"
+firstURL <- "http://www.congreso.es/portal/page/portal/Congreso/Congreso/Publicaciones/IndPub?_piref73_1340068_73_1340059_1340059.next_page=/wc/indicePublicaciones&letra=b"
 # browseURL(firstURL)
 
 ###################################################
-# Paso 1) Escrapeo firstURL (='directorio' Serie A)
+# Paso 1) Escrapeo firstURL (='directorio' Serie B)
 ###################################################
 
 #-------------------------------#
@@ -44,40 +44,40 @@ firstURL <- "http://www.congreso.es/portal/page/portal/Congreso/Congreso/Publica
 ## Crear un directorio de proyectos*URLS
 doc  <- htmlTreeParse(getURL(firstURL), encoding="UTF-8", useInternalNodes=TRUE)
 f1 <- getNodeSet(doc, '//*[@class="resultados_encontrados"]')
-length(f1) #136 documentos)
+length(f1) #222 documentos)
 
-#llamamos a la función propia construir_dir_serieA
-proy_listA <- construir_dir_serieA(f1 = f1, proy_listA = proy_listA)
+#llamamos a la función propia construir_dir_serieB
+proy_listB <- construir_dir_serieB(f1 = f1, proy_listB = proy_listB)
 #NOTA. hasta que mejoremos el escrapeo esto es inestable, algunas URLS no son correctas.
 
 #Guardar el directorio
-save(proy_listA, file = "dir-serieA.rd")
+save(proy_listB, file = "dir-serieB.rd")
 
-proy_listA[[1]] #ej. primer proyecto de ley de la lista
+proy_listB[[1]] #ej. primer proyecto de ley de la lista
 
 #----------------------------#
 #         Siguientes         #
 #----------------------------#
 #Cargamos el directorio con toda la serie hasta la fecha
-load("dir-serieA.rd")
+load("dir-serieB.rd")
 
 #escrapeamos para ver los nuevos
 doc  <- htmlTreeParse(getURL(firstURL), encoding="UTF-8", useInternalNodes=TRUE)
 f1 <- getNodeSet(doc, '//*[@class="resultados_encontrados"]')
-length(f1) #136 documentos)
+length(f1) #222 documentos)
 
 #creamos directorio actualizado, y contrastamos
-proy_listA_updated <- construir_dir_serieA(f1 = f1, proy_listA = proy_listA)
+proy_listB_updated <- construir_dir_serieB(f1 = f1, proy_listB = proy_listB)
 
-proy_listA_pdte <- setdiff(x = proy_listA_updated, y = proy_listA)
+proy_listB_pdte <- setdiff(x = proy_listB_updated, y = proy_listB)
 
 #guardamos pendientes
-save(proy_listA_pdte, file="abl.rd")
+save(proy_listB_pdte, file="abl.rd")
 #actualizamos directorio completo
-rm(proy_listA)
-proy_listA <- proy_listA_updated
-save(proy_listA, file = "dir-serieA.rd")
-rm(proy_listA_updated)
+rm(proy_listB)
+proy_listB <- proy_listB_updated
+save(proy_listB, file = "dir-serieB.rd")
+rm(proy_listB_updated)
 
 #######################################################################
 # Paso 2) Escrapeo secURL (='directorio' de cada boletin de la Serie A)
@@ -88,9 +88,9 @@ rm(proy_listA_updated)
 #-------------------------------#
 #     Primera (y única) vez     #
 #-------------------------------#
-length(proy_listA) #136 proyectos de ley en total
-for(i in 1:length(proy_listA)){#i=90 para descargar uno de ellos; for(i in 1:length(proy_listA)) para descargar todos
-        secURL <- proy_listA[[i]]$url
+length(proy_listB) #222 proposiciones en total
+for(i in 1:length(proy_listB)){#i=90 para descargar uno de ellos; for(i in 1:length(proy_listB)) para descargar todos
+        secURL <- proy_listB[[i]]$url
         #   browseURL(secURL) #para comprobar
         #escrapeamos
         doc  <- htmlTreeParse(getURL(secURL), encoding="UTF-8", useInternalNodes=TRUE)
@@ -102,14 +102,14 @@ for(i in 1:length(proy_listA)){#i=90 para descargar uno de ellos; for(i in 1:len
         
         #llamamos a la función propia construir_dir_bolA
         #inicializamos la lista
-        bol_listA <- list()
+        bol_listB <- list()
         #NOTA. Si guardarlocal = TRUE genera un fichero local que después se procesará.
-        bol_listA <- construir_dir_bolA(f2 = f2, guardarlocal = TRUE, bol_list = bol_listA)
+        bol_listB <- construir_dir_bolB(f2 = f2, guardarlocal = TRUE, bol_list = bol_listB)
         #guardamos bol_listA para mantener un recuento
-        if(length(bol_listA)>0 & length(bol_listA[[1]]$codigo)>0){
-                e <- str_extract(string = bol_listA[[1]]$codigo, pattern = "A-.*-")
+        if(length(bol_listB)>0 & length(bol_listB[[1]]$codigo)>0){
+                e <- str_extract(string = bol_listB[[1]]$codigo, pattern = "B-.*-")
                 filename <- paste0("dir-",substr(e, start=0,stop=nchar(e)-1),".rd")
-                if(!file.exists(filename)){ save(bol_listA, file=filename) }
+                if(!file.exists(filename)){ save(bol_listB, file=filename) }
         }
 }
 
@@ -117,10 +117,10 @@ for(i in 1:length(proy_listA)){#i=90 para descargar uno de ellos; for(i in 1:len
 #         Siguientes         #
 #----------------------------#
 # Cargar la lista de boletines pendientes
-load("abl.rd") # se carga la lista proy_listA_pdte
-length(proy_listA_pdte) #pendientes de descarga
-for(i in 1:length(proy_listA_pdte)){#i=90 para descargar uno de ellos; for(i in 1:length(proy_listA)) para descargar todos
-        secURL <- proy_listA_pdte[[i]]$url
+load("abl.rd") # se carga la lista proy_listB_pdte
+length(proy_listB_pdte) #pendientes de descarga
+for(i in 1:length(proy_listB_pdte)){#i=90 para descargar uno de ellos; for(i in 1:length(proy_listB)) para descargar todos
+        secURL <- proy_listB_pdte[[i]]$url
         #   browseURL(secURL) #para comprobar
         #escrapeamos
         doc  <- htmlTreeParse(getURL(secURL), encoding="UTF-8", useInternalNodes=TRUE)
@@ -132,32 +132,32 @@ for(i in 1:length(proy_listA_pdte)){#i=90 para descargar uno de ellos; for(i in 
         
         #llamamos a la función propia construir_dir_bolA
         #inicializamos la lista
-        bol_listA <- list()
+        bol_listB <- list()
         #NOTA. Si guardarlocal = TRUE genera un fichero local que después se procesará.
-        bol_listA <- construir_dir_bolA(f2 = f2, guardarlocal = TRUE, bol_list = bol_listA)
+        bol_listB <- construir_dir_bolB(f2 = f2, guardarlocal = TRUE, bol_list = bol_listB)
         #guardamos bol_listA para mantener un recuento
-        if(length(bol_listA)>0 & length(bol_listA[[1]]$codigo)>0){
-                e <- str_extract(string = bol_listA[[1]]$codigo, pattern = "A-.*-")
+        if(length(bol_listB)>0 & length(bol_listB[[1]]$codigo)>0){
+                e <- str_extract(string = bol_listB[[1]]$codigo, pattern = "B-.*-")
                 filename <- paste0("dir-",substr(e, start=0,stop=nchar(e)-1),".rd")
-                if(!file.exists(filename)){ save(bol_listA, file=filename) }
+                if(!file.exists(filename)){ save(bol_listB, file=filename) }
         }
 }
 
 
 ### ACLARACIONES.
-### Por cada Proyecto de Ley (A-X) se crea una lista con campos:
+### Por cada Proposición de Ley (B-X) se crea una lista con campos:
 # x: titulo
-# codigo: A-X-X 
+# codigo: B-X-X 
 # fecha: dd/mm/aaaa
-# url: que da acceso a un tramite del Proyecto de Ley en cuestión
+# url: que da acceso a un tramite de la Proposición de Ley en cuestión
 # proc: Indicador procesado 0/1 (inicialmente 0)
 # filename: nombre del fichero local, si se almacena.
 
 #### ejemplo.
-# ..$ x       : chr "BOCG. Congreso de los Diputados, serie A, núm. 1-1, de 13/01/2012 Proyecto de Ley Ver boletín completo: texto íntegro    PDF"
-# ..$ codigo  : chr "A-1-1"
-# ..$ tramite : chr "Proyecto de Ley"
+# ..$ x       : chr "BOCG. Congreso de los Diputados, serie B, núm. 1-1, ..."
+# ..$ codigo  : chr "B-1-1"
+# ..$ tramite : chr "proposición de Ley"
 # ..$ fecha   : chr "13/01/2012"
 # ..$ url     : chr "http://www.congreso.es/portal/page/portal/Congreso/PopUpCGI?CMD=VERLST&CONF=BRSPUB.cnf&BASE=PU10&DOCS=1-1&FMT=PUWTXDTS.fmt&OPDE"| __truncated__
 # ..$ proc    : num 0
-# ..$ filename: chr "BOCG-A-1-1.rd"
+# ..$ filename: chr "BOCG-B-1-1.rd"

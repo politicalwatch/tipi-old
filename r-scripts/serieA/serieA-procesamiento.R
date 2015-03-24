@@ -9,6 +9,7 @@
 # Salida: ninguna; se alimenta bbdd mongo
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
 
+source("../mongodb-conn.R")
 source("funciones-procesamiento.R")
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
@@ -21,8 +22,9 @@ i=1
 names(proy_listA[[i]])
 
 # proy_listA[[i]]$codigo
-for(i in 1:length(proy_listA)){#i=1
+for(i in 1:4){#i=1 #for(i in 1:length(proy_listA))
         filename <- paste0("dir-", proy_listA[[i]]$codigo, ".rd")
+        if(!file.exists(filename)){ next() }
         load(filename) # se carga bol_listA
 #         length(bol_listA) # hay 15 documentos asociados
         # names(bol_listA[[i]]) #campos para cada tramite del Proyecto
@@ -34,28 +36,44 @@ for(i in 1:length(proy_listA)){#i=1
                 #Procesamiento según tipo de trámite
                 if(bol_listA[[d]]$tramite == tramitesA[3]){
                         # procesar trámite "Enmiendas e índice de enmiendas al articulado"
-                        resul <- proc_serieA_enmiendas(lines)
+                        lcont <- try(proc_serieA_enmiendas(lines, codigo = bol_listA[[d]]$codigo))
+#                         lcont <- proc_serieA_enmiendas(lines, codigo=bol_listA[[d]]$codigo)
+                        #caso de error al procesar: imprimir mensaje y enviar vacio.
+                        if(class(lcont) == "try-error"){
+                          lcont <- vector("list")
+                          lcont$bol <- bol_listA[[d]]$codigo
+                          print(paste("falla el boletin:", bol_listA[[d]]$codigo))
+                          next()
+                        }
                         #boletin procesado, enviar a MongoDB
-                        #TODO. Adaptar al caso de lista de listas
+                        if(class(lcont) != "try-error" & length(lcont)>0){
+                                mongo.remove(mongo, mongo_collection("serieA"), criteria=list(bol=bol_listA[[d]]$codigo))
+                                lcontb <- lapply(lcont, function(x) {
+                                        return(mongo.bson.from.list(x))
+                                })
+                                mongo.insert.batch(mongo, mongo_collection("serieA"), lcontb)
+                        }
                 } else {
-                        resul <- proc_serieA(lines)
+#                         lcont <- proc_serieA(lines, codigo=bol_listA[[d]]$codigo)
+                        lcont <- try(proc_serieA(lines, codigo = bol_listA[[d]]$codigo))
+                        #caso de error al procesar: imprimir mensaje y enviar vacio.
+                        if(class(lcont) == "try-error"){
+                          lcont <- vector("list")
+                          lcont$bol <- bol_listA[[d]]$codigo
+                          print(paste("falla el boletin:", bol_listA[[d]]$codigo))
+                          next()
+                        }
                         #boletin procesado, enviar a MongoDB
-#                         if (length(resul) > 0) {
-#                                 if (!mongo.is.connected(mg)) mg <- mongo.create(host="grserrano.net")
-#                                 mongo.remove(mg, "pdfs.depuracionesInes", criteria=list(bol=bol))
-#                                 lcontb <- lapply(lcont, function(x) {
-#                                         x$ndx <- NULL
-#                                         x$cnt <- NULL
-#                                         return(mongo.bson.from.list(x))
-#                                 })
-#                                 cat(" ", length(lcontb), "\n")
-#                                 mongo.insert.batch(mg, "pdfs.depuracionesInes", lcontb)
-#                         }
+                        if (class(lcont) != "try-error" & length(lcont) > 0) {
+                                mongo.remove(mongo, mongo_collection("serieA"), criteria=list(bol=bol_listA[[d]]$codigo))
+                                lcontb <- lapply(list(lcont), function(x) {
+                                        return(mongo.bson.from.list(lcont))
+                                })
+                                cat(" ", length(lcontb), "\n")
+                                mongo.insert.batch(mongo, mongo_collection("serieA"), lcontb)
+                        }
                 }
-                #Boletin procesado, enviar a mongo
-
         }
 }
-
 
 
