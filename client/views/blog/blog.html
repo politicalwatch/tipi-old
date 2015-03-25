@@ -2,29 +2,18 @@
     {{> header}}
     <div class="containerglob">
         <div class="row">
-            <div class="col-md-3 old nube grey">
-                <h1>{{blogname}}</h1>
-                <hr>
-                <h3>{{blogdescription}}</h3>
+            <div class="col-md-12 old darkpatt grey blog">
+                <h1 class="left">{{blogname}}</h1>
+                <!-- <hr>
+                <h3>{{blogdescription}}</h3> -->
             </div>
-            <div class="col-md-7 col-md-offset-1 old blog">
-                <h1>Artículos</h1>
-                <hr>
+        </div>
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 old blog">
                 <div class="row">
                     {{> yield}}
                 </div>
             </div>
-            <!-- <div class="col-md-4 old blog">
-                <h1>Datos</h1>
-                <hr>
-                <div class="row">
-                    <h2>Datos públicos</h2>
-                    <small>Fecha</small>
-                    <p class="serif">
-                        En este espacio encontrarás todas las novedades, artículos, talleres y el resto de actividades que desde Ciudadanía Activa llevamos a cabo desde nuestro proyecto.
-                    </p>
-                </div>
-            </div> -->
         </div>
     </div>
     {{> footer}}
@@ -34,14 +23,18 @@
     {{> header}}
     <div class="containerglob">
         <div class="row">
-            <div class="col-md-3 old nube grey">
-                <h1>{{blogname}}</h1>
-                <hr>
-                <h3>{{blogdescription}}</h3>
+            <div class="col-md-12 old darkpatt grey blog">
+                <h1 class="left">{{blogname}}</h1>
+                <!-- <hr>
+                <h3>{{blogdescription}}</h3> -->
             </div>
-            <div class="col-md-7 col-md-offset-1 old blog">
+        </div>
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 blog">
                 <div class="row">
-                    {{> yield}}
+                    <div class="col-md-12">
+                        {{> yield}}
+                    </div>
                 </div>
             </div>
         </div>
