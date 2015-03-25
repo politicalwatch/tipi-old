@@ -182,7 +182,10 @@
 	.navbar-custom.top-nav-collapse {
 		border-bottom: 1px solid rgba(255,255,255,.3);
 	}
+}
 
+@media(max-width:992px) {
+	.containerglob > .row:first-of-type { padding-top:0px; }
 }
 
 	/*mis estilos-------------------------------------------------------------*/
