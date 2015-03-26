@@ -52,9 +52,9 @@ length(f1) #136 documentos)
 
 all_serieA <- construir_dir_serieA(f1=f1)
 
-for(i in 1:length(all_serieA)){#i=90 para descargar uno de ellos; for(i in 1:length(proy_listA)) para descargar todos
+for(i in 1:length(all_serieA)){#i=10 para descargar uno de ellos; for(i in 1:length(proy_listA)) para descargar todos
 	secURL <- all_serieA[[i]]$url
-	if( !all_serieA[[i]] %in% proy_listA )
+	if( !check_in_sublists_index(list2d=proy_listA, all_serieA[[i]]$codigo) )
 	{
 
 		#   browseURL(secURL) #para comprobar
