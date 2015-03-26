@@ -49,12 +49,19 @@
                 <h1>Blog y Periodismo de Datos</h1>
                 <hr>
                 <p>Dedicamos un espacio a la reflexión, análisis y detalle de nuestras actividades.</p>
-            </div>    
+            </div>
             <div class="col-md-6 right oswald">
                 <h1><mark>Lo más reciente</mark></h1>
-                <h3>Talleres <small>Madrid, martes 3-11-2014</small></h3>
-                {{lastEntry}}
-                <h3>Artículos <small><a href="#">{{#with lastEntry }} {{title}} {{/with}}</a></small></h3>
+                <h3>Talleres</h3>
+                    <ul>
+                        <li><a href="#"><small>Madrid, martes 3-11-2014</small></a></li>
+                    </ul>
+                <h3>Artículos</h3>
+                    <ul class="unstyled">
+                        {{#each lastEntries}}
+                        <li><a href="#"><small></small>{{title}}</a></li>
+                        {{/each}}
+                    </ul>
                 <hr>
                 <br>
                 <h2 class="oswald">Investigación de</h2>

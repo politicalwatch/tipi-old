@@ -1,5 +1,5 @@
 Template.homepage.helpers({
-    lastEntry: function() {
-        return Meteor.subscribe('blogLastEntry');
+    lastEntries: function() {
+        return Blog.find({},{sort: {date: -1}, limit: 3});
     }
-})
+});
