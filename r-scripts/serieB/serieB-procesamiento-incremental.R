@@ -10,8 +10,6 @@
 # Salida: ninguna; se alimenta bbdd mongo
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
 
-	q <- mongo.bson.from.JSON(paste0('{ "bol":"123" }'))
-	a <- mongo.find(mongo, mongo_collection("serieA"), q)
 source("../common.R")
 source("../mongodb-conn.R")
 source("funciones-procesamiento.R")
