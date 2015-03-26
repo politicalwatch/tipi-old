@@ -1,7 +1,5 @@
 settings.json
 .DS_Store
-.meteor/.id
-.meteor/local/*
 *.sw*
 .RData
 .Rhistory
