@@ -77,7 +77,7 @@ for(i in 1:length(all_serieB)){#i=90 para descargar uno de ellos; for(i in 1:len
       filename <- paste0(GENERATED_BASE_DIR, "dir-",substr(e, start=0,stop=nchar(e)-1),".rd")
       if(!file.exists(filename)){ save(bol_listB, file=filename) }
     }
-    proy_listB <- c(proy_listB, all_serieB[[i]])
+    proy_listB <- c(proy_listB, list(all_serieB[[i]]))
     save(proy_listB, file=paste0(GENERATED_BASE_DIR, "dir-serieB.rd"))
   } else {
     cat("elemento procesado previamente!")
