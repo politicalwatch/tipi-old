@@ -24,6 +24,7 @@ names(proy_listA[[i]])
 
 # proy_listA[[i]]$codigo
 for(i in 1:length(proy_listA))
+{
         filename <- paste0(GENERATED_BASE_DIR, "dir-", proy_listA[[i]]$codigo, ".rd")
         if(!file.exists(filename)){ next() }
         load(filename) # se carga bol_listA
@@ -32,7 +33,7 @@ for(i in 1:length(proy_listA))
         # bol_listA[[i]]$tramite #trámite en cuestión
         
         for(d in 1:length(bol_listA)){#d=1
-                load(paste0(GENERATED_BASE_DIR, bol_listA[[d]]$filename)) # carga lines, que contiene el texto a procesar
+                load(paste0(bol_listA[[d]]$filename)) # carga lines, que contiene el texto a procesar
                 
                 #Procesamiento según tipo de trámite
                 if(bol_listA[[d]]$tramite == tramitesA[3]){
