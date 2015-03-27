@@ -35,10 +35,10 @@ for(i in 1:length(proy_listA))
 	for(d in 1:length(bol_listA)){#d=1
 		load(paste0(bol_listA[[d]]$filename)) # carga lines, que contiene el texto a procesar
 
-		q <- mongo.bson.from.JSON(paste0('{ "bol":"', bol_listA[[d]]$codigo, '" }'))
+		# q <- mongo.bson.from.JSON(paste0('{ "bol":"', bol_listA[[d]]$codigo, '" }'))
 		print(bol_listA[[d]])
-		a <- mongo.find(mongo, mongo_collection("serieA"), q)
-		if(!mongo.cursor.next(a))
+		# a <- mongo.find(mongo, mongo_collection("serieA"), q)
+		if(true) #!mongo.cursor.next(a))
 		{
 			#Procesamiento según tipo de trámite
 			if(bol_listA[[d]]$tramite == tramitesA[3]){

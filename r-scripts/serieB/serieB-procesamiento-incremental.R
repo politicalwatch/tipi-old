@@ -58,8 +58,6 @@ for(i in 1:length(proy_listB)){#i=1 #for(i in 1:length(proy_listB))
 			#caso de boletin 'normal' (i.e. sin enmiendas)
 			if ( class(lcont) != "try-error" & length(lcont[[1]]) == 1 ) {
 				print(bol_listB[[d]]$codigo)
-
-				mongo.remove(mongo, mongo_collection("serieB"), criteria=list(bol=bol_listB[[d]]$codigo))
 				lcontb <- lapply(list(lcont), function(x) {return(mongo.bson.from.list(lcont))})
 				cat(" ", length(lcontb), "\n")
 				mongo.insert.batch(mongo, mongo_collection("serieB"), lcontb)
@@ -67,7 +65,6 @@ for(i in 1:length(proy_listB)){#i=1 #for(i in 1:length(proy_listB))
 			#caso de boletin con enmiendas. Ej B-157-5.
 			#el primer elemento seria a su vez una lista (con mas de 1 elemento), luego length()>1
 			if ( class(lcont) != "try-error" & length(lcont[[1]]) > 1 ){
-				mongo.remove(mongo, mongo_collection("serieB"), criteria=list(bol=bol_listB[[d]]$codigo))
 				print(bol_listB[[d]]$codigo)
 				lcontb <- lapply(lcont, function(x) {return(mongo.bson.from.list(x))})
 				mongo.insert.batch(mg, mongo_collection("serieB"), lcontb)
