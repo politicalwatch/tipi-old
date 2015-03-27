@@ -54,7 +54,7 @@ all_serieB <- construir_dir_serieB(f1 = f1)
 
 for(i in 1:length(all_serieB)){#i=90 para descargar uno de ellos; for(i in 1:length(proy_listB)) para descargar todos
   secURL <- all_serieB[[i]]$url
-  if( !check_in_sublists_index(list2d=proy_listA, all_serieB[[i]]$codigo) )
+  if( !check_in_sublists_index(list2d=proy_listB, all_serieB[[i]]$codigo) )
   {
     #   browseURL(secURL) #para comprobar
     #escrapeamos
