@@ -35,13 +35,13 @@ for(i in 1:length(proy_listB)){#i=1 #for(i in 1:length(proy_listB))
 
 	for(d in 1:length(bol_listB)){#d=1
 
+		#q <- mongo.bson.from.JSON(paste0('{ "bol":"', bol_listB[[d]]$codigo, '", "numenmienda":"', '', '" }'))
 		q <- mongo.bson.from.JSON(paste0('{ "bol":"', bol_listB[[d]]$codigo, '" }'))
 		a <- mongo.find(mongo, mongo_collection("serieB"), q)
 		if(!mongo.cursor.next(a))
 		{
 			print("No estaba, añadiendo")
 			print(bol_listB[[d]]$codigo)
-			print("asd")
 			if(!file.exists(bol_listB[[d]]$filename)){ next() }
 			load(bol_listB[[d]]$filename) # carga lines, que contiene el texto a procesar
 
