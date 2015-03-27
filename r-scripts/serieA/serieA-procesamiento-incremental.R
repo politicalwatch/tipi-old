@@ -38,7 +38,7 @@ for(i in 1:length(proy_listA))
 		# q <- mongo.bson.from.JSON(paste0('{ "bol":"', bol_listA[[d]]$codigo, '" }'))
 		print(bol_listA[[d]])
 		# a <- mongo.find(mongo, mongo_collection("serieA"), q)
-		if(true) #!mongo.cursor.next(a))
+		if(TRUE) #!mongo.cursor.next(a))
 		{
 			#Procesamiento según tipo de trámite
 			if(bol_listA[[d]]$tramite == tramitesA[3]){
