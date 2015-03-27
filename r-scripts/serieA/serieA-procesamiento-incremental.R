@@ -43,7 +43,7 @@ for(i in 1:length(proy_listA))
 			#Procesamiento según tipo de trámite
 			if(bol_listA[[d]]$tramite == tramitesA[3]){
 				# procesar trámite "Enmiendas e índice de enmiendas al articulado"
-				lcont <- try(proc_serieA_enmiendas(lines, codigo = bol_listA[[d]]$codigo))
+				lcont <- try(proc_serieA_enmiendas(lines, codigo = bol_listA[[d]]$codigo, tramite = bol_listA[[d]]$tramite))
 				#                         lcont <- proc_serieA_enmiendas(lines, codigo=bol_listA[[d]]$codigo)
 				#caso de error al procesar: imprimir mensaje y enviar vacio.
 				if(class(lcont) == "try-error"){
@@ -60,7 +60,7 @@ for(i in 1:length(proy_listA))
 				}
 			} else {
 				#                         lcont <- proc_serieA(lines, codigo=bol_listA[[d]]$codigo)
-				lcont <- try(proc_serieA(lines, codigo = bol_listA[[d]]$codigo))
+				lcont <- try(proc_serieA(lines, codigo = bol_listA[[d]]$codigo, tramite = bol_listA[[d]]$tramite))
 				#caso de error al procesar: imprimir mensaje y enviar vacio.
 				if(class(lcont) == "try-error"){
 					lcont <- vector("list")
