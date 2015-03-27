@@ -35,11 +35,11 @@ for(i in 1:length(proy_listA))
 	for(d in 1:length(bol_listA)){#d=1
 		load(paste0(bol_listA[[d]]$filename)) # carga lines, que contiene el texto a procesar
 
-		# q <- mongo.bson.from.JSON(paste0('{ "bol":"', bol_listA[[d]]$codigo, '" }'))
-		print(bol_listA[[d]])
-		# a <- mongo.find(mongo, mongo_collection("serieA"), q)
-		if(TRUE) #!mongo.cursor.next(a))
+		q <- mongo.bson.from.JSON(paste0('{ "bol":"', bol_listA[[d]]$codigo, '" }'))
+		a <- mongo.find(mongo, mongo_collection("serieA"), q)
+		if(!mongo.cursor.next(a))
 		{
+			print("No presente en mongo, añadiendo.\n")
 			#Procesamiento según tipo de trámite
 			if(bol_listA[[d]]$tramite == tramitesA[3]){
 				# procesar trámite "Enmiendas e índice de enmiendas al articulado"
@@ -76,6 +76,10 @@ for(i in 1:length(proy_listA))
 					mongo.insert.batch(mongo, mongo_collection("serieA"), lcontb)
 				}
 			}
+		}
+		else
+		{
+			print("Ya presente en mongo!\n")
 		}
 	}
 }
