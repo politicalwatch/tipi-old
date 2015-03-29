@@ -47,8 +47,6 @@ for(i in 1:length(proy_listB)){#i=1 #for(i in 1:length(proy_listB))
 
 			#Procesamiento idéntico para todos los B
 			lcont <- try(proc_serieB(lines, codigo = bol_listB[[d]]$codigo, tramite = bol_listB[[d]]$tramite))
-			#URL como campo adicional a enviar a mongoDB
-			lcont$url <- bol_listB[[d]]$url
 			#caso de error al procesar: imprimir mensaje y enviar vacio.
 			if(class(lcont) == "try-error"){
 				lcont <- vector("list")
@@ -61,6 +59,8 @@ for(i in 1:length(proy_listB)){#i=1 #for(i in 1:length(proy_listB))
 			#caso de boletin 'normal' (i.e. sin enmiendas)
 			if ( class(lcont) != "try-error" & length(lcont[[1]]) == 1 ) {
 				print(bol_listB[[d]]$codigo)
+				#URL como campo adicional a enviar a mongoDB
+				lcont$url <- bol_listB[[d]]$url
 				lcontb <- lapply(list(lcont), function(x) {return(mongo.bson.from.list(lcont))})
 				cat(" ", length(lcontb), "\n")
 				mongo.insert.batch(mongo, mongo_collection("serieB"), lcontb)
@@ -68,6 +68,10 @@ for(i in 1:length(proy_listB)){#i=1 #for(i in 1:length(proy_listB))
 			#caso de boletin con enmiendas. Ej B-157-5.
 			#el primer elemento seria a su vez una lista (con mas de 1 elemento), luego length()>1
 			if ( class(lcont) != "try-error" & length(lcont[[1]]) > 1 ){
+			        #URL como campo adicional a enviar a mongoDB
+			        for(k in 1:length(lcont)){
+			                lcont[[k]]$url <- bol_listB[[d]]$url
+			        }
 				print(bol_listB[[d]]$codigo)
 				lcontb <- lapply(lcont, function(x) {return(mongo.bson.from.list(x))})
 				mongo.insert.batch(mg, mongo_collection("serieB"), lcontb)
