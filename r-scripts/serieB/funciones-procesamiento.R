@@ -118,7 +118,7 @@ proc_serieB <- function(lines, codigo, tramite){
         
         #Si es de enmiendas llamamos a la funcion proc_serieB_enmiendas y devolvemos resultado.
         #ej. B-157-5
-        if(tmp$tramite %in% c(tramitesBamp[12], tramitesBamp[20])){
+        if(tmp$tramite %in% c(tramitesBamp[12], tramitesBamp[19])){
           tmp <- proc_serieB_enmiendas(tmp, lines) ####### REVISAR CON EJEMPLO
           return(tmp)
           break()
