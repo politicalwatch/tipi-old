@@ -49,11 +49,16 @@ for(i in 1:length(proy_listA))
 				if(class(lcont) == "try-error"){
 					lcont <- vector("list")
 					lcont$bol <- bol_listA[[d]]$codigo
+                                        lcont$url <- bol_listA[[d]]$url
 					print(paste("falla el boletin:", bol_listA[[d]]$codigo))
 					next()
 				}
 				#boletin procesado, enviar a MongoDB
 				if(class(lcont) != "try-error" & length(lcont)>0){
+				        #Añadir url a cada elemento de la lista (uno por enmienda)
+				        for(k in 1:length(lcont)){
+				                lcont[[k]]$url <- bol_listA[[d]]$url
+				        }
 					mongo.remove(mongo, mongo_collection("serieA"), criteria=list(bol=bol_listA[[d]]$codigo))
 					lcontb <- lapply(lcont, function(x) {return(mongo.bson.from.list(x))})
 					mongo.insert.batch(mongo, mongo_collection("serieA"), lcontb)
@@ -61,16 +66,19 @@ for(i in 1:length(proy_listA))
 			} else {
 				#                         lcont <- proc_serieA(lines, codigo=bol_listA[[d]]$codigo)
 				lcont <- try(proc_serieA(lines, codigo = bol_listA[[d]]$codigo, tramite = bol_listA[[d]]$tramite))
+                                
 				#caso de error al procesar: imprimir mensaje y enviar vacio.
 				if(class(lcont) == "try-error"){
 					lcont <- vector("list")
 					lcont$bol <- bol_listA[[d]]$codigo
+					lcont$url <- bol_listA[[d]]$url
 					print(paste("falla el boletin:", bol_listA[[d]]$codigo))
 					next()
 				}
 				#boletin procesado, enviar a MongoDB
 				if (class(lcont) != "try-error" & length(lcont) > 0) {
-					mongo.remove(mongo, mongo_collection("serieA"), criteria=list(bol=bol_listA[[d]]$codigo))
+				        lcont$url <- bol_listA[[d]]$url
+                                        mongo.remove(mongo, mongo_collection("serieA"), criteria=list(bol=bol_listA[[d]]$codigo))
 					lcontb <- lapply(list(lcont), function(x) {return(mongo.bson.from.list(lcont))})
 					cat(" ", length(lcontb), "\n")
 					mongo.insert.batch(mongo, mongo_collection("serieA"), lcontb)
