@@ -45,8 +45,8 @@ load("diputados-mongo.rd")
 ## Procesamiento serie B, todos los trámites excepto enmiendas
 ## argumentos: lines que se carga con load(fichero .rd que contiene boletin)
 ## devuelve: lista tmp() con los campos procesados:
-# [1] "bol"     "ref"     "tipo"    "tramite" "titulo"  "cnt"     "fecha"   "cntpre" 
-proc_serieB <- function(lines, codigo){
+# [1] "bol"     "ref"     "tipo"    "tramite" "titulo" "autor" "cnt"     "fecha"   "cntpre" "comision"
+proc_serieB <- function(lines, codigo, tramite){
         #limpiar lines
         lines <- lines[lines!=""]
         lp  <- grep("^Página", lines)
@@ -87,7 +87,7 @@ proc_serieB <- function(lines, codigo){
         #Algunos casos en que no hay una referencia todo el texto junto. Ej A-15-5
         #y salir del bucle
         if(!any(iref)){ 
-                tmp$tramite <- tolower(lines[1])
+                tmp$tramite <- tramite
                 tmp$content <- lines[2:length(lines)]  
                 return(tmp)
                 break() 
@@ -95,7 +95,7 @@ proc_serieB <- function(lines, codigo){
         tmp$ref  <- str_extract(lines[reflin[1]], "^[0-9]{3}\\/[0-9]{5,6}")
         tmp$tipo <- str_split(tmp$ref, "/")[[1]][1]
         #tramite
-        tmp$tramite <- tolower(lines[1])
+        tmp$tramite <- tramite
         
         #lineas del indice
         # ndx  <-  lines[reflin[1]:(reflin[2]-1)] 
@@ -103,18 +103,11 @@ proc_serieB <- function(lines, codigo){
         ndx <- str_replace_all(ndx, "^[0-9]{3}\\/[0-9]{5,6}", "")
         ndx <- str_trim(ndx)
         
-        #Afinar trámite.
-        #a veces la primera linea es 'Proposición de Ley' pero en realidad hay más matices
-        if(tmp$tramite %in% c("proposición de ley", "proposicion de ley")){
-          tmp$tramite <- extraer.tramiteB(ndx, tramitesBamp)
-        }
-        tmp$tramite <- unique(tmp$tramite)
-        
         #titulo
         tmp$titulo <- ndx[1]
         tmp$titulo <- str_replace_all(tmp$titulo, " +", " ") ## Quito espacios duplicados
-        tmp$titulo <- str_trim(tmp$titulo) ## Quito espacios en los extremos
-        
+        tmp$titulo <- str_trim(tmp$titulo) ## Quito espacios en los extremos   
+
         #Campo fecha: se saca del indice
         detfecha <- str_detect(ndx, "([0-9]+) de ([a-z]+) de ([0-9]+)")
         if (any(detfecha)) {
@@ -125,31 +118,46 @@ proc_serieB <- function(lines, codigo){
         
         #Si es de enmiendas llamamos a la funcion proc_serieB_enmiendas y devolvemos resultado.
         #ej. B-157-5
-        if(tmp$tramite == "enmiendas"){
-          tmp <- proc_serieB_enmiendas(tmp, lines)
+        if(tmp$tramite %in% c(tramitesBamp[12], tramitesBamp[20])){
+          tmp <- proc_serieB_enmiendas(tmp, lines) ####### REVISAR CON EJEMPLO
           return(tmp)
           break()
         }
         
-        #NOTA. Específico serie B.
-        #Autor de la Proposición de ley: grupo parlamentario (uno o varios).
-        #Solamente para tramite = Proposición de ley o Iniciativa
-        # alimentamos el campo "autor" con el nombre abreviado de un grupo
-        if(tmp$tramite %in% (c(tramitesB[1],tramitesB[2]))){
-          if(any(s <- str_detect(string = ndx, pattern = ignore.case("^Autor:")))){
-            lingrupo <- ndx[s]
-            ## valor por defecto (por si no encuentra Grupos)
-            tmp$autor <- "" 
-            ## Busco grupos parlamentarios en lingrupo
-            if (length(lingrupo)>0) {
-              gpdet <- str_detect(string = lingrupo[1], pattern = as.character(gparlam$gparlams))
-              if (any(gpdet)) {
-                ##cat("\n", pres[i], "\n *", paste(diputados[dipdet, "apnom"], collapse=";"), "\n")
-                tmp$autor <- unique(gparlam[gpdet, "gparlamab"])
-              } 
-            }
-          }
+        #Campo autor. En la serie B se asigna en función del tipo.
+        #en función de la primera linea del documento.
+        tmp$autor <- "" #Lo dejamos así en los tipos 122, 123
+        if(tmp$tipo == "120"){ tmp$autor <- "Iniciativa legislativa popular" }
+        if(tmp$tipo == "125"){ tmp$autor <- "Comunidad autónoma" }   
+
+        #En los tipo 122 el autor (vacío) se matiza con grupo y diputado
+        #Añadimos grupos parlamentarios
+        if(tmp$tipo == "122"){ #Buscar diputado y grupos
+                if(any(s <- str_detect(string = ndx, pattern = ignore.case("^Autor:")))){
+                        lingrupo <- ndx[s]
+                        ## Busco grupos parlamentarios en lingrupo
+                        if (length(lingrupo)>0) {
+                                gpdet <- str_detect(string = lingrupo[1], pattern = as.character(gparlam$gparlams))
+                                if (any(gpdet)) {
+                                        ##cat("\n", pres[i], "\n *", paste(diputados[dipdet, "apnom"], collapse=";"), "\n")
+                                        tmp$grupos <- unique(gparlam[gpdet, "gparlamab"])
+                                } 
+                        }
+                }
         }
+        
+        #código por si hay que añadir el Diputado.
+#         if(any(s <- str_detect(string = ndx, pattern = "Diputado"))){
+#                 lindiputado <- ndx[s]
+#                 ## Busco diputados en lindiputado
+#                 if (length(lindiputado)>0) {
+#                         dipdet <- str_detect(string = lindiputado[1], pattern = as.character(diputados$nomapre))
+#                         if (any(dipdet)) {
+#                                 ##cat("\n", pres[i], "\n *", paste(diputados[dipdet, "apnom"], collapse=";"), "\n")
+#                                 tmp1$diputados <- diputados[dipdet, "apnom"]
+#                         } 
+#                 }
+#         }
           
         #lineas del contenido: seguido de indice
         # excepto si hay alguna linea que comienza en 'Informe'; entonces vamos hasta allí
@@ -164,8 +172,6 @@ proc_serieB <- function(lines, codigo){
         tmp$content <- str_trim(tmp$content)
         tmp$content <- tmp$content[tmp$content != ""]
         tmp$content <- str_replace_all(tmp$content, '\\"', "")
-        
-        ##++++++nota. antes fecha estaba aqui. si OK eliminar esta linea.+++++###
 
         # contentpre
         ## contenido entre indice y el Informe, si lo hay
@@ -258,7 +264,7 @@ proc_serieB_enmiendas <- function(tmp, lines){
                                 gpdet <- str_detect(string = lindiputado[1], pattern = as.character(gparlam$gparlams))
                                 if (any(gpdet)) {
                                         ##cat("\n", pres[i], "\n *", paste(diputados[dipdet, "apnom"], collapse=";"), "\n")
-                                        tmp1$grupos <- gparlam[gpdet, "gparlamab"]
+                                        tmp1$grupos <- unique(gparlam[gpdet, "gparlamab"])
                                 } 
                         }
                         #actualizamos contenido para eliminar diputado
@@ -283,7 +289,7 @@ tramitesB <- c("Proposición de Ley",
 )
 #Lista ampliada
 tramitesBamp <- c("Proposición de Ley",
-               "Iniciativa",#CONSULTAR ALBA: EQUIVALENTE A PL?
+               "Iniciativa",
                "Rechazada",
                "Retirada",
                "Caducidad de la iniciativa", #--->"Caducidad"
@@ -292,13 +298,12 @@ tramitesBamp <- c("Proposición de Ley",
                "Proposición de reforma del Reglamento del Congreso", #B-39
                "Proposición de reforma constitucional", #B-55
                "Texto de la Proposición", #B58
-               "Acuerdo subsiguiente a la toma en consideración",#B-70
+               "Acuerdo subsiguiente a la toma en consideración",#B-70, B-112
                "Enmiendas e índice de enmiendas al articulado",#B-70
                "Informe de la Ponencia", #B-70
                "Dictamen de la Comisión", #B-112
                "Aprobación por la Comisión con competencia legislativa plena",
                "Votación favorable en debate de totalidad",#B-112
-               "Acuerdo subsiguiente a la toma en consideración", #B-112
                "Aprobación por la Comisión con competencia legislativa plena", #B-119
                "Tramitación en lectura única", #B-157
                "Enmiendas", #B-157
