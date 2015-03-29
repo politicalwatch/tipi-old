@@ -109,8 +109,8 @@ construir_dir_bolB <- function(f2, guardarlocal = FALSE, bol_list=list()){
                 tmp$x <- str_trim(cleanBN(str_replace(string = x1, pattern = '\\n', replacement = "")))
                 tmp$codigo <- codigo1
                 tmp$tramite <- ""
-                #Para la serie B solo distinguimos 4: iniciativa/proposición de ley, retirada, rechazada
-                if(any(tr <- str_detect(string = tmp$x, pattern = tramitesB))){ tmp$tramite <- tramitesB[tr] }
+                #[CAMBIO: AMPLIAR LISTA TRAMITES] Para la serie B distinguimos una lista ampliada, tramitesBamp
+                if(any(tr <- str_detect(string = tmp$x, pattern = tramitesBamp))){ tmp$tramite <- tramitesBamp[tr] }
                 tmp$fecha <- f1
                 tmp$url <- url
                 tmp$proc <- 0 #marcado comoprocesado?
