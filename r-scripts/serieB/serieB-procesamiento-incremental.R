@@ -46,7 +46,7 @@ for(i in 1:length(proy_listB)){#i=1 #for(i in 1:length(proy_listB))
 			load(bol_listB[[d]]$filename) # carga lines, que contiene el texto a procesar
 
 			#Procesamiento idéntico para todos los B
-			lcont <- try(proc_serieB(lines, codigo = bol_listB[[d]]$codigo))
+			lcont <- try(proc_serieB(lines, codigo = bol_listB[[d]]$codigo, tramite = bol_listB[[d]]$tramite))
 			#caso de error al procesar: imprimir mensaje y enviar vacio.
 			if(class(lcont) == "try-error"){
 				lcont <- vector("list")
