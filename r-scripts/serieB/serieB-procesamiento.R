@@ -37,10 +37,13 @@ for(i in 1:length(proy_listB)){#i=1 #for(i in 1:length(proy_listB))
       
       #Procesamiento idéntico para todos los B
       lcont <- try(proc_serieB(lines, codigo = bol_listB[[d]]$codigo, tramite = bol_listB[[d]]$tramite))
+      #URL como campo adicional a enviar a mongoDB
+      lcont$url <- bol_listB[[d]]$url
       #caso de error al procesar: imprimir mensaje y enviar vacio.
       if(class(lcont) == "try-error"){
         lcont <- vector("list")
         lcont$bol <- bol_listB[[d]]$codigo
+        lcont$url <- bol_listB[[d]]$url
         print(paste("falla el boletin:", bol_listB[[d]]$codigo))
         next()
       }
