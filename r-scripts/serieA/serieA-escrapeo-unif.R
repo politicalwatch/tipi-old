@@ -47,10 +47,10 @@ if( file.exists(paste0(GENERATED_BASE_DIR, "dir-serieA.rd")) )
 
 ## Crear un directorio de proyectos*URLS
 doc  <- htmlTreeParse(getURL(firstURL), encoding="UTF-8", useInternalNodes=TRUE)
-f1 <- getNodeSet(doc, '//*[@class="resultados_encontrados"]')
-length(f1) #136 documentos)
+# f1 <- getNodeSet(doc, '//*[@class="resultados_encontrados"]')
+# length(f1) #136 documentos)
 
-all_serieA <- construir_dir_serieA(f1=f1)
+all_serieA <- construir_dir_serieA(doc = doc)
 
 for(i in 1:length(all_serieA)){#i=10 para descargar uno de ellos; for(i in 1:length(proy_listA)) para descargar todos
 	secURL <- all_serieA[[i]]$url
@@ -59,8 +59,8 @@ for(i in 1:length(all_serieA)){#i=10 para descargar uno de ellos; for(i in 1:len
 
 		#   browseURL(secURL) #para comprobar
 		#escrapeamos
-		doc  <- htmlTreeParse(getURL(secURL), encoding="UTF-8", useInternalNodes=TRUE)
-		f2 <- getNodeSet(doc, '//*[@class="resultados_encontrados"]')
+		doc2  <- htmlTreeParse(getURL(secURL), encoding="UTF-8", useInternalNodes=TRUE)
+# 		f2 <- getNodeSet(doc, '//*[@class="resultados_encontrados"]')
 
 		## almacenar todos los boletines del Proyecto de Ley en cuestión
 		#va guardando ficheros locales, si no se desea guardar fichero local ponemos guardarlocal=FALSE.
@@ -70,9 +70,9 @@ for(i in 1:length(all_serieA)){#i=10 para descargar uno de ellos; for(i in 1:len
         #inicializamos la lista
         bol_listA <- list()
         #NOTA. Si guardarlocal = TRUE genera un fichero local que después se procesará.
-        bol_listA <- construir_dir_bolA(f2 = f2, guardarlocal = TRUE, bol_list = bol_listA)
+        bol_listA <- construir_dir_bolA(doc2, guardarlocal = TRUE, bol_list = bol_listA)
         #guardamos bol_listA para mantener un recuento
-        if(length(bol_listA)>0 & length(bol_listA[[1]]$codigo)>0){
+        if( length(bol_listA)>0 & length(bol_listA[[1]]$codigo)>0 ){
                 e <- str_extract(string = bol_listA[[1]]$codigo, pattern = "A-.*-")
                 filename <- paste0(GENERATED_BASE_DIR, "dir-",substr(e, start=0,stop=nchar(e)-1),".rd")
                 if(!file.exists(filename)){ save(bol_listA, file=filename) }
