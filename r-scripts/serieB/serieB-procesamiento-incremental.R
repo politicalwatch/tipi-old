@@ -10,6 +10,14 @@
 # Salida: ninguna; se alimenta bbdd mongo
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
 
+library("XML")
+library("RCurl")
+library("plyr")
+library("stringr")
+library("data.table")
+library("RSQLite")
+library("rmongodb")
+
 source("../common.R")
 source("../mongodb-conn.R")
 source("funciones-procesamiento.R")
@@ -74,7 +82,7 @@ for(i in 1:length(proy_listB)){#i=1 #for(i in 1:length(proy_listB))
 			        }
 				print(bol_listB[[d]]$codigo)
 				lcontb <- lapply(lcont, function(x) {return(mongo.bson.from.list(x))})
-				mongo.insert.batch(mg, mongo_collection("serieB"), lcontb)
+				mongo.insert.batch(mongo, mongo_collection("serieB"), lcontb)
 			}
 		} else {
 			print("Ya estaba en mongo el boletin!")
