@@ -44,6 +44,14 @@ dir <- paste0(GENERATED_BASE_DIR, "bocgs-proc")
 #  Carga masiva  #
 ##################
 
+library("XML")
+library("RCurl")
+library("plyr")
+library("stringr")
+library("data.table")
+library("RSQLite")
+library("rmongodb")
+
 source("../mongodb-conn.R")
 # Cargar código procesamiento
 source("funciones-procesamiento.R")
@@ -51,35 +59,55 @@ source("funciones-procesamiento.R")
 # Presupone ficheros locales guardados: 
 ## bocgs-proc/BOCG-D-num.rd : siendo num un parámetro (número de boletín)
 
+
+load(paste0(GENERATED_BASE_DIR, "listos_mongo.rd"))
+if( file.exists(paste0(GENERATED_BASE_DIR, "introducidos_mongo.rd")) )
+{
+  load(paste0(GENERATED_BASE_DIR, "introducidos_mongo.rd"))
+} else {
+  introducidos_mongo <- list()
+}
+
+pendientes <- setdiff(y = introducidos_mongo, x = listos_mongo)
+
 # bucle
 for(i in 1:length(listos_mongo)){ #i=630
 	#suponemos .rd ya existe
-	num <- listos_mongo[i] #num=555
-	if(file.exists(paste0(dir, "/BOCG-D-", num, ".rd"))){
-		load(paste0(dir, "/BOCG-D-", num, ".rd")) #esto carga lines
-		#
-		# Procesar contenido
-		resul <- try(proc_boletin(lines, num))
-		if(class(resul) == "try-error"){
-			lcont <- vector("list")
-			lcont$bol <- "num"
-			print(paste("falla el boletin:", num))
-			next()
-		} else {
-			lcont <- resul
-		}
-		#enviar a bbdd
-		if (length(lcont) > 0) {
+	num <- listos_mongo[[i]] #num=555
+	if( ! num %in% introducidos_mongo )
+	{
+		if(file.exists(paste0(dir, "/BOCG-D-", num, ".rd"))){
+			load(paste0(dir, "/BOCG-D-", num, ".rd")) #esto carga lines
+			#
+			# Procesar contenido
+			resul <- try(proc_boletin(lines, num))
+			if(class(resul) == "try-error"){
+				lcont <- vector("list")
+				lcont$bol <- "num"
+				print(paste("falla el boletin:", num))
+				next()
+			} else {
+				lcont <- resul
+			}
+			#enviar a bbdd
+			if (length(lcont) > 0) {
 
-			mongo.remove(mongo, mongo_collection("serieD"), criteria=list(bol=num))
-			lcontb <- lapply(lcont, function(x) {
-								 #campos que no interesa enviar
-								 x$ndx <- NULL
-								 x$cnt <- NULL
-								 return(mongo.bson.from.list(x))})
-			cat(" ", length(lcontb), "\n")
-			mongo.insert.batch(mongo, mongo_collection("serieD"), lcontb)
+				mongo.remove(mongo, mongo_collection("serieD"), criteria=list(bol=num))
+				lcontb <- lapply(lcont, function(x) {
+									#campos que no interesa enviar
+									x$ndx <- NULL
+									x$cnt <- NULL
+									return(mongo.bson.from.list(x))})
+				cat(" ", length(lcontb), "\n")
+				mongo.insert.batch(mongo, mongo_collection("serieD"), lcontb)
+				introducidos_mongo <- c(introducidos_mongo, num)
+				save(introducidos_mongo, file=paste0(GENERATED_BASE_DIR, "introducidos_mongo.rd"))
+			}
 		}
+	}
+	else
+	{
+		cat("ya introducido en mongo!")
 	}
 }
 
