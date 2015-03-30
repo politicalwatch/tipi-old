@@ -9,6 +9,14 @@
 # Salida: ninguna; se alimenta bbdd mongo
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
 
+library("XML")
+library("RCurl")
+library("plyr")
+library("stringr")
+library("data.table")
+library("RSQLite")
+library("rmongodb")
+
 source("../common.R")
 source("../mongodb-conn.R")
 source("funciones-procesamiento.R")
