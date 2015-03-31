@@ -1,10 +1,10 @@
 Template.header.helpers({
-  messages: function () {
-    return Messages.find();
-  },
-  hasMessages: function() {
-    return Messages.count() != 0;
-  },
+  // messages: function () {
+  //   return Messages.find();
+  // },
+  // hasMessages: function() {
+  //   return Messages.count() != 0;
+  // },
   isLoggedIn: function () {
     return !!Meteor.user();
   }
@@ -15,6 +15,6 @@ Template.header.events({
     Meteor.logout();
   },
   'click .close': function () {
-    Messages.remove({});
+    // Messages.remove({});
   }
 })
