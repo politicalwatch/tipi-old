@@ -168,15 +168,26 @@ Router.map(function() {
   });
 
   this.route('tipilist', {
-    path: '/tipi',
-    waitOn: function () {
-      return Meteor.subscribe('allTipi');
-    },
-    data: function () {
-     return {
-				tipi: Tipi.find()
-      }
-    }
+	  path: '/tipi',
+	  waitOn: function () {
+		  var qry = this.params.query;
+		  Session.set('searchTipis', qry);
+		  var cqry = _.clone(qry);
+		  for (var k in cqry) {
+			  if (cqry[k] == "") delete cqry[k];
+			  else if (typeof(cqry[k]) != "object") cqry[k] = {$regex: qry[k], $options: "gi"};
+		  }
+		  return Meteor.subscribe('allTipi');
+	  },
+	  data: function () {
+		  var cnt = Tipi.find().count();
+		  return {
+			  count: cnt,
+			  yesfound: cnt > 0,
+			  toomuch: cnt > 100,
+			  tipisfound: Tipi.find()
+		  }
+	  }
   });
 
   this.route('tipiini', {
