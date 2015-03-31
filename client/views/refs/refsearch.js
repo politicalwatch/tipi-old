@@ -62,7 +62,7 @@ Template.refsearch.events({
 		var collection_data = Refs.find(query).fetch();
 		var data = json2csv(collection_data, true, true);
 		var blob = new Blob([data], {type: "text/csv;charset=utf-8"});
-		saveAs(blob, "proclines.csv");
+		saveAs(blob, "refs.csv");
 	}
   //
 });
