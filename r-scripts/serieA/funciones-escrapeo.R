@@ -12,32 +12,31 @@
 #                url-->http://www.congreso.es/portal/page/portal/Congreso/Congreso/Publicaciones/IndPub?_piref73_1340068_73_1340059_1340059.next_page=/wc/indicePublicaciones&letra=a
 #             proy_listA lista final que contendra campos (hay que tenerla creada).REVISAR ESTO.
 
-construir_dir_serieA <- function(f1, proy_listA=list()){ 
+construir_dir_serieA <- function(doc, proy_listA=list()){ 
         proy_listA <- list()
-        # length(bol_listA) <- length(f2)
+        #Rutas par acoger la información de la web.
+        f1 <- getNodeSet(doc, '//*[@class="resultados_encontrados"]')  #para sacar el codigo
+        p <- "//*[@id='RESULTADOS_BUSQUEDA']/div[@class='resultados']/div[@class='resultados_encontrados']/p[@class='titulo_iniciativa']/a[1]"
+        f11 <- getNodeSet(doc, path = p) #para sacar el link
+        ## Bucle que recorre todos los Proyectos de Ley.
         for(i in 1:length(f1)){#i=1 #i in 1:2
-                x <- xmlValue(f1[[i]])
-                #limpieza
-                x <- str_trim(cleanBN(str_replace(string = x, pattern = '\\n', replacement = "")))
+                x <- xmlValue(f1[[i]], trim = TRUE)
                 ##Extraer codigo proyecto de ley: A-x
-                if(!is.na(s1 <- str_extract(string = x, pattern = '(A-[0-9])'))) { s <- s1 }
-                if(!is.na(s1 <- str_extract(string = x, pattern = '(A-[0-9][0-9])'))){ s <- s1 }
-                if(!is.na(s1 <- str_extract(string = x, pattern = '(A-[0-9][0-9][0-9])'))){ s <- s1 }
-                
-                codigo <- s
-                
-                # construir secURL que nos lleva al PL
-                
-                # secURL <- "http://www.congreso.es/portal/page/portal/Congreso/Congreso/Publicaciones/IndPub?_piref73_1340068_73_1340059_1340059.next_page=/wc/servidorCGI&CMD=VERLST&BASE=IP10&FMT=INPTXLTS.fmt&DOCS=1-200&DOCORDER=FIFO&OPDEF=Y&DES1=Proyectos+de+Ley&DES2=A&DES3=a&NUM1=1&QUERY=%28121%2F000001%2F0000.NDOC.+O+%28congreso.SECC.+Y+A.SERI.+Y+1.NDIA.%29%29"
-                secURL <- urlhtmlsec(codigo = codigo)
-                
+                if(!is.na(s <- str_extract(string = x, pattern = '(A-[0-9]{1,3})'))) { codigo <- s }
+                ##Construir secURL que nos lleva al PL
+                nodo <- f11[[i]]
+                if(!is.null(codigo)){ 
+                        secURL <- xmlAttrs(nodo)["href"]
+                        names(secURL) <- NULL
+                } else { 
+                        stop("No existe un código en el texto") 
+                        break 
+                }
                 #almacenar proyecto de ley en el directorio
                 #y guardar campos: referencia, titulo, numero documentos, url
                 tmp <- list()
                 tmp$titulo <- x
                 tmp$codigo <- codigo
-                tmp$referencia <- "" #de momento no se incluye
-                #                 str_extract(x, "^[0-9]{3}\\/[0-9]{5,6}"))
                 tmp$url <- secURL
                 proy_listA <- append(proy_listA, list(tmp))
         }
@@ -52,41 +51,30 @@ construir_dir_serieA <- function(f1, proy_listA=list()){
 #                ejemplo de URL:
 #                url-->http://www.congreso.es/portal/page/portal/Congreso/Congreso/Publicaciones/IndPub?_piref73_1340068_73_1340059_1340059.next_page=/wc/servidorCGI&CMD=VERLST&BASE=IP10&FMT=INPTXLTS.fmt&DOCS=1-200&DOCORDER=FIFO&OPDEF=Y&DES1=Proyectos+de+Ley&DES2=A&DES3=a&NUM1=1&QUERY=%28121%2F000001%2F0000.NDOC.+O+%28congreso.SECC.+Y+A.SERI.+Y+1.NDIA.%29%29
 #             guardarlocal = TRUE o FALSE, si queremos que guarde fichero local en el directorio actual
-construir_dir_bolA <- function(f2, guardarlocal = FALSE, bol_list=list()){ 
+construir_dir_bolA <- function(doc2, guardarlocal = FALSE, bol_list=list()){ 
         bol_listA <- list()
+        f2 <- getNodeSet(doc2, '//*[@class="resultados_encontrados"]')
+        #Path para escrapear urls
+        p <- "//*[@id='RESULTADOS_BUSQUEDA']/div[@class='resultados']/div[@class='resultados_encontrados']/p[@class='subtitulo_iniciativa']/a[1]"
+        f22 <- getNodeSet(doc2, path = p) #para extraer la url
         # length(bol_listA) <- length(f2)
         for(i in 1:length(f2)){#i=1 #i in 1:length(f2)
-                x1 <- xmlValue(f2[[i]])
+                x1 <- xmlValue(f2[[i]], trim = TRUE)
                 ##De momento descargamos los Diarios de sesiones, se procesaran aparte.
                 if(str_detect(string = str_trim(x1), pattern = '^DS')){ break }
                 
-                ##Detectar codigo boletin
-                # s <- str_extract(string = x, pattern = 'núm. [1-9]-[1-9]|núm. [1-9]-[1-99]')
-                if(!is.na(s1 <- str_extract(string = x1, pattern = 'núm.(.*?)[0-9]-[0-9]'))) { s <- s1 }
-                if(!is.na(s1 <- str_extract(string = x1, pattern = 'núm.(.*?)[0-9]-[0-9][0-9]'))){ s <- s1 }
-                if(!is.na(s1 <- str_extract(string = x1, pattern = 'núm.(.*?)[0-9]-[0-9][0-9][0-9]'))){ s <- s1 }
-                
-                if(!is.na(s1 <- str_extract(string = x1, pattern = 'núm.(.*?)[0-9][0-9]-[0-9]'))){ s <- s1 }
-                if(!is.na(s1 <- str_extract(string = x1, pattern = 'núm.(.*?)[0-9][0-9]-[0-9][0-9]'))){ s <- s1 }
-                if(!is.na(s1 <- str_extract(string = x1, pattern = 'núm.(.*?)[0-9][0-9]-[0-9][0-9][0-9]'))){ s <- s1 }
-                
-                if(!is.na(s1 <- str_extract(string = x1, pattern = 'núm.(.*?)[0-9][0-9][0-9]-[0-9]'))){ s <- s1 }
-                if(!is.na(s1 <- str_extract(string = x1, pattern = 'núm.(.*?)[0-9][0-9][0-9]-[0-9][0-9]'))){ s <- s1 }
-                if(!is.na(s1 <- str_extract(string = x1, pattern = 'núm.(.*?)[0-9][0-9][0-9]-[0-9][0-9][0-9]'))){ s <- s1 }
+                ## Extraer número boletin
+                if(!is.na(s <- str_extract(string = x1, pattern = 'núm.(.*?)[0-9]{1,3}-[0-9]{1,3}'))) { codigo <- s }
                 #admite numeros 1-2, 1-21, 1-211....
+                #Transformamos para que se parezca a A-X-X
+                if(!is.null(codigo)){ codigo1 <- gsub(pattern = "n[úu]m. ", replacement = "A-", codigo) }
                 
-                codigo1 <- gsub(pattern = "n[úu]m. ", replacement = "A-", s)
-                
-                ### extraer fecha
+                ### Extraer fecha
                 f1 <- str_extract(string = x1, pattern = '([0-9]{2})/([0-9]{2})/([0-9]{4})')
                 
-                url <- urlhtml(num = codigoAnumero(codigo1), fecha = fechanum(f1))
-                #si aparece expresamente BOCG-10-A-90-1... hay que construir URL de otra forma
-                if(!is.na(scod <- str_extract(string = x1, pattern = paste0(GENERATED_BASE_DIR, 'BOCG-.*-A-.*')))){
-                        url <- paste0("http://www.congreso.es/portal/page/portal/Congreso/PopUpCGI?CMD=VERLST&CONF=BRSPUB.cnf&BASE=PU10&DOCS=1-1&FMT=PUWTXDTS.fmt&OPDEF=Y&QUERY=",
-                                      str_trim(scod), ".CODI.")
-                }
-                #         browseURL(url)
+                ### Extraer url
+                nodo <- f22[[i]]
+                url <- paste0("http://www.congreso.es",xmlAttrs(nodo)["href"])
                 
                 #descargar documento
                 # obtener las lineas del texto
@@ -121,54 +109,55 @@ construir_dir_bolA <- function(f2, guardarlocal = FALSE, bol_list=list()){
 
 ### FUNCIONES DE ESCRAPEO ADAPTADAS A LA SERIE A
 
+### TODO ESTO A ELIMINAR.
 #Dado un codigo (A-X) contruye la segunda URL para acceder a los tramites del proyecto
-urlhtmlsec <- function(codigo){
-        #partes fijas
-        urlpre <- "http://www.congreso.es/portal/page/portal/Congreso/Congreso/Publicaciones/IndPub?_piref73_1340068_73_1340059_1340059.next_page=/wc/servidorCGI&CMD=VERLST&BASE=IP10&FMT=INPTXLTS.fmt&DOCS=1-200&DOCORDER=FIFO&OPDEF=Y&DES1=Proyectos+de+Ley&DES2=A&DES3=a&NUM1="
-        urlmid <- "&QUERY=%28121%2"
-#         urlpost <- "%2F0000.NDOC.+O+%28congreso.SECC.+Y+A.SERI.+Y+101.NDIA.%29%29"
-#         urlpost <- "%2F0000.NDOC.+O+%28congreso.SECC.+Y+A.SERI.+Y+1.NDIA.%29%29"
-        urlpost0 <- "%2F0000.NDOC.+O+%28congreso.SECC.+Y+A.SERI.+Y+"
-        urlpost1 <- ".NDIA.%29%29"
-        #extraer numero del codigo y añadirlo a urlpre
-        num <- as.numeric(gsub(pattern = "A-", replacement = "", x = codigo))
-        urlpre <- paste0(urlpre, num)
-        urlpost <- paste0(urlpost0, num, urlpost1)
-        #construir cadena intermedia que empieza por 'F'
-        urlmid <- paste0(urlmid, paste0("F", str_pad(string = num, width = 6, pad = "0")))
-        url <- paste0(urlpre, urlmid, urlpost)
-        return(url)
-} 
+# urlhtmlsec <- function(codigo){
+#         #partes fijas
+#         urlpre <- "http://www.congreso.es/portal/page/portal/Congreso/Congreso/Publicaciones/IndPub?_piref73_1340068_73_1340059_1340059.next_page=/wc/servidorCGI&CMD=VERLST&BASE=IP10&FMT=INPTXLTS.fmt&DOCS=1-200&DOCORDER=FIFO&OPDEF=Y&DES1=Proyectos+de+Ley&DES2=A&DES3=a&NUM1="
+#         urlmid <- "&QUERY=%28121%2"
+# #         urlpost <- "%2F0000.NDOC.+O+%28congreso.SECC.+Y+A.SERI.+Y+101.NDIA.%29%29"
+# #         urlpost <- "%2F0000.NDOC.+O+%28congreso.SECC.+Y+A.SERI.+Y+1.NDIA.%29%29"
+#         urlpost0 <- "%2F0000.NDOC.+O+%28congreso.SECC.+Y+A.SERI.+Y+"
+#         urlpost1 <- ".NDIA.%29%29"
+#         #extraer numero del codigo y añadirlo a urlpre
+#         num <- as.numeric(gsub(pattern = "A-", replacement = "", x = codigo))
+#         urlpre <- paste0(urlpre, num)
+#         urlpost <- paste0(urlpost0, num, urlpost1)
+#         #construir cadena intermedia que empieza por 'F'
+#         urlmid <- paste0(urlmid, paste0("F", str_pad(string = num, width = 6, pad = "0")))
+#         url <- paste0(urlpre, urlmid, urlpost)
+#         return(url)
+# } 
 
 #Dado un numero (devuelto por codigoAnumero) y fecha construye la URL para acceder al boletin
 #ejemplo....Partir de scrapeo-A.
 #Se alimenta de codigoAnumero y fechanum
-urlhtml <- function(num, fecha){
-        #num en formato 000101, valor devuelto por codigoAnumero
-        #fecha en formato transformado 20130112, valor devuelto por fechanum
-        urlpre <- "http://www.congreso.es/portal/page/portal/Congreso/PopUpCGI?CMD=VERLST&CONF=BRSPUB.cnf&BASE=PU10&DOCS=1-1&FMT=PUWTXDTS.fmt&OPDEF=Y&QUERY=CDA"
-        urlpost <- ".CODI."
-        return(paste0(urlpre, paste0(fecha, num), urlpost))
-}
+# urlhtml <- function(num, fecha){
+#         #num en formato 000101, valor devuelto por codigoAnumero
+#         #fecha en formato transformado 20130112, valor devuelto por fechanum
+#         urlpre <- "http://www.congreso.es/portal/page/portal/Congreso/PopUpCGI?CMD=VERLST&CONF=BRSPUB.cnf&BASE=PU10&DOCS=1-1&FMT=PUWTXDTS.fmt&OPDEF=Y&QUERY=CDA"
+#         urlpost <- ".CODI."
+#         return(paste0(urlpre, paste0(fecha, num), urlpost))
+# }
 
 # Dado un codigo tipo A-1-1 construye el codigo numerico de la URL: 000101
-codigoAnumero <- function(codigo){
-        num1 <- str_split_fixed(codigo, "-", n = 3)[,2] #numero A-X
-        num2 <- str_split_fixed(codigo, "-", n = 3)[,3] #numero A-1-X
-        paste0(str_pad(string = num1, width = 4, pad = "0"),
-               str_pad(string = num2, width = 2, pad = "0"))
-}
-
-#extraer solamente el numero de un codigo tipo A-90
-extraernumero <- function(codigo){
-        num1 <- str_split_fixed(codigo, "-", n= 3 )[,2]
-        return(num1)
-}
-
-fechanum <- function(f){#f='2013/01/13'
-        paste0(str_split(f, "/")[[1]][3], str_split(f, "/")[[1]][2], str_split(f, "/")[[1]][1])
-        #devuelve '20130113'
-}
+# codigoAnumero <- function(codigo){
+#         num1 <- str_split_fixed(codigo, "-", n = 3)[,2] #numero A-X
+#         num2 <- str_split_fixed(codigo, "-", n = 3)[,3] #numero A-1-X
+#         paste0(str_pad(string = num1, width = 4, pad = "0"),
+#                str_pad(string = num2, width = 2, pad = "0"))
+# }
+# 
+# #extraer solamente el numero de un codigo tipo A-90
+# extraernumero <- function(codigo){
+#         num1 <- str_split_fixed(codigo, "-", n= 3 )[,2]
+#         return(num1)
+# }
+# 
+# fechanum <- function(f){#f='2013/01/13'
+#         paste0(str_split(f, "/")[[1]][3], str_split(f, "/")[[1]][2], str_split(f, "/")[[1]][1])
+#         #devuelve '20130113'
+# }
 
 #función genérica para quitar blancos
 cleanBN <- function(x) { return( gsub(" +", " ", gsub("[[:cntrl:]]", "", x)) )}

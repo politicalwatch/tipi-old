@@ -44,12 +44,9 @@ firstURL <- "http://www.congreso.es/portal/page/portal/Congreso/Congreso/Publica
 #-------------------------------#
 ## Crear un directorio de proyectos*URLS
 doc  <- htmlTreeParse(getURL(firstURL), encoding="UTF-8", useInternalNodes=TRUE)
-f1 <- getNodeSet(doc, '//*[@class="resultados_encontrados"]')
-length(f1) #136 documentos)
 
-#llamamos a la función propia construir_dir_serieA
-proy_listA <- construir_dir_serieA(f1 = f1, proy_listA = proy_listA)
-#NOTA. hasta que mejoremos el escrapeo esto es inestable, algunas URLS no son correctas.
+## Llamamos a la función propia para el directorio de la serie, construir_dir_serieA
+proy_listA <- construir_dir_serieA(doc = doc, proy_listA = proy_listA)
 
 #Guardar el directorio
 save(proy_listA, file = paste0(GENERATED_BASE_DIR, "dir-serieA.rd"))
@@ -62,13 +59,8 @@ proy_listA[[1]] #ej. primer proyecto de ley de la lista
 #Cargamos el directorio con toda la serie hasta la fecha
 load(paste0(GENERATED_BASE_DIR, "dir-serieA.rd"))
 
-#escrapeamos para ver los nuevos
-doc  <- htmlTreeParse(getURL(firstURL), encoding="UTF-8", useInternalNodes=TRUE)
-f1 <- getNodeSet(doc, '//*[@class="resultados_encontrados"]')
-length(f1) #136 documentos)
-
 #creamos directorio actualizado, y contrastamos
-proy_listA_updated <- construir_dir_serieA(f1 = f1, proy_listA = proy_listA)
+proy_listA_updated <- construir_dir_serieA(doc = doc, proy_listA = proy_listA)
 
 proy_listA_pdte <- setdiff(x = proy_listA_updated, y = proy_listA)
 
@@ -89,13 +81,13 @@ rm(proy_listA_updated)
 #-------------------------------#
 #     Primera (y única) vez     #
 #-------------------------------#
-length(proy_listA) #136 proyectos de ley en total
+length(proy_listA) #141 proyectos de ley en total
 for(i in 1:length(proy_listA)){#i=90 para descargar uno de ellos; for(i in 1:length(proy_listA)) para descargar todos
         secURL <- proy_listA[[i]]$url
         #   browseURL(secURL) #para comprobar
         #escrapeamos
-        doc  <- htmlTreeParse(getURL(secURL), encoding="UTF-8", useInternalNodes=TRUE)
-        f2 <- getNodeSet(doc, '//*[@class="resultados_encontrados"]')
+        doc2  <- htmlTreeParse(getURL(secURL), encoding="UTF-8", useInternalNodes=TRUE)
+#         f2 <- getNodeSet(doc, '//*[@class="resultados_encontrados"]')
         
         ## almacenar todos los boletines del Proyecto de Ley en cuestión
         #va guardando ficheros locales, si no se desea guardar fichero local ponemos guardarlocal=FALSE.
@@ -105,9 +97,9 @@ for(i in 1:length(proy_listA)){#i=90 para descargar uno de ellos; for(i in 1:len
         #inicializamos la lista
         bol_listA <- list()
         #NOTA. Si guardarlocal = TRUE genera un fichero local que después se procesará.
-        bol_listA <- construir_dir_bolA(f2 = f2, guardarlocal = TRUE, bol_list = bol_listA)
+        bol_listA <- construir_dir_bolA(doc2, guardarlocal = TRUE, bol_list = bol_listA)
         #guardamos bol_listA para mantener un recuento
-        if(length(bol_listA)>0 & length(bol_listA[[1]]$codigo)>0){
+        if( length(bol_listA)>0 & length(bol_listA[[1]]$codigo)>0 ){
                 e <- str_extract(string = bol_listA[[1]]$codigo, pattern = "A-.*-")
                 filename <- paste0(GENERATED_BASE_DIR, "dir-",substr(e, start=0,stop=nchar(e)-1),".rd")
                 if(!file.exists(filename)){ save(bol_listA, file=filename) }
@@ -124,8 +116,7 @@ for(i in 1:length(proy_listA_pdte)){#i=90 para descargar uno de ellos; for(i in 
         secURL <- proy_listA_pdte[[i]]$url
         #   browseURL(secURL) #para comprobar
         #escrapeamos
-        doc  <- htmlTreeParse(getURL(secURL), encoding="UTF-8", useInternalNodes=TRUE)
-        f2 <- getNodeSet(doc, '//*[@class="resultados_encontrados"]')
+        doc2  <- htmlTreeParse(getURL(secURL), encoding="UTF-8", useInternalNodes=TRUE)
         
         ## almacenar todos los boletines del Proyecto de Ley en cuestión
         #va guardando ficheros locales, si no se desea guardar fichero local ponemos guardarlocal=FALSE.
@@ -135,9 +126,9 @@ for(i in 1:length(proy_listA_pdte)){#i=90 para descargar uno de ellos; for(i in 
         #inicializamos la lista
         bol_listA <- list()
         #NOTA. Si guardarlocal = TRUE genera un fichero local que después se procesará.
-        bol_listA <- construir_dir_bolA(f2 = f2, guardarlocal = TRUE, bol_list = bol_listA)
+        bol_listA <- construir_dir_bolA(doc2, guardarlocal = TRUE, bol_list = bol_listA)
         #guardamos bol_listA para mantener un recuento
-        if(length(bol_listA)>0 & length(bol_listA[[1]]$codigo)>0){
+        if( length(bol_listA)>0 & length(bol_listA[[1]]$codigo)>0 ){
                 e <- str_extract(string = bol_listA[[1]]$codigo, pattern = "A-.*-")
                 filename <- paste0(GENERATED_BASE_DIR, "dir-",substr(e, start=0,stop=nchar(e)-1),".rd")
                 if(!file.exists(filename)){ save(bol_listA, file=filename) }

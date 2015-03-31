@@ -10,6 +10,7 @@ aldeed:template-extension@3.4.3
 anti:i18n@0.4.3
 aslagle:reactive-table@0.7.2
 autoupdate@1.2.0
+axw:json2csv@0.1.0
 base64@1.0.3
 binary-heap@1.0.3
 blaze@2.1.0
@@ -66,6 +67,7 @@ mobile-status-bar@1.0.3
 momentjs:moment@2.8.4
 mongo@1.1.0
 mongo-livedata@1.0.8
+mrt:filesaver@0.0.3
 mrt:moment@2.8.1
 npm-bcrypt@0.7.8_1
 observe-sequence@1.0.5

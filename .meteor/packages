@@ -26,3 +26,5 @@ d3js:d3
 sacha:spin
 zimme:select2-bootstrap3-css
 aldeed:autoform-select2
+axw:json2csv
+mrt:filesaver

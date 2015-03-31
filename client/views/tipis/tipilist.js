@@ -13,12 +13,15 @@ Template.tipilist.created = function () {
 //{numActo: 1, ref: 1, fechaPub: 1, autor: 1, grupoPar: 1, titulo: 1}
 
 Template.tipilist.helpers({
+	lastquery: function() {
+		return Session.get("searchRefs");
+	},
 	   settings: function () {
         return {
             rowsPerPage: 30,
-						bPaginate: false,
+						//bPaginate: false,
             showFilter: true,
-						showColumnToggles: true,
+						showColumnToggles: false,
             fields: [{ key: 'numActo', label: 'TiPi', sort: 'descending'},
 										 { key: 'ref', label: 'Referencia'},
 										 { key: 'autor', label: 'Autor'},
@@ -39,5 +42,27 @@ Template.tipilist.helpers({
 										]
         };
     }
+  //
+});
+
+
+Template.tipilist.rendered = function () {
+  //
+};
+
+Template.tipilist.events({
+	'submit form': function(e) {console.log("Form submitted");},
+	'click button.reset': function(e) {Session.set('searchTipis', {});},
+	'click button#exportcsv': function(e) {
+		var query = Session.get("searchTipis");
+		for( var property in query )
+			if( query.hasOwnProperty(property) )
+				if( query[property] == "" )
+					delete query[property];
+		var collection_data = Tipi.find(query).fetch();
+		var data = json2csv(collection_data, true, true);
+		var blob = new Blob([data], {type: "text/csv;charset=utf-8"});
+		saveAs(blob, "tipis.csv");
+	}
   //
 });

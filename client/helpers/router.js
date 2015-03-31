@@ -181,40 +181,51 @@ Router.map(function() {
   this.route('tipilist', {
     path: '/tipis',
     waitOn: function () {
-      return Meteor.subscribe('allTipis');
+        var qry = this.params.query;
+        Session.set('searchTipis', qry);
+        var cqry = _.clone(qry);
+        for (var k in cqry) {
+            if (cqry[k] == "") delete cqry[k];
+            else if (typeof(cqry[k]) != "object") cqry[k] = {$regex: qry[k], $options: "gi"};
+        }
+        return Meteor.subscribe('allTipis');
     },
     data: function () {
-     return {
-				tipi: Tipis.find()
-      }
+        var cnt = Tipis.find().count();
+        return {
+            count: cnt,
+            yesfound: cnt > 0,
+            toomuch: cnt > 100,
+            tipisfound: Tipis.find()
+        }
     }
   });
 
   this.route('tipiini', {
     path: '/tipis/:_id',
     waitOn: function () {
-			var oid = new Mongo.ObjectID(this.params._id);
-      console.log(this.params._id);
-      return Meteor.subscribe('singleTipi', oid);
+	    var oid = new Mongo.ObjectID(this.params._id);
+        console.log(this.params._id);
+        return Meteor.subscribe('singleTipi', oid);
     },
     data: function () {
-			var ini = _.clone(Tipi.findOne());
-			ini.fechaPub = moment(ini.fechaPub).format('LLLL');
-			ini.fechaActualiz = moment(ini.fechaActualiz).format('LLLL');
-			ini.fechaUltRev   = moment(ini.fechaUltRev).format('LLLL');
-			return {
-				tipiini: ini
-			}
-    }
+	    var ini = _.clone(Tipi.findOne());
+		ini.fechaPub = moment(ini.fechaPub).format('LLLL');
+		ini.fechaActualiz = moment(ini.fechaActualiz).format('LLLL');
+		ini.fechaUltRev   = moment(ini.fechaUltRev).format('LLLL');
+		return {
+			tipiini: ini
+		}
+      }
   });
 		
 	this.route('tipiedit', {
-    path: '/tipis/:_id/edit',
-    waitOn: function () {
+        path: '/tipis/:_id/edit',
+        waitOn: function () {
 			var oid = new Mongo.ObjectID(this.params._id);
-      return Meteor.subscribe('singleTipi', oid);
-    },
-    data: function () {
+            return Meteor.subscribe('singleTipi', oid);
+        },
+        data: function () {
 			//var ini = _.clone(Tipis.findOne());
 			//ini.fechaPub = moment(ini.fechaPub).format('LLLL');
 			//ini.fechaActualiz = moment(ini.fechaActualiz).format('LLLL');
@@ -222,8 +233,8 @@ Router.map(function() {
 			return {
 				tipiini: Tipis.findOne()
 			}
-    }
-  });
+        }
+    });
 
 	
   // Pages

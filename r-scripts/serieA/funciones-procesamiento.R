@@ -45,9 +45,10 @@ load("diputados-mongo.rd")
 ## Procesamiento serie A, todos los trámites excepto enmiendas
 ## argumentos: lines que se carga con load(fichero .rd que contiene boletin)
 ##             codigo: A-X-X que identifica el boletin
+##             tramite: un elemento de la lista tramitesA
 ## devuelve: lista tmp() con los campos procesados:
 # [1] "bol"     "ref"     "tipo"    "tramite" "titulo"  "content"     "fecha"   "contentpre" 
-proc_serieA <- function(lines, codigo){
+proc_serieA <- function(lines, codigo, tramite){
         #limpiar lines
         lines <- lines[lines!=""]
         lp  <- grep("^Página", lines)
@@ -88,7 +89,7 @@ proc_serieA <- function(lines, codigo){
         #Algunos casos en que no hay una referencia todo el texto junto. Ej A-15-5
         #y salir del bucle
         if(!any(iref)){ 
-                tmp$tramite <- tolower(lines[1])
+                #                 tmp$tramite <- tolower(lines[1])
                 tmp$content <- lines[2:length(lines)]  
                 return(tmp)
                 break() 
@@ -96,7 +97,7 @@ proc_serieA <- function(lines, codigo){
         tmp$ref  <- str_extract(lines[reflin[1]], "^[0-9]{3}\\/[0-9]{5,6}")
         tmp$tipo <- str_split(tmp$ref, "/")[[1]][1]
         #tramite
-        tmp$tramite <- tolower(lines[1])
+        tmp$tramite <- tramite
         
         #lineas del indice
         # ndx  <-  lines[reflin[1]:(reflin[2]-1)] 
@@ -108,6 +109,11 @@ proc_serieA <- function(lines, codigo){
         tmp$titulo <- ndx[1]
         tmp$titulo <- str_replace_all(tmp$titulo, " +", " ") ## Quito espacios duplicados
         tmp$titulo <- str_trim(tmp$titulo) ## Quito espacios en los extremos
+        
+        #autor. Si es 'proyecto de ley' es el Gobierno; si no, se deja vacio.
+        #en función de la primera linea del documento.
+        tmp$autor <- ""
+        if(tramite == tramitesA[1]){ tmp$autor <- "Gobierno" }
         
         #lineas del contenido: seguido de indice
         # excepto si hay alguna linea que comienza en 'Informe'; entonces vamos hasta allí
@@ -145,12 +151,14 @@ proc_serieA <- function(lines, codigo){
         return(tmp)
 }
 
+
 ## Procesamiento serie A, trámite excepto enmiendas
 ## argumentos: lines que se carga con load(fichero .rd que contiene boletin)
 ##             codigo: A-X-X que identifica el boletin
+##             tramite: un elemento de la lista tramitesA
 ## devuelve: lista tmp() con los campos procesados:
 # [1] "bol"     "ref"     "tipo"    "tramite" "titulo"  "cnt"     "fecha"   "contentpre" 
-proc_serieA_enmiendas <- function(lines, codigo){
+proc_serieA_enmiendas <- function(lines, codigo, tramite){
         ##### Procesamiento trámite 'Enmiendas'
         lines <- lines[lines!=""]
         lp  <- grep("^Página", lines)
@@ -189,15 +197,16 @@ proc_serieA_enmiendas <- function(lines, codigo){
         #Algunos casos en que no hay una referencia todo el texto junto. Ej A-15-5
         #y salir del bucle
         if(!any(iref)){ 
-          tmp$tramite <- tolower(lines[1])
-          tmp$content <- lines[2:length(lines)]  
-          return(tmp)
-          break() 
+                #           tmp$tramite <- tolower(lines[1])
+                tmp$content <- lines[2:length(lines)]  
+                return(tmp)
+                break() 
         }
         tmp$ref  <- str_extract(lines[reflin[1]], "^[0-9]{3}\\/[0-9]{5,6}")
         tmp$tipo <- str_split(tmp$ref, "/")[[1]][1]
         #tramite
-        tmp$tramite <- tolower(lines[1])
+        #         tmp$tramite <- tolower(lines[1])
+        tmp$tramite <- tramite
         #titulo
         tmp$titulo <- ndx[1]
         tmp$titulo <- str_replace_all(tmp$titulo, " +", " ") ## Quito espacios duplicados
@@ -218,15 +227,15 @@ proc_serieA_enmiendas <- function(lines, codigo){
         
         #si no hay enmiendas se envia un unico documento
         if(!length(nenmi)>0){ #enviar lo basico: codigo, tramite, content, referencia
-          lcont <- tmp
-          lcont$bol <- codigo
-          return(list(lcont))
-          break()
+                lcont <- tmp
+                lcont$bol <- codigo
+                return(list(lcont))
+                break()
         }
         #lo siguiente iria en un bucle
         count <- 0
         for(i in 1:length(nenmi)){#i=46
-#                 browser()
+                #                 browser()
                 count <- count + 1
                 #Campos comunes. 
                 #Añadimos los de cada enmienda en tmp1.
@@ -238,10 +247,10 @@ proc_serieA_enmiendas <- function(lines, codigo){
                 #considerar el caso de ser la ultima
                 if(i == length(nenmi)){
                         if(any(s <- str_detect( lines, "^ÍNDICE DE ENMIENDAS AL ARTICULADO"))){
-                          ifin <- (1:length(lines))[s]
-                          finenmi <- ifin-1
+                                ifin <- (1:length(lines))[s]
+                                finenmi <- ifin-1
                         } else {
-                          finenmi <- length(lines) #vamos al final
+                                finenmi <- length(lines) #vamos al final
                         }
                 }
                 #número de enmienda
