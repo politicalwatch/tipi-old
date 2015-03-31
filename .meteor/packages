@@ -23,3 +23,5 @@ liyu:sprintfjs
 mrt:moment
 meteorhacks:kadira
 d3js:d3
+axw:json2csv
+mrt:filesaver
