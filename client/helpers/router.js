@@ -88,9 +88,22 @@ Router.map(function() {
     }
   });
 
-	 this.route('dicts', {
+  this.route('refAnnotate', {
+    path: '/refs/:_id/annotate',
     waitOn: function () {
-      return Meteor.subscribe('dicts');
+      var oid = new Mongo.ObjectID(this.params._id);
+      return Meteor.subscribe('singleRef', oid) && Meteor.subscribe('allDicts');
+    },
+    data: function () {
+      return {
+        ref: Refs.findOne()
+      }
+    }
+  });
+
+	this.route('dicts', {
+    waitOn: function () {
+      return Meteor.subscribe('allDicts');
     },
     data: function () {
 			//var cursor = Dicts.find();
@@ -103,7 +116,7 @@ Router.map(function() {
 	this.route('dictnew', {
 		path: '/dicts/new',
     //waitOn: function () {
-    //  return Meteor.subscribe('dicts);
+    //  return Meteor.subscribe('allDicts);
     //},
     data: function () {
 			return {
@@ -129,7 +142,6 @@ Router.map(function() {
   this.route('dictedit', {
 		path: '/dicts/:_id/edit',
     waitOn: function () {
-			//console.log(this.params);
 			var oid = new Mongo.ObjectID(this.params._id);
       return Meteor.subscribe('singleDict', oid);
     },
@@ -156,7 +168,6 @@ Router.map(function() {
     },
     data: function () {
 			var cnt = Refs.find().count();
-			console.log(cnt);
 			return {
 				count: cnt,
 				yesfound: cnt > 0,
@@ -168,22 +179,22 @@ Router.map(function() {
   });
 
   this.route('tipilist', {
-    path: '/tipi',
+    path: '/tipis',
     waitOn: function () {
-      return Meteor.subscribe('allTipi');
+      return Meteor.subscribe('allTipis');
     },
     data: function () {
      return {
-				tipi: Tipi.find()
+				tipi: Tipis.find()
       }
     }
   });
 
   this.route('tipiini', {
-    path: '/tipi/:_id',
+    path: '/tipis/:_id',
     waitOn: function () {
-			//console.log(this.params);
 			var oid = new Mongo.ObjectID(this.params._id);
+      console.log(this.params._id);
       return Meteor.subscribe('singleTipi', oid);
     },
     data: function () {
@@ -198,19 +209,18 @@ Router.map(function() {
   });
 		
 	this.route('tipiedit', {
-    path: '/tipi/:_id/edit',
+    path: '/tipis/:_id/edit',
     waitOn: function () {
-			//console.log(this.params);
 			var oid = new Mongo.ObjectID(this.params._id);
       return Meteor.subscribe('singleTipi', oid);
     },
     data: function () {
-			//var ini = _.clone(Tipi.findOne());
+			//var ini = _.clone(Tipis.findOne());
 			//ini.fechaPub = moment(ini.fechaPub).format('LLLL');
 			//ini.fechaActualiz = moment(ini.fechaActualiz).format('LLLL');
 			//ini.fechaUltRev   = moment(ini.fechaUltRev).format('LLLL');
 			return {
-				tipiini: Tipi.findOne()
+				tipiini: Tipis.findOne()
 			}
     }
   });

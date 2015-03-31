@@ -37,12 +37,3 @@ Template.refs.helpers({
 
 
 //http://www.congreso.es/portal/page/portal/Congreso/Congreso/Iniciativas?_piref73_12412194_73_1335437_1335437.next_page=/wc/servidorCGI&CMD=VERLST&BASE=IW10&FMT=INITXDSS.fmt&DOCS=1-1&DOCORDER=FIFO&OPDEF=ADJ&QUERY=%28181%2F002079*.NDOC.%29
-
-
-Template.items.rendered = function () {
-  //
-};
-
-Template.items.events({
-  //
-});

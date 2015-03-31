@@ -19,7 +19,7 @@ html {
 @media(min-width:767px) {
     p {
         margin: 0 0 35px;
-        font-size: 20px;
+        font-size: 14px;
         line-height: 1.6;
     }
 }

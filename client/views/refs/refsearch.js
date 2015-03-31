@@ -11,7 +11,6 @@ Template.refsearch.helpers({
 			return Session.get("searchRefs");
 		},
 		count: function() {
-			console.log(this);
 			if (this.count >= 300) flash("Se han encontrado más de 300 iniciativas.", "warning");
 			else if (this.count == 0) flash("No se han encontrado iniciativas que cumplan los criterios.", "info");
 		},
@@ -32,7 +31,7 @@ Template.refsearch.helpers({
 										 { key: 'acciones', label: 'Acciones', 
 										 	fn: function(val, obj) {
 												return Spacebars.SafeString(
-				'<a href="refs/'+ obj._id._str + '"><span class="label label-info"><i class="fa fa-eye"></i></span></a>&nbsp;' +
+				'<a href="refs/'+ obj._id._str + '"><span class="label label-info"><i class="fa fa-eye"></i></span></a>&nbsp;<a href="refs/'+ obj._id._str + '/annotate"><span class="label label-info"><i class="fa fa-tag"></i></span></a>&nbsp;' +
 				'<a href="http://www.congreso.es/portal/page/portal/Congreso/Congreso/Iniciativas?_piref73_2148295_73_1335437_1335437.next_page=/wc/servidorCGI&CMD=VERLST&BASE=IW10&PIECE=IWD0&FMT=INITXD1S.fmt&FORM1=INITXLUS.fmt&DOCS=1-1&QUERY=%28I%29.ACIN1.+%26+%28' + encodeURIComponent(obj.ref) + '%29.ALL." target="_blank"><span class="label label-info"><i class="fa fa-institution"></i></span>');
 												//return new Spacebars.SafeString('<a href="+Routes.route[\'refs\'].path(obj._id._str)+">Ver</a>');
 											}}

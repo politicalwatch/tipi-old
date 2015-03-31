@@ -6,14 +6,11 @@ Code related to the item template
 
 /+ ---------------------------------------------------- */
 
-Template.ref.created = function () {
-  //
-};
-
 Template.ref.helpers({
   
-  myHelper: function () {
-    //
+  showterms: function () {
+    console.log(Dicts.find().fetch());
+    return "";
   }
 
 });

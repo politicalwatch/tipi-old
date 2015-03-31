@@ -27,11 +27,11 @@ Template.tipilist.helpers({
 										 
 										 { key: 'acciones', label: 'Acciones', 
 										 	fn: function(val, obj) {
-												var actstr = '<a href="tipi/'+ obj._id._str + '"><span class="label label-info"><i class="fa fa-eye"></i></span></a>&nbsp;';
+												var actstr = '<a href="tipis/'+ obj._id._str + '"><span class="label label-info"><i class="fa fa-eye"></i></span></a>&nbsp;';
 												
 												if (Meteor.user()) {
 													actstr += 
-				'<a href="tipi/'+ obj._id._str + '/edit"><span class="label label-warning"><i class="fa fa-pencil"></i></span></a>&nbsp;';
+				'<a href="tipis/'+ obj._id._str + '/edit"><span class="label label-warning"><i class="fa fa-pencil"></i></span></a>&nbsp;';
 												}
 												return Spacebars.SafeString(actstr);
 												//return new Spacebars.SafeString('<a href="+Routes.route[\'refs\'].path(obj._id._str)+">Ver</a>');
@@ -39,14 +39,5 @@ Template.tipilist.helpers({
 										]
         };
     }
-  //
-});
-
-
-Template.dicts.rendered = function () {
-  //
-};
-
-Template.dicts.events({
   //
 });

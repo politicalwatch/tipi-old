@@ -188,15 +188,24 @@
 	.containerglob > .row:first-of-type { padding-top:0px; }
 }
 
-	/*mis estilos-------------------------------------------------------------*/
-	
-	/*posiciones generales-------------------------------------------------------------*/
-.center{
-	text-align:center;
-	padding:30px;}
-	.right{
-		text-align:right;}
-.footer { background: #e7e7e7; color: white; padding: 20px; }
+/*mis estilos-------------------------------------------------------------*/
+
+/*posiciones generales-------------------------------------------------------------*/
+.center{ text-align:center; padding:30px; }
+.right{ text-align:right; }
+
+.footer {
+	width: 100%;
+	/*position: fixed;*/
+	bottom: 0;
+	padding: 6px;
+	background: #e7e7e7;
+	color: #222;
+	box-shadow: 0px -2px -1px #222;
+	-moz-box-shadow: 0px -2px -1px #222;
+	-webkit-box-shadow: 0px -2px -1px #222;
+}
+
 p {color: grey}
 mark{background-color: black; color: white;text-align: right;}
 	
@@ -328,6 +337,14 @@ text-align:center;
 .node--root,
 .node--leaf {
   pointer-events: none;
+}
+
+/*refs and tipis--------------------------------------------*/
+.ref {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 
 	

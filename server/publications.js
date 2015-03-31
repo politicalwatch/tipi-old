@@ -24,7 +24,7 @@ if (Meteor.isServer) {
 		return Refs.find(id);
 	});
 
-	Meteor.publish('dicts', function() {
+	Meteor.publish('allDicts', function() {
 		console.log("en publish");
 		return Dicts.find({}, {fields: {dictgroup: 1, dict: 1, lastUpdate: 1},
 													 sort: {dictgroup: -1}});
@@ -33,12 +33,12 @@ if (Meteor.isServer) {
 		return Dicts.find(id);
 	});
 
-	Meteor.publish('allTipi', function() {
-		return Tipi.find({}, {fields: {numActo: 1, ref: 1, fechaPub: 1, autor: 1, grupoPar: 1, titulo: 1},
+	Meteor.publish('allTipis', function() {
+		return Tipis.find({}, {fields: {numActo: 1, ref: 1, fechaPub: 1, autor: 1, grupoPar: 1, titulo: 1},
 													 sort: {numActo: -1}});
 	});
 	Meteor.publish('singleTipi', function(id) {
-		return Tipi.find(id);
+		return Tipis.find(id);
 	});
 
 	Meteor.publish('allRefs', function() {
@@ -57,11 +57,6 @@ if (Meteor.isServer) {
 		return Refs.find({}, {fields: {bol: 1, ref: 1, gopag: 1, autor: 1, titulo: 1, dicts: 1, fecha: 1, content: 1}, 
 													sort: {bol: -1, fecha: -1},
 													limit: 300});
-	});
-
-
-	Meteor.publish('blogLastEntry', function() {
-	  return Blog.find({published: true}, {fields: {title: 1}}, {sort: {date:-1}, limit:1});
 	});
 
 }

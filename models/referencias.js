@@ -6,7 +6,7 @@ All code related to the Items collection goes here.
 
 /+ ---------------------------------------------------- */
 
-Refs = new Meteor.Collection('proclines', {idGeneration : 'MONGO'});
+Refs = new Meteor.Collection('referencias', {idGeneration : 'MONGO'});
 
 // Allow/Deny
 
