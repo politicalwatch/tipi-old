@@ -86,6 +86,8 @@ proc_serieA <- function(lines, codigo, tramite){
         tmp <- list()
         ## A1-1 o algo asi...
         tmp$bol <- codigo
+        #Origen
+        tmp$origen <- "serieA"
         #Algunos casos en que no hay una referencia todo el texto junto. Ej A-15-5
         #y salir del bucle
         if(!any(iref)){ 
@@ -200,6 +202,8 @@ proc_serieA_enmiendas <- function(lines, codigo, tramite){
         #codigo='A-1-1'
         ###para emnmienda=1
         tmp$bol <- codigo
+        #Origen
+        tmp$origen <- "serieA"
         #Algunos casos en que no hay una referencia todo el texto junto. Ej A-15-5
         #y salir del bucle
         if(!any(iref)){ 
