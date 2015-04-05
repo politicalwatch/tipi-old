@@ -84,6 +84,8 @@ proc_serieB <- function(lines, codigo, tramite){
         tmp <- list()
         ## A1-1 o algo asi...
         tmp$bol <- codigo
+        #Origen
+        tmp$origen <- "serieB"
         #Algunos casos en que no hay una referencia todo el texto junto. Ej A-15-5
         #y salir del bucle
         if(!any(iref)){ 
