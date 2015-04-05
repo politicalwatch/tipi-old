@@ -96,6 +96,15 @@ proc_serieB <- function(lines, codigo, tramite){
         }
         tmp$ref  <- str_extract(lines[reflin[1]], "^[0-9]{3}\\/[0-9]{5,6}")
         tmp$tipo <- str_split(tmp$ref, "/")[[1]][1]
+        tmp$tipotexto <- ""        
+        tipodet <- str_detect(string = tmp$tipo, pattern = as.character(tipostexto$tipo))
+        if (any(tipodet)) {
+                #cogemos el primero, el segundo corresponde con enmiendas
+                tmp$tipotexto <- tipostexto[tipodet, "textoabrev"][1]
+                if(tramite %in% c("Enmiendas e índice de enmiendas al articulado", "Enmiendas") & length(tipodet)>1){
+                        tmp$tipotexto <- tipostexto[tipodet, "textoabrev"][2]
+                }
+        } 
         #tramite
         tmp$tramite <- tramite
         
@@ -120,8 +129,8 @@ proc_serieB <- function(lines, codigo, tramite){
         
         #Si es de enmiendas llamamos a la funcion proc_serieB_enmiendas y devolvemos resultado.
         #ej. B-157-5
-        if(tmp$tramite %in% c(tramitesBamp[12], tramitesBamp[19])){
-          tmp <- proc_serieB_enmiendas(tmp, lines) ####### REVISAR CON EJEMPLO
+        if(tmp$tramite %in% c("Enmiendas e índice de enmiendas al articulado", "Enmiendas")){
+          tmp <- proc_serieB_enmiendas(tmp, lines) 
           return(tmp)
           break()
         }
@@ -284,127 +293,127 @@ proc_serieB_enmiendas <- function(tmp, lines){
 
 #Trámites para la serie B.
 #Lista reducida para la serieB. el resto de casos son 'otro'.
-tramitesB <- c("Proposición de Ley",
-               "Iniciativa",#CONSULTAR ALBA: EQUIVALENTE A PL?
-               "Rechazada",
-               "Retirada"
-)
-#Lista ampliada
-tramitesBamp <- c("Proposición de Ley",
-               "Iniciativa",
-               "Rechazada",
-               "Retirada",
-               "Caducidad de la iniciativa", #--->"Caducidad"
-               "Modificación del título", #--->'Modificacion'B-36
-               "Toma en consideración", #B-39, 
-               "Proposición de reforma del Reglamento del Congreso", #B-39
-               "Proposición de reforma constitucional", #B-55
-               "Texto de la Proposición", #B58
-               "Acuerdo subsiguiente a la toma en consideración",#B-70, B-112
-               "Enmiendas e índice de enmiendas al articulado",#B-70
-               "Informe de la Ponencia", #B-70
-               "Dictamen de la Comisión", #B-112
-               "Aprobación por la Comisión con competencia legislativa plena",
-               "Votación favorable en debate de totalidad",#B-112
-               "Aprobación por la Comisión con competencia legislativa plena", #B-119
-               "Tramitación en lectura única", #B-157
-               "Enmiendas", #B-157
-               "Aprobación por el Pleno" #B-157
-)
+# tramitesB <- c("Proposición de Ley",
+#                "Iniciativa",#CONSULTAR ALBA: EQUIVALENTE A PL?
+#                "Rechazada",
+#                "Retirada"
+# )
+# #Lista ampliada
+# tramitesBamp <- c("Proposición de Ley",
+#                "Iniciativa",
+#                "Rechazada",
+#                "Retirada",
+#                "Caducidad de la iniciativa", #--->"Caducidad"
+#                "Modificación del título", #--->'Modificacion'B-36
+#                "Toma en consideración", #B-39, 
+#                "Proposición de reforma del Reglamento del Congreso", #B-39
+#                "Proposición de reforma constitucional", #B-55
+#                "Texto de la Proposición", #B58
+#                "Acuerdo subsiguiente a la toma en consideración",#B-70, B-112
+#                "Enmiendas e índice de enmiendas al articulado",#B-70
+#                "Informe de la Ponencia", #B-70
+#                "Dictamen de la Comisión", #B-112
+#                "Aprobación por la Comisión con competencia legislativa plena",
+#                "Votación favorable en debate de totalidad",#B-112
+#                "Aprobación por la Comisión con competencia legislativa plena", #B-119
+#                "Tramitación en lectura única", #B-157
+#                "Enmiendas", #B-157
+#                "Aprobación por el Pleno" #B-157
+# )
 
 ##[INES 22-12-2014] Grupos parlamentarios, nombres alternativos
-gparlam <- data.frame( gparlam = c("Grupo Parlamentario Popular en el Congreso",
-                                   "Grupo Parlamentario Socialista",
-                                   "Grupo Parlamentario Catalán (Convergència i Unió)",
-                                   "Grupo Parlamentario de IU, ICV-EUiA, CHA: La Izquierda Plural",
-                                   "Grupo Parlamentario de la Izquierda Plural",#[INES 21-01-2015]
-                                   "Grupo Parlamentario de Unión Progreso y Democracia",
-                                   "Grupo Parlamentario Vasco (EAJ-PNV)",
-                                   "Grupo Parlamentario Mixto"),
-                       gparlams = c("Popular en el Congreso",
-                                    "Socialista",
-                                    "Catalán \\(Convergència i Unió\\)",
-                                    "IU, ICV-EUiA, CHA: La Izquierda Plural",
-                                    "Izquierda Plural",#[INES 21-01-2015]
-                                    "Unión Progreso y Democracia",
-                                    "Vasco \\(EAJ-PNV\\)",
-                                    "Mixto"),
-                       gparlamab = c("GP",
-                                     "GS",
-                                     "GC-CiU",
-                                     "GIP",
-                                     "GIP",#[INES 21-01-2015]
-                                     "GUPyD",
-                                     "GV (EAJ-PNV)", #[INES 21-01-2015 quitamos \\]
-                                     "GMx")  )
+# gparlam <- data.frame( gparlam = c("Grupo Parlamentario Popular en el Congreso",
+#                                    "Grupo Parlamentario Socialista",
+#                                    "Grupo Parlamentario Catalán (Convergència i Unió)",
+#                                    "Grupo Parlamentario de IU, ICV-EUiA, CHA: La Izquierda Plural",
+#                                    "Grupo Parlamentario de la Izquierda Plural",#[INES 21-01-2015]
+#                                    "Grupo Parlamentario de Unión Progreso y Democracia",
+#                                    "Grupo Parlamentario Vasco (EAJ-PNV)",
+#                                    "Grupo Parlamentario Mixto"),
+#                        gparlams = c("Popular en el Congreso",
+#                                     "Socialista",
+#                                     "Catalán \\(Convergència i Unió\\)",
+#                                     "IU, ICV-EUiA, CHA: La Izquierda Plural",
+#                                     "Izquierda Plural",#[INES 21-01-2015]
+#                                     "Unión Progreso y Democracia",
+#                                     "Vasco \\(EAJ-PNV\\)",
+#                                     "Mixto"),
+#                        gparlamab = c("GP",
+#                                      "GS",
+#                                      "GC-CiU",
+#                                      "GIP",
+#                                      "GIP",#[INES 21-01-2015]
+#                                      "GUPyD",
+#                                      "GV (EAJ-PNV)", #[INES 21-01-2015 quitamos \\]
+#                                      "GMx")  )
 
 
 ## [ines 16-01-2015] Comisiones
-comisiones <- c("^Comisión Constitucional$",
-                "^Comisión de Asuntos Exteriores$",
-                "^Comisión de Justicia$",
-                "^Comisión de Interior$",
-                "^Comisión de Defensa$",
-                "^Comisión de Economía y Competitividad$",
-                "^Comisión de Hacienda y Administraciones Públicas$",
-                "^Comisión de Presupuestos$",
-                "^Comisión de Fomento$",
-                "^Comisión de Educación y Deporte$",
-                "^Comisión de Empleo y Seguridad Social$",
-                "^Comisión de Industria, Energía y Turismo$",
-                "^Comisión de Agricultura, Alimentación y Medio Ambiente$",
-                "^Comisión de Sanidad y Servicios Sociales$",
-                "^Comisión de Cooperación Internacional para el Desarrollo$",
-                "^Comisión de Cultura$",
-                "^Comisión de Igualdad$",
-                "^Comisión de Reglamento$",
-                "^Comisión del Estatuto de los Diputados$",
-                "^Comisión de Peticiones$",
-                "^Comisión de Seguimto. y Evaluación de los Acuerdos del Pacto de Toledo$",
-                "^Comisión sobre Seguridad Vial y Movilidad Sostenible$",
-                "^Comisión para las Políticas Integrales de la Discapacidad$",
-                "^Comisión de control de los créditos destinados a gastos reservados$",
-                "^Comisión Consultiva de Nombramientos$",
-                "^Comisión para el Estudio del Cambio Climático$",
-                "^Comisión Mixta para las Relaciones con el Tribunal de Cuentas$",
-                "^Comisión Mixta para la Unión Europea$",
-                "^Comisión Mixta de Relaciones con el Defensor del Pueblo$",
-                "^Comisión Mixta para el Estudio del Problema de las Drogas$",
-                "^Comisión Mixta Control Parlam. de la Corporación RTVE y sus Sociedades$"
-)
-
-comisabrev <- c("Constitucional",
-                "Asuntos Exteriores",
-                "Justicia",
-                "Interior",
-                "Defensa",
-                "Economía y Competitividad",
-                "Hacienda y Administraciones Públicas",
-                "Presupuestos",
-                "Fomento",
-                "Educación y Deporte",
-                "Empleo y Seguridad Social",
-                "Industria, Energía y Turismo",
-                "Agricultura, Alimentación y Medio Ambiente",
-                "Sanidad y Servicios Sociales",
-                "Cooperación Internacional para el Desarrollo",
-                "Cultura",
-                "Igualdad",
-                "Reglamento",
-                "Estatuto de los Diputados",
-                "Peticiones",
-                "Seguimto. y Evaluación de los Acuerdos del Pacto de Toledo",
-                "Seguridad Vial y Movilidad Sostenible",
-                "Políticas Integrales de la Discapacidad",
-                "control de los créditos destinados a gastos reservados",
-                "Consultiva de Nombramientos",
-                "Estudio del Cambio Climático",
-                "Mixta para las Relaciones con el Tribunal de Cuentas",
-                "Mixta para la Unión Europea",
-                "Mixta de Relaciones con el Defensor del Pueblo",
-                "Mixta para el Estudio del Problema de las Drogas",
-                "Mixta Control Parlam. de la Corporación RTVE y sus Sociedades"
-)
+# comisiones <- c("^Comisión Constitucional$",
+#                 "^Comisión de Asuntos Exteriores$",
+#                 "^Comisión de Justicia$",
+#                 "^Comisión de Interior$",
+#                 "^Comisión de Defensa$",
+#                 "^Comisión de Economía y Competitividad$",
+#                 "^Comisión de Hacienda y Administraciones Públicas$",
+#                 "^Comisión de Presupuestos$",
+#                 "^Comisión de Fomento$",
+#                 "^Comisión de Educación y Deporte$",
+#                 "^Comisión de Empleo y Seguridad Social$",
+#                 "^Comisión de Industria, Energía y Turismo$",
+#                 "^Comisión de Agricultura, Alimentación y Medio Ambiente$",
+#                 "^Comisión de Sanidad y Servicios Sociales$",
+#                 "^Comisión de Cooperación Internacional para el Desarrollo$",
+#                 "^Comisión de Cultura$",
+#                 "^Comisión de Igualdad$",
+#                 "^Comisión de Reglamento$",
+#                 "^Comisión del Estatuto de los Diputados$",
+#                 "^Comisión de Peticiones$",
+#                 "^Comisión de Seguimto. y Evaluación de los Acuerdos del Pacto de Toledo$",
+#                 "^Comisión sobre Seguridad Vial y Movilidad Sostenible$",
+#                 "^Comisión para las Políticas Integrales de la Discapacidad$",
+#                 "^Comisión de control de los créditos destinados a gastos reservados$",
+#                 "^Comisión Consultiva de Nombramientos$",
+#                 "^Comisión para el Estudio del Cambio Climático$",
+#                 "^Comisión Mixta para las Relaciones con el Tribunal de Cuentas$",
+#                 "^Comisión Mixta para la Unión Europea$",
+#                 "^Comisión Mixta de Relaciones con el Defensor del Pueblo$",
+#                 "^Comisión Mixta para el Estudio del Problema de las Drogas$",
+#                 "^Comisión Mixta Control Parlam. de la Corporación RTVE y sus Sociedades$"
+# )
+# 
+# comisabrev <- c("Constitucional",
+#                 "Asuntos Exteriores",
+#                 "Justicia",
+#                 "Interior",
+#                 "Defensa",
+#                 "Economía y Competitividad",
+#                 "Hacienda y Administraciones Públicas",
+#                 "Presupuestos",
+#                 "Fomento",
+#                 "Educación y Deporte",
+#                 "Empleo y Seguridad Social",
+#                 "Industria, Energía y Turismo",
+#                 "Agricultura, Alimentación y Medio Ambiente",
+#                 "Sanidad y Servicios Sociales",
+#                 "Cooperación Internacional para el Desarrollo",
+#                 "Cultura",
+#                 "Igualdad",
+#                 "Reglamento",
+#                 "Estatuto de los Diputados",
+#                 "Peticiones",
+#                 "Seguimto. y Evaluación de los Acuerdos del Pacto de Toledo",
+#                 "Seguridad Vial y Movilidad Sostenible",
+#                 "Políticas Integrales de la Discapacidad",
+#                 "control de los créditos destinados a gastos reservados",
+#                 "Consultiva de Nombramientos",
+#                 "Estudio del Cambio Climático",
+#                 "Mixta para las Relaciones con el Tribunal de Cuentas",
+#                 "Mixta para la Unión Europea",
+#                 "Mixta de Relaciones con el Defensor del Pueblo",
+#                 "Mixta para el Estudio del Problema de las Drogas",
+#                 "Mixta Control Parlam. de la Corporación RTVE y sus Sociedades"
+# )
 
 ## Extraer fecha de las cadenas finales de los contenidos
 ## x es una cadena que contiene una fecha en formato dd de mes de aaaa
