@@ -13,6 +13,9 @@ source("../common.R")
 source("../mongodb-conn.R")
 source("funciones-procesamiento.R")
 
+#listas comunes a todas las series
+source("../common-lists.R")
+
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
 #      Procesamiento Boletines Serie A: Proyectos de Ley      #
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
@@ -36,7 +39,7 @@ for(i in 1:length(proy_listA))
 		load(paste0(bol_listA[[d]]$filename)) # carga lines, que contiene el texto a procesar
 
 		#Procesamiento según tipo de trámite
-		if(bol_listA[[d]]$tramite == tramitesA[3]){
+		if(bol_listA[[d]]$tramite %in% c("Enmiendas e índice de enmiendas al articulado","Enmiendas")){
 			# procesar trámite "Enmiendas e índice de enmiendas al articulado"
 			lcont <- try(proc_serieA_enmiendas(lines, codigo = bol_listA[[d]]$codigo, tramite = bol_listA[[d]]$tramite))
 			#                         lcont <- proc_serieA_enmiendas(lines, codigo=bol_listA[[d]]$codigo)
