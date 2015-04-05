@@ -13,6 +13,9 @@ source("../common.R")
 source("../mongodb-conn.R")
 source("funciones-procesamiento.R")
 
+#listas comunes a todas las series
+source("../common-lists.R")
+
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
 #      Procesamiento Boletines Serie A: Proyectos de Ley      #
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
