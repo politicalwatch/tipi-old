@@ -22,14 +22,15 @@ source("../common.R")
 source("../mongodb-conn.R")
 source("funciones-procesamiento.R")
 
+#listas comunes a todas las series
+source("../common-lists.R")
+
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
 #      Procesamiento Boletines Serie A: Proyectos de Ley      #
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
 
 load(paste0(GENERATED_BASE_DIR, "dir-serieB.rd")) # se carga proy_listB
 length(proy_listB)
-i=1
-names(proy_listB[[i]])
 
 # proy_listB[[i]]$codigo
 for(i in 1:length(proy_listB)){#i=1 #for(i in 1:length(proy_listB))
