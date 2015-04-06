@@ -17,8 +17,8 @@ Template.refsearch.helpers({
 	   settings: function () {
         return {
             rowsPerPage: 30,
-            showFilter: true,
-						showColumnToggles: false,
+            showFilter: false,
+			showColumnToggles: false,
             fields: [{ key: 'bol', label: 'Bol.', sort: 'descending'},
 										 { key: 'ref', label: 'Referencia'},
 										 { key: 'fecha', label: 'Fecha',

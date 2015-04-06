@@ -8,22 +8,19 @@ All code related to the Items collection goes here.
 
 Refs = new Meteor.Collection('referencias', {idGeneration : 'MONGO'});
 
-// Allow/Deny
+// Methods
 
-Refs.allow({
-  insert: function(userId, doc){
-    //return can.createItem(userId);
-		// Nadie puede insertar ni borrar referencias, pero sí actualizar
-		return false;
-  },
-  update:  function(userId, doc, fieldNames, modifier){
-    return can.editRef(userId, doc);
-  },
-  remove:  function(userId, doc){
-    //return can.removeItem(userId, doc);
-		return false;
+Meteor.methods({
+  annotateRef: function(id, _dicts, _terms, _annotate){
+    if(can.annotateRef(Meteor.user())){
+      Refs.update(id, {$set: {dicts: _dicts, terms: _terms, annotate: _annotate}});
+    }
+    else {
+      throw new Meteor.Error(403, 'You do not have the rights to annotate items.')
+    }
   }
 });
+
 
 TabularTables = {};
 
