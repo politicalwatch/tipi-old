@@ -32,6 +32,8 @@ load("diputados-mongo.rd")
 # Listado boletines a procesar #
 #++++++++++++++++++++++++++++++#
 source("../common.R")
+#listas comunes a todas las series
+source("../common-lists.R")
 
 ### obtener listado completo boletines
 # cargar fichero abl.rd
