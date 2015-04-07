@@ -7,6 +7,9 @@ Code related to the items template
 /+ ---------------------------------------------------- */
 
 Template.refsearch.helpers({
+		alldicts_helper: function() {
+			return Dicts.find().fetch();
+		},
 		lastquery: function() {
 			return Session.get("searchRefs");
 		},
@@ -46,7 +49,11 @@ Template.refsearch.helpers({
 
 
 Template.refsearch.rendered = function (a) {
+	if(!this._rendered) {
+		this._rendered = true;
 
+		// setup select
+	}
 };
 
 Template.refsearch.events({
