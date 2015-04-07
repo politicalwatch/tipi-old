@@ -121,7 +121,7 @@ proc_serieA <- function(lines, codigo, tramite){
         #autor. Si es 'proyecto de ley' es el Gobierno; si no, se deja vacio.
         #en función de la primera linea del documento.
         tmp$autor <- ""
-        if(tramite == tramitesA[1]){ tmp$autor <- "Gobierno" }
+        if(tramite %in% c("Iniciativa", "Proyecto de Ley")){ tmp$autor <- "Gobierno" }
         
         #lineas del contenido: seguido de indice
         # excepto si hay alguna linea que comienza en 'Informe'; entonces vamos hasta allí
