@@ -293,21 +293,21 @@ proc_boletin <- function(lines, num){
         cntini <- firstreflin[2]
         cntend <- length(lines)
         
-        ## [INES] Almacenar localizacion de frases separadoras
+        #Almacenar localizacion de frases separadoras
         separa_list <- list()
         # generamos una lista que contiene vectores lógicos T/F para cada separador
         for(s in frsep){
                 separa_list[[s]] <- str_detect(string = lines, pattern = ignore.case(s))
         }
         
-        # [INES] Almacenar localizacion de secciones (NO NECESARIO: VALORAR.)
+        #Almacenar localizacion de secciones (NO NECESARIO: VALORAR.)
         sec_list <- list()
         # generamos una lista que contiene vectores lógicos T/F para cada sección
         for(ss in secciones){
                 sec_list[[ss]] <- str_detect(string = lines, pattern = ignore.case(ss))
         }
         
-        ## [INES] Almacenar secciones y referencias dentro de cada una
+        #Almacenar secciones y referencias dentro de cada una
         sec_list_refs <- list()        
         for(ss in 1:length(secciones)){
                 if(ss < length(secciones)){
@@ -319,7 +319,7 @@ proc_boletin <- function(lines, num){
         # finalmente mergear listas (re-utilizar sec_list_refs)
         sec_list_refs <- mapply(c, secciones, sec_list_refs, USE.NAMES = FALSE)
         
-        ## [NOTA] La idea es implementar lo mismo con las Comisiones.
+        #Lo mismo con las Comisiones.
         com_list <- list() # lista que almacenará posiciones de cada comisión
         for(cc in comisiones){
                 com_list[[cc]] <- str_detect(string = lines, pattern = ignore.case(cc))
@@ -339,6 +339,15 @@ proc_boletin <- function(lines, num){
                                 tmp$bol  <- sprintf("%03d", as.numeric(num))
                                 tmp$ref  <- str_extract(lines[nref[i]], "^[0-9]{3}\\/[0-9]{5,6}")
                                 tmp$tipo <- str_split(tmp$ref, "/")[[1]][1]
+                                
+                                #####TODO######Añadir aqui tipotexto.
+                                tmp$tipotexto <- ""        
+                                tipodet <- str_detect(string = tmp$tipo, pattern = as.character(tipostexto$tipo))
+                                if (any(tipodet)) {
+                                        #cogemos el primero, el segundo corresponde con enmiendas
+                                        tmp$tipotexto <- tipostexto[tipodet, "textoabrev"][1]
+                                } 
+                                
                                 tmp$ndx  <- lines[nref[i]:(nref[i+1]-1)] #Contenido del índice.
                                 tmp$ndx <- str_replace_all(tmp$ndx, "^[0-9]{3}\\/[0-9]{5,6}", "")
                                 tmp$ndx <- str_trim(tmp$ndx)
@@ -361,16 +370,7 @@ proc_boletin <- function(lines, num){
                                         tmp$autor <- str_trim(str_match(tmp$ndx[tmpaut], "Autor:(.*)")[, 2])
                                         tmp$ndx <- tmp$ndx[!tmpaut]
                                 }
-                                
-                                ##[INES 22-12-2014] Búsqueda de grupos parlamentarios en el índice
-                                #                                         tmpgparl <- str_detect(tmp$ndx, ignore.case("grupo[s]? parlamentario"))
-                                #                                         if (any(tmpgparl)) {
-                                #                                                 detgrup    <- str_detect(tmp$ndx[tmpgparl], gparlam$gparlams)
-                                #                                                 if(!any(detgrup)){
-                                #                                                         tmp$grupos <- gparlam[detgrup, "gparlamab"] ## guardo abreviado  
-                                #                                                 }
-                                #                                         }
-                                ##[INES 19-01-2015]
+                                                                        }
                                 #Buscamos grupo en la primera linea del titulo.
                                 tmpgparl <- str_detect(tmp$ndx, ignore.case("grupo[s]? parlamentario"))
                                 if (any(tmpgparl)) {
@@ -379,20 +379,9 @@ proc_boletin <- function(lines, num){
                                                 tmp$grupos <- gparlam[detgrup, "gparlamab"] ## guardo abreviado  
                                         }
                                 }
-                                
-                                ##[INES 22-12-2014] TODO: Búsqueda de comisiones en el índice.
-                                ##[INES 16-01-2015] Cambio lógica: no se busca en el índice sino el inmediatamente anterior, y solo para algunos tipos
-                                #                                 tmpcomis <- str_detect(tmp$ndx, "(Comisi[óo]n)|(Comisiones)")
-                                #                                 if (any(tmpcomis)) {
-                                #                                         #       tmp$ndx[tmpcomis]
-                                #                                         #de momento cogemos sólo una comisión
-                                #                                         tmp$comisiones <- str_extract(tmp$ndx[tmpcomis], "Comisión de +([a-zA-Z]+){1,1}")
-                                #                                 }        
-                                
                                 ## El título son las líneas que quedan en el índice excepto la última si
                                 ## hay más de una, pero es distinto para las 184 que para el resto
                                 tmp$titulo <- tmp$ndx[1]
-                                
                                 tmp$titulo <- str_replace_all(tmp$titulo, " +", " ") ## Quito espacios duplicados
                                 tmp$titulo <- str_trim(tmp$titulo) ## Quito espacios en los extremos
                                 
@@ -412,14 +401,12 @@ proc_boletin <- function(lines, num){
                                                 }
                                                 tmp$mref <- lsv 
                                         }
-                                        #[INES 17-01-2015]
                                         #ultima referencia
                                         secondrefn <- nref[nref>secondref][1]-1 #Fin del contenido: **a veces mal**
                                         if( grepl(tmp$ref, lines[nref[length(nref)-1]]) ) { secondrefn <- secondrefn + 1 }
                                         tmp$cnt    <- lines[secondref:secondrefn] #Esto puede incluir líneas que no son. Ej bol=307, ref='184/024404'
-                                        ##tmp$cnt    <- tmp$cnt[tmp$cnt != ""]  ## No hace falta, se ha limpiado antes
                                         
-                                        ### [INES 2015-01-15] Eliminar lineas con frases separadoras, y hasta el final
+                                        #Eliminar lineas con frases separadoras, y hasta el final
                                         v <- vector()
                                         for(ss in frsep){
                                                 if(any(g <- grep(pattern = ss, tmp$cnt, ignore.case = TRUE))){
@@ -445,7 +432,7 @@ proc_boletin <- function(lines, num){
                                                 tmp$contentpos <- tmp1$contentpos
                                                 tmp$contentend <- tmp1$contentend
                                         }
-                                        ##[17-01-2015] Priorizar fecha de contentend, si hay texto con fecha
+                                        # Priorizar fecha de contentend, si hay texto con fecha
                                         if(!is.null(tmp$contentend)){
                                                 if(tmp$contentend != ""){
                                                         fecha2 <- try(extraer.fecha(tmp$contentend))
@@ -455,7 +442,7 @@ proc_boletin <- function(lines, num){
                                         }
                                         
                                         ## Añadir procesamiento de contenido: autor, grupo parlamentario, etc.
-                                        ##[INES 22-12-2014]
+                                        #
                                         tmpgparlcnt <- str_detect(tmp$contentpre, ignore.case("grupo[s]* parlamentario"))
                                         if (any(tmpgparlcnt)) {
                                                 detgrup    <- str_detect(tmp$contentpre[tmpgparlcnt], gparlam$gparlams)
@@ -479,11 +466,30 @@ proc_boletin <- function(lines, num){
                                         }
                                         rm(vc, vc1)
                                 }
-                                
+                                #Añadir fecha de creación
                                 tmp$created <- as.POSIXct(Sys.time(), tz="CET")
-                                lcont[[i]] <- tmp
+                                #Boletines con enmiendas: Varios documentos por referencia.
+                                lenmiendas <- list()
+                                if(tmp$tipo %in% c('161', '162')){
+                                        if(any(str_detect(string = tmp$content, pattern = "^Enmienda"))){ 
+                                                lenmiendas <- proc_serieD_enmiendas(tmp)
+                                        }
+                                        #añadimos a tmp campos adicionales enmineda 
+                                        #sobreescribimos también algunos de los campos
+                                        #alimentamos lcont tantas veces como numenmienda.
+                                        #adaptando el indice i para tal efecto.
+                                }
+                                #añadir, si hay, las enmiendas como elementos adicionales
+                                numenmi <- length(lenmiendas) #docs adicionales por añadir: 0 si no hay Enmiendas.
+                                l <- length(lcont) #para ver por dònde vamos
+                                if(numenmi == 0){ lcont[[(l+1)]] <- tmp }
+                                if(numenmi > 0){
+                                        for(p in 1:numenmi){
+                                                lcont[[(l+p)]] <- lenmiendas[[p]]
+                                        }
+                                }
+#                                 lcont[[i]] <- tmp #CAMBIAR AQUI
                         }             
-                }
         } else {
                 lcont$bol <- sprintf("%03d", as.numeric(num))
                 lcont$special <- TRUE
@@ -493,3 +499,87 @@ proc_boletin <- function(lines, num){
         return(lcont)
 }
 
+
+# Frases separadoras enmiendas tipos 161, 162
+frsepenmi <- c("^A la Mesa de la Comisión",
+               "^A la Mesa de la Comisiones")
+
+
+#afecta solo tipos 161, 162
+#Parámetros: campo content, a separar por enmiendas
+#Devuelve: lista de documentos tmpenmi a enviar a Mongo, a añadir a lcont.
+proc_serieD_enmiendas <- function(tmp){
+        
+        content <- c(tmp$content, tmp$contentend) #para cazar el último 'Palacio de...'
+        
+        # Inicializar listado que contendrá enmiendas, y con el que ampliaremos lcont
+        lenmiendas <- list()
+        
+        # Contenido vacío, nos salimos
+        if(length(content)==1){ break() }
+        
+        # NO hay enmiendas, devolvemos lo que teníamos tmp
+        if(!any(detenmi <- str_detect(string=content, pattern="^Enmienda"))){#no hay enmiendas
+                enmiendas <- tmp #devuelve lo que teníamos
+        }
+        
+        # Caso normal, hay enmiendas.
+        linenmi<- c(1:length(content))[detenmi] #id de lineas de content con enmiendas
+        numenmi <- length(linenmi)
+        
+        detsepenmi <- vector()
+        for(c in 1:length(content)){#c=1
+                if(any(str_detect(string=content[c], pattern=frsepenmi))) detsepenmi <- c(detsepenmi, c)
+        }
+        linsepenmi <- c(1:length(content))[detsepenmi]
+        
+        # ahora recorremos estas lineas linsepenmi, marcan comienzo y final de las enmiendas
+        for(k in 1:length(linsepenmi)){#k=1
+                
+                # Inicializar lista a devolver
+                tmpenmi <- tmp
+                
+                #número de enmienda
+                tmpenmi$numenmienda <- k
+                
+                # añadir tramite
+                tmpenmi$tramite <- "Enmienda"
+                
+                enmipre <- content[linsepenmi[k]+1]
+                if(k != length(linsepenmi)){
+                        enmifin <- linsepenmi[k+1]
+                }else{ enmifin <- length(content) }
+                
+                #contentpre de la enmienda
+                if(k != length(linsepenmi)){
+                        enmiend <- content[enmifin-1]
+                }else{ enmiend <- content[enmifin] }
+                
+                #extraer diputados de enmiend (el 'contentend' de la enmienda)
+                dipdet <- str_detect(enmiend, ignore.case(diputados$nomapre))
+                if (any(dipdet)) {
+                        tmpenmi$diputados <- diputados[dipdet, "apnom"]
+                } 
+                #extraer grupos parlamentarios.
+                gparldet <- str_detect(enmiend, ignore.case(gparlam$gparlam))
+                if(any(gparldet)) {
+                        tmpenmi$grupos <- gparlam[gparldet, "gparlamab"]
+                }
+                #extraer texto de la enmienda: sobreescribimos content.
+                #desde 'Enmienda' hasta el fin.
+                tmpenmi$content <- ""
+                if(length(linenmi)==length(linsepenmi)){
+                        tmpenmi$content <- content[(linsepenmi[k]+2):enmifin]
+                }
+                #extraer fecha de la enmienda
+                resulfec <- try(extraer.fecha(x = enmiend)) 
+                if(any(class(resulfec) %in% c("POSIXct","POSIXt"))){ tmpenmi$fecha <- resulfec }
+                
+                #fecha de creacion
+                tmpenmi$created <- as.POSIXct(Sys.time(), tz="CET")
+                
+                lenmiendas[[k]] <- tmpenmi
+        }
+        
+        return(lenmiendas)
+}
