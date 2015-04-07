@@ -67,6 +67,9 @@
 .oldleft h2 {font-family: 'Old Standard TT';
 	font-size:22px;
 	font-weight:100;}
+.oldleft h2 {font-family: 'Old Standard TT';
+	font-size:36px;
+	font-weight:100;}
 .oldleft h3 {font-family: 'Old Standard TT';
 	font-size:16px;
 	font-weight:100;}
@@ -74,6 +77,11 @@
 	font-size:130px;
 	font-weight:100;
 	color: black;}
+
+.oldleft h2#scanner::first-letter {font-family:'Abril Fatface';
+	font-size:70px;
+	font-weight:100;
+	color: #fed26f;}
 
 .old h1::first-letter
 {font-family:'Abril Fatface';
@@ -326,7 +334,7 @@ text-align:center;
   stroke-width: 1.5px;
 }
 .node--leaf {
-  fill: white;
+  fill: yellow;
 }
 .label {
   font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;

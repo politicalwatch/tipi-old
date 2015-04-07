@@ -30,7 +30,8 @@ Template.scanner.rendered = function() {
         .append("g")
         .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
 
-    d3.json("https://gist.githubusercontent.com/mbostock/7607535/raw/a05a94858375bd0ae023f6950a2b13fac5127637/flare.json", function(error, root) {
+    // https://gist.githubusercontent.com/mbostock/7607535/raw/a05a94858375bd0ae023f6950a2b13fac5127637/flare.json
+    d3.json(Meteor.absoluteUrl("/data/fixtures.json"), function(error, root) {
       if (error) return console.error(error);
 
       var focus = root,
@@ -41,7 +42,7 @@ Template.scanner.rendered = function() {
           .data(nodes)
         .enter().append("circle")
           .attr("class", function(d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
-          .style("fill", function(d) { return d.children ? color(d.depth) : null; })
+          .style("fill", function(d) { return d.children ? /*color(d.depth)*/ "#000" : null; })
           .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); });
 
       var text = svg.selectAll("text")
@@ -55,12 +56,15 @@ Template.scanner.rendered = function() {
       var node = svg.selectAll("circle,text");
 
       d3.select("body")
-          .style("background", color(-1))
+          .style("background", "#000" /*color(-1)*/)
           .on("click", function() { zoom(root); });
 
       zoomTo([root.x, root.y, root.r * 2 + margin]);
 
       function zoom(d) {
+
+        $("#scanner").text(d.name);
+
         var focus0 = focus; focus = d;
 
         var transition = d3.transition()

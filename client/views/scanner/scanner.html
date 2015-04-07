@@ -1,18 +1,24 @@
 <template name="scanner">
     {{> header}}
     <div class="containerglob">
-        <div class="row oldleft">
+        <!-- <div class="row oldleft">
             <h1>Escaner</h1>
-        </div>
-        <div class="row">
-            <div class="col-md-7" style="height:500px">
+        </div> -->
+        <div class="row" style="background-color: black;">
+            <div class="col-sm-6" style="height:600px; padding-top: 30px; padding-bottom: 30px;">
                 
                 <div id="vizz"></div>
 
                 <!-- <img src="/images/bolas.svg" alt=""> -->
 
             </div>
-            <div class="col-md-5 oswald">
+            <div class="col-sm-6" style="background-color: black; color: white; padding-top: 30px; padding-bottom: 30px;">
+                <div class="oldleft">
+                    <h2 id="scanner">Escaner</h2>
+                </div>
+                
+            </div>
+            <!-- <div class="col-md-5 oswald">
                 <p>
                     Filtre por:
                 </p>    
@@ -23,10 +29,8 @@
                     <span class="btn"><h5>Lugar</h5></span>
                     <span class="btn"><h5>Trámite parlamentario</h5></span>
                     <span class="btn"><h5>Fecha</h5></span>
-                </span>
-                
-            </div>
+                </span>    
+            </div> -->
         </div>
     </div>
-    {{> footer}}
 </template>
