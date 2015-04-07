@@ -14,9 +14,9 @@ Template.dicts.helpers({
 	   settings: function () {
         return {
             rowsPerPage: 30,
-						bPaginate: false,
-            showFilter: true,
-						showColumnToggles: false,
+			bPaginate: false,
+            showFilter: false,
+			showColumnToggles: false,
             fields: [{ key: 'dictgroup', label: 'Grupo', sort: 'descending'},
 										 { key: 'dict', label: 'Diccionario'},
 										 { key: 'lastUpdate', label: 'Actualizado'},

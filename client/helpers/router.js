@@ -92,7 +92,7 @@ Router.map(function() {
     path: '/refs/:_id/annotate',
     waitOn: function () {
       var oid = new Mongo.ObjectID(this.params._id);
-      return Meteor.subscribe('singleRef', oid) && Meteor.subscribe('allDicts');
+      return Meteor.subscribe('singleRef', oid) && Meteor.subscribe('allDictsWithWords');
     },
     data: function () {
       return {

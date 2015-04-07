@@ -92,7 +92,7 @@ construir_dir_bolA <- function(doc2, guardarlocal = FALSE, bol_list=list()){
                 tmp$x <- str_trim(cleanBN(str_replace(string = x1, pattern = '\\n', replacement = "")))
                 tmp$codigo <- codigo1
                 tmp$tramite <- ""
-                if(any(tr <- str_detect(string = tmp$x, pattern = tramitesA))){ tmp$tramite <- tramitesA[tr] }
+                if(any(tr <- str_detect(string = tmp$x, pattern = tramitesA))){ tmp$tramite <- tramitesA[tr][1] }
                 tmp$fecha <- f1
                 tmp$url <- url
                 tmp$proc <- 0 #marcado comoprocesado?

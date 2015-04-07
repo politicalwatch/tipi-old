@@ -9,11 +9,32 @@
                                 <h3>{{bol}} - {{ref}} - {{titulo}}</h3>
                                 <hr>
                                 <p>
-                                    <h5 class="text-center"><i>Display dictionaries and terms to select</i></h5>
+                                    <strong>Terminos que aparecen:</strong>
+                                    <ul>
+                                        {{#each show_terms }}
+                                            <li>{{this}}</li>
+                                        {{/each}}
+                                    </ul>
                                 </p>
                                 <p>
+                                    <strong>Diccionarios:</strong>
+                                    <ul>
+                                        {{#each show_dicts }}
+                                            <li>{{this}}</li>
+                                        {{/each}}
+                                    </ul>
+                                </p>
+                                <!--<p>
+                                <h5>Dictionarios sugeridos:</h5>
+                                <ul>
+                                    {{#each dictionaries_suggested}}
+                                        <li>{{this}}</li>
+                                    {{/each}}
+                                </ul>
+                                </p> -->
+                                <p>
                                     <a class="btn btn-default" id="back">← Volver</a>
-                                    <a id="save" class="btn btn-warning pull-right">Guardar</a>
+                                    <a id="annotate" class="btn btn-default pull-right">Anotar</a>
                                 </p>
                             </div>
                         {{/with}}
