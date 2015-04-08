@@ -337,6 +337,8 @@ proc_boletin <- function(lines, num){
                         if (!is.na(ndxend) & nref[i] <= ndxend) {
                                 tmp <- list()
                                 tmp$bol  <- sprintf("%03d", as.numeric(num))
+                                #Origen
+                                tmp$origen <- "serieD"
                                 tmp$ref  <- str_extract(lines[nref[i]], "^[0-9]{3}\\/[0-9]{5,6}")
                                 tmp$tipo <- str_split(tmp$ref, "/")[[1]][1]
                                 tmp$tipotexto <- ""        
@@ -345,7 +347,7 @@ proc_boletin <- function(lines, num){
                                         #cogemos el primero, el segundo corresponde con enmiendas
                                         tmp$tipotexto <- as.character(tipostexto[tipodet, "textoabrev"][1])
                                 } 
-                                
+
                                 tmp$ndx  <- lines[nref[i]:(nref[i+1]-1)] #Contenido del índice.
                                 tmp$ndx <- str_replace_all(tmp$ndx, "^[0-9]{3}\\/[0-9]{5,6}", "")
                                 tmp$ndx <- str_trim(tmp$ndx)
@@ -382,7 +384,13 @@ proc_boletin <- function(lines, num){
                                 tmp$titulo <- tmp$ndx[1]
                                 tmp$titulo <- str_replace_all(tmp$titulo, " +", " ") ## Quito espacios duplicados
                                 tmp$titulo <- str_trim(tmp$titulo) ## Quito espacios en los extremos
-                                
+                        
+                                ## Trámite: Del titulo para tipos 161, 162 (proyectos no de ley)
+                                if(tmp$tipo %in% c("161", "162")){
+                                        if(any(dettram <- str_detect(tmp$titulo, pattern=tramitesDPNL))){
+                                                tmp$tramite <- tramitesDPNL[dettram][1]
+                                        }
+                                }
                                 ## Esto debe marcar el comienzo del contenido de la referencia que encotramos en el índice
                                 secondref  <- grep(paste0("^", tmp$ref), lines)[2]
                                 if (!is.na(secondref)) { ## Sólo ataco contenido si aparece la referencia una segunda vez
@@ -555,16 +563,26 @@ proc_serieD_enmiendas <- function(tmp){
                 enmifin <- linendings[which(linendings > linsepenmi[k])][1]
                         
                 #contentpre de la enmienda
-#                 if(k != length(linsepenmi)){
-#                         enmiend <- content[enmifin-1]
-#                 }else{ enmiend <- content[enmifin] }
-                tmpenmi$contentend <- enmiend <- content[enmifin]
-                
+                if(k != length(linsepenmi)){
+                        enmiend <- content[enmifin]
+                }else{ enmiend <- content[length(content)] }
+                tmpenmi$contentend <- enmiend
                 #extraer diputados de enmiend (el 'contentend' de la enmienda)
-                dipdet <- str_detect(enmiend, ignore.case(diputados$nomapre))
-                if (any(dipdet)) {
-                        tmpenmi$diputados <- diputados[dipdet, "apnom"]
-                } 
+#                 dipdet <- str_detect(enmiend, ignore.case(diputados$nomapre))
+#                 if (any(dipdet)) {
+#                         tmpenmi$diputados <- diputados[dipdet, "apnom"]
+#                 } 
+# browser()
+                if (enmiend != "") {
+                        dipdet <- str_detect(enmiend, diputados$nomapre)
+#                         if (!is.na(dipdet) & any(dipdet)) {
+#                                 ##cat("\n", pres[i], "\n *", paste(diputados[dipdet, "apnom"], collapse=";"), "\n")
+#                                 tmpenmi$diputados <- diputados[dipdet, "apnom"]
+#                         } 
+                        if(!is.null(dipdet)){
+                                if(any(dipdet)) {  tmpenmi$diputados <- diputados[dipdet, "apnom"] }
+                        }
+                }
                 #extraer grupos parlamentarios.
                 gparldet <- str_detect(enmiend, ignore.case(gparlam$gparlams))
                 if(any(gparldet)) {
