@@ -230,6 +230,7 @@ Router.map(function() {
 			Session.set('searchRefs', qry);
 			var cqry = _.clone(qry);
 			var fdesde, fhasta;
+			fdesde = fhasta = null;
 			for (var k in cqry) {
 				if( k == "fechadesde" && cqry[k] != "" ) {
 					fdesde = cqry[k];
@@ -241,7 +242,7 @@ Router.map(function() {
 				else if (cqry[k] == "") delete cqry[k];
 				else if (typeof(cqry[k]) != "object") cqry[k] = {$regex: qry[k], $options: "gi"};
 			}
-			cqry["fecha"] = {$gte: new Date(fdesde), $lte: new Date(fhasta)};
+			if( fdesde != null && fhasta != null ) cqry["fecha"] = {$gte: new Date(fdesde), $lte: new Date(fhasta)};
 			return [Meteor.subscribe("allDicts"), Meteor.subscribe("allRefsSearch", cqry)];
     },
     data: function () {
