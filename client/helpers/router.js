@@ -229,11 +229,22 @@ Router.map(function() {
 			var qry = this.params.query;
 			Session.set('searchRefs', qry);
 			var cqry = _.clone(qry);
-			// TODO: tratar el intervalo de fechas
 			for (var k in cqry) {
+				if( k == "fechadesde" && cqry[k] != "" ) {
+					console.log("FECHADESDE!");
+					fdesde = new Date(cqry[k]);
+					console.log(fdesde);
+	  				delete cqry[k];
+				} else if(k == "fechahasta" && cqry[k] != "") {
+	  				console.log("FECHAHASTA!");
+					fhasta = new Date(cqry[k]);
+					console.log(fhasta);
+	  				delete cqry[k];
+				}
 				if (cqry[k] == "") delete cqry[k];
 				else if (typeof(cqry[k]) != "object") cqry[k] = {$regex: qry[k], $options: "gi"};
 			}
+			cqry["fecha"] = {$gt: fdesde, $lt: fhasta};
 			return [Meteor.subscribe("allDicts"), Meteor.subscribe("allRefsSearch", cqry)];
     },
     data: function () {
