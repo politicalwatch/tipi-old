@@ -234,7 +234,7 @@ Router.map(function() {
 				if (cqry[k] == "") delete cqry[k];
 				else if (typeof(cqry[k]) != "object") cqry[k] = {$regex: qry[k], $options: "gi"};
 			}
-			return Meteor.subscribe("allRefsSearch", cqry);
+			return [Meteor.subscribe("allDicts"), Meteor.subscribe("allRefsSearch", cqry)];
     },
     data: function () {
 			var cnt = Refs.find().count();

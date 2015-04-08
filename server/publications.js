@@ -77,4 +77,44 @@ if (Meteor.isServer) {
 													limit: 300});
 	});
 
+
+	Meteor.publish('tipisByDeputy', function(deputy_name) {
+		// TODO: complete queried fields
+		return Tipis.find({autor: deputy_name}, {fields: { autor: 1 }});
+	});
+
+	Meteor.publish('tipisByDict', function(dict_name) {
+		// TODO: complete queried fields
+		return Tipis.find({dicts: dict_name}, {fields: { autor: 1, dicts: 1 }});
+	});
+
+	Meteor.publish('tipisTopDeputiesByDict', function(dict_name) {
+		// TODO: complete queried fields
+		// tipis por diccionario con más diputados
+		var bydict = Tipis.find({dicts: dict_name}, {fields: {}});
+		// var diputados = new Array();
+		// foreach( tipi in bydict ) {
+		//   if( !diputados[tipi.deputy] )
+		//   	diputados[tipi.deputy] = 0
+		//   diputados[tipi.deputy]++
+		// }
+		// sort diputados, return last
+	});
+
+	Meteor.publish('tipisNParlGroupByDict', function() {
+		// TODO: complete queried fields
+		return Tipis.find({}, {fields: {}});
+	});
+
+	Meteor.publish('userInfo', function(username) {
+		// TODO: complete queried fields. Check for username.
+		return User.find({ name: username }, {fields: {}});
+	});
+
+	Meteor.publish('userListByType', function(user_type) {
+		// TODO: complete queried fields. Change collection.
+		return Tipis.find({ type: user_type }, {fields: {}});
+	});
+
+
 }
