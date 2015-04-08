@@ -270,3 +270,18 @@ tramitesBamp <- c("Proposición de Ley",
                "Enmiendas", #B-157
                "Aprobación por el Pleno" #B-157
 )
+
+#Tramites serie D, tipos 161, 162
+tramitesDPNL <- c("Desestimación así como enmiendas formuladas",
+				  "Desestimación así como enmienda formulada",
+				  "Desestimada así como enmiendas formuladas",
+				  "Desestimada así como enmienda formulada",
+				  "Aprobación con modificaciones así como enmiendas formuladas",
+				  "Aprobación con modificaciones así como enmienda formulada",
+				  "Aprobada con modificaciones así como enmiendas formuladas",
+				  "Aprobada con modificaciones así como enmienda formulada",
+				  "Retirada", 
+				  "Rechazada",
+				  "Aprobación",
+				  "Aprobada"
+)
