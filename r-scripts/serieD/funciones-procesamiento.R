@@ -339,13 +339,11 @@ proc_boletin <- function(lines, num){
                                 tmp$bol  <- sprintf("%03d", as.numeric(num))
                                 tmp$ref  <- str_extract(lines[nref[i]], "^[0-9]{3}\\/[0-9]{5,6}")
                                 tmp$tipo <- str_split(tmp$ref, "/")[[1]][1]
-                                
-                                #####TODO######Añadir aqui tipotexto.
                                 tmp$tipotexto <- ""        
                                 tipodet <- str_detect(string = tmp$tipo, pattern = as.character(tipostexto$tipo))
                                 if (any(tipodet)) {
                                         #cogemos el primero, el segundo corresponde con enmiendas
-                                        tmp$tipotexto <- tipostexto[tipodet, "textoabrev"][1]
+                                        tmp$tipotexto <- as.character(tipostexto[tipodet, "textoabrev"][1])
                                 } 
                                 
                                 tmp$ndx  <- lines[nref[i]:(nref[i+1]-1)] #Contenido del índice.
