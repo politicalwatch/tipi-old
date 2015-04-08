@@ -38,12 +38,10 @@ if (Meteor.isServer) {
 	});
 
 	Meteor.publish('allDicts', function() {
-		console.log("en publish");
 		return Dicts.find({}, {fields: {dictgroup: 1, dict: 1, lastUpdate: 1},
 													 sort: {dictgroup: -1}});
 	});
 	Meteor.publish('allDictsWithWords', function() {
-		console.log("en publish");
 		return Dicts.find({}, {fields: {dictgroup: 1, dict: 1, words:1, lastUpdate: 1},
 													 sort: {dictgroup: -1}});
 	});

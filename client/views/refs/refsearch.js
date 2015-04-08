@@ -51,7 +51,8 @@ Template.refsearch.helpers({
 Template.refsearch.rendered = function (a) {
 	if(!this._rendered) {
 		this._rendered = true;
-
+		$("#fechadesde").datepicker();
+		$("#fechahasta").datepicker();
 		// setup select
 	}
 };
