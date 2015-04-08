@@ -92,6 +92,7 @@ tap:i18n@1.3.2
 templating@1.1.0
 tmeasday:paginated-subscription@0.2.4
 tracker@1.0.6
+tsega:bootstrap3-datetimepicker@4.7.14_3
 ui@1.0.6
 underscore@1.0.3
 url@1.0.4
