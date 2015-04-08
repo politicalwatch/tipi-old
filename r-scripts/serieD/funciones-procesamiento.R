@@ -470,6 +470,7 @@ proc_boletin <- function(lines, num){
                                 lenmiendas <- list()
                                 if(tmp$tipo %in% c('161', '162')){
                                         if(any(str_detect(string = tmp$content, pattern = "^Enmienda"))){ 
+                                                tmp$tramite <- "Enmienda a Proposición no de Ley"
                                                 lenmiendas <- proc_serieD_enmiendas(tmp)
                                         }
                                         #añadimos a tmp campos adicionales enmineda 
@@ -531,6 +532,10 @@ proc_serieD_enmiendas <- function(tmp){
         }
         linsepenmi <- c(1:length(content))[detsepenmi]
         
+        #lineas finalizadoras: 'Palacio del Congreso...'
+        detendings <- str_detect(string=content, pattern = ignore.case('^Palacio del Congreso '))
+        linendings <- c(1:length(content))[detendings]
+        
         # ahora recorremos estas lineas linsepenmi, marcan comienzo y final de las enmiendas
         for(k in 1:length(linsepenmi)){#k=1
                 
@@ -540,18 +545,20 @@ proc_serieD_enmiendas <- function(tmp){
                 #número de enmienda
                 tmpenmi$numenmienda <- k
                 
-                # añadir tramite
-                tmpenmi$tramite <- "Enmienda"
-                
                 enmipre <- content[linsepenmi[k]+1]
-                if(k != length(linsepenmi)){
-                        enmifin <- linsepenmi[k+1]
-                }else{ enmifin <- length(content) }
                 
+#                 if(k != length(linsepenmi)){
+#                         enmifin <- linsepenmi[k+1]
+#                 }else{ enmifin <- length(content) }
+                
+                #siguiente linea con 'Palacio...'
+                enmifin <- linendings[which(linendings > linsepenmi[k])][1]
+                        
                 #contentpre de la enmienda
-                if(k != length(linsepenmi)){
-                        enmiend <- content[enmifin-1]
-                }else{ enmiend <- content[enmifin] }
+#                 if(k != length(linsepenmi)){
+#                         enmiend <- content[enmifin-1]
+#                 }else{ enmiend <- content[enmifin] }
+                tmpenmi$contentend <- enmiend <- content[enmifin]
                 
                 #extraer diputados de enmiend (el 'contentend' de la enmienda)
                 dipdet <- str_detect(enmiend, ignore.case(diputados$nomapre))
@@ -559,7 +566,7 @@ proc_serieD_enmiendas <- function(tmp){
                         tmpenmi$diputados <- diputados[dipdet, "apnom"]
                 } 
                 #extraer grupos parlamentarios.
-                gparldet <- str_detect(enmiend, ignore.case(gparlam$gparlam))
+                gparldet <- str_detect(enmiend, ignore.case(gparlam$gparlams))
                 if(any(gparldet)) {
                         tmpenmi$grupos <- gparlam[gparldet, "gparlamab"]
                 }
@@ -567,7 +574,7 @@ proc_serieD_enmiendas <- function(tmp){
                 #desde 'Enmienda' hasta el fin.
                 tmpenmi$content <- ""
                 if(length(linenmi)==length(linsepenmi)){
-                        tmpenmi$content <- content[(linsepenmi[k]+2):enmifin]
+                        tmpenmi$content <- content[(linsepenmi[k]+2):(enmifin-1)]
                 }
                 #extraer fecha de la enmienda
                 resulfec <- try(extraer.fecha(x = enmiend)) 
