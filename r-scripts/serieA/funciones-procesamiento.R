@@ -102,7 +102,7 @@ proc_serieA <- function(lines, codigo, tramite){
         tipodet <- str_detect(string = tmp$tipo, pattern = as.character(tipostexto$tipo))
         if (any(tipodet)) {
                 #cogemos el primero, el segundo corresponde con enmiendas
-                tmp$tipotexto <- tipostexto[tipodet, "textoabrev"][1]
+                tmp$tipotexto <- as.character(tipostexto[tipodet, "textoabrev"][1])
         } 
         #tramite
         tmp$tramite <- tramite
@@ -220,7 +220,7 @@ proc_serieA_enmiendas <- function(lines, codigo, tramite){
         tipodet <- str_detect(string = tmp$tipo, pattern = as.character(tipostexto$tipo))
         if (any(tipodet)) {
                 #si lo hay, cogemos el segundo, que corresponde con enmiendas
-                tmp$tipotexto <- tipostexto[tipodet, "textoabrev"][2]
+                tmp$tipotexto <- as.character(tipostexto[tipodet, "textoabrev"][2])
         } 
         #tramite
         #         tmp$tramite <- tolower(lines[1])
