@@ -1,36 +1,38 @@
 <template name="scanner">
     {{> header}}
-    <div class="containerglob">
+    <div class="containerglob darkpatt" style="min-height: 95vh;">
         <!-- <div class="row oldleft">
             <h1>Escaner</h1>
         </div> -->
-        <div class="row" style="background-color: black;">
-            <div class="col-sm-6" style="height:600px; padding-top: 30px; padding-bottom: 30px;">
-                
+        <div class="row">
+            <div class="col-sm-6" style="height:650px; padding-top: 25px; padding-bottom: 25px;">
                 <div id="vizz"></div>
-
-                <!-- <img src="/images/bolas.svg" alt=""> -->
-
             </div>
-            <div class="col-sm-6" style="background-color: black; color: white; padding-top: 30px; padding-bottom: 30px;">
+            <div class="col-sm-6" style="color: white; padding-top: 25px; padding-bottom: 25px;">
                 <div class="oldleft">
-                    <h2 id="scanner">Escaner</h2>
+                    <h2 id="scanner-title">Escaner</h2>
+                    <div id="scanner-content" class="hidden">
+                        <h3>Diputados</h3>
+                        <ul>
+                            {{#each diputados }}
+                                <li>{{ name }}</li>
+                            {{/each}}
+                        </ul>
+                        <h3>Grupos parlamentarios</h3>
+                        <ul>
+                            {{#each gps }}
+                                <li>{{ name }}</li>
+                            {{/each}}
+                        </ul>
+                        <h3>Whatever</h3>
+                        <ul>
+                            {{#each whatevers }}
+                                <li>{{ name }}</li>
+                            {{/each}}
+                        </ul>
+                    </div>
                 </div>
-                
             </div>
-            <!-- <div class="col-md-5 oswald">
-                <p>
-                    Filtre por:
-                </p>    
-                <span class="btn-group-vertical">
-                    <span class="btn"><h5>Grupo parlamentario</h5></span>
-                    <span class="btn"><h5>Diputado</h5></span>
-                    <span class="btn"><h5>Tipo de acto</h5></span>
-                    <span class="btn"><h5>Lugar</h5></span>
-                    <span class="btn"><h5>Trámite parlamentario</h5></span>
-                    <span class="btn"><h5>Fecha</h5></span>
-                </span>    
-            </div> -->
         </div>
     </div>
 </template>

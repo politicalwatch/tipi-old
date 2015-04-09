@@ -78,7 +78,7 @@
 	font-weight:100;
 	color: black;}
 
-.oldleft h2#scanner::first-letter {font-family:'Abril Fatface';
+.oldleft h2#scanner-title::first-letter {font-family:'Abril Fatface';
 	font-size:70px;
 	font-weight:100;
 	color: #fed26f;}
@@ -106,7 +106,9 @@
 
 
 
-
+#app {
+	min-height: 95vh;
+}
 
 .container { padding-top: 50px; }
 .containerglob { 
@@ -372,3 +374,6 @@ img {width: 100%; height: 100%;}
 .grey {background-color: grey;}
 .grey h1 {color: #ffc741;}
 .grey h3 {color: #fff;}
+
+
+.hidden {display: none;}

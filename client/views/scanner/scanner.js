@@ -2,7 +2,37 @@ var dicts = {'educacion': 150, 'sanidad': 50};
 
 Template.scanner.helpers({
     dictcount: function(dictname) {
-        return dicts[dictname];
+      return dicts[dictname];
+    },
+    diputados: function() {
+      // Dummy data
+      dataset = []
+      for (i = 0; i < 3; i++) {
+        obj = new Object();
+        obj.name = "xxx Falciani";
+        dataset.push(obj);
+      };
+      return dataset;
+    },
+    gps: function() {
+      // Dummy data
+      dataset = []
+      for (i = 0; i < 3; i++) {
+        obj = new Object();
+        obj.name = "Partido X";
+        dataset.push(obj);
+      };
+      return dataset;
+    },
+    whatevers: function() {
+      // Dummy data
+      dataset = []
+      for (i = 0; i < 3; i++) {
+        obj = new Object();
+        obj.name = "Whtvr " + (i+1);
+        dataset.push(obj);
+      };
+      return dataset;
     }
 });
 
@@ -12,7 +42,7 @@ Template.scanner.rendered = function() {
     // D3js example: https://raw.githubusercontent.com/Slava/d3-meteor-basic/master/client.js
 
     var margin = 20,
-    diameter = 500;
+    diameter = 600;
 
     var color = d3.scale.linear()
         .domain([-1, 5])
@@ -42,7 +72,8 @@ Template.scanner.rendered = function() {
           .data(nodes)
         .enter().append("circle")
           .attr("class", function(d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
-          .style("fill", function(d) { return d.children ? /*color(d.depth)*/ "#000" : null; })
+          .style("fill", function(d) { return d.children ? "#000" : null; })
+          .style("fill-opacity", function(d) { return d.children ? 0 : 1; })
           .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); });
 
       var text = svg.selectAll("text")
@@ -55,15 +86,33 @@ Template.scanner.rendered = function() {
 
       var node = svg.selectAll("circle,text");
 
-      d3.select("body")
-          .style("background", "#000" /*color(-1)*/)
+      var image = new Image;
+      image.src = "https://octodex.github.com/images/original.png";
+      image.onload = load;
+
+      function load() {
+        circle.append("image")
+            .attr("xlink:href", this.src)
+            .attr("width", "90%")
+            .attr("height", "90%");
+      }
+
+      d3.select("#vizz")
           .on("click", function() { zoom(root); });
 
       zoomTo([root.x, root.y, root.r * 2 + margin]);
 
       function zoom(d) {
 
-        $("#scanner").text(d.name);
+        $("#scanner-title").text(d.name);
+        if ($("#scanner-title").text() == "Escaner") {
+          console.log("Añade clase hidden");
+          $("#scanner-content").addClass("hidden");
+        }
+        else {
+          console.log("Quita clase hidden");
+          $("#scanner-content").removeClass("hidden");
+        }
 
         var focus0 = focus; focus = d;
 
