@@ -485,6 +485,7 @@ text-align:center;
 /*otros-------*/
 
 a {color: #fed26f;}
+a.inverse {color: #222;}
 img {width: 100%; height: 100%;}
 .btn {background: black; color: white; border-color: none;}
 .btn h5 {font-family: 'Lato';}
