@@ -21,14 +21,15 @@ source("../common.R")
 source("../mongodb-conn.R")
 source("funciones-procesamiento.R")
 
+#listas comunes a todas las series
+source("../common-lists.R")
+
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
 #      Procesamiento Boletines Serie A: Proyectos de Ley      #
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
 
 load(paste0(GENERATED_BASE_DIR, "dir-serieA.rd")) # se carga proy_listA
 length(proy_listA)
-i=1
-names(proy_listA[[i]])
 
 # proy_listA[[i]]$codigo
 for(i in 1:length(proy_listA))
@@ -49,7 +50,7 @@ for(i in 1:length(proy_listA))
 		{
 			print("No presente en mongo, añadiendo.\n")
 			#Procesamiento según tipo de trámite
-			if(bol_listA[[d]]$tramite == tramitesA[3]){
+			if(bol_listA[[d]]$tramite %in% c("Enmiendas e índice de enmiendas al articulado","Enmiendas")){
 				# procesar trámite "Enmiendas e índice de enmiendas al articulado"
 				lcont <- try(proc_serieA_enmiendas(lines, codigo = bol_listA[[d]]$codigo, tramite = bol_listA[[d]]$tramite))
 				#                         lcont <- proc_serieA_enmiendas(lines, codigo=bol_listA[[d]]$codigo)

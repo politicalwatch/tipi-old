@@ -27,6 +27,9 @@ source("../common.R")
 source("funciones-escrapeo.R")
 source("funciones-procesamiento.R")
 
+#listas comunes a todas las series
+source("../common-lists.R")
+
 ########################################################
 #   URL fija Congreso - Serie B: Proposiciones de ley  #
 ########################################################

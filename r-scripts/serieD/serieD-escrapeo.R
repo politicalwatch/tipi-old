@@ -21,6 +21,8 @@ library("rmongodb")
 
 ### Cargar funciones propias
 source("../common.R")
+#listas comunes a todas las series
+source("../common-lists.R")
 source("funciones-extraccion.R")
 
 #################################

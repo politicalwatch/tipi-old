@@ -8,25 +8,41 @@ All publications-related code.
 
 if (Meteor.isServer) {
 
-	// Publish all items
-
-	Meteor.publish('allItems', function() {
-	  return Items.find();
+	Meteor.publish('posts', function(options) {
+	  check(options, {
+	    sort: Object,
+	    limit: Number
+	  });
+	  return Posts.find({}, options);
 	});
 
-	// Publish a single item
-
-	Meteor.publish('singleItem', function(id) {
-	  return Items.find(id);
+	Meteor.publish('singlePost', function(id) {
+	  check(id, String);
+	  return Posts.find(id);
 	});
+
+
+	Meteor.publish('comments', function(postId) {
+	  check(postId, String);
+	  return Comments.find({postId: postId});
+	});
+
+	Meteor.publish('notifications', function() {
+	  return Notifications.find({userId: this.userId, read: false});
+	});
+	
+
 
 	Meteor.publish('singleRef', function(id) {
 		return Refs.find(id);
 	});
 
 	Meteor.publish('allDicts', function() {
-		console.log("en publish");
 		return Dicts.find({}, {fields: {dictgroup: 1, dict: 1, lastUpdate: 1},
+													 sort: {dictgroup: -1}});
+	});
+	Meteor.publish('allDictsWithWords', function() {
+		return Dicts.find({}, {fields: {dictgroup: 1, dict: 1, words:1, lastUpdate: 1},
 													 sort: {dictgroup: -1}});
 	});
 	Meteor.publish('singleDict', function(id) {
@@ -58,5 +74,45 @@ if (Meteor.isServer) {
 													sort: {bol: -1, fecha: -1},
 													limit: 300});
 	});
+
+
+	Meteor.publish('tipisByDeputy', function(deputy_name) {
+		// TODO: complete queried fields
+		return Tipis.find({autor: deputy_name}, {fields: { autor: 1 }});
+	});
+
+	Meteor.publish('tipisByDict', function(dict_name) {
+		// TODO: complete queried fields
+		return Tipis.find({dicts: dict_name}, {fields: { autor: 1, dicts: 1 }});
+	});
+
+	Meteor.publish('tipisTopDeputiesByDict', function(dict_name) {
+		// TODO: complete queried fields
+		// tipis por diccionario con más diputados
+		var bydict = Tipis.find({dicts: dict_name}, {fields: {}});
+		// var diputados = new Array();
+		// foreach( tipi in bydict ) {
+		//   if( !diputados[tipi.deputy] )
+		//   	diputados[tipi.deputy] = 0
+		//   diputados[tipi.deputy]++
+		// }
+		// sort diputados, return last
+	});
+
+	Meteor.publish('tipisNParlGroupByDict', function() {
+		// TODO: complete queried fields
+		return Tipis.find({}, {fields: {}});
+	});
+
+	Meteor.publish('userInfo', function(username) {
+		// TODO: complete queried fields. Check for username.
+		return User.find({ name: username }, {fields: {}});
+	});
+
+	Meteor.publish('userListByType', function(user_type) {
+		// TODO: complete queried fields. Change collection.
+		return Tipis.find({ type: user_type }, {fields: {}});
+	});
+
 
 }

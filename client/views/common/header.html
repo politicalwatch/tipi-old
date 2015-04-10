@@ -12,33 +12,40 @@
 
 			<div class="collapse navbar-collapse" id="navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><a href="{{pathFor 'scanner'}}">Escaner</a></li>
+					<li class="{{activeRouteClass  'scanner'}}"><a href="{{pathFor 'scanner'}}">Escaner</a></li>
 					<li><a href="http://unmundosalvadorsoler.org/ciecode/avizor/quepasocon/" target="_blank">QPC</a></li>
-					<!--
-					<li><a href="{{pathFor 'items'}}">Items</a></li>
-				  	-->
-                    <!--
-					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">TiPi <i class="fa fa-minus-circle"></i></a>
+					<li class="{{activeRouteClass  '/blog'}}"><a href="/blog">Blog</a></li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Participa <span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">Últimas en seguimiento</a></li>
-							<li><a href="#">Buscar</a></li>
-							<li><a href="#">Rehacer relaciones</a></li>
+							<li class="{{activeRouteClass 'home' 'newPosts'}}">
+					        	<a href="{{pathFor 'newPosts'}}">Últimas conversaciones</a>
+					        </li>
+					        <li class="{{activeRouteClass 'bestPosts'}}">
+					        	<a href="{{pathFor 'bestPosts'}}">Más valoradas</a>
+					        </li>
+					        {{#if currentUser}}
+					        	<li class="divider"></li>
+					        	<li class="{{activeRouteClass 'postSubmit'}}">
+					            	<a class="btn btn-default" href="{{pathFor 'postSubmit'}}">Iniciar conversación</a>
+					            </li>
+					        {{/if}}
 						</ul>
 					</li>
-                    -->
-					<li><a href="/blog">Blog</a></li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión <span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="{{pathFor 'refsearch'}}">Iniciativas Congreso</a></li>
-							<li><a href="{{pathFor 'tipilist'}}">Iniciativas TiPi</a></li>
+							<li class="{{activeRouteClass 'refsearch'}}"><a href="{{pathFor 'refsearch'}}">Iniciativas Congreso</a></li>
+							<li class="{{activeRouteClass 'tipilist'}}"><a href="{{pathFor 'tipilist'}}">Iniciativas TiPi</a></li>
 							<li class="divider"></li>
-							<li><a href="{{pathFor 'dicts'}}">Diccionarios</a></li>
+							<li class="{{activeRouteClass 'dicts'}}"><a href="{{pathFor 'dicts'}}">Diccionarios</a></li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					{{#if currentUser}}
 						<li><a href="#">{{currentUser.username}}</a></li>
+						<!-- <li class="dropdown">
+					    	{{> notifications}}
+					    </li> -->
 						<li><a href="/" class="log-out"><i class="fa fa-sign-out"></i></a></li>
 					{{else}} 
 						<li><a href="{{pathFor 'login'}}">Entrar</a></li>

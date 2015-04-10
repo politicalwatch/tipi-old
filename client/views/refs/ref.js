@@ -6,15 +6,6 @@ Code related to the item template
 
 /+ ---------------------------------------------------- */
 
-Template.ref.helpers({
-  
-  showterms: function () {
-    console.log(Dicts.find().fetch());
-    return "";
-  }
-
-});
-
 Template.ref.rendered = function () {
   //
 };
