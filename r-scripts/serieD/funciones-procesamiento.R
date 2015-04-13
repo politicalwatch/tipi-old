@@ -495,7 +495,6 @@ proc_boletin <- function(lines, num){
                                                 lcont[[(l+p)]] <- lenmiendas[[p]]
                                         }
                                 }
-#                                 lcont[[i]] <- tmp #CAMBIAR AQUI
                         }             
         } else {
                 lcont$bol <- sprintf("%03d", as.numeric(num))
@@ -534,9 +533,16 @@ proc_serieD_enmiendas <- function(tmp){
         linenmi<- c(1:length(content))[detenmi] #id de lineas de content con enmiendas
         numenmi <- length(linenmi)
         
+        # Separacion de enmiendas: frases separadoras
         detsepenmi <- vector()
         for(c in 1:length(content)){#c=1
                 if(any(str_detect(string=content[c], pattern=frsepenmi))) detsepenmi <- c(detsepenmi, c)
+        }        
+        #Si no hay tales frases separadaras las separamos con 'Enmienda'
+        if(length(detsepenmi)==0){ #no se separan por 'A la Mesa de...'
+                for(c in 1:length(content)){#c=1
+                        if(any(str_detect(string=content[c], pattern='^Enmienda'))) detsepenmi <- c(detsepenmi, c)
+                }
         }
         linsepenmi <- c(1:length(content))[detsepenmi]
         
@@ -584,7 +590,7 @@ proc_serieD_enmiendas <- function(tmp){
                         }
                 }
                 #extraer grupos parlamentarios.
-                gparldet <- str_detect(enmiend, ignore.case(gparlam$gparlams))
+                gparldet <- str_detect(enmiend, gparlam$gparlams)
                 if(any(gparldet)) {
                         tmpenmi$grupos <- gparlam[gparldet, "gparlamab"]
                 }

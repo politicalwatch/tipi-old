@@ -73,7 +73,6 @@ for(i in 1:length(nums)){ #i=630
         }
         #enviar a bbdd
         if (length(lcont) > 0) {
-
                 mongo.remove(mongo, mongo_collection("serieD"), criteria=list(bol=num))
                 lcontb <- lapply(lcont, function(x) {
                         #campos que no interesa enviar
