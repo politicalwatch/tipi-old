@@ -4,14 +4,14 @@
             {{#with currentUser}}
                 <div class="row">
                     <div class="col-sm-12 text-center grey darkpatt">
-                        <h1>{{username}}</h1>
-                        <a class="label label-default pull-right" href="#">Editar</a>
+                        <h1>{{username}} // {{profile.firstname}} {{profile.lastname}}</h1>
+                        <a class="label label-default pull-right" href="{{pathFor 'profile_edit'}}">Editar</a>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
-                        <h4>{{profile.firstname}} {{profile.lastname}}</h4>
-                        <h5>{{defaultEmail}}</h5>
+                        <!-- <h4>{{profile.firstname}} {{profile.lastname}}</h4> -->
+                        <!-- <h5>{{defaultEmail}}</h5> -->
                     </div>
                     <div class="col-sm-6"></div>
                 </div>

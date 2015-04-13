@@ -318,6 +318,10 @@ Router.map(function() {
         name: 'profile'
     });
 
+    Router.route('/profile/edit', {
+      name: 'profile_edit'
+  });
+
 	
   // Pages
 
@@ -327,7 +331,9 @@ Router.map(function() {
 
 	this.route('about');
 
-  this.route('scanner');
+  this.route('scanner', {
+    title: 'Scanner'
+  });
 
   // Users
   this.route('login');
@@ -353,4 +359,4 @@ var requireLogin = function() {
 
 
 Router.onBeforeAction('dataNotFound', {only: 'postPage'});
-Router.onBeforeAction(requireLogin, {only: ['postSubmit', 'profile']});
+Router.onBeforeAction(requireLogin, {only: ['postSubmit', 'profile', 'profile_edit']});

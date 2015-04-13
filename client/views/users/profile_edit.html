@@ -1,0 +1,16 @@
+<template name="profileEdit">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        {{#autoForm collection='Meteor.users' doc=currentUser id="editProfileForm" type='update'}}
+            {{> afQuickField name='profile.firstname'}}
+            {{> afQuickField name='profile.lastname'}}
+            <!-- {{> afQuickField name='emails.$.address'}}
+            {{> afQuickField name='password'}}
+            {{> afQuickField name='passwordConfirmation'}} -->
+            <button type="submit" class="btn btn-block btn-secondary">Guardar cambios</button>
+      {{/autoForm}}
+      </div>
+    </div>
+  </div>
+</template>

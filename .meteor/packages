@@ -9,11 +9,14 @@ accounts-password
 accounts-ui
 iron:router
 mizzao:bootstrap-3
+aldeed:collection2
 houston:admin
 francocatena:status
 alanning:roles
 xolvio:md-blog
+aldeed:simple-schema
 aldeed:autoform
+aldeed:autoform-select2
 underscore
 aslagle:reactive-table
 fortawesome:fontawesome
@@ -25,7 +28,6 @@ meteorhacks:kadira
 d3js:d3
 sacha:spin
 zimme:select2-bootstrap3-css
-aldeed:autoform-select2
 axw:json2csv
 mrt:filesaver
 rajit:bootstrap3-datepicker
