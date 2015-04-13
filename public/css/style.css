@@ -3,46 +3,8 @@
 	font-family: 'Abril Fatface';
 	font-style: normal;
 	font-weight: 400;
-	src: local('Abril Fatface'), local('AbrilFatface-Regular'), url(http://fonts.gstatic.com/s/abrilfatface/v7/X1g_KwGeBV3ajZIXQ9VnDokaQb-UsZVONjobs91YQtw.woff) format('woff');}
-
-@font-face {
-	font-family: 'Oswald';
-	font-style: normal;
-	font-weight: 400;
-	src: local('Oswald Regular'), local('Oswald-Regular'), url(http://fonts.gstatic.com/s/oswald/v9/qpy-UiLNKP-VfOdbcs6r6-vvDin1pK8aKteLpeZ5c0A.woff) format('woff');
+	src: local('Abril Fatface'), local('AbrilFatface-Regular'), url(http://fonts.gstatic.com/s/abrilfatface/v7/X1g_KwGeBV3ajZIXQ9VnDokaQb-UsZVONjobs91YQtw.woff) format('woff');
 }
-
-.oswald{font-family: 'Oswald';}
-
-@font-face {
-	font-family: 'PT Serif';
-	font-style: normal;
-	font-weight: 400;
-	src: local('PT Serif'), local('PTSerif-Regular'), url(http://fonts.gstatic.com/s/ptserif/v7/sDRi4fY9bOiJUbgq53yZCXYhjbSpvc47ee6xR_80Hnw.woff) format('woff');
-}
-
-.serif {font-family: 'PT Serif';}
-
-@font-face {
-	font-family: 'PT Mono';
-	font-style: normal;
-	font-weight: 400;
-	src: local('PT Mono'), local('PTMono-Regular'), url(Mono.woff) format('woff');
-	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;}
-
-@font-face {
-	font-family: 'Lato';
-	font-style: normal;
-	font-weight: 100;
-	src: local('Lato Regular'), local('Lato-Regular'), url(http://fonts.gstatic.com/s/lato/v8/qIIYRU-oROkIk8vfvxw6QvesZW2xOQ-xsNqO47m55DA.woff) format('woff');}
-
-
-.lato h1{font-family: 'Lato';
-	font-weight:100;
-
-}
-
-.old{font-family: 'Old Standard TT';}
 
 @font-face {
 	font-family: 'Old Standard TT';
@@ -50,13 +12,31 @@
 	font-weight: 400;
 	src: local('Old Standard TT Regular'), local('OldStandardTT-Regular'),url(http://fonts.gstatic.com/s/oldstandardtt/v6/n6RTCDcIPWSE8UNBa4k-DOeKpinAksS0bOq9o5QARNc.woff) format('woff');
 }
-.old h1 {font-family: 'Old Standard TT';
+
+@font-face {
+	font-family: 'Lato';
+	font-style: normal;
+	font-weight: 100;
+	src: local('Lato Regular'), local('Lato-Regular'), url(http://fonts.gstatic.com/s/lato/v8/qIIYRU-oROkIk8vfvxw6QvesZW2xOQ-xsNqO47m55DA.woff) format('woff');
+}
+
+
+.lato {font-family: 'Lato';}
+.old{font-family: 'Old Standard TT';}
+
+body {
+	font-family: 'Lato';
+	font-size: 16px;
+}
+
+
+.old h1 {
 	font-size:60px;
 	font-weight:100;
 }
 .old h1.right { text-align:right; }
 .old h2 {font-family: 'Old Standard TT';
-	font-size:22px;
+	font-size:32px;
 	font-weight:100;}
 .old h3 {font-family: 'Old Standard TT';
 	font-size:16px;
@@ -65,7 +45,7 @@
 	font-size:60px;
 	font-weight:100;}
 .oldleft h2 {font-family: 'Old Standard TT';
-	font-size:22px;
+	font-size:32px;
 	font-weight:100;}
 .oldleft h3 {font-family: 'Old Standard TT';
 	font-size:16px;
@@ -80,13 +60,11 @@
 	font-size:150px;
 	font-weight:100;
 	color: black;
-
 }
 
 .oldwhite h1{font-family: 'Old Standard TT';
 	font-size:60px;
 	font-weight:100;
-	text-align:right;
 	color:white}
 .oldwhite h1::first-letter
 {font-family:'Abril Fatface';
@@ -206,82 +184,53 @@
 	-webkit-box-shadow: 0px -2px -1px #222;
 }
 
-p {color: grey}
+p {color: #fff; font-size: 16px;}
 mark{background-color: black; color: white;text-align: right;}
 	
-	/*cajas inicio-------------------------------------------------------------*/	
-#cajaca{
+/*cajas inicio-------------------------------------------------------------*/	
+#homepage{
 	background-image: url("../images/fotomanos.jpg");
-	color: white;
+	color: #fff;
+}
+#cajaparticipa{
+	background: url("../images/fotomanos.jpg") bottom;
+	color: #fff;
+}
+.big-logo {
+	padding: 50px;
+}
+.content-row {
+	padding-top:30px;
+	padding-bottom:30px;
+}
+.content-row p{
+	font-size: 18px;
+}
+.content-row .desc{
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+.content-row .desc-2x{
+	padding-top: 40px;
+	padding-bottom: 40px;
 }
 #cajainiciativas{
-	background-color: #CFFFDD   ;/*#fed26f*/
-	
+	/*background-color: #fed26f;*/
+	color: #fff;
 }
-	#cajaca p{
-		color: lightgrey;
-		font-family: 'Old Standard TT';
-	}
 #qpc{
-	background-color: #ECE136   ;
-	
-	color: white;
+	background-color: #ECE136;
+	color: #fff;
 }
 
 #cajablog{
-	background-color: #E3FAB9   ;
-	
-	color: black;
+	color: #fff;
 }
-
-#cajaparticipa{
-	background-color: #5C5863   ;/**/
-	color: white;
-	
+.cajacontainer{
+	padding:30px;
 }
-	
-#cajaparticipa h1::first-letter
-	{
-		color: white;
-
-	}
-
-
-#cajaagenda{
-	background-color: white   ;
-		color: black;
-		
-	}
-#cajacontacto{
-	background-color: black ;
-		color: white;
-		
-	}
-	#cajacontacto h1::first-letter
-	{
-		color: white;
-
-	}
-
-.cajacontainer{padding:30px;}
-
-
-
-/*articulos----------------------------------------------------------*/
-#tituloart h1{
-
-font-family:  'Old Standard TT';
-	font-weight: 900;
-}
-#textoart p{
-	padding-left:0px;
-	padding-right:50px;
-	font-family: 'PT Serif';
-}
-#tituloart h3{
-text-align:center;
-	font-family: 'PT Serif';
-	color: grey;
+.line-bottom {
+	border-bottom: 2px solid #fed26f;
 }
 
 /*participa---------------------------------------------------------*/
@@ -299,7 +248,8 @@ text-align:center;
 
 /*blog---------------------------------------------------------------*/
 .blog-post {
-	font-family: 'PT Serif';
+	font-family: 'Lato';
+	padding-bottom: 20px;
 }
 .blog-post h2 a {
 	font-family: 'Old Standard TT';
@@ -485,7 +435,9 @@ text-align:center;
 /*otros-------*/
 
 a {color: #fed26f;}
+a:hover {color: #fed26f; text-decoration: underline;}
 a.inverse {color: #222;}
+a.inverse:hover {color: #222; text-decoration: underline;}
 img {width: 100%; height: 100%;}
 .btn {background: black; color: white; border-color: none;}
 .btn h5 {font-family: 'Lato';}

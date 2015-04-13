@@ -1,75 +1,72 @@
 <template name="homepage">
-    <div class="containerglob">
-
-        <div id="cajaca" class="row oldwhite">
-            <div class="col-md-6">
+    <div id="homepage" class="containerglob">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <img class="big-logo" src="/images/logos-tipi/logo4_blanco.svg" width="80%">
+                </div>
+            </div>
+        </div>
+        <div id="cajaquees" class="row content-row oldwhite darkpatt">
+            <div class="col-md-12 text-center">
                 <h1>¿Qué es?</h1>
-                <hr>
-                <p>
-                    Es un proyecto que pretende fortalecer las capacidades de la sociedad civil para incidir en los procesos de toma de decisión política y en la generación de un debate público informado sobre la pobreza y justicia social en España. 
-                </p>
-            </div>
-            <div class="col-md-6" style="padding-top:120px;">
-                <img src="/images/logos-tipi/logo4_blanco.svg" width="100%">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <p class="desc">Es un proyecto que pretende fortalecer las capacidades de la sociedad civil para incidir en los procesos de toma de decisión política y en la generación de un debate público informado sobre la pobreza y justicia social en España.</p>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div id="cajainiciativas" class="row old blog">
-            <section>
-                <div class="col-md-6">
-                    <h1>¿Qué hacemos?</h1>
-                    <hr>
-                    <p>
-                        Hacemos seguimiento de la actividad parlamentaria en temas de infancia y pobreza.
-                    </p>
+        <div id="cajainiciativas" class="row content-row oldwhite darkpatt">
+            <div class="col-md-12 text-center">
+                <h1>¿Qué hacemos?</h1>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <p class="desc">Hacemos seguimiento de la actividad parlamentaria en temas de infancia y pobreza.</p>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <!-- Add image here -->
-                </div>
-            </section>
+            </div>
         </div>
-
-        <div id="cajaparticipa" class="row old">
-            <div class="col-md-6">
+        <div id="cajablog" class="row content-row oldwhite darkpatt">
+            <div class="col-md-12">
+                <h1 class="text-center">Periodismo de Datos</h1>
+                <p class="text-center">Dedicamos un espacio a la reflexión, análisis y detalle de nuestras actividades.</p>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="line-bottom">
+                            <h3 class="lato">Talleres</h3>
+                            <ul>
+                                <li><a href="#">Madrid, martes 3-11-2014</a></li>
+                            </ul>
+                        </div>
+                        <div class="line-bottom">
+                            <h3 class="lato">Artículos</h3>
+                            <ul class="unstyled">
+                                {{#each lastEntries}}
+                                <li><a href="#">{{title}}</a></li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                        <div class="right">
+                            <h3>Investigación de</h3>
+                            <img src="/images/porcausa2.png" alt="" style="width:20%; vertical-align:center">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="cajaparticipa" class="containerglob">
+        <div class="row content-row oldwhite">
+            <div class="col-md-12 text-center">
                 <h1>Participa</h1>
-                <hr>
-                <p style="color: white">
-                    Nuestro objetivo es capacitar y fortalecer la interlocución entre decisores políticos y generadores de opinión.
-                </p>
-            </div>
-            <div class="col-md-6 nube2 center">
-                <br><br><br><br>
-                <i class="fa fa-paper-plane-o fa-5x"></i>
-                <h3>¡Contacta con un diputado!</h3>
+                <p>Nuestro objetivo es capacitar y fortalecer la interlocución entre decisores políticos y generadores de opinión.</p>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <a href="#" class="btn btn-secondary" style="margin-top: 30px;"><i class="fa fa-paper-plane-o fa-2x"></i>Contacta con un/a diputado/a</a>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div id="cajablog" class="row">
-            <div class="col-md-6 blog old">
-                <h1>Blog y Periodismo de Datos</h1>
-                <hr>
-                <p>Dedicamos un espacio a la reflexión, análisis y detalle de nuestras actividades.</p>
-            </div>
-            <div class="col-md-6 right oswald">
-                <h1><mark>Lo más reciente</mark></h1>
-                <h3>Talleres</h3>
-                    <ul>
-                        <li><a href="#"><small>Madrid, martes 3-11-2014</small></a></li>
-                    </ul>
-                <h3>Artículos</h3>
-                    <ul class="unstyled">
-                        {{#each lastEntries}}
-                        <li><a href="#"><small></small>{{title}}</a></li>
-                        {{/each}}
-                    </ul>
-                <hr>
-                <br>
-                <h2 class="oswald">Investigación de</h2>
-                <img src="/images/porcausa2.png" alt="" style="width:20%; vertical-align:center">
-                <br>
-            </div>
-        </div>
-        
-
     </div>
 </template>
