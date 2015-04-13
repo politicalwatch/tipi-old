@@ -42,7 +42,7 @@
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					{{#if currentUser}}
-						<li><a href="#">{{currentUser.username}}</a></li>
+						<li><a href="{{pathFor 'profile'}}">{{currentUser.username}}</a></li>
 						<!-- <li class="dropdown">
 					    	{{> notifications}}
 					    </li> -->
@@ -56,18 +56,14 @@
 		</div>
 	</nav>
 	{{#if hasMessages }}
-	<div class="container">
-		<div class="row">
-			<div class="col-xs-12 messages" style="padding-top: 50px">
-				{{#each messages}}
-				<div class="alert alert-dismissible alert-{{type}}" role="alert">
-					<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-					{{message}}
-				</div>
-				{{/each}}
+		{{#each messages}}
+			<div class="alert alert-dismissible alert-{{type}}" role="alert">
+				
+							<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+							{{message}}
+				
 			</div>
-		</div>
-	</div>
+		{{/each}}
 	{{/if}}
 
 </template>

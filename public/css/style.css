@@ -98,15 +98,13 @@
 
 
 
-
-
-.container { padding-top: 50px; }
+.container:first-of-type { padding-top: 50px; }
 .containerglob { 
 	/* Do something with fullscreen images */
 	padding-left: 10px;
 	padding-right: 10px;
 }
-.containerglob > .row:first-of-type { padding-top:30px; }
+.container > .row:first-of-type, .containerglob > .row:first-of-type { padding-top:30px; }
 
 .navbar li a {
 	font-weight: bold;
@@ -331,7 +329,7 @@ text-align:center;
 .label {
   font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
   text-anchor: middle;
-  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+  /*text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;*/
 }
 .label,
 .node--root,
@@ -452,7 +450,7 @@ text-align:center;
   100% {opacity: 0;}
 }
 
-.errors{
+.errors {
   position: fixed;
   z-index: 10000;
   padding: 10px;
@@ -462,16 +460,8 @@ text-align:center;
   bottom: 0px;
   pointer-events: none;
 }
-.alert {
-  animation: fadeOut 2700ms ease-in 0s 1 forwards;
-  -webkit-animation: fadeOut 2700ms ease-in 0s 1 forwards;
-  -moz-animation: fadeOut 2700ms ease-in 0s 1 forwards;
-  width: 250px;
-  float: right;
-  clear: both;
-  margin-bottom: 5px;
-  pointer-events: auto;
-}
+
+.alert { padding-top: 50px; }
 
 /*refs and tipis--------------------------------------------*/
 .ref {

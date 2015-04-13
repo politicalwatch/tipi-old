@@ -1,28 +1,34 @@
 Template.signup.events = {
-  'click input[type=submit]': function(event){
+  'click button[type=submit]': function(event){
     event.preventDefault();
-
     var user = {
       username: $('#username').val(),
       email: $('#email').val(),
       password: $('#password').val(),
-			password2: $('#password2').val()
+			password2: $('#password2').val(),
+      profile: {
+        firstname: $('#firstname').val(),
+        lastname: $('#lastname').val()
+      }
+      // Add default roles
+      // roles: ['ciudadano']
     };
 
     if(!user.username || !user.email || !user.password){
-      flash('Please fill in all fields');
+      flash('Please fill in all fields', 'danger');
     } else if (user.password != user.password2) {
-      flash('La contraseña no coincide');
+      flash('Las contraseñas no coincide', 'danger');
 		}else{
       Accounts.createUser(user, function(error){
         if(error){
-          flash(error.reason, 'error');
+          flash(error.reason, 'danger');
         }else{
           Router.go('/');
-          flash('Thanks for signing up!');
-        }  
+          flash('Gracias por registrarte en TiPi', 'success');
+        }
       });
     }
+    return false;
 
   }
 };

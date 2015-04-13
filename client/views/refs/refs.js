@@ -6,7 +6,7 @@ Code related to the items template
 
 /+ ---------------------------------------------------- */
 
-Template.items.created = function () {
+Template.refs.created = function () {
   //
 };
 

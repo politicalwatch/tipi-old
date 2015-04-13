@@ -24,7 +24,7 @@ var filters = {
 
   isLoggedIn: function() {
     if (!(Meteor.loggingIn() || Meteor.user())) {
-      alert('Please Log In First.')
+      alert('Please Log In First.', 'info')
       this.stop();
     }
   }
@@ -284,7 +284,6 @@ Router.map(function() {
     path: '/tipis/:_id',
     waitOn: function () {
 	    var oid = new Mongo.ObjectID(this.params._id);
-        console.log(this.params._id);
         return Meteor.subscribe('singleTipi', oid);
     },
     data: function () {
@@ -299,8 +298,8 @@ Router.map(function() {
   });
 		
 	this.route('tipiedit', {
-        path: '/tipis/:_id/edit',
-        waitOn: function () {
+    path: '/tipis/:_id/edit',
+    waitOn: function () {
 			var oid = new Mongo.ObjectID(this.params._id);
             return Meteor.subscribe('singleTipi', oid);
         },
@@ -313,6 +312,10 @@ Router.map(function() {
 				tipiini: Tipis.findOne()
 			}
         }
+    });
+
+    this.route('/profile', {
+        name: 'profile'
     });
 
 	
@@ -350,4 +353,4 @@ var requireLogin = function() {
 
 
 Router.onBeforeAction('dataNotFound', {only: 'postPage'});
-Router.onBeforeAction(requireLogin, {only: 'postSubmit'});
+Router.onBeforeAction(requireLogin, {only: ['postSubmit', 'profile']});
