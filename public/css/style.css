@@ -75,7 +75,31 @@ body {
 }
 
 
+/*generales-------*/
 
+a {color: #fed26f;}
+a:hover {color: #fed26f; text-decoration: underline;}
+a.inverse {color: #222;}
+a.inverse:hover {color: #222; text-decoration: underline;}
+img {width: 100%; height: 100%;}
+.btn {background: black; color: white; border-color: none;}
+.btn h5 {font-family: 'Lato';}
+.btn:hover {background:#fed26f;}
+.btn {margin:5px; border-radius: 0px;}
+.btnotro {background: grey; border-color: black; margin: 1px;color: black;}
+
+.dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
+	background-color: #000;
+}
+
+.nube {background-image: url("../images/fotomanos.jpg"); color: white; height:600px}
+.nube2{background-image: url("../images/fotomanos.jpg"); color: white; height:400px}
+.darkpatt { background: url("../images/patterns/stressed_linen.png") repeat; }
+.grey {background-color: grey;}
+.grey h1 {color: #ffc741;}
+.grey h3 {color: #fff;}
+
+#spinner { height: 300px; }
 
 
 .container { padding-top: 50px; }
@@ -184,7 +208,7 @@ body {
 	-webkit-box-shadow: 0px -2px -1px #222;
 }
 
-p {color: #fff; font-size: 16px;}
+p {color: #222; font-size: 16px;}
 mark{background-color: black; color: white;text-align: right;}
 	
 /*cajas inicio-------------------------------------------------------------*/	
@@ -209,6 +233,7 @@ mark{background-color: black; color: white;text-align: right;}
 .content-row .desc{
 	padding-top: 20px;
 	padding-bottom: 20px;
+	color: #fff;
 }
 .content-row .desc-2x{
 	padding-top: 40px;
@@ -343,7 +368,7 @@ mark{background-color: black; color: white;text-align: right;}
         display: inline-block;
         color: #aaaaaa; }
     .post .post-content p {
-      margin: 0; }
+      margin: 0; color: #777; }
   .post .discuss {
     display: block;
     float: right;
@@ -362,6 +387,9 @@ mark{background-color: black; color: white;text-align: right;}
       font-size: 12px; }
   .comments li p:last-child {
     margin-bottom: 0; }
+   .comments p {
+   	color: #777;
+   }
 
 .load-more {
   display: block;
@@ -430,30 +458,3 @@ mark{background-color: black; color: white;text-align: right;}
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
-
-	
-/*otros-------*/
-
-a {color: #fed26f;}
-a:hover {color: #fed26f; text-decoration: underline;}
-a.inverse {color: #222;}
-a.inverse:hover {color: #222; text-decoration: underline;}
-img {width: 100%; height: 100%;}
-.btn {background: black; color: white; border-color: none;}
-.btn h5 {font-family: 'Lato';}
-.btn:hover {background:#fed26f;}
-.btn {margin:5px; border-radius: 0px;}
-.btnotro {background: grey; border-color: black; margin: 1px;color: black;}
-
-.dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
-	background-color: #000;
-}
-
-.nube {background-image: url("../images/fotomanos.jpg"); color: white; height:600px}
-.nube2{background-image: url("../images/fotomanos.jpg"); color: white; height:400px}
-.darkpatt { background: url("../images/patterns/stressed_linen.png") repeat; }
-.grey {background-color: grey;}
-.grey h1 {color: #ffc741;}
-.grey h3 {color: #fff;}
-
-#spinner { height: 300px; }

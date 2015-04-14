@@ -10,9 +10,11 @@ Template.postItem.helpers({
   upvotedClass: function() {
     var userId = Meteor.userId();
     if (userId && !_.include(this.upvoters, userId)) {
-      return 'btn-primary upvotable';
-    } else {
-      return 'disabled';
+      return 'btn-secondary upvotable';
+    }
+    else {
+        // return 'disabled';
+        return 'btn-secondary upvotable';
     }
   }
 });
@@ -20,6 +22,11 @@ Template.postItem.helpers({
 Template.postItem.events({
   'click .upvotable': function(e) {
     e.preventDefault();
-    Meteor.call('upvote', this._id);
+    console.log("Enter...");
+    if (Meteor.user()) {
+        Meteor.call('upvote', this._id);
+    } else {
+        Router.go('login');
+    }
   }
 });
