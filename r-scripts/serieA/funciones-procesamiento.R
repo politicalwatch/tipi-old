@@ -369,7 +369,7 @@ crearCampoAutor <- function(elemento){
                         for(g in 1:length(elemento$grupos)){
                                 vg <- c(vg, c(elemento$grupos[g]))
                         }
-                        elemento$autor$grupo <- vg
+                        elemento$autor$grupo <- unique(vg)
                         elemento$grupos <- NULL
                 }
                 if(!is.null(elemento$diputados)){
@@ -377,7 +377,7 @@ crearCampoAutor <- function(elemento){
                         for(d in 1:length(elemento$diputados)){
                                 vd <- c(vd, c(elemento$diputados[g]))
                         }
-                        if(!is.null(elemento$autor)) elemento$autor$diputado <- vd
+                        if(!is.null(elemento$autor)) elemento$autor$diputado <- unique(vd)
                         elemento$diputados <- NULL
                 }
         }
