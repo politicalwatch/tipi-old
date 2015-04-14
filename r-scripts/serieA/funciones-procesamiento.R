@@ -112,17 +112,23 @@ proc_serieA <- function(lines, codigo, tramite){
         ndx <- lines[ndxini:ndxend]
         ndx <- str_replace_all(ndx, "^[0-9]{3}\\/[0-9]{5,6}", "")
         ndx <- str_trim(ndx)
-        
+        #
         #titulo
         tmp$titulo <- ndx[1]
         tmp$titulo <- str_replace_all(tmp$titulo, " +", " ") ## Quito espacios duplicados
         tmp$titulo <- str_trim(tmp$titulo) ## Quito espacios en los extremos
-        
+        #
         #autor. Si es 'proyecto de ley' es el Gobierno; si no, se deja vacio.
         #en función de la primera linea del documento.
-        tmp$autor <- ""
-        if(tramite %in% c("Iniciativa", "Proyecto de Ley")){ tmp$autor <- "Gobierno" }
-        
+        if(tramite %in% c("Iniciativa", "Proyecto de Ley")){ 
+                tmp$autor <- "Gobierno" 
+                names(tmp$autor)="otro"
+        }
+        #
+        #lugar. Si es 'proyecto de ley' es el Pleno.
+        if(tramite %in% c("Iniciativa", "Proyecto de Ley")){ 
+                tmp$lugar <- "Pleno" 
+        }
         #lineas del contenido: seguido de indice
         # excepto si hay alguna linea que comienza en 'Informe'; entonces vamos hasta allí
         if(any(e <- str_detect(string = lines, pattern = ignore.case('^Informe')))){
@@ -136,6 +142,10 @@ proc_serieA <- function(lines, codigo, tramite){
         tmp$content <- str_trim(tmp$content)
         tmp$content <- tmp$content[tmp$content != ""]
         tmp$content <- str_replace_all(tmp$content, '\\"', "")
+        #quitar linea "Autor: Gobierno", si la hay.
+        if(any(linautor <- str_detect(tmp$content, pattern = "^Autor: Gobierno.$|^Autor: Gobierno$"))){
+                tmp$content <- tmp$content[-linautor]
+        }
         
         # Campo fecha: se saca del indice
         detfecha <- str_detect(ndx, "([0-9]+) de ([a-z]+) de ([0-9]+)")
@@ -147,15 +157,15 @@ proc_serieA <- function(lines, codigo, tramite){
         # contentpre
         ## contenido entre indice y el Informe, si lo hay
         tmp$contentpre = ""
-        if(ndxend < cntini){ tmp$contentpre <- lines[(ndxend+1):(cntini-1)] }
-        
-        ## Búsqueda de comisiones/comisión en contentpre
+        if(ndxend < cntini){ tmp$contentpre <- lines[(ndxend+1):(cntini-1)] } 
+        ## Lugar (comisiones/comisión) en contentpre
         detcomis <- str_detect(string = tmp$contentpre, pattern = ignore.case('^A la comisi[óo]n'))
         if(any(detcomis)){
                 linescomis <- tmp$contentpre[detcomis]
-                tmp$comision <- try(extraer.comision(linescomis))
-                if (any(class(tmp$comision) == "try-error")) tmp$comision <- NULL
+                tmp$lugar <- try(extraer.comision(linescomis))
+                if (any(class(tmp$lugar) == "try-error")) tmp$lugar <- NULL
         }
+        tmp$contentpre <- NULL
         return(tmp)
 }
 
@@ -216,7 +226,7 @@ proc_serieA_enmiendas <- function(lines, codigo, tramite){
         tmp$tipo <- str_split(tmp$ref, "/")[[1]][1]
         #Tipo en formato texto
         tmp$tipotexto <- ""
-        
+        #Buscar el texto.
         tipodet <- str_detect(string = tmp$tipo, pattern = as.character(tipostexto$tipo))
         if (any(tipodet)) {
                 #si lo hay, cogemos el segundo, que corresponde con enmiendas
@@ -238,11 +248,11 @@ proc_serieA_enmiendas <- function(lines, codigo, tramite){
                 tmp$fecha <- try(extraer.fecha(linesfecha[length(linesfecha)]))
                 if (any(class(tmp$fecha) == "try-error")) tmp$fecha <- NULL
         }
-        
+        #
         ## Vamos añadiendo a una lista el contenido de cada enmienda
         # y ademas los campos comunes: bol, fecha (para todas la misma), titulo...
         lcont <- list() #para almacenar las enmiendas, todas con la misma referencia y distinto numero
-        
+        #
         #si no hay enmiendas se envia un unico documento
         if(!length(nenmi)>0){ #enviar lo basico: codigo, tramite, content, referencia
                 lcont <- tmp
@@ -250,7 +260,7 @@ proc_serieA_enmiendas <- function(lines, codigo, tramite){
                 return(list(lcont))
                 break()
         }
-        #lo siguiente iria en un bucle
+        #bucle
         count <- 0
         for(i in 1:length(nenmi)){#i=46
                 #                 browser()
@@ -258,7 +268,7 @@ proc_serieA_enmiendas <- function(lines, codigo, tramite){
                 #Campos comunes. 
                 #Añadimos los de cada enmienda en tmp1.
                 tmp1 <- tmp
-                
+                #
                 #contenido de la enmienda
                 inienmi <- nenmi[i]
                 finenmi <- nenmi[i+1]-1
@@ -279,8 +289,8 @@ proc_serieA_enmiendas <- function(lines, codigo, tramite){
                 tmp1$content <- str_trim(tmp1$content)
                 tmp1$content <- tmp1$content[tmp1$content != ""]
                 tmp1$content <- str_replace_all(tmp1$content, '\\"', "")
-                
-                #Diputados tras 'FIRMANTE'??? CONSULTAR ALBA; MIRAR CASOS.
+                #
+                #Diputados tras 'FIRMANTE'
                 if(any(s <- str_detect(string = tmp1$content, pattern = "^FIRMANTE"))){
                         lindiputado <- tmp1$content[(1:length(tmp1$content))[s]+1]
                         ## Busco diputados en lindiputado
@@ -292,7 +302,6 @@ proc_serieA_enmiendas <- function(lines, codigo, tramite){
                                 } 
                         }
                 }
-                
                 #Grupo parlamentario: del mismo sitio
                 if(any(s <- str_detect(string = tmp1$content, pattern = "^FIRMANTE"))){
                         lindiputado <- tmp1$content[(1:length(tmp1$content))[s]+1]
@@ -307,132 +316,73 @@ proc_serieA_enmiendas <- function(lines, codigo, tramite){
                         #actualizamos contenido para eliminar diputado
                         tmp1$content <- tmp1$content[3:length(tmp1$content)]
                 }
+                #Lugar (Comision): De la frase 'A la mesa de la Comisión..', tras firmante y diputado
+                if(any(s <- str_detect(string = tmp1$content, pattern = "^A la Mesa de la Comisión"))){
+                        lincomision <- tmp1$content[s]
+                        ## Busco comision en lincomision
+                        if (length(lincomision)>0) {
+                                comdet <- str_detect(string = lincomision[1], pattern = dfcomisiones$comisionbusq)
+                                if (any(comdet)) {
+                                        tmp1$lugar <- dfcomisiones[comdet, "comision"]
+                                } 
+                        }
+                        #actualizamos contenido para eliminar diputado
+#                         tmp1$content <- tmp1$content[3:length(tmp1$content)]
+                }
                 lcont[[i]] <- tmp1 
         }
         #i=1 primera enmienda. 
         return(lcont)
 }
 
-#+++++++++++++++++++++++++++++++#
-# Diccionarios - Listas propias #
-#+++++++++++++++++++++++++++++++#
+## Unir enmiendas del mismo grupo parlamentario
+unirEnmiendas <- function(lcont){
+        lgrupos <- capture.output(sapply(1:length(lcont), function(x){ print(lcont[[x]]$grupos) }, simplify = TRUE))
+        #lgrupos nos da cuáles hay que juntar
+        #
+        v <- vector(length=length(lgrupos))
+        for(k in 2:length(lgrupos)) { if(lgrupos[k] == lgrupos[k-1]) v[k] <- 1 }
+        #mergear posiciones indicadas con las anterioes.
+        
+        #ampliar: numenmienda, grupos, diputados
+        #ampliar: content. Un texto seguido del otro.
+        dupli <- c(1:length(v))[v==1]
+        lcont2 <- lcont
+        for(k in dupli){#k=c(1:length(v))[v==1][1]
+                lcont2[[(k-1)]]$numenmienda <- c(lcont[[(k-1)]]$numenmienda, lcont[[k]]$numenmienda)
+                lcont2[[(k-1)]]$grupos <- unique(c(lcont[[(k-1)]]$grupos, lcont[[k]]$grupos))
+                lcont2[[(k-1)]]$diputados <- unique(c(lcont[[(k-1)]]$diputados, lcont[[k]]$diputados))
+                lcont2[[(k-1)]]$content <- c(lcont[[(k-1)]]$content, lcont[[k]]$content)
+        }
+        #eliminar las que no interesan: los mismos indices
+        lcont2 <- lcont2[-dupli]
+        return(lcont2)
+}
 
-#tipos de serie A
-# tiposA <- c("(121) Proyecto de Ley.$",
-#             "(121) Proyecto de Ley$",
-#             "Ampliación del plazo de enmiendas.$",
-#             "Ampliación del plazo de enmiendas$",
-#             "Correcci[óo]n de error.$",
-#             "Correcci[óo]n de error$",
-#             "Correcci[óo]n de errores.$",
-#             "Correcci[óo]n de errores$",
-#             "ENMIENDAS E ÍNDICE DE ENMIENDAS AL ARTICULADO$",
-#### NOTA. Comprobar con Alba.
-# tramitesA <- c("Proyecto de Ley",
-#             "Ampliación del plazo de enmiendas",
-#             "Enmiendas e índice de enmiendas al articulado",
-#             "Enmiendas",
-#             "Informe de la Ponencia",
-#             "Dictamen de la Comisión",
-#             "Escritos de mantenimiento de enmiendas para su defensa ante el Pleno",
-#             "Aprobación definitiva por el Congreso",
-#             "Aprobación por el Pleno"
-# )
-
-
-##[INES 22-12-2014] Grupos parlamentarios, nombres alternativos
-# gparlam <- data.frame( gparlam = c("Grupo Parlamentario Popular en el Congreso",
-#                                    "Grupo Parlamentario Socialista",
-#                                    "Grupo Parlamentario Catalán (Convergència i Unió)",
-#                                    "Grupo Parlamentario de IU, ICV-EUiA, CHA: La Izquierda Plural",
-#                                    "Grupo Parlamentario de la Izquierda Plural",#[INES 21-01-2015]
-#                                    "Grupo Parlamentario de Unión Progreso y Democracia",
-#                                    "Grupo Parlamentario Vasco (EAJ-PNV)",
-#                                    "Grupo Parlamentario Mixto"),
-#                        gparlams = c("Popular en el Congreso",
-#                                     "Socialista",
-#                                     "Catalán \\(Convergència i Unió\\)",
-#                                     "IU, ICV-EUiA, CHA: La Izquierda Plural",
-#                                     "Izquierda Plural",#[INES 21-01-2015]
-#                                     "Unión Progreso y Democracia",
-#                                     "Vasco \\(EAJ-PNV\\)",
-#                                     "Mixto"),
-#                        gparlamab = c("GP",
-#                                      "GS",
-#                                      "GC-CiU",
-#                                      "GIP",
-#                                      "GIP",#[INES 21-01-2015]
-#                                      "GUPyD",
-#                                      "GV (EAJ-PNV)", #[INES 21-01-2015 quitamos \\]
-#                                      "GMx")  )
-
-
-## [ines 16-01-2015] Comisiones
-# comisiones <- c("^Comisión Constitucional$",
-#                 "^Comisión de Asuntos Exteriores$",
-#                 "^Comisión de Justicia$",
-#                 "^Comisión de Interior$",
-#                 "^Comisión de Defensa$",
-#                 "^Comisión de Economía y Competitividad$",
-#                 "^Comisión de Hacienda y Administraciones Públicas$",
-#                 "^Comisión de Presupuestos$",
-#                 "^Comisión de Fomento$",
-#                 "^Comisión de Educación y Deporte$",
-#                 "^Comisión de Empleo y Seguridad Social$",
-#                 "^Comisión de Industria, Energía y Turismo$",
-#                 "^Comisión de Agricultura, Alimentación y Medio Ambiente$",
-#                 "^Comisión de Sanidad y Servicios Sociales$",
-#                 "^Comisión de Cooperación Internacional para el Desarrollo$",
-#                 "^Comisión de Cultura$",
-#                 "^Comisión de Igualdad$",
-#                 "^Comisión de Reglamento$",
-#                 "^Comisión del Estatuto de los Diputados$",
-#                 "^Comisión de Peticiones$",
-#                 "^Comisión de Seguimto. y Evaluación de los Acuerdos del Pacto de Toledo$",
-#                 "^Comisión sobre Seguridad Vial y Movilidad Sostenible$",
-#                 "^Comisión para las Políticas Integrales de la Discapacidad$",
-#                 "^Comisión de control de los créditos destinados a gastos reservados$",
-#                 "^Comisión Consultiva de Nombramientos$",
-#                 "^Comisión para el Estudio del Cambio Climático$",
-#                 "^Comisión Mixta para las Relaciones con el Tribunal de Cuentas$",
-#                 "^Comisión Mixta para la Unión Europea$",
-#                 "^Comisión Mixta de Relaciones con el Defensor del Pueblo$",
-#                 "^Comisión Mixta para el Estudio del Problema de las Drogas$",
-#                 "^Comisión Mixta Control Parlam. de la Corporación RTVE y sus Sociedades$"
-# )
-# 
-# comisabrev <- c("Constitucional",
-#                 "Asuntos Exteriores",
-#                 "Justicia",
-#                 "Interior",
-#                 "Defensa",
-#                 "Economía y Competitividad",
-#                 "Hacienda y Administraciones Públicas",
-#                 "Presupuestos",
-#                 "Fomento",
-#                 "Educación y Deporte",
-#                 "Empleo y Seguridad Social",
-#                 "Industria, Energía y Turismo",
-#                 "Agricultura, Alimentación y Medio Ambiente",
-#                 "Sanidad y Servicios Sociales",
-#                 "Cooperación Internacional para el Desarrollo",
-#                 "Cultura",
-#                 "Igualdad",
-#                 "Reglamento",
-#                 "Estatuto de los Diputados",
-#                 "Peticiones",
-#                 "Seguimto. y Evaluación de los Acuerdos del Pacto de Toledo",
-#                 "Seguridad Vial y Movilidad Sostenible",
-#                 "Políticas Integrales de la Discapacidad",
-#                 "control de los créditos destinados a gastos reservados",
-#                 "Consultiva de Nombramientos",
-#                 "Estudio del Cambio Climático",
-#                 "Mixta para las Relaciones con el Tribunal de Cuentas",
-#                 "Mixta para la Unión Europea",
-#                 "Mixta de Relaciones con el Defensor del Pueblo",
-#                 "Mixta para el Estudio del Problema de las Drogas",
-#                 "Mixta Control Parlam. de la Corporación RTVE y sus Sociedades"
-# )
+#Parametro: Elemento de una lista
+#Devuelve: elemento actualizado con un campo "autor", y sin campos "diputados" ni "grupos"
+crearCampoAutor <- function(elemento){
+        #existe alguno, diputado o grupo
+        if(!is.null(elemento$grupos)|!is.null(elemento$diputados)){
+                if(!is.null(elemento$grupos)){
+                        vg <- vector()
+                        for(g in 1:length(elemento$grupos)){
+                                vg <- c(vg, c(elemento$grupos[g]))
+                        }
+                        elemento$autor$grupo <- vg
+                        elemento$grupos <- NULL
+                }
+                if(!is.null(elemento$diputados)){
+                        vd <- vector()
+                        for(d in 1:length(elemento$diputados)){
+                                vd <- c(vd, c(elemento$diputados[g]))
+                        }
+                        if(!is.null(elemento$autor)) elemento$autor$diputado <- vd
+                        elemento$diputados <- NULL
+                }
+        }
+        return(elemento)
+}
 
 ## Extraer fecha de las cadenas finales de los contenidos
 ## x es una cadena que contiene una fecha en formato dd de mes de aaaa
