@@ -14,7 +14,7 @@ Template.refsearch.helpers({
 			return Session.get("searchRefs");
 		},
 		count: function() {
-			if (this.count >= 300) flash("Se han encontrado más de 300 iniciativas.", "warning");
+			if (this.count >= 300) flash("Se han encontrado más de 300 iniciativas.", "info");
 			else if (this.count == 0) flash("No se han encontrado iniciativas que cumplan los criterios.", "info");
 		},
 	   settings: function () {
@@ -25,10 +25,15 @@ Template.refsearch.helpers({
             fields: [{ key: 'bol', label: 'Bol.', sort: 'descending'},
 										 { key: 'ref', label: 'Referencia'},
 										 { key: 'fecha', label: 'Fecha',
-										 fn: function(val, obj) {
-											 return moment(val).format('l') + ', ' + moment(val).fromNow();
-										 }},
-										 { key: 'autor', label: 'Autor'},
+										 	fn: function(val, obj) {
+												return moment(val).format('l') + ', ' + moment(val).fromNow();
+										 	}
+										 },
+										 { key: 'autor', label: 'Autor',
+										 	fn: function(val, obj) {
+										 		return getAutor(val);
+										 	}
+										 },
 										 { key: 'titulo', label: 'Título'},
 										 { key: 'dicts', label: 'Diccionarios'},
 										 { key: 'acciones', label: 'Acciones', 
@@ -73,3 +78,12 @@ Template.refsearch.events({
 	}
   //
 });
+
+function getAutor(autor) {
+	if (typeof autor !== 'undefined') {
+		if (typeof autor.grupo !== 'undefined') {return autor.grupo;}
+		else if (typeof autor.diputado !== 'undefined') {return autor.diputado;}
+		else if (typeof autor.otro !== 'undefined') {return autor.otro;}
+		else {return '';}
+	}
+}
