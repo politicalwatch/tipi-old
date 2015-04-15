@@ -336,7 +336,7 @@ text-align:center;
   stroke-width: 1.5px;
 }
 .node--leaf {
-  fill: yellow;
+  fill: #fed26f;
 }
 .label {
   font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;

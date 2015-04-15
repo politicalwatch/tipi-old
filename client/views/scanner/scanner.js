@@ -60,7 +60,38 @@ Template.scanner.rendered = function() {
         .append("g")
         .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
 
-    // https://gist.githubusercontent.com/mbostock/7607535/raw/a05a94858375bd0ae023f6950a2b13fac5127637/flare.json
+    var bubble = d3.layout.pack()
+                .size([diameter, diameter])
+                .value(function(d) {return d.size;})
+    var json = {"countries_msg_vol": [
+      {"url": Meteor.absoluteUrl("images/svgs/dependencia-02.svg"),"hits": 100}
+    ]};
+
+    var nodes = bubble.nodes(processData(json));
+    var vis = svg.selectAll('circle').data(nodes);
+    vis.enter().append("image")
+      .attr("xlink:href", function(d){
+            return  d.url;
+      })
+      .attr("width", function(d) { console.log(d); 
+      return d.size; })
+      .attr("height", function(d) { return d.size; })
+      .attr('transform', function(d) { return 'translate(0,0)'; });
+
+    function processData(data) {
+      var objs = data.countries_msg_vol;
+
+      var newDataSet = [];
+
+
+      for(var i=0; i<objs.length; i++) {
+          var obj = objs[i];
+          newDataSet.push({url: obj.url, className: obj.url, size: obj.hits});
+      }
+      return {children: newDataSet};
+    }
+
+    /*
     d3.json(Meteor.absoluteUrl("/data/fixtures.json"), function(error, root) {
       if (error) return console.error(error);
 
@@ -138,5 +169,6 @@ Template.scanner.rendered = function() {
     });
 
     d3.select(self.frameElement).style("height", diameter + "px");
+    */
 
 };
