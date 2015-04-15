@@ -310,7 +310,7 @@ proc_serieA_enmiendas <- function(lines, codigo, tramite){
                                 gpdet <- str_detect(string = lindiputado[1], pattern = as.character(gparlam$gparlams))
                                 if (any(gpdet)) {
                                         ##cat("\n", pres[i], "\n *", paste(diputados[dipdet, "apnom"], collapse=";"), "\n")
-                                        tmp1$grupos <- gparlam[gpdet, "gparlamab"]
+                                        tmp1$grupos <- unique(gparlam[gpdet, "gparlamab"])
                                 } 
                         }
                         #actualizamos contenido para eliminar diputado
@@ -375,7 +375,7 @@ crearCampoAutor <- function(elemento){
                 if(!is.null(elemento$diputados)){
                         vd <- vector()
                         for(d in 1:length(elemento$diputados)){
-                                vd <- c(vd, c(elemento$diputados[g]))
+                                vd <- c(vd, c(elemento$diputados[d]))
                         }
                         if(!is.null(elemento$autor)) elemento$autor$diputado <- unique(vd)
                         elemento$diputados <- NULL
