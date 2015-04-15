@@ -1,12 +1,12 @@
 /* ---------------------------------------------------- +/
 
-## Items ##
+## refs ##
 
-Code related to the items template
+Code related to the refs template
 
 /+ ---------------------------------------------------- */
 
-Template.items.created = function () {
+Template.refs.created = function () {
   //
 };
 
