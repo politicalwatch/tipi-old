@@ -46,7 +46,7 @@ for(i in 1:length(proy_listA)){
                 load(paste0(bol_listA[[d]]$filename)) # carga lines, que contiene el texto a procesar
                 
                 q <- mongo.bson.from.JSON(paste0('{ "bol":"', bol_listA[[d]]$codigo, '" }'))
-                a <- mongo.find(mongo, mongo_collection("serieApruebas"), q)
+                a <- mongo.find(mongo, mongo_collection("serieA"), q)
                 if(!mongo.cursor.next(a)){
                         print("No presente en mongo, añadiendo.\n")
                         #Procesamiento del boletín A-1-X: Proyecto de Ley
@@ -66,9 +66,9 @@ for(i in 1:length(proy_listA)){
                                         #Añadir url a cada elemento de la lista (uno por enmienda)
                                         lcont1$url <- bol_listA[[d]]$url
                                         #Enviar
-                                        mongo.remove(mongo, mongo_collection("serieApruebas"), criteria=list(bol=bol_listA[[d]]$codigo))
+                                        mongo.remove(mongo, mongo_collection("serieA"), criteria=list(bol=bol_listA[[d]]$codigo))
                                         lcontb <- lapply(list(lcont1), function(x) {return(mongo.bson.from.list(x))})
-                                        mongo.insert.batch(mongo, mongo_collection("serieApruebas"), lcontb)
+                                        mongo.insert.batch(mongo, mongo_collection("serieA"), lcontb)
                                 }
                                 vcontrol[d] <- 1
                         }
@@ -80,10 +80,28 @@ for(i in 1:length(proy_listA)){
                                 # y enviar aparte.
                                 lcont <- try(proc_serieA_enmiendas(lines, codigo = bol_listA[[d]]$codigo, tramite = bol_listA[[d]]$tramite))
                                 if(class(lcont) == "list"){
-                                        #unir Enmiendas mismo grupo parlamentario
-                                        lcont <- unirEnmiendas(lcont)
-                                        #Crear campo autor
-                                        lcont <- sapply(lcont, FUN=crearCampoAutor)
+                                        if(length(lcont)>1){#Unir enmiendas.
+                                                #unir Enmiendas mismo grupo parlamentario
+                                                lcont2 <- list()
+                                                lgrupos <- unique(sapply(1:length(lcont), function(x){ print(lcont[[x]]$grupos) }, simplify = TRUE))
+                                                for(i in 1:length(lgrupos)){#i=1
+                                                        if(!is.character(lgrupos[[i]])){#grupo nulo, se salta de momento.TODO.Forzar que todos tengan '='
+                                                                next()
+                                                        }
+                                                        elem <- agruparUnGrupo(lcont = lcont, grupo = lgrupos[[i]])
+                                                        lcont2[[i]] <- elem
+                                                }
+                                                #lgrupos nos da cuáles hay que juntar
+                                                #Crear campo autor
+                                                #                                         lcont <- sapply(lcont, FUN=crearCampoAutor)
+                                                lcontEn <- list()
+                                                for(k in 1:length(lcont2)){#k=1
+                                                        lcontEn[[k]] <- crearCampoAutor(lcont2[[k]])
+                                                }
+                                                lcont <- lcontEn
+                                        }else if(length(lcont)==1){#crear campo autor
+                                                lcont[[1]] <- crearCampoAutor(lcont[[1]])
+                                        }
                                 } 
                                 #caso de error al procesar: imprimir mensaje y enviar vacio.
                                 if(class(lcont) == "try-error"){
@@ -100,9 +118,9 @@ for(i in 1:length(proy_listA)){
                                                 lcont[[k]]$url <- bol_listA[[d]]$url
                                                 lcont[[k]]$created <- as.POSIXct(Sys.time(), tz="CET")
                                         }
-                                        mongo.remove(mongo, mongo_collection("serieApruebas"), criteria=list(bol=bol_listA[[d]]$codigo))
+                                        mongo.remove(mongo, mongo_collection("serieA"), criteria=list(bol=bol_listA[[d]]$codigo))
                                         lcontb <- lapply(lcont, function(x) {return(mongo.bson.from.list(x))})
-                                        mongo.insert.batch(mongo, mongo_collection("serieApruebas"), lcontb)
+                                        mongo.insert.batch(mongo, mongo_collection("serieA"), lcontb)
                                         vcontrol[d] <- 1
                                         next()
                                 }
@@ -137,9 +155,9 @@ for(i in 1:length(proy_listA)){
                                 rm(ltmp)
                                 if(sum(vcontrol)==length(vcontrol)){#ya hemos procesado todo
                                         #enviar a mongo
-                                        #                                         mongo.remove(mongo, mongo_collection("serieApruebas"), criteria=list(bol=bol_listA[[d]]$codigo))
+                                        #                                         mongo.remove(mongo, mongo_collection("serieA"), criteria=list(bol=bol_listA[[d]]$codigo))
                                         lcontb2 <- lapply(list(lcont2), function(x) {return(mongo.bson.from.list(x))})
-                                        mongo.insert.batch(mongo, mongo_collection("serieApruebas"), lcontb2)
+                                        mongo.insert.batch(mongo, mongo_collection("serieA"), lcontb2)
                                 }
                                 
                         }

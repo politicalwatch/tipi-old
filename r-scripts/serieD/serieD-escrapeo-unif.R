@@ -15,7 +15,6 @@ library("XML")
 library("RCurl")
 library("plyr")
 library("stringr")
-library("data.table")
 library("RSQLite")
 library("rmongodb")
 

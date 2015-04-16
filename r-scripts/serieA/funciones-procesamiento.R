@@ -337,26 +337,74 @@ proc_serieA_enmiendas <- function(lines, codigo, tramite){
 
 ## Unir enmiendas del mismo grupo parlamentario
 unirEnmiendas <- function(lcont){
-        lgrupos <- capture.output(sapply(1:length(lcont), function(x){ print(lcont[[x]]$grupos) }, simplify = TRUE))
+        lgrupos <- unique(sapply(1:length(lcont), function(x){ print(lcont[[x]]$grupos) }, simplify = TRUE))
         #lgrupos nos da cuáles hay que juntar
-        #
-        v <- vector(length=length(lgrupos))
-        for(k in 2:length(lgrupos)) { if(lgrupos[k] == lgrupos[k-1]) v[k] <- 1 }
-        #mergear posiciones indicadas con las anterioes.
-        
-        #ampliar: numenmienda, grupos, diputados
-        #ampliar: content. Un texto seguido del otro.
-        dupli <- c(1:length(v))[v==1]
-        lcont2 <- lcont
-        for(k in dupli){#k=c(1:length(v))[v==1][1]
-                lcont2[[(k-1)]]$numenmienda <- c(lcont[[(k-1)]]$numenmienda, lcont[[k]]$numenmienda)
-                lcont2[[(k-1)]]$grupos <- unique(c(lcont[[(k-1)]]$grupos, lcont[[k]]$grupos))
-                lcont2[[(k-1)]]$diputados <- unique(c(lcont[[(k-1)]]$diputados, lcont[[k]]$diputados))
-                lcont2[[(k-1)]]$content <- c(lcont[[(k-1)]]$content, lcont[[k]]$content)
+        lcont2 <- list()
+        #Insertar en lcont2 tantos elementos como grupos haya.
+        for(i in 1:length(lgrupos)){#i=1
+                if(!is.character(lgrupos[[i]])){#grupo nulo, se salta de momento.TODO.Forzar que todos tengan '='
+                        next()
+                }
+                #se agrupan las enmiendas
+                elemen <- agruparUnGrupo(lcont = lcont, grupo = lgrupos[[i]])
+                #se insertan en la lista
+                lcont2[[i]] <- elemen
+                rm(elemen)
         }
-        #eliminar las que no interesan: los mismos indices
-        lcont2 <- lcont2[-dupli]
-        return(lcont2)
+}
+
+#Agrupar en un solo elemento de lista todos los los elementos de un grupo parlamentario
+#i=indice donde introducir el elemento
+#lcont2=lista nueva, generada de antes con lcont2<-list()
+agruparUnGrupo <- function(lcont, grupo){#grupo=lgrupos[[1]]
+        #grupos distintos en lcont
+#         lgrupos <- unique(sapply(1:length(lcont), function(x){ print(lcont[[x]]$grupos) }, simplify = TRUE))
+        #
+        elemen <- list()
+        #determinar en que elementos de lcont tengo que iterar.
+        kgrupobusq <- rep(0, length(lcont))
+        for(k in 1:length(lcont)){#k=1
+                if(!is.null(lcont[[k]]$grupos)){ 
+                        if(identical(lcont[[k]]$grupos, grupo)){kgrupobusq[k] <- 1 }
+                }
+        }
+        #
+#         c <- 0
+        #buscar el primero y coger la info básica
+        for(k in 1:length(lcont)){
+                if(kgrupobusq[k] == 1){ elemen <- lcont[[k]] }
+                elemen$diputados <- "" #por si no existe
+        }
+        #iterar sobre el resto
+        if(length(lcont)!=1){
+                for(k in 2:length(lcont)){
+                        if(kgrupobusq[k] == 1){
+                                elemen$numenmienda <- c(elemen$numenmienda, lcont[[k]]$numenmienda)
+                                elemen$content <- c(elemen$content, lcont[[k]]$content)
+                                elemen$grupos <- unique(c(elemen$grupos, lcont[[k]]$grupos))
+                                if(!is.null(lcont[[k]]$diputados)){
+                                        elemen$diputados <- c(elemen$diputados, lcont[[k]]$diputados)
+                                }
+                        }
+                }
+        }
+#         for(k in 1:length(lcont)){#k=1 , #iterar sobre todos y buscar el grupo.
+#                 if(kgrupobusq[k] == 1 & c==0){#primera vez, coger el elemento
+#                         elemen <- lcont[[k]]
+#                         elemen$diputados <- "" #por si no existe
+#                 }
+#                 if(kgrupobusq[k] == 1 & c!=0){#siguientes, solo actualizar
+#                         elemen$numenmienda <- c(elemen$numenmienda, lcont[[k]]$numenmienda)
+#                         elemen$content <- c(elemen$content, lcont[[k]]$content)
+#                         elemen$grupos <- unique(c(elemen$grupos, lcont[[k]]$grupos))
+#                         if(!is.null(lcont[[k]]$diputados)){
+#                                 elemen$diputados <- c(elemen$diputados, lcont[[k]]$diputados)
+#                         }
+#                 }
+#                 c <- 1
+#         }
+#         c <- 0
+        return(elemen)
 }
 
 #Parametro: Elemento de una lista
