@@ -156,6 +156,9 @@ tipostexto <- data.frame(tipo = c(120,
                                       "Funciones Pleno",
                                       "Funciones Diputación permanente",
                                       "Operaciones Fuerzas Armadas exterior"))
+                                      
+#tipos en serie D que no se procesarán.
+noprocesar <- c("052", "062", "186", "187", "188", "189", "193", "200", "201", "221", "222", "223", "224", "299","430")
 
 #++++++++++++++++++++++++#
 #    2. Comisiones       #
