@@ -66,7 +66,7 @@ if (Meteor.isServer) {
 	Meteor.publish('allRefsSearch', function(q) {
 		return Refs.find(q, {fields: {bol: 1, ref: 1, gopag: 1, autor: 1, titulo: 1, dicts: 1, fecha: 1}, 
 													sort: {fecha: -1},
-													limit: 300});
+													limit: 100});
 	});
 
 	Meteor.publish('allRefsContent', function() {
