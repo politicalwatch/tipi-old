@@ -78,7 +78,7 @@ for(i in 1:length(nums)){ #i=630
                         lcont2[[k]] <- crearCampoAutor(lcont[[k]])
                 }
                 mongo.remove(mongo, mongo_collection("serieD"), criteria=list(bol=num))
-                lcontb <- lapply(lcont, function(x) {
+                lcontb <- lapply(lcont2, function(x) {
                         #campos que no interesa enviar
                         x$ndx <- NULL
                         x$cnt <- NULL
