@@ -127,7 +127,6 @@ proc.refcontent <- function(lc){
         return(lc)
 }
 
-
 ## Extraer fecha de las cadenas finales de los contenidos
 ## x es una cadena que contiene una fecha en formato dd de mes de aaaa
 extraer.fecha <- function(x) {
@@ -158,6 +157,31 @@ extraer.fecha <- function(x) {
                 aaaa  <- as.integer(match[1, 4])
         }
         return(as.POSIXct(paste(aaaa, mm, dd, sep="-"), tz="CET"))
+}
+
+#Parametro: Elemento de una lista
+#Devuelve: elemento actualizado con un campo "autor", y sin campos "diputados" ni "grupos"
+crearCampoAutor <- function(elemento){
+        #existe alguno, diputado o grupo
+        if(!is.null(elemento$grupos)|!is.null(elemento$diputados)){
+                if(!is.null(elemento$grupos)){
+                        vg <- vector()
+                        for(g in 1:length(elemento$grupos)){
+                                vg <- c(vg, c(elemento$grupos[g]))
+                        }
+                        elemento$autor$grupo <- unique(vg)
+                        elemento$grupos <- NULL
+                }
+                if(!is.null(elemento$diputados)){
+                        vd <- vector()
+                        for(d in 1:length(elemento$diputados)){
+                                vd <- c(vd, c(elemento$diputados[d]))
+                        }
+                        if(!is.null(elemento$autor)) elemento$autor$diputado <- unique(vd)
+                        elemento$diputados <- NULL
+                }
+        }
+        return(elemento)
 }
 
 ## Expandir series de referencias del tipo "184/061759 a 184/061762"
@@ -420,7 +444,7 @@ proc_boletin <- function(lines, num){
                         tmp$created <- as.POSIXct(Sys.time(), tz="CET")
                         #Boletines con enmiendas: Varios documentos por referencia.
                         lenmiendas <- list()
-                        if(tmp$tipo %in% c('161', '162')){
+                        if(tmp$tipo %in% c('161', '162')){##TODO. Incluir aqui 173, 043.
                                 if(any(str_detect(string = tmp$content, pattern = "^Enmienda"))){ 
                                         tmp$tramite <- "Enmienda a Proposición no de Ley"
                                         lenmiendas <- proc_serieD_enmiendas(tmp)
@@ -451,6 +475,7 @@ proc_boletin <- function(lines, num){
 
 
 #afecta solo tipos 161, 162
+#TODO. A incluir tambien: 173 (Mociones), 043 (Dictámenes)
 #Parámetros: campo content, a separar por enmiendas
 #Devuelve: lista de documentos tmpenmi a enviar a Mongo, a añadir a lcont.
 proc_serieD_enmiendas <- function(tmp){
