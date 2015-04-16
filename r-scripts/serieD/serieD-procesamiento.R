@@ -73,11 +73,17 @@ for(i in 1:length(nums)){ #i=630
         }
         #enviar a bbdd
         if (length(lcont) > 0) {
+                lcont2 <- list()
+                for(k in 1:length(lcont)){#k=1
+                        lcont2[[k]] <- crearCampoAutor(lcont[[k]])
+                }
                 mongo.remove(mongo, mongo_collection("serieD"), criteria=list(bol=num))
                 lcontb <- lapply(lcont, function(x) {
                         #campos que no interesa enviar
                         x$ndx <- NULL
                         x$cnt <- NULL
+                        #TODO. quitar algunos más.
+                        x$gopag <- NULL
                         return(mongo.bson.from.list(x))
                 })
                 cat(" ", length(lcontb), "\n")
