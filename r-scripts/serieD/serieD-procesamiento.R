@@ -66,6 +66,8 @@ for(i in 1:length(nums)){ #i=630
         if(class(resul) == "try-error"){
                 lcont <- vector("list")
                 lcont$bol <- "num"
+                #Añadir url
+                lcont$url <- paste0("http://www.congreso.es", abl[num, "url"]) 
                 print(paste("falla el boletin:", num))
                 next()
         } else {
@@ -73,9 +75,12 @@ for(i in 1:length(nums)){ #i=630
         }
         #enviar a bbdd
         if (length(lcont) > 0) {
+                #Crear campo autor con formato adecuado.
+                #Añadir url.
                 lcont2 <- list()
                 for(k in 1:length(lcont)){#k=1
                         lcont2[[k]] <- crearCampoAutor(lcont[[k]])
+                        lcont2[[k]]$url <- paste0("http://www.congreso.es", abl[num, "url"]) 
                 }
                 mongo.remove(mongo, mongo_collection("serieD"), criteria=list(bol=num))
                 lcontb <- lapply(lcont2, function(x) {
