@@ -101,7 +101,8 @@ proc.refcontent <- function(lc){
         lc$contentpre <- lc$content[1]  #segunda línea tras limpiar ref
         lc$contentpre <- lc$contentpre[!is.na(lc$contentpre)]
         ## Busco diputados en contentpre
-        if (length(lc$contentpre)>0) {
+        # Si ya están no los asigno.
+        if (length(lc$contentpre)>0 & is.null(lc$diputados)) { #Controla que no se machaca Diputado si ya existe.
                 dipdet <- str_detect(lc$contentpre, diputados$nomapre)
                 if (any(dipdet)) {
                         ##cat("\n", pres[i], "\n *", paste(diputados[dipdet, "apnom"], collapse=";"), "\n")
@@ -180,6 +181,11 @@ crearCampoAutor <- function(elemento){
                         if(!is.null(elemento$autor)) elemento$autor$diputado <- unique(vd)
                         elemento$diputados <- NULL
                 }
+        }
+        #Autor específico según el tipo en serie D.
+        if(elemento$tipo %in% c("154", "155", "156", "158")){
+                elemnento$autor <- NULL
+                elemento$autor$otro <- "Gobierno"
         }
         return(elemento)
 }
@@ -333,20 +339,51 @@ proc_boletin <- function(lines, num){
                                         tmp$ndx[tmpreg] <- str_replace(tmp$ndx[tmpreg], "\\(núm. reg. [[:digit:]]+\\)", "")
                                 }
                                 ## Búsqueda del autor en el índice (sólo existe en ciertos tipos)
-                                tmpaut <- str_detect(tmp$ndx, "Autor:")
-                                if (any(tmpaut)) {
-                                        tmp$autor <- str_trim(str_match(tmp$ndx[tmpaut], "Autor:(.*)")[, 2])
-                                        tmp$ndx <- tmp$ndx[!tmpaut]
+                                ## Antes se buscaba el autor a lo bestia. ahora distinguimos siempre grupos/diputados
+#                                 tmpaut <- str_detect(tmp$ndx, "Autor:")
+#                                 if (any(tmpaut)){
+#                                         tmp$autor <- str_trim(str_match(tmp$ndx[tmpaut], "Autor:(.*)")[, 2])
+#                                         tmp$ndx <- tmp$ndx[!tmpaut]
+#                                 }
+                                #Búsqueda de Grupo Parlamentario.
+                                #Por defecto pondremos "otro" si se trata de Enmiendas (161, 162, 173, 043)
+                                #Para poder tratar casos donde no se asigna el Grupo.
+                                if(tmp$tipo %in% c("161", "162", "173", "043")){
+                                        tmp$grupos <- "otro"
+                                }
+                                #Si se caza el Grupo, lo sobreescribimos.
+                                if(length(tmp$ndx)>0){
+                                        detgrupo <- str_detect(tmp$ndx, ignore.case("grupo[s]? parlamentario"))
+                                        if(any(detgrupo)){
+                                                lingrupo <- tmp$ndx[detgrupo] #por si hay mas de una linea en indice.
+                                                gpdet <- str_detect(string = lingrupo[1], pattern = as.character(gparlam$gparlams))
+                                                if(any(gpdet)){
+                                                        tmp$grupos <- unique(gparlam[gpdet, "gparlamab"])
+                                                }
+                                        }
+                                }
+                                #Búsqueda de Diputados. 
+                                #Al contrario que Grupo, Diputado no existe por defecto.
+                                #TODO. verificar si en algun caso el Diputado aparece en el índice.
+                                if(length(tmp$ndx)>0){
+                                        detdiputado <- str_detect(tmp$ndx, ignore.case("Diputado|Diputados|Diputada|Diputadas"))
+                                        if(any(detdiputado)){
+                                                lindiputado <- tmp$ndx[detdiputado]
+                                                dipdet <- str_detect(lindiputado[1], pattern = as.character(diputados$nomapre))
+                                                if(any(dipdet)){
+                                                        tmp$diputados <- unique(diputados[dipdet, "apnom"])
+                                                }
+                                        }
                                 }
                         }
-                        #Buscamos grupo en la primera linea del titulo.
-                        tmpgparl <- str_detect(tmp$ndx, ignore.case("grupo[s]? parlamentario"))
-                        if (any(tmpgparl)) {
-                                detgrup    <- str_detect(tmp$ndx[tmpgparl][1], gparlam$gparlams)
-                                if(any(detgrup)){
-                                        tmp$grupos <- gparlam[detgrup, "gparlamab"] ## guardo abreviado  
-                                }
-                        }
+#                         #Buscamos grupo en la primera linea del titulo.
+#                         tmpgparl <- str_detect(tmp$ndx, ignore.case("grupo[s]? parlamentario"))
+#                         if (any(tmpgparl)) {
+#                                 detgrup    <- str_detect(tmp$ndx[tmpgparl][1], gparlam$gparlams)
+#                                 if(any(detgrup)){
+#                                         tmp$grupos <- gparlam[detgrup, "gparlamab"] ## guardo abreviado  
+#                                 }
+#                         }
                         ## El título son las líneas que quedan en el índice excepto la última si
                         ## hay más de una, pero es distinto para las 184 que para el resto
                         tmp$titulo <- tmp$ndx[1]
@@ -400,6 +437,7 @@ proc_boletin <- function(lines, num){
                                 }
                                 if (length(tmp$cnt)>0) {
                                         tmp1 <- proc.refcontent(tmp)
+                                        #Nota. Función controla que si diputado ya existe no se machaca
                                         tmp$diputados  <- tmp1$diputados
                                         tmp$content    <- tmp1$content
                                         tmp$contentpre <- tmp1$contentpre
@@ -415,16 +453,17 @@ proc_boletin <- function(lines, num){
                                         if(!is.null(fecha2)) { tmp$fecha <- fecha2 }
                                 }
                                 
-                                ## Añadir procesamiento de contenido: autor, grupo parlamentario, etc.
-                                #
-                                tmpgparlcnt <- str_detect(tmp$contentpre, ignore.case("grupo[s]* parlamentario"))
-                                if (any(tmpgparlcnt)) {
-                                        detgrup    <- str_detect(tmp$contentpre[tmpgparlcnt], gparlam$gparlams)
-                                        tmp$grupos <- unique(c(tmp$grupos, gparlam[detgrup, "gparlamab"]))  ## guardo abreviado
-                                        #                 s <- unlist(str_extract_all(tmp$ndx[tmpgparl], grupos.re))
-                                        #                                     tmp$grupos <- c(tmp$grupos, gparlam[detgrup, "gparlamab"])  ## guardo abreviado
+                                ## Buscamos Grupo parlamentario en contentpre, si aún no existe.
+                                if(is.null(tmp$grupos)){ #Buscamos en contentpre si aún no existe.
+                                        tmpgparlcnt <- str_detect(tmp$contentpre, ignore.case("grupo[s]* parlamentario"))
+                                        if (any(tmpgparlcnt)) {
+                                                detgrup    <- str_detect(tmp$contentpre[tmpgparlcnt], gparlam$gparlams)
+                                                tmp$grupos <- unique(c(tmp$grupos, gparlam[detgrup, "gparlamab"]))  ## guardo abreviado
+                                                #                 s <- unlist(str_extract_all(tmp$ndx[tmpgparl], grupos.re))
+                                                #                                     tmp$grupos <- c(tmp$grupos, gparlam[detgrup, "gparlamab"])  ## guardo abreviado
+                                        }
                                 }
-                                ## Buscamos comisión inmediatamente anterior en el boletín
+                                ## Buscamos Comisión inmediatamente anterior en el boletín
                                 vc <- vector(mode = "numeric")
                                 vc1 <- vector(mode = "numeric")
                                 for(cc in 1:length(comisiones)){
@@ -436,12 +475,12 @@ proc_boletin <- function(lines, num){
                                 if(length(vc1)>0) { vc <- max(vc) }# Línea en lines que contiene la comisión inmediatamente anterior
                                 # Asignaremos Comisión sólo para algunos tipos.
                                 if( tmp$tipo %in% c('161','181','184') & length(vc)>0 ){
-                                        tmp$comisiones <- lines[vc]
+                                        tmp$lugar <- lines[vc]
                                 }
                                 rm(vc, vc1)
                         }
                         #Añadir fecha de creación
-                        tmp$created <- as.POSIXct(Sys.time(), tz="CET")
+#                         tmp$created <- as.POSIXct(Sys.time(), tz="CET")
                         #Boletines con enmiendas: Varios documentos por referencia.
                         lenmiendas <- list()
                         if(tmp$tipo %in% c('161', '162')){##TODO. Incluir aqui 173, 043.
