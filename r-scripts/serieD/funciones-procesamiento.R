@@ -515,7 +515,7 @@ proc_boletin <- function(lines, num){
 
 #afecta solo tipos 161, 162
 #TODO. A incluir tambien: 173 (Mociones), 043 (Dictámenes)
-#Parámetros: campo content, a separar por enmiendas
+#Parámetros: lista tmp, a separar por enmiendas
 #Devuelve: lista de documentos tmpenmi a enviar a Mongo, a añadir a lcont.
 proc_serieD_enmiendas <- function(tmp){
         
@@ -612,6 +612,8 @@ proc_serieD_enmiendas <- function(tmp){
                 
                 lenmiendas[[k]] <- tmpenmi
         }
+        ## TODO. Antes de enviarlo de vuelta a lcont, juntar los tmpemi por grupos parlamentarios.
+        ## Esto es en lugar de devolver una lista de length(linenmi) elementos, devolver menos.
         
         return(lenmiendas)
 }
