@@ -93,15 +93,22 @@ for(i in 1:length(listos_mongo)){ #i=630
 			}
 			#enviar a bbdd
 			if (length(lcont) > 0) {
-
-				mongo.remove(mongo, mongo_collection("serieD"), criteria=list(bol=num))
-				lcontb <- lapply(lcont, function(x) {
-									#campos que no interesa enviar
-									x$ndx <- NULL
-									x$cnt <- NULL
-									return(mongo.bson.from.list(x))})
-				cat(" ", length(lcontb), "\n")
-				mongo.insert.batch(mongo, mongo_collection("serieD"), lcontb)
+			        #Crear campo autor con formato adecuado.
+			        #Añadir url.
+			        lcont2 <- list()
+			        for(k in 1:length(lcont)){#k=1
+			                lcont2[[k]] <- crearCampoAutor(lcont[[k]])
+			                lcont2[[k]]$url <- paste0("http://www.congreso.es", abl[num, "url"]) 
+			        }
+			        mongo.remove(mongo, mongo_collection("serieD"), criteria=list(bol=num))
+			        lcontb <- lapply(lcont2, function(x) {
+			                #campos que no interesa enviar
+			                x$ndx <- NULL
+			                x$cnt <- NULL
+			                #TODO. quitar algunos más.
+			                x$gopag <- NULL
+			                return(mongo.bson.from.list(x))
+			        })
 				introducidos_mongo <- c(introducidos_mongo, num)
 				save(introducidos_mongo, file=paste0(GENERATED_BASE_DIR, "introducidos_mongo.rd"))
 			}
