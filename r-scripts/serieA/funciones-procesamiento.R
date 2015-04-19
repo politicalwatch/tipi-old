@@ -351,6 +351,7 @@ unirEnmiendas <- function(lcont){
                 lcont2[[i]] <- elemen
                 rm(elemen)
         }
+        return(lcont2)
 }
 
 #Agrupar en un solo elemento de lista todos los los elementos de un grupo parlamentario
