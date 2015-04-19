@@ -160,35 +160,6 @@ extraer.fecha <- function(x) {
         return(as.POSIXct(paste(aaaa, mm, dd, sep="-"), tz="CET"))
 }
 
-#Parametro: Elemento de una lista
-#Devuelve: elemento actualizado con un campo "autor", y sin campos "diputados" ni "grupos"
-crearCampoAutor <- function(elemento){
-        #existe alguno, diputado o grupo
-        if(!is.null(elemento$grupos)|!is.null(elemento$diputados)){
-                if(!is.null(elemento$grupos)){
-                        vg <- vector()
-                        for(g in 1:length(elemento$grupos)){
-                                vg <- c(vg, c(elemento$grupos[g]))
-                        }
-                        elemento$autor$grupo <- unique(vg)
-                        elemento$grupos <- NULL
-                }
-                if(!is.null(elemento$diputados)){
-                        vd <- vector()
-                        for(d in 1:length(elemento$diputados)){
-                                vd <- c(vd, c(elemento$diputados[d]))
-                        }
-                        if(!is.null(elemento$autor)) elemento$autor$diputado <- unique(vd)
-                        elemento$diputados <- NULL
-                }
-        }
-        #Autor específico según el tipo en serie D.
-        if(elemento$tipo %in% c("154", "155", "156", "158")){
-                elemnento$autor <- NULL
-                elemento$autor$otro <- "Gobierno"
-        }
-        return(elemento)
-}
 
 ## Expandir series de referencias del tipo "184/061759 a 184/061762"
 expandrefs <- function(mrefs) {
@@ -390,6 +361,11 @@ proc_boletin <- function(lines, num){
                         tmp$titulo <- str_replace_all(tmp$titulo, " +", " ") ## Quito espacios duplicados
                         tmp$titulo <- str_trim(tmp$titulo) ## Quito espacios en los extremos
                         
+                        ## Autor en el título: Respuestas a preguntas orales (184)
+                        ##VERIFICAR AQUI.
+                        if(str_detect(string = tmp$titulo, pattern = "^Autor: Gobierno")){
+                                tmp$autor <- "Gobierno"
+                        }
                         ## Trámite: Del titulo para tipos 161, 162 (proyectos no de ley)
                         if(tmp$tipo %in% c("161", "162")){
                                 if(any(dettram <- str_detect(tmp$titulo, pattern=tramitesDPNL))){
@@ -483,10 +459,21 @@ proc_boletin <- function(lines, num){
 #                         tmp$created <- as.POSIXct(Sys.time(), tz="CET")
                         #Boletines con enmiendas: Varios documentos por referencia.
                         lenmiendas <- list()
-                        if(tmp$tipo %in% c('161', '162')){##TODO. Incluir aqui 173, 043.
+                        if(tmp$tipo %in% c('161', '162', '173', '043')){
+                                #Ejemplos 173: bol=163, ref=173/000045
                                 if(any(str_detect(string = tmp$content, pattern = "^Enmienda"))){ 
-                                        tmp$tramite <- "Enmienda a Proposición no de Ley"
+                                        if(tmp$tipo %in% c('161', '162')){
+                                                tmp$tramite <- "Enmiendas a Proposición no de Ley"
+                                        }
+                                        if(tmp$tipo %in% c('173')){
+                                                tmp$tramite <- "Enmiendas a Moción"
+                                        }
+                                        if(tmp$tipo %in% c('043')){
+                                                tmp$tramite <- "Enmiendas a Planes, programas y dictámenes/Propuestas de resolución"
+                                        }
                                         lenmiendas <- proc_serieD_enmiendas(tmp)
+                                        #CAMBIO UNIR ENMIENDAS AQUI.
+                                        lenmiendas <- unirEnmiendas(lcont = lenmiendas)
                                 }
                                 #añadimos a tmp campos adicionales enmineda 
                                 #sobreescribimos también algunos de los campos
@@ -612,8 +599,9 @@ proc_serieD_enmiendas <- function(tmp){
                 
                 lenmiendas[[k]] <- tmpenmi
         }
-        ## TODO. Antes de enviarlo de vuelta a lcont, juntar los tmpemi por grupos parlamentarios.
-        ## Esto es en lugar de devolver una lista de length(linenmi) elementos, devolver menos.
-        
         return(lenmiendas)
 }
+
+
+
+
