@@ -80,7 +80,7 @@ for(i in 1:length(nums)){ #i=630
                 lcont2 <- list()
                 for(k in 1:length(lcont)){#k=1
                         lcont2[[k]] <- crearCampoAutor(lcont[[k]])
-#                         lcont2[[k]]$url <- paste0("http://www.congreso.es", abl[num, "url"]) 
+                        lcont2[[k]]$url <- paste0("http://www.congreso.es", abl[num, "url"]) 
                 }
                 mongo.remove(mongo, mongo_collection("serieD"), criteria=list(bol=num))
                 lcontb <- lapply(lcont2, function(x) {
