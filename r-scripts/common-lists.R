@@ -1,4 +1,4 @@
-### Directorios comunes a todas las series - Boletines Congreso Diputados
+### Directorios y Funciones comunes a todas las series - Boletines Congreso Diputados
 
 #+++++++++++++++++++++++++++++#
 #    1. Mapeo tipo a texto    #
@@ -358,3 +358,113 @@ tramitesDPNL <- c("Desestimación así como enmiendas formuladas",
 				  "Aprobación",
 				  "Aprobada"
 )
+
+
+#+++++++++++++++++++++++++++++++++++++++++++#
+#   Funciones - Tratamiento Campo "autor    #
+#+++++++++++++++++++++++++++++++++++++++++++#
+
+##### Tratamiento campo "autor"
+#Parametro: Elemento de una lista
+#Devuelve: elemento actualizado con un campo "autor", y sin campos "diputados" ni "grupos"
+crearCampoAutor <- function(elemento){
+        #existe alguno, diputado o grupo
+        if(!is.null(elemento$grupos)|!is.null(elemento$diputados)){
+                if(!is.null(elemento$grupos)){
+                        vg <- vector()
+                        for(g in 1:length(elemento$grupos)){
+                                vg <- c(vg, c(elemento$grupos[g]))
+                        }
+                        elemento$autor$grupo <- unique(vg)
+                        elemento$grupos <- NULL
+                }
+                if(!is.null(elemento$diputados)){
+                        vd <- vector()
+                        for(d in 1:length(elemento$diputados)){
+                                vd <- c(vd, c(elemento$diputados[d]))
+                        }
+                        if(!is.null(elemento$autor)) elemento$autor$diputado <- unique(vd)
+                        elemento$diputados <- NULL
+                }
+        }
+        #Autor específico según el tipo en serie D.
+        if(elemento$tipo %in% c("154", "155", "156", "158")){
+                elemento$autor <- NULL
+                elemento$autor$otro <- "Gobierno"
+        }
+        #Respuestas a preguntas (184...): Si hemos cazado el Autor en el título.
+        if(!is.null(elemento$autor)){
+                if(elemento$autor == "Gobierno"){
+                        elemento$autor <- NULL
+                        elemento$autor$otro <- "Gobierno"
+                }
+        }
+        return(elemento)
+}
+
+
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
+#   Funciones - Separación Enmiendas por Grupos parlamentarios    #
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
+
+##### Envío separado de Enmiendas por Grupos.
+#Agrupar en un solo elemento de lista todos los los elementos de un grupo parlamentario
+#i=indice donde introducir el elemento
+#lcont2=lista nueva, generada de antes con lcont2<-list()
+agruparUnGrupo <- function(lcont, grupo){#grupo=lgrupos[[1]]
+        #grupos distintos en lcont
+        #         lgrupos <- unique(sapply(1:length(lcont), function(x){ print(lcont[[x]]$grupos) }, simplify = TRUE))
+        #
+        elemen <- list()
+        #determinar en que elementos de lcont tengo que iterar.
+        kgrupobusq <- rep(0, length(lcont))
+        for(k in 1:length(lcont)){#k=1
+                if(!is.null(lcont[[k]]$grupos)){ 
+                        if(identical(lcont[[k]]$grupos, grupo)){kgrupobusq[k] <- 1 }
+                }
+        }
+        #
+        #         c <- 0
+        #buscar el primero y coger la info básica
+        for(k in 1:length(lcont)){
+                if(kgrupobusq[k] == 1){ 
+                        elemen <- lcont[[k]] #en cuanto encuentra, sale del bucle
+                        break()
+                }
+                if(is.null(elemen$diputados)) { elemen$diputados <- "" } 
+        }
+        #iterar sobre el resto
+        #Si hay una sola enmienda por dicho grupo, devolver resultado.
+        if(sum(kgrupobusq)>1 & length(lcont)>1){
+                for(k in 2:length(lcont)){
+                        if(kgrupobusq[k] == 1){
+                                elemen$numenmienda <- c(elemen$numenmienda, lcont[[k]]$numenmienda)
+                                elemen$content <- c(elemen$content, lcont[[k]]$content)
+                                elemen$grupos <- unique(c(elemen$grupos, lcont[[k]]$grupos))
+                                if(!is.null(lcont[[k]]$diputados)){
+                                        elemen$diputados <- c(elemen$diputados, lcont[[k]]$diputados)
+                                }
+                        }
+                }
+        }
+        return(elemen)
+}
+
+## Unir enmiendas del mismo grupo parlamentario
+unirEnmiendas <- function(lcont){
+        lgrupos <- unique(sapply(1:length(lcont), function(x){ print(lcont[[x]]$grupos) }, simplify = TRUE))
+        #lgrupos nos da cuáles hay que juntar
+        lcont2 <- list()
+        #Insertar en lcont2 tantos elementos como grupos haya.
+        for(i in 1:length(lgrupos)){#i=1
+                if(!is.character(lgrupos[[i]])){#grupo nulo, se salta de momento.TODO.Forzar que todos tengan '='
+                        next()
+                }
+                #se agrupan las enmiendas
+                elemen <- agruparUnGrupo(lcont = lcont, grupo = lgrupos[[i]])
+                #se insertan en la lista
+                lcont2[[i]] <- elemen
+                rm(elemen)
+        }
+        return(lcont2)
+}
