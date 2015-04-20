@@ -92,11 +92,13 @@ for(i in 1:length(proy_listA)){
                                                         lcont2[[i]] <- elem
                                                 }
                                                 #lgrupos nos da cuáles hay que juntar
+                                                #Quitar elementos nulos, si los hay.
+                                                lcont2 <- lcont2[!sapply(lcont2, is.null)]
                                                 #Crear campo autor
                                                 #                                         lcont <- sapply(lcont, FUN=crearCampoAutor)
                                                 lcontEn <- list()
                                                 for(k in 1:length(lcont2)){#k=1
-                                                        lcontEn[[k]] <- crearCampoAutor(lcont2[[k]])
+                                                        lcontEn[[k]] <- crearCampoAutor(lcont2[[k]])  
                                                 }
                                                 lcont <- lcontEn
                                         }else if(length(lcont)==1){#crear campo autor
