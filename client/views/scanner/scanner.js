@@ -42,7 +42,8 @@ Template.scanner.rendered = function() {
     // D3js example: https://raw.githubusercontent.com/Slava/d3-meteor-basic/master/client.js
 
     var margin = 20,
-    diameter = 600;
+    diameter = 600,
+    scaling = 1.3;
 
     var color = d3.scale.linear()
         .domain([-1, 5])
@@ -50,7 +51,7 @@ Template.scanner.rendered = function() {
         .interpolate(d3.interpolateHcl);
 
     var pack = d3.layout.pack()
-        .padding(2)
+        .padding(3)
         .size([diameter - margin, diameter - margin])
         .value(function(d) { return d.size; })
 
@@ -58,78 +59,35 @@ Template.scanner.rendered = function() {
         .attr("width", diameter)
         .attr("height", diameter)
         .append("g")
-        .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
+        .attr("transform", "translate(" + diameter / 2.5 + "," + diameter / 2.5 + ")");
 
-    var bubble = d3.layout.pack()
-                .size([diameter, diameter])
-                .value(function(d) {return d.size;})
-    var json = {"countries_msg_vol": [
-      {"url": Meteor.absoluteUrl("images/svgs/dependencia-02.svg"),"hits": 100}
-    ]};
-
-    var nodes = bubble.nodes(processData(json));
-    var vis = svg.selectAll('circle').data(nodes);
-    vis.enter().append("image")
-      .attr("xlink:href", function(d){
-            return  d.url;
-      })
-      .attr("width", function(d) { console.log(d); 
-      return d.size; })
-      .attr("height", function(d) { return d.size; })
-      .attr('transform', function(d) { return 'translate(0,0)'; });
-
-    function processData(data) {
-      var objs = data.countries_msg_vol;
-
-      var newDataSet = [];
-
-
-      for(var i=0; i<objs.length; i++) {
-          var obj = objs[i];
-          newDataSet.push({url: obj.url, className: obj.url, size: obj.hits});
-      }
-      return {children: newDataSet};
-    }
-
-    /*
     d3.json(Meteor.absoluteUrl("/data/fixtures.json"), function(error, root) {
       if (error) return console.error(error);
 
       var focus = root,
           nodes = pack.nodes(root),
           view;
+      
+      var image = svg.selectAll('image').data(nodes).enter().append("image")
+            .attr("xlink:href", function(d){
+                return Meteor.absoluteUrl("images/svgs-circles/") + d.icon;
+            })
+            .attr("width", function(d) { return d.r * scaling; })
+            .attr("height", function(d) { return d.r * scaling; })
+            .attr('transform', function(d) { return 'translate('+d.x+','+d.y+')'; })
+            .attr("class", function(d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
+            .style("opacity", function(d) { return d.children ? 0 : 1; })
+            .style("cursor", "pointer")
+            .on("click", function(d) { console.log("CLICK!!!"); if (focus !== d) { console.log("Focus: " + focus); console.log("Data: " + d); zoom(d), d3.event.stopPropagation(); } });
 
-      var circle = svg.selectAll("circle")
-          .data(nodes)
-        .enter().append("circle")
-          .attr("class", function(d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
-          .style("fill", function(d) { return d.children ? "#000" : null; })
-          .style("fill-opacity", function(d) { return d.children ? 0 : 1; })
-          .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); });
+        image.on("click", function(d) { console.log(d); });
 
-      var text = svg.selectAll("text")
-          .data(nodes)
-        .enter().append("text")
-          .attr("class", "label")
-          .style("fill-opacity", function(d) { return d.parent === root ? 1 : 0; })
-          .style("display", function(d) { return d.parent === root ? null : "none"; })
-          .text(function(d) { return d.name; });
+    var node = svg.selectAll("image");
 
-      var node = svg.selectAll("circle,text");
-
-      var image = new Image;
-      image.src = "https://octodex.github.com/images/original.png";
-      image.onload = load;
-
-      function load() {
-        circle.append("image")
-            .attr("xlink:href", this.src)
-            .attr("width", "90%")
-            .attr("height", "90%");
-      }
 
       d3.select("#vizz")
           .on("click", function() { zoom(root); });
+
 
       zoomTo([root.x, root.y, root.r * 2 + margin]);
 
@@ -137,11 +95,10 @@ Template.scanner.rendered = function() {
 
         $("#scanner-title").text(d.name);
         if ($("#scanner-title").text() == "Escaner") {
-          console.log("Añade clase hidden");
           $("#scanner-content").addClass("hidden");
         }
         else {
-          console.log("Quita clase hidden");
+    
           $("#scanner-content").removeClass("hidden");
         }
 
@@ -154,21 +111,18 @@ Template.scanner.rendered = function() {
               return function(t) { zoomTo(i(t)); };
             });
 
-        transition.selectAll("text")
-          .filter(function(d) { return d.parent === focus || this.style.display === "inline"; })
-            .style("fill-opacity", function(d) { return d.parent === focus ? 1 : 0; })
-            .each("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
-            .each("end", function(d) { if (d.parent !== focus) this.style.display = "none"; });
       }
 
       function zoomTo(v) {
+        // console.log('V: ' + v);
         var k = diameter / v[2]; view = v;
-        node.attr("transform", function(d) { return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")"; });
-        circle.attr("r", function(d) { return d.r * k; });
+        node.attr("transform", function(d) {
+            return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")";
+        });
+        image.attr("width", function(d) { return d.r * scaling * k; }).attr("height", function(d) { return d.r * scaling * k; });
       }
     });
 
     d3.select(self.frameElement).style("height", diameter + "px");
-    */
 
 };
