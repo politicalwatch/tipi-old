@@ -50,11 +50,11 @@ if (Meteor.isServer) {
 	});
 
 	Meteor.publish('allTipis', function() {
-		return Tipis.find({}, {fields: {numActo: 1, ref: 1, fechaPub: 1, autor: 1, grupoPar: 1, titulo: 1},
-													 sort: {numActo: -1}});
+		return Refs.find({is_tipi: true}, {fields: {ref: 1, autor: 1, titulo: 1},
+													 sort: {ref: -1}});
 	});
 	Meteor.publish('singleTipi', function(id) {
-		return Tipis.find(id);
+		return Refs.find({_id: id, is_tipi: true});
 	});
 
 	Meteor.publish('allRefs', function() {

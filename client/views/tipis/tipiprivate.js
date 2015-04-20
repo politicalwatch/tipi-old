@@ -1,29 +1,24 @@
 /* ---------------------------------------------------- +/
 
-## Item ##
+## Private Tipi ##
 
-Code related to the item template
+Code related to the private tipi template
 
 /+ ---------------------------------------------------- */
 
-Template.tipiini.created = function () {
+Template.tipiprivate.created = function () {
   //
 };
 
-Template.tipiini.helpers({
-  
-  myHelper: function () {
-    //
-  }
-
+Template.tipiprivate.helpers({
+  //
 });
 
-Template.tipiini.rendered = function () {
+Template.tipiprivate.rendered = function () {
   //
 };
 
-Template.tipiini.events({
-
+Template.tipiprivate.events({
   'click #verencongreso': function(e, instance){
     var ref = this;
 		e.preventDefault();
