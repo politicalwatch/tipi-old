@@ -24,7 +24,7 @@ Template.refsearch.helpers({
 			showColumnToggles: false,
             fields: [{ key: 'bol', label: 'Bol.', sort: 'descending',
             								fn: function(val, obj) {
-            									return getBol(val);
+            									return obj.getBol();
             								}
             							 },
 										 { key: 'ref', label: 'Referencia'},
@@ -35,7 +35,7 @@ Template.refsearch.helpers({
 										 },
 										 { key: 'autor', label: 'Autor',
 										 	fn: function(val, obj) {
-										 		return getAutor(val);
+										 		return obj.getAutor();
 										 	}
 										 },
 										 { key: 'titulo', label: 'Título'},
@@ -81,19 +81,3 @@ Template.refsearch.events({
 	}
   //
 });
-
-function getBol(bol) {
-    if (typeof bol !== 'undefined') {
-        if (typeof bol.bol !== 'undefined') {return bol.bol;}
-        else {return bol;}
-    }
-}
-
-function getAutor(autor) {
-	if (typeof autor !== 'undefined') {
-		if (typeof autor.diputadp !== 'undefined') {return autor.diputado;}
-		else if (typeof autor.grupo !== 'undefined') {return autor.grupo;}
-		else if (typeof autor.otro !== 'undefined') {return autor.otro;}
-		else {return '';}
-	}
-}

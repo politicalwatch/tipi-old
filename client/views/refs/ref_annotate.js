@@ -13,11 +13,7 @@ Template.refAnnotate.helpers({
     },
     show_dicts: function() {
         return Refs.find().fetch()[0].dicts;
-    },
-    // dictionaries_suggested: function() {
-    //     if (typeof ds === 'undefined') return [];
-    //     else return ds;
-    // }
+    }
 });
 
 Template.refAnnotate.events({
@@ -26,14 +22,13 @@ Template.refAnnotate.events({
         history.back();
     },
     'click #annotate': function(e) {
+        $('#annotate').text('Anotando...');
+        $('selector').css('cursor','wait');
         e.preventDefault();
-        console.log("Anotando...");
-        $("#save").text("Anotando...");
         res = suggest_annotation();
-        Meteor.call('annotateRef', this._id, res[0], res[1], true);
-        console.log(res[0]);
-        $("#save").text("Anotado!");
-        console.log("Anotado!");
+        Meteor.call('annotateRef', this._id, this.titulo, this.getAutor(), res[0], res[1], true, res[0]);
+        $('#annotate').text('Anotado!');
+        $('selector').css('cursor','default');
     },
 });
 
