@@ -22,7 +22,11 @@ Template.refsearch.helpers({
             rowsPerPage: 30,
             showFilter: false,
 			showColumnToggles: false,
-            fields: [{ key: 'bol', label: 'Bol.', sort: 'descending'},
+            fields: [{ key: 'bol', label: 'Bol.', sort: 'descending',
+            								fn: function(val, obj) {
+            									return getBol(val);
+            								}
+            							 },
 										 { key: 'ref', label: 'Referencia'},
 										 { key: 'fecha', label: 'Fecha',
 										 	fn: function(val, obj) {
@@ -78,10 +82,17 @@ Template.refsearch.events({
   //
 });
 
+function getBol(bol) {
+    if (typeof bol !== 'undefined') {
+        if (typeof bol.bol !== 'undefined') {return bol.bol;}
+        else {return bol;}
+    }
+}
+
 function getAutor(autor) {
 	if (typeof autor !== 'undefined') {
-		if (typeof autor.grupo !== 'undefined') {return autor.grupo;}
-		else if (typeof autor.diputado !== 'undefined') {return autor.diputado;}
+		if (typeof autor.diputadp !== 'undefined') {return autor.diputado;}
+		else if (typeof autor.grupo !== 'undefined') {return autor.grupo;}
 		else if (typeof autor.otro !== 'undefined') {return autor.otro;}
 		else {return '';}
 	}

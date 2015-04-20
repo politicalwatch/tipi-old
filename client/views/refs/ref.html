@@ -10,14 +10,24 @@
  Volver</a>
 								<a class="btn btn-default btn-secondary pull-right" id="verencongreso"><i class="fa fa-institution"></i> Ver en el Congreso</a>
 				    		</div>
-							<h3>{{bol}} - {{ref}} - {{titulo}}</h3>
+							<h3>{{getBol}} - {{ref}} - {{titulo}}</h3>
 							<hr>
 							<p>
 								<dl class="dl-horizontal">
 									<dt>Tipo</dt>
 										<dd>{{tipotexto}}</dd>
 									<dt>Trámite</dt>
-										<dd>{{tramite}}</dd>
+										<dd>{{getTramite}}</dd>
+									{{#if numenmienda}}
+										<dt>Enmiedas</dt>
+										<dd>
+											<ul>
+										{{#each numenmienda}}
+											<li>{{this}}</li>
+										{{/each}}
+										</ul>
+										</dd>
+									{{/if}}
 									<dt>Lugar</dt>
 										<dd>{{lugar}}</dd>
 									<dt>Fecha</dt>

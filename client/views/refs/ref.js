@@ -13,8 +13,8 @@ Template.ref.rendered = function () {
 Template.ref.helpers({
     getAutor: function() {
         if (typeof this.autor !== 'undefined') {
-            if (typeof this.autor.grupo !== 'undefined') {return this.autor.grupo;}
-            else if (typeof this.autor.diputado !== 'undefined') {return this.autor.diputado;}
+            if (typeof this.autor.diputado !== 'undefined') {return this.autor.diputado;}
+            else if (typeof this.autor.grupo !== 'undefined') {return this.autor.grupo;}
             else if (typeof this.autor.otro !== 'undefined') {return this.autor.otro;}
             else {return '';}
         }
@@ -23,6 +23,30 @@ Template.ref.helpers({
         if (typeof this.autor !== 'undefined') {
             if (typeof this.autor.grupo !== 'undefined') {return this.autor.grupo;}
             else {return '';}
+        }
+    },
+    getBol: function() {
+        if (typeof this.bol !== 'undefined') {
+            if (typeof this.bol.bol !== 'undefined') {return this.bol.bol;}
+            else {return this.bol;}
+        }
+    },
+    getTramite: function() {
+        if (typeof this.tramite !== 'undefined') {
+            if (typeof this.tramite.tramite !== 'undefined') {return this.tramite.tramite;}
+            else {return this.tramite;}
+        }
+    },
+    getUrl: function() {
+        if (typeof this.url !== 'undefined') {
+            if (typeof this.url.url !== 'undefined') {return this.url.url;}
+            else {
+              if (Array.isArray(this.url)) {
+                return this.url[0];
+              } else {
+                return this.url;
+              }
+            }
         }
     }
 });
