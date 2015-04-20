@@ -44,7 +44,7 @@ function suggest_annotation() {
     _.each(dicts, function(d) {
         if (d.dictgroup == "tipi") {
             _.each(d.words, function(w) {
-                search = new RegExp(w, 'i');
+                search = new RegExp(w, 'gi');
                 if (Refs.find({'content': search}).count() > 0) {
                     ts.push(w);
                     ds.push(d.dict);
