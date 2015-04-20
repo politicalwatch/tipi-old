@@ -103,7 +103,6 @@ for(i in 1:length(listos_mongo)){ #i=630
 			                lcont2[[k]] <- crearCampoAutor(lcont[[k]])
 			                lcont2[[k]]$url <- paste0("http://www.congreso.es", abl[num, "url"]) 
 			        }
-			        mongo.remove(mongo, mongo_collection("serieD"), criteria=list(bol=num))
 			        lcontb <- lapply(lcont2, function(x) {
 			                #campos que no interesa enviar
 			                x$ndx <- NULL
@@ -112,6 +111,7 @@ for(i in 1:length(listos_mongo)){ #i=630
 			                x$gopag <- NULL
 			                return(mongo.bson.from.list(x))
 			        })
+                    mongo.insert.batch(mongo, mongo_collection("serieD"), lcontb)
 				introducidos_mongo <- c(introducidos_mongo, num)
 				save(introducidos_mongo, file=paste0(GENERATED_BASE_DIR, "introducidos_mongo.rd"))
 			}
