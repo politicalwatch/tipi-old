@@ -50,7 +50,6 @@ library("XML")
 library("RCurl")
 library("plyr")
 library("stringr")
-library("data.table")
 library("RSQLite")
 library("rmongodb")
 
@@ -62,6 +61,7 @@ source("funciones-procesamiento.R")
 ## bocgs-proc/BOCG-D-num.rd : siendo num un parámetro (número de boletín)
 
 
+load(paste0(GENERATED_BASE_DIR, "abl.rd"))
 load(paste0(GENERATED_BASE_DIR, "listos_mongo.rd"))
 if( file.exists(paste0(GENERATED_BASE_DIR, "introducidos_mongo.rd")) )
 {
@@ -76,6 +76,7 @@ pendientes <- setdiff(y = introducidos_mongo, x = listos_mongo)
 for(i in 1:length(listos_mongo)){ #i=630
 	#suponemos .rd ya existe
 	num <- listos_mongo[[i]] #num=555
+	print(num)
 	if( ! num %in% introducidos_mongo )
 	{
 		if(file.exists(paste0(dir, "/BOCG-D-", num, ".rd"))){
