@@ -55,10 +55,14 @@
 										<dd>
 										{{#if content}}
 											<p>
-											{{#each content}}
-												{{this}}
-												<br>
-											{{/each}}
+												{{#if terms}}
+													{{contentHighlighted}}
+												{{else}}
+													{{#each content}}
+														{{this}}
+														<br>
+													{{/each}}
+												{{/if}}
 											</p>
 										{{else}}
 											<p>Sin contenido</p>

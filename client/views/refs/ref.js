@@ -11,6 +11,16 @@ Template.ref.rendered = function () {
 };
 
 Template.ref.helpers({
+    contentHighlighted: function() {
+        str = this.content.join("<br/>");
+        if (this.terms !== 'undefined') {
+            for(i=0;i<this.terms.length;i++) {
+                regex = new RegExp(this.terms[i], "i");
+                str = str.replace(regex, ("<span class='highlighted'>" + "$&" + "</span>") );
+            }
+        }
+        return new Handlebars.SafeString(str);
+    },
     getAutor: function() {
         if (typeof this.autor !== 'undefined') {
             if (typeof this.autor.diputado !== 'undefined') {return this.autor.diputado;}

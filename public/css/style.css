@@ -451,6 +451,10 @@ mark{background-color: black; color: white;text-align: right;}
   pointer-events: auto;
 }
 
+.highlighted {
+    background-color: yellow;
+}
+
 /*refs and tipis--------------------------------------------*/
 .ref {
 	margin-top: 10px;
