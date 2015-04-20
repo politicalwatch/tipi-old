@@ -22,7 +22,11 @@ Template.refsearch.helpers({
             rowsPerPage: 30,
             showFilter: false,
 			showColumnToggles: false,
-            fields: [{ key: 'bol', label: 'Bol.', sort: 'descending'},
+            fields: [{ key: 'bol', label: 'Bol.', sort: 'descending',
+            								fn: function(val, obj) {
+            									return getBol(val);
+            								}
+            							 },
 										 { key: 'ref', label: 'Referencia'},
 										 { key: 'fecha', label: 'Fecha',
 										 	fn: function(val, obj) {
@@ -41,7 +45,6 @@ Template.refsearch.helpers({
 												return Spacebars.SafeString(
 				'<a href="refs/'+ obj._id._str + '"><span class="label label-info"><i class="fa fa-eye"></i></span></a>&nbsp;<a href="refs/'+ obj._id._str + '/annotate"><span class="label label-info"><i class="fa fa-tag"></i></span></a>&nbsp;' +
 				'<a href="http://www.congreso.es/portal/page/portal/Congreso/Congreso/Iniciativas?_piref73_2148295_73_1335437_1335437.next_page=/wc/servidorCGI&CMD=VERLST&BASE=IW10&PIECE=IWD0&FMT=INITXD1S.fmt&FORM1=INITXLUS.fmt&DOCS=1-1&QUERY=%28I%29.ACIN1.+%26+%28' + encodeURIComponent(obj.ref) + '%29.ALL." target="_blank"><span class="label label-info"><i class="fa fa-institution"></i></span>');
-												//return new Spacebars.SafeString('<a href="+Routes.route[\'refs\'].path(obj._id._str)+">Ver</a>');
 											}}
 										]
         };
@@ -79,10 +82,17 @@ Template.refsearch.events({
   //
 });
 
+function getBol(bol) {
+    if (typeof bol !== 'undefined') {
+        if (typeof bol.bol !== 'undefined') {return bol.bol;}
+        else {return bol;}
+    }
+}
+
 function getAutor(autor) {
 	if (typeof autor !== 'undefined') {
-		if (typeof autor.grupo !== 'undefined') {return autor.grupo;}
-		else if (typeof autor.diputado !== 'undefined') {return autor.diputado;}
+		if (typeof autor.diputadp !== 'undefined') {return autor.diputado;}
+		else if (typeof autor.grupo !== 'undefined') {return autor.grupo;}
 		else if (typeof autor.otro !== 'undefined') {return autor.otro;}
 		else {return '';}
 	}
