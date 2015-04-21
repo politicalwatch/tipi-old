@@ -1,4 +1,4 @@
-/*fonts*/
+552f7bc912c71fc4a0dea835/*fonts*/
 @font-face {
 	font-family: 'Abril Fatface';
 	font-style: normal;
@@ -39,7 +39,7 @@ body {
 	font-size:32px;
 	font-weight:100;}
 .old h3 {font-family: 'Old Standard TT';
-	font-size:16px;
+	font-size:24px;
 	font-weight:100;}
 .oldleft h1 {font-family: 'Old Standard TT';
 	font-size:60px;
@@ -48,7 +48,7 @@ body {
 	font-size:32px;
 	font-weight:100;}
 .oldleft h3 {font-family: 'Old Standard TT';
-	font-size:16px;
+	font-size:24px;
 	font-weight:100;}
 .oldleft h1::first-letter {font-family:'Abril Fatface';
 	font-size:130px;
@@ -61,17 +61,24 @@ body {
 	font-weight:100;
 	color: black;
 }
+.old h2::first-letter
+{font-family:'Abril Fatface';
+    font-size:74px;
+    font-weight:100;
+    color: black;
+}
 
-.oldwhite h1{font-family: 'Old Standard TT';
-	font-size:60px;
-	font-weight:100;
-	color:white}
 .oldwhite h1::first-letter
 {font-family:'Abril Fatface';
 	font-size:150px;
 	font-weight:100;
 	color: #fed26f;
-
+}
+.oldwhite h2::first-letter
+{font-family:'Abril Fatface';
+    font-size:74px;
+    font-weight:100;
+    color: #fed26f;
 }
 
 
@@ -430,6 +437,10 @@ mark{background-color: black; color: white;text-align: right;}
   100% {opacity: 0;}
 }
 
+.hide {
+    display: none;
+}
+
 .errors{
   position: fixed;
   z-index: 10000;
@@ -461,4 +472,45 @@ mark{background-color: black; color: white;text-align: right;}
 	margin-bottom: 10px;
 	padding-top: 5px;
 	padding-bottom: 5px;
+}
+#tipi-wrapper {
+    color: #fff;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+#tipi-wrapper h3 {
+    margin-top: 0px;
+}
+#tipi-wrapper p {
+    color: #fff;
+}
+#tipi-wrapper p .well {
+    color: #222;
+}
+#tipi-wrapper hr {
+    color: #fed26f;
+    background-color: #fed26f;
+    height: 3px;
+}
+#tipi-wrapper .tipi-titles {}
+#tipi-wrapper .tipi-metadata {
+    font-size: 18px;
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+#tipi-wrapper .tipi-metadata > div {
+    padding-left: 20px;
+}
+#tipi-wrapper .dicts-block {
+    padding-top: 15px;
+}
+#tipi-wrapper .dicts-block .dict-block {
+    background-color: #fed26f;
+    color: #222;
+    padding: 5px;
+    margin-bottom: 5px;
+    text-align: center;
+    font-weight: bold;
 }

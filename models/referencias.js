@@ -11,6 +11,12 @@ Refs = new Meteor.Collection('referencias', {idGeneration : 'MONGO'});
 
 /* Helpers */
 Refs.helpers({
+    relativeDate: function() {
+        return moment(this.fecha).startOf('day').fromNow();
+    },
+    shortDate: function() {
+        return moment(this.fecha).format('MMM Do YYYY').fromNow();
+    },
     getAutor: function() {
         if (typeof this.autor !== 'undefined') {
             if (typeof this.autor.diputado !== 'undefined') {return this.autor.diputado;}

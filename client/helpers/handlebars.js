@@ -16,5 +16,9 @@ Template.registerHelper('pluralize', function(n, thing) {
 });
 
 Handlebars.registerHelper('myHelper', function(myArgument){
-  return "Hello, " + myArgument;
+    return "Hello, " + myArgument;
+});
+
+Handlebars.registerHelper('', function(section){
+  return "";
 });
