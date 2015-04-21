@@ -15,7 +15,7 @@ Template.ref.helpers({
         str = this.content.join("<br/>");
         if (this.terms !== 'undefined') {
             for(i=0;i<this.terms.length;i++) {
-                regex = new RegExp(this.terms[i], "i");
+                regex = new RegExp(this.terms[i], 'gi');
                 str = str.replace(regex, ("<span class='highlighted'>" + "$&" + "</span>") );
             }
         }

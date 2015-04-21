@@ -102,14 +102,15 @@ if(file.exists(paste0(GENERATED_BASE_DIR, "listos_mongo.rd"))) {
 }
 
 for(num in 1:nrow(abl)){#i=1
-        if (file.exists(paste0(GENERATED_BASE_DIR, "bocgs-proc/BOCG-D-", num, ".rd"))) {
-                load(paste0(GENERATED_BASE_DIR, "bocgs-proc/BOCG-D-", num, ".rd"))
+		nn <- abl[num, "num"]
+        if (file.exists(paste0(GENERATED_BASE_DIR, "bocgs-proc/BOCG-D-", nn, ".rd"))) {
+                load(paste0(GENERATED_BASE_DIR, "bocgs-proc/BOCG-D-", nn, ".rd"))
         } else {
                 url <- paste0("http://www.congreso.es", abl[num, "url"])
-                tst   <- flattenXML(getBOCG(num, url, browse=FALSE), 0)
+                tst   <- flattenXML(getBOCG(nn, url, browse=FALSE), 0)
                 lines <- unlist(lapply(tst, function(x) str_trim(xmlValue(x))))
-                save(lines, file=paste0(GENERATED_BASE_DIR, "bocgs-proc/BOCG-D-", num, ".rd"))
-                listos_mongo <- c(listos_mongo, num)
+                save(lines, file=paste0(GENERATED_BASE_DIR, "bocgs-proc/BOCG-D-", nn, ".rd"))
+                listos_mongo <- c(listos_mongo, nn)
                 save(listos_mongo, file=paste0(GENERATED_BASE_DIR, "listos_mongo.rd"))
         }
 }

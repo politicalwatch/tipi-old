@@ -95,7 +95,7 @@ for(i in 1:length(listos_mongo)){ #i=630
 				lcont <- resul
 			}
 			#enviar a bbdd
-			if (length(lcont) > 0) {
+			if (length(lcont) > 0 & is.null(lcont$special)) {
 			        #Crear campo autor con formato adecuado.
 			        #Añadir url.
 			        lcont2 <- list()
