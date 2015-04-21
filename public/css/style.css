@@ -85,9 +85,9 @@ body {
 /*generales-------*/
 
 a {color: #fed26f;}
-a:hover {color: #fed26f; text-decoration: underline;}
+a:hover, a:link, a:visited {color: #fed26f; text-decoration: underline;}
 a.inverse {color: #222;}
-a.inverse:hover {color: #222; text-decoration: underline;}
+a.inverse:hover, a.inverse:link, a.inverse:visited {color: #222; text-decoration: underline;}
 img {width: 100%; height: 100%;}
 .btn {background: black; color: white; border-color: none;}
 .btn h5 {font-family: 'Lato';}
