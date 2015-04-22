@@ -79,6 +79,11 @@ for(i in 1:length(proy_listA)){
                                 # procesar trámite "Enmiendas e índice de enmiendas al articulado"
                                 # Primeramente lcont contiene cada enmienda por separado.
                                 lcont <- try(proc_serieA_enmiendas(lines, codigo = bol_listA[[d]]$codigo, tramite = bol_listA[[d]]$tramite))
+                                #Consieramos el grupo no detectado por R como un nuevo grupo, para que una las Enmiendas (sin determinar).
+                                for(k in 1:length(lcont)){#k=1
+                                        if(is.null(lcont[[k]]$grupos)){ lcont[[k]]$grupos <- "Sin Determinar" }
+                                }
+                                #Unir Enmiendas.
                                 if(class(lcont) == "list"){
                                         if(length(lcont)>1){#Unir enmiendas.
                                                 #unir Enmiendas mismo grupo parlamentario
