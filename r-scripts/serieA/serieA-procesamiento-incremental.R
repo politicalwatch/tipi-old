@@ -77,12 +77,12 @@ for(i in 1:length(proy_listA)){
                         #      Si son de otro tipo se unen y se envían juntas.
                         if(bol_listA[[d]]$tramite %in% c("Enmiendas e índice de enmiendas al articulado","Enmiendas")){
                                 # procesar trámite "Enmiendas e índice de enmiendas al articulado"
-                                # y enviar aparte.
+                                # Primeramente lcont contiene cada enmienda por separado.
                                 lcont <- try(proc_serieA_enmiendas(lines, codigo = bol_listA[[d]]$codigo, tramite = bol_listA[[d]]$tramite))
                                 if(class(lcont) == "list"){
                                         if(length(lcont)>1){#Unir enmiendas.
                                                 #unir Enmiendas mismo grupo parlamentario
-                                                lcont2 <- list()
+                                                lcont2 <- list() ###TODO. bucle para añadir a lcont el grupo "sin asignar" y añadir éste a lgrupos para que itere.
                                                 lgrupos <- unique(sapply(1:length(lcont), function(x){ print(lcont[[x]]$grupos) }, simplify = TRUE))
                                                 for(i in 1:length(lgrupos)){#i=1
                                                         if(!is.character(lgrupos[[i]])){#grupo nulo, se salta de momento.TODO.Forzar que todos tengan '='

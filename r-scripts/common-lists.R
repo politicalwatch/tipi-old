@@ -372,6 +372,7 @@ tramitesDPNL <- c("Desestimación así como enmiendas formuladas",
 #Parametro: Elemento de una lista
 #Devuelve: elemento actualizado con un campo "autor", y sin campos "diputados" ni "grupos"
 crearCampoAutor <- function(elemento){
+        elementodado <- elemento
         #existe alguno, diputado o grupo
         if(!is.null(elemento$grupos)|!is.null(elemento$diputados)){
                 if(!is.null(elemento$grupos)){
@@ -397,8 +398,8 @@ crearCampoAutor <- function(elemento){
                 elemento$autor$otro <- "Gobierno"
         }
         #Respuestas a preguntas (184...): Si hemos cazado el Autor en el título.
-        if(!is.null(elemento$autor)){
-                if(elemento$autor == "Gobierno"){
+        if(!is.null(elementodado$autor)){
+                if(elementodado$autor == "Gobierno"){
                         elemento$autor <- NULL
                         elemento$autor$otro <- "Gobierno"
                 }
@@ -430,27 +431,52 @@ agruparUnGrupo <- function(lcont, grupo){#grupo=lgrupos[[1]]
         #
         #         c <- 0
         #buscar el primero y coger la info básica
-        for(k in 1:length(lcont)){
-                if(kgrupobusq[k] == 1){ 
-                        elemen <- lcont[[k]] #en cuanto encuentra, sale del bucle
-                        break()
-                }
-                if(is.null(elemen$diputados)) { elemen$diputados <- "" } 
+        indices <- which(kgrupobusq == 1)
+        if(length(indices)>1){ 
+                elemen <- lcont[[indices[1]]] 
         }
-        #iterar sobre el resto
-        #Si hay una sola enmienda por dicho grupo, devolver resultado.
-        if(sum(kgrupobusq)>1 & length(lcont)>1){
-                for(k in 2:length(lcont)){
-                        if(kgrupobusq[k] == 1){
-                                elemen$numenmienda <- c(elemen$numenmienda, lcont[[k]]$numenmienda)
-                                elemen$content <- c(elemen$content, lcont[[k]]$content)
-                                elemen$grupos <- unique(c(elemen$grupos, lcont[[k]]$grupos))
-                                if(!is.null(lcont[[k]]$diputados)){
-                                        elemen$diputados <- c(elemen$diputados, lcont[[k]]$diputados)
-                                }
+        indices <- indices[-1] #quitamos el primero
+        if(length(indices)>1){
+                for(k in indices){#k=19
+                        #actualizar campos con nuevas Enmiendas consecutivas.
+                        elemen$numenmienda <- c(elemen$numenmienda, lcont[[k]]$numenmienda)
+                        elemen$content <- c(elemen$content, lcont[[k]]$content)
+                        elemen$grupos <- unique(c(elemen$grupos, lcont[[k]]$grupos)) #deberia ser siempre el mismo.
+                        #si no hay diputado en el primero lo ponemos vacio.
+                        if(is.null(elemen$diputados)){ elemen$diputados <- "" } 
+                        if(!is.null(lcont[[k]]$diputados)){
+                                if(elemen$diputados == ""){ elemen$diputados <-  lcont[[k]]$diputados } #asi no aparece solo ""
+                                elemen$diputados <- c(elemen$diputados, lcont[[k]]$diputados)
                         }
                 }
         }
+#         
+#         #
+#         #iterar sobre el resto. Eliminar de indices
+#         
+#         
+#         #buscar el primero y coger la info básica
+#         for(k in 1:length(lcont)){
+#                 if(kgrupobusq[k] == 1){ 
+#                         elemen <- lcont[[k]] #en cuanto encuentra, sale del bucle
+#                         break()
+#                 }
+#                 if(is.null(elemen$diputados)) { elemen$diputados <- "" } 
+#         }
+#         #iterar sobre el resto
+#         #Si hay una sola enmienda por dicho grupo, devolver resultado.
+#         if(sum(kgrupobusq)>1 & length(lcont)>1){
+#                 for(k in 2:length(lcont)){
+#                         if(kgrupobusq[k] == 1){
+#                                 elemen$numenmienda <- c(elemen$numenmienda, lcont[[k]]$numenmienda)
+#                                 elemen$content <- c(elemen$content, lcont[[k]]$content)
+#                                 elemen$grupos <- unique(c(elemen$grupos, lcont[[k]]$grupos))
+#                                 if(!is.null(lcont[[k]]$diputados)){
+#                                         elemen$diputados <- c(elemen$diputados, lcont[[k]]$diputados)
+#                                 }
+#                         }
+#                 }
+#         }
         return(elemen)
 }
 
