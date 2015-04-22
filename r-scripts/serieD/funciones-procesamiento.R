@@ -319,9 +319,9 @@ proc_boletin <- function(lines, num){
                                 #Búsqueda de Grupo Parlamentario.
                                 #Por defecto pondremos "otro" si se trata de Enmiendas (161, 162, 173, 043)
                                 #Para poder tratar casos donde no se asigna el Grupo.
-                                if(tmp$tipo %in% c("161", "162", "173", "043")){
-                                        tmp$grupos <- "otro"
-                                }
+#                                 if(tmp$tipo %in% c("161", "162", "173", "043")){
+#                                         tmp$grupos <- "Sin Determinar"
+#                                 }
                                 #Si se caza el Grupo, lo sobreescribimos.
                                 if(length(tmp$ndx)>0){
                                         detgrupo <- str_detect(tmp$ndx, ignore.case("grupo[s]? parlamentario"))
@@ -357,14 +357,16 @@ proc_boletin <- function(lines, num){
 #                         }
                         ## El título son las líneas que quedan en el índice excepto la última si
                         ## hay más de una, pero es distinto para las 184 que para el resto
+                        tmp$titulo <- ""  #por si no se caza
                         tmp$titulo <- tmp$ndx[1]
                         tmp$titulo <- str_replace_all(tmp$titulo, " +", " ") ## Quito espacios duplicados
                         tmp$titulo <- str_trim(tmp$titulo) ## Quito espacios en los extremos
                         
                         ## Autor en el título: Respuestas a preguntas orales (184)
                         ##VERIFICAR AQUI.
-                        if(str_detect(string = tmp$titulo, pattern = "^Autor: Gobierno")){
-                                tmp$autor <- "Gobierno"
+                        if(length(tmp$titulo)>0){
+                                if(str_detect(string = tmp$titulo, pattern = "^Autor: Gobierno")){
+                                tmp$autor <- "Gobierno"}
                         }
                         ## Trámite: Del titulo para tipos 161, 162 (proyectos no de ley)
                         if(tmp$tipo %in% c("161", "162")){
