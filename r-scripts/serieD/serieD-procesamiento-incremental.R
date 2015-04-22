@@ -88,7 +88,7 @@ for(i in 1:length(listos_mongo)){ #i=630
 				lcont <- vector("list")
 				lcont$bol <- "num"
 				#Añadir url
-                lcont$url <- paste0("http://www.congreso.es", abl[num, "url"]) 
+                                lcont$url <- paste0("http://www.congreso.es", abl[num, "url"]) 
 				print(paste("falla el boletin:", num))
 				next()
 			} else {
