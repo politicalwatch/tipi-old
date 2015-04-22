@@ -10,7 +10,7 @@
 	font-family: 'Old Standard TT';
 	font-style: normal;
 	font-weight: 400;
-	src: local('Old Standard TT Regular'), local('OldStandardTT-Regular'),url(http://fonts.gstatic.com/s/oldstandardtt/v6/n6RTCDcIPWSE8UNBa4k-DOeKpinAksS0bOq9o5QARNc.woff) format('woff');
+	src: local('Old Standard TT'), local('OldStandardTT'),url(http://fonts.gstatic.com/s/oldstandardtt/v6/n6RTCDcIPWSE8UNBa4k-DOeKpinAksS0bOq9o5QARNc.woff) format('woff');
 }
 
 @font-face {
@@ -22,72 +22,72 @@
 
 
 .lato {font-family: 'Lato';}
-.old{font-family: 'Old Standard TT';}
+.old{font-family: 'Old Standard TT';font-weight:100;}
 
 body {
 	font-family: 'Lato';
 	font-size: 16px;
 }
 
-
 .old h1 {
 	font-size:60px;
-	font-weight:100;
 }
 .old h1.right { text-align:right; }
-.old h2 {font-family: 'Old Standard TT';
+.old h2 {
 	font-size:32px;
-	font-weight:100;}
-.old h3 {font-family: 'Old Standard TT';
+}
+.old h2.2x {
+    font-size:60px !important;
+}
+.old h3 {
 	font-size:24px;
-	font-weight:100;}
-.oldleft h1 {font-family: 'Old Standard TT';
-	font-size:60px;
-	font-weight:100;}
-.oldleft h2 {font-family: 'Old Standard TT';
-	font-size:32px;
-	font-weight:100;}
-.oldleft h3 {font-family: 'Old Standard TT';
-	font-size:24px;
-	font-weight:100;}
-.oldleft h1::first-letter {font-family:'Abril Fatface';
+}
+.oldleft h1::first-letter {
+    font-family:'Abril Fatface';
 	font-size:130px;
-	font-weight:100;
-	color: black;}
-
-.old h1::first-letter
-{font-family:'Abril Fatface';
-	font-size:150px;
-	font-weight:100;
 	color: black;
 }
-.old h2::first-letter
-{font-family:'Abril Fatface';
+
+.old h1::first-letter {
+    font-family:'Abril Fatface';
+	font-size:150px;
+	color: black;
+}
+.old h2::first-letter {
+    font-family:'Abril Fatface';
     font-size:74px;
-    font-weight:100;
+    color: black;
+}
+.old h2.2x::first-letter {
+    font-family:'Abril Fatface';
+    font-size:150px !important;
     color: black;
 }
 
-.oldwhite h1::first-letter
-{font-family:'Abril Fatface';
+.oldwhite h1::first-letter {
+    font-family:'Abril Fatface';
 	font-size:150px;
-	font-weight:100;
 	color: #fed26f;
 }
-.oldwhite h2::first-letter
-{font-family:'Abril Fatface';
+.oldwhite h2::first-letter {
+    font-family:'Abril Fatface';
     font-size:74px;
-    font-weight:100;
+    color: #fed26f;
+}
+.old h2.2x::first-letter {
+    font-family:'Abril Fatface';
+    font-size:150px !important;
     color: #fed26f;
 }
 
 
 /*generales-------*/
 
-a {color: #fed26f;}
-a:hover, a:link, a:visited {color: #fed26f; text-decoration: underline;}
-a.inverse {color: #222;}
-a.inverse:hover, a.inverse:link, a.inverse:visited {color: #222; text-decoration: underline;}
+a, a:link, a:visited {color: #fed26f;}
+a:hover {text-decoration: underline;}
+a.inverse, a.inverse:link, a.inverse:visited {color: #222;}
+a.inverse:hover {text-decoration: underline;}
+a.btn { text-decoration: none; }
 img {width: 100%; height: 100%;}
 .btn {background: black; color: white; border-color: none;}
 .btn h5 {font-family: 'Lato';}
@@ -148,9 +148,7 @@ img {width: 100%; height: 100%;}
 	outline: 0;
 }
 
-.navbar-custom a {
-	color: ;
-}
+.navbar-custom a {}
 
 .navbar-custom .nav li.active {
 	outline: nonte;
@@ -172,16 +170,7 @@ img {width: 100%; height: 100%;}
 	background-color: rgba(255,255,255,.3);
 }
 
-@media(min-width:767px) {
-	/*.navbar {
-		padding: 20px 0;
-		border-bottom: 0;
-		letter-spacing: 1px;
-		background: 0 0;
-		-webkit-transition: background .5s ease-in-out,padding .5s ease-in-out;
-		-moz-transition: background .5s ease-in-out,padding .5s ease-in-out;
-		transition: background .5s ease-in-out,padding .5s ease-in-out;
-	}*/
+@media(min-width:768px) {
 
 	.top-nav-collapse {
 		padding: 0;
@@ -191,9 +180,10 @@ img {width: 100%; height: 100%;}
 	.navbar-custom.top-nav-collapse {
 		border-bottom: 1px solid rgba(255,255,255,.3);
 	}
+
 }
 
-@media(max-width:992px) {
+@media(max-width:767px) {
 	.containerglob > .row:first-of-type { padding-top:0px; }
 }
 

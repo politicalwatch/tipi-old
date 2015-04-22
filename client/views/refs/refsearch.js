@@ -30,7 +30,7 @@ Template.refsearch.helpers({
 										 { key: 'ref', label: 'Referencia'},
 										 { key: 'fecha', label: 'Fecha',
 										 	fn: function(val, obj) {
-												return moment(val).format('l') + ', ' + moment(val).fromNow();
+												return moment(val).format('l');
 										 	}
 										 },
 										 { key: 'autor', label: 'Autor',

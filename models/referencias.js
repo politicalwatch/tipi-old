@@ -15,13 +15,13 @@ Refs.helpers({
         return moment(this.fecha).startOf('day').fromNow();
     },
     shortDate: function() {
-        return moment(this.fecha).format('MMM Do YYYY').fromNow();
+        return moment(this.fecha).format('l');
     },
     getAutor: function() {
         if (typeof this.autor !== 'undefined') {
-            if (typeof this.autor.diputado !== 'undefined') {return this.autor.diputado;}
-            else if (typeof this.autor.grupo !== 'undefined') {return this.autor.grupo;}
-            else if (typeof this.autor.otro !== 'undefined') {return this.autor.otro;}
+            if ((typeof this.autor.diputado !== 'undefined') && (this.autor.diputado != '')) {return this.autor.diputado;}
+            else if ((typeof this.autor.grupo !== 'undefined') && (this.autor.grupo != '')) {return this.autor.grupo;}
+            else if ((typeof this.autor.otro !== 'undefined') && (this.autor.otro != '')) {return this.autor.otro;}
             else {return '';}
         }
     },
