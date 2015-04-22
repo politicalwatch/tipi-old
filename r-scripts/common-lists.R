@@ -372,6 +372,7 @@ tramitesDPNL <- c("Desestimación así como enmiendas formuladas",
 #Parametro: Elemento de una lista
 #Devuelve: elemento actualizado con un campo "autor", y sin campos "diputados" ni "grupos"
 crearCampoAutor <- function(elemento){
+        elementodado <- elemento
         #existe alguno, diputado o grupo
         if(!is.null(elemento$grupos)|!is.null(elemento$diputados)){
                 if(!is.null(elemento$grupos)){
@@ -397,8 +398,8 @@ crearCampoAutor <- function(elemento){
                 elemento$autor$otro <- "Gobierno"
         }
         #Respuestas a preguntas (184...): Si hemos cazado el Autor en el título.
-        if(!is.null(elemento$autor)){
-                if(elemento$autor == "Gobierno"){
+        if(!is.null(elementodado$autor)){
+                if(elementodado$autor == "Gobierno"){
                         elemento$autor <- NULL
                         elemento$autor$otro <- "Gobierno"
                 }
