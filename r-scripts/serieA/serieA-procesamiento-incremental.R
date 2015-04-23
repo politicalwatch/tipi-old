@@ -162,7 +162,7 @@ for(i in 1:length(proy_listA)){
                                 rm(ltmp)
                                 if(sum(vcontrol)==length(vcontrol)){#ya hemos procesado todo
                                         #enviar a mongo
-                                        #                                         mongo.remove(mongo, mongo_collection("serieA"), criteria=list(bol=bol_listA[[d]]$codigo))
+                                        mongo.remove(mongo, mongo_collection("serieA"), criteria=list(bol=bol_listA[[d]]$codigo))
                                         lcontb2 <- lapply(list(lcont2), function(x) {return(mongo.bson.from.list(x))})
                                         mongo.insert.batch(mongo, mongo_collection("serieA"), lcontb2)
                                 }
