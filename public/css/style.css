@@ -110,6 +110,12 @@ img {width: 100%; height: 100%;}
 
 #spinner { height: 300px; }
 
+.hidden {display: none;}
+
+.highlighted {
+    background-color: yellow;
+}
+
 #app {
 	min-height: 95vh;
 }
@@ -195,8 +201,9 @@ img {width: 100%; height: 100%;}
 /*mis estilos-------------------------------------------------------------*/
 
 /*posiciones generales-------------------------------------------------------------*/
+.left { text-align:left; padding:30px; }
 .center{ text-align:center; padding:30px; }
-.right{ text-align:right; }
+.right{ text-align:right; padding:30px; }
 
 .footer {
 	width: 100%;
@@ -213,7 +220,7 @@ img {width: 100%; height: 100%;}
 p {color: #222; font-size: 16px;}
 mark{background-color: black; color: white;text-align: right;}
 	
-/*cajas inicio-------------------------------------------------------------*/	
+/*cajas-------------------------------------------------------------*/	
 #homepage{
 	background-image: url("../images/fotomanos.jpg");
 	color: #fff;
@@ -457,9 +464,7 @@ mark{background-color: black; color: white;text-align: right;}
   pointer-events: auto;
 }
 
-.highlighted {
-    background-color: yellow;
-}
+
 
 /*refs and tipis--------------------------------------------*/
 .ref {
@@ -510,13 +515,32 @@ mark{background-color: black; color: white;text-align: right;}
     font-weight: bold;
 }
 
-.nube {background-image: url("../images/fotomanos.jpg"); color: white; height:600px}
-.nube2{background-image: url("../images/fotomanos.jpg"); color: white; height:400px}
-.darkpatt { background: url("../images/patterns/stressed_linen.png") repeat; }
-.grey {background-color: grey;}
-.grey h1 {color: #ffc741;}
-.grey h3 {color: #fff;}
+/*About---------------------------*/
+#about {
+  padding-bottom: 40px;
+}
+#about hr{
+  text-align: center;
+  width: 50%;
+  color: #fed26f;
+  background-color: #fed26f;
+  height: 2px;
+}
+#about .dictionary-block {
+  text-align: center;
+  min-height: 200px;
+}
+#about h2, #about .dictionary-block h3, #about .credits h4 {
+  color: #fff;
+}
+#about .dictionary-block p {
+  color: #fff;
+}
+#about .dictionary-block .dictionary-icon {
+  width: 72px;
+  height: 72px;
+}
 
-#spinner { height: 300px; }
-
-.hidden {display: none;}
+#about .credits img {
+  width: 100px;
+}
