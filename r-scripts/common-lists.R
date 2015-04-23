@@ -393,10 +393,12 @@ crearCampoAutor <- function(elemento){
                 }
         }
         #Autor específico según el tipo en serie D.
-        if(elemento$tipo %in% c("154", "155", "156", "158")){
-                elemento$autor <- NULL
-                elemento$autor$otro <- "Gobierno"
-        }
+        if(!is.null(elemento$tipo)){
+        	        if(elemento$tipo %in% c("154", "155", "156", "158")){
+        	        	elemento$autor <- NULL
+                elemento$autor$otro <- "Gobierno"}
+		}
+
         #Respuestas a preguntas (184...): Si hemos cazado el Autor en el título.
         if(!is.null(elementodado$autor)){
                 if(elementodado$autor == "Gobierno"){
