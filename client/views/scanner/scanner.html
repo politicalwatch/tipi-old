@@ -1,13 +1,36 @@
 <template name="scanner">
-    {{> header}}
-    <div class="containerglob">
-        <div class="row oldleft">
+    <div class="containerglob darkpatt" style="min-height: 95vh;">
+        <!-- <div class="row oldleft">
             <h1>Escaner</h1>
-        </div>
+        </div> -->
         <div class="row">
-            <div class="col-md-12">
-                <h2 class="text-center"><i>In progress...</i></h2>
-                <!-- Developed in another branch -->
+            <div class="col-sm-6" style="height:650px; padding-top: 25px; padding-bottom: 25px;">
+                <div id="vizz"></div>
+            </div>
+            <div class="col-sm-6" style="color: white; padding-top: 25px; padding-bottom: 25px;">
+                <div class="old oldwhite">
+                    <h2 id="scanner-title">Escaner</h2>
+                    <div id="scanner-content" class="hidden">
+                        <h3>Diputados</h3>
+                        <ul>
+                            {{#each diputados }}
+                                <li>{{ name }}</li>
+                            {{/each}}
+                        </ul>
+                        <h3>Grupos parlamentarios</h3>
+                        <ul>
+                            {{#each gps }}
+                                <li>{{ name }}</li>
+                            {{/each}}
+                        </ul>
+                        <h3>Whatever</h3>
+                        <ul>
+                            {{#each whatevers }}
+                                <li>{{ name }}</li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

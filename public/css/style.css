@@ -1,4 +1,4 @@
-552f7bc912c71fc4a0dea835/*fonts*/
+/*fonts*/
 @font-face {
 	font-family: 'Abril Fatface';
 	font-style: normal;
@@ -32,7 +32,9 @@ body {
 .old h1 {
 	font-size:60px;
 }
-.old h1.right { text-align:right; }
+.old h1.right {
+  text-align:right;
+}
 .old h2 {
 	font-size:32px;
 }
@@ -43,13 +45,13 @@ body {
 	font-size:24px;
 }
 .oldleft h1::first-letter {
-    font-family:'Abril Fatface';
+  font-family:'Abril Fatface';
 	font-size:130px;
 	color: black;
 }
 
 .old h1::first-letter {
-    font-family:'Abril Fatface';
+  font-family:'Abril Fatface';
 	font-size:150px;
 	color: black;
 }
@@ -108,6 +110,9 @@ img {width: 100%; height: 100%;}
 
 #spinner { height: 300px; }
 
+#app {
+	min-height: 95vh;
+}
 
 .container { padding-top: 50px; }
 .containerglob { 
@@ -298,7 +303,7 @@ mark{background-color: black; color: white;text-align: right;}
   stroke-width: 1.5px;
 }
 .node--leaf {
-  fill: white;
+  fill: #fed26f;
 }
 .label {
   font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -504,3 +509,14 @@ mark{background-color: black; color: white;text-align: right;}
     text-align: center;
     font-weight: bold;
 }
+
+.nube {background-image: url("../images/fotomanos.jpg"); color: white; height:600px}
+.nube2{background-image: url("../images/fotomanos.jpg"); color: white; height:400px}
+.darkpatt { background: url("../images/patterns/stressed_linen.png") repeat; }
+.grey {background-color: grey;}
+.grey h1 {color: #ffc741;}
+.grey h3 {color: #fff;}
+
+#spinner { height: 300px; }
+
+.hidden {display: none;}

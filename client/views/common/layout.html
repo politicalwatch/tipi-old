@@ -1,5 +1,7 @@
-<template name="layout">    
+<template name="layout">
     {{> header}}
-    {{> yield}}
+    <div id="app">
+        {{> yield}}
+    </div>
     {{> footer}}
 </template>
