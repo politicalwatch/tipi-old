@@ -70,20 +70,15 @@ Template.scanner.rendered = function() {
       
       var image = svg.selectAll('image').data(nodes).enter().append("image")
             .attr("xlink:href", function(d){
-                return Meteor.absoluteUrl("images/svgs-circles/") + d.icon;
+                  return Meteor.absoluteUrl("/images/svgs-circles/") + d.icon;
             })
             .attr("width", function(d) { return d.r * scaling; })
             .attr("height", function(d) { return d.r * scaling; })
             .attr('transform', function(d) { return 'translate('+d.x+','+d.y+')'; })
-            .attr("class", function(d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
-            .style("opacity", function(d) { return d.children ? 0 : 1; })
-            .style("cursor", "pointer")
-            .on("click", function(d) { console.log("CLICK!!!"); if (focus !== d) { console.log("Focus: " + focus); console.log("Data: " + d); zoom(d), d3.event.stopPropagation(); } });
-
-        image.on("click", function(d) { console.log(d); });
-
-    var node = svg.selectAll("image");
-
+            // .attr("class", function(d) { return d.children ? "node node--root" : "node node--leaf"; })
+            .style("opacity", function(d) { return d.children ? "0" : "1"; })
+            .style("cursor", function(d) { return d.children ? "default" : "pointer"; })
+            .on("click", function(d) { if (focus !== d) { zoom(d), d3.event.stopPropagation(); } });
 
       d3.select("#vizz")
           .on("click", function() { zoom(root); });
@@ -114,15 +109,15 @@ Template.scanner.rendered = function() {
       }
 
       function zoomTo(v) {
-        // console.log('V: ' + v);
         var k = diameter / v[2]; view = v;
-        node.attr("transform", function(d) {
+        image.attr("transform", function(d) {
             return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")";
-        });
-        image.attr("width", function(d) { return d.r * scaling * k; }).attr("height", function(d) { return d.r * scaling * k; });
+        }).attr("width", function(d) { return d.r * scaling * k; }).attr("height", function(d) { return d.r * scaling * k; });
       }
+      
     });
 
     d3.select(self.frameElement).style("height", diameter + "px");
+
 
 };
