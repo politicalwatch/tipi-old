@@ -1,3 +1,5 @@
+options(stringsAsFactors=FALSE)
+
 GENERATED_BASE_DIR <- "gendir/"
 
 check_in_sublists_index <- function(list2d, to_check) {
