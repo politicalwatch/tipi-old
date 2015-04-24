@@ -27,30 +27,27 @@
                 </div>
             </div>
         </div>
-         <div id="cajablog" class="row content-row old oldwhite darkpatt">
+         <div id="cajalatest" class="row content-row old oldwhite darkpatt">
             <div class="col-md-12">
-                <h1 class="text-center">Periodismo de Datos</h1>
+                <h1 class="text-center">Últimas novedades</h1>
                 <p class="text-center desc">Dedicamos un espacio a la reflexión, análisis y detalle de nuestras actividades.</p>
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
-                        <!-- TODO: Comment for now -->
-                        <!-- <div class="line-bottom">
-                            <h3 class="lato">Talleres</h3>
-                            <ul class="list-unstyled">
-                                <li><a href="#">Madrid, martes 3-11-2014</a></li>
-                            </ul>
-                        </div> -->
-                        <div class="line-bottom">
+                <div class="container">    
+                    <div class="row">
+                        <div class="col-md-4 latest">
+                            <h3 class="lato">Escaner</h3>
+                            <a href="{{pathFor 'scannervizz'}}"><img src="/images/scannervizz.png" alt="Previa del Escaner" style="width:80%; vertical-align:center;"></a>
+                        </div>
+                        <div class="col-md-4 latest">
                             <h3 class="lato">Artículos</h3>
                             <ul class="list-unstyled">
                                 {{#each lastEntries}}
-                                <li><a href="{{pathFor route='blogPost'}}">{{title}}</a></li>
+                                <li class="lined"><a href="{{pathFor route='blogPost'}}">{{title}}</a></li>
                                 {{/each}}
                             </ul>
                         </div>
-                        <div class="right">
-                            <h4>Investigación de</h4>
-                            <img src="/images/porcausa2.png" alt="" style="width:20%; vertical-align:center">
+                        <div class="col-md-4 latest">
+                            <h3>Investigación de</h3>
+                            <img src="/images/porcausa2.png" alt="Logo PorCausa.org" style="width:80%; vertical-align:center;">
                         </div>
                     </div>
                 </div>

@@ -1,3 +1,7 @@
+/*Colors*/
+/*Tipi Yellow: #fbc239*/
+/*Tipi Dark grey: #222*/
+
 /*fonts*/
 @font-face {
 	font-family: 'Abril Fatface';
@@ -49,6 +53,7 @@ body {
 	font-size:130px;
 	color: black;
 }
+.oldwhite h1, .oldwhite h1 { color: #fff; }
 
 .old h1::first-letter {
   font-family:'Abril Fatface';
@@ -69,23 +74,23 @@ body {
 .oldwhite h1::first-letter {
     font-family:'Abril Fatface';
 	font-size:150px;
-	color: #fed26f;
+	color: #fbc239;
 }
 .oldwhite h2::first-letter {
     font-family:'Abril Fatface';
     font-size:74px;
-    color: #fed26f;
+    color: #fbc239;
 }
 .old h2.2x::first-letter {
     font-family:'Abril Fatface';
     font-size:150px !important;
-    color: #fed26f;
+    color: #fbc239;
 }
 
 
 /*generales-------*/
 
-a, a:link, a:visited {color: #fed26f;}
+a, a:link, a:visited {color: #fbc239;}
 a:hover {text-decoration: underline;}
 a.inverse, a.inverse:link, a.inverse:visited {color: #222;}
 a.inverse:hover {text-decoration: underline;}
@@ -93,7 +98,7 @@ a.btn { text-decoration: none; }
 img {width: 100%; height: 100%;}
 .btn {background: black; color: white; border-color: none;}
 .btn h5 {font-family: 'Lato';}
-.btn:hover {background:#fed26f;}
+.btn:hover {background:#fbc239;}
 .btn {margin:5px; border-radius: 0px;}
 .btnotro {background: grey; border-color: black; margin: 1px;color: black;}
 
@@ -119,6 +124,10 @@ img {width: 100%; height: 100%;}
 #app {
 	min-height: 95vh;
 }
+
+.white-block { background-color: #fff; }
+
+.yellow-block { background-color: #fbc239; }
 
 .container { padding-top: 50px; }
 .containerglob { 
@@ -249,7 +258,7 @@ mark{background-color: black; color: white;text-align: right;}
 	padding-bottom: 40px;
 }
 #cajainiciativas{
-	/*background-color: #fed26f;*/
+	/*background-color: #fbc239;*/
 	color: #fff;
 }
 #qpc{
@@ -257,14 +266,18 @@ mark{background-color: black; color: white;text-align: right;}
 	color: #fff;
 }
 
-#cajablog{
+#cajalatest{
 	color: #fff;
+}
+#cajalatest .latest {
+  text-align: center;
+}
+li.lined {
+  padding-bottom: 5px;
+  border-bottom: 1px dashed #fbc239;
 }
 .cajacontainer{
 	padding:30px;
-}
-.line-bottom {
-	border-bottom: 2px solid #fed26f;
 }
 
 /*participa---------------------------------------------------------*/
@@ -310,7 +323,7 @@ mark{background-color: black; color: white;text-align: right;}
   stroke-width: 1.5px;
 }
 .node--leaf {
-  fill: #fed26f;
+  fill: #fbc239;
 }
 .label {
   font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -494,8 +507,8 @@ mark{background-color: black; color: white;text-align: right;}
     color: #222;
 }
 #tipi-wrapper hr {
-    color: #fed26f;
-    background-color: #fed26f;
+    color: #fbc239;
+    background-color: #fbc239;
     height: 3px;
 }
 #tipi-wrapper .tipi-titles {}
@@ -511,7 +524,7 @@ mark{background-color: black; color: white;text-align: right;}
     padding-top: 15px;
 }
 #tipi-wrapper .dicts-block .dict-block {
-    background-color: #fed26f;
+    background-color: #fbc239;
     color: #222;
     padding: 5px;
     margin-bottom: 5px;
@@ -524,30 +537,12 @@ mark{background-color: black; color: white;text-align: right;}
 #about hr{
   text-align: center;
   width: 50%;
-  color: #fed26f;
-  background-color: #fed26f;
+  color: #fbc239;
+  background-color: #fbc239;
   height: 1px;
 }
-#about .dictionary-block {
-  text-align: center;
-  min-height: 200px;
-}
-#about h2, #about .dictionary-block h3 {
+#about h2 {
   color: #fff;
-}
-#about .dictionary-block p {
-  color: #fff;
-}
-#about .dictionary-block .dictionary-icon {
-  width: 72px;
-  height: 72px;
-}
-#about #social > div > div {
-  border: 2px solid #222;
-  padding: 10px;
-}
-#about .yellow-block {
-  background-color: #fed26f;
 }
 #about #social *, #about #credits * {
   color: #222;
@@ -563,6 +558,21 @@ mark{background-color: black; color: white;text-align: right;}
   width: 150px;
 }
 
-#about #credits .white-block {
-  background-color: #fff;
+/*Topics----------------------------*/
+#topics .dictionary-block {
+  text-align: center;
+  min-height: 200px;
+}
+#topics h2 {
+  color: #fff;
+}
+#topics .dictionary-block h3 {
+  color: #fbc239;
+}
+#topics .dictionary-block p {
+  color: #fff;
+}
+#topics .dictionary-block .dictionary-icon {
+  width: 72px;
+  height: 72px;
 }
