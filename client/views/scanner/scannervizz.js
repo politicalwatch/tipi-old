@@ -1,9 +1,4 @@
-var dicts = {'educacion': 150, 'sanidad': 50};
-
-Template.scanner.helpers({
-    dictcount: function(dictname) {
-      return dicts[dictname];
-    },
+Template.scannervizz.helpers({
     diputados: function() {
       // Dummy data
       dataset = []
@@ -37,9 +32,24 @@ Template.scanner.helpers({
 });
 
 
-Template.scanner.rendered = function() {
+Template.scannervizz.rendered = function() {
 
     // D3js example: https://raw.githubusercontent.com/Slava/d3-meteor-basic/master/client.js
+
+    // Load count data for vizz
+    var dicts = Dicts.find().fetch();
+    var root = {
+        "name": "Escaner",
+        "children": []
+    }
+    _.each(dicts, function(d) {
+        objd = {
+            "name": d.dict,
+            "icon": d.iconb1,
+            "size": Refs.find({"dicts": d.dict}).count()
+        }
+        root["children"].push(objd);
+    });
 
     var margin = 20,
     diameter = 600,
@@ -61,8 +71,9 @@ Template.scanner.rendered = function() {
         .append("g")
         .attr("transform", "translate(" + diameter / 2.5 + "," + diameter / 2.5 + ")");
 
-    d3.json(Meteor.absoluteUrl("/data/fixtures.json"), function(error, root) {
-      if (error) return console.error(error);
+
+    // d3.json(Meteor.absoluteUrl("/data/fixtures.json"), function(error, root) {
+    //   if (error) return console.error(error);
 
       var focus = root,
           nodes = pack.nodes(root),
@@ -115,7 +126,7 @@ Template.scanner.rendered = function() {
         }).attr("width", function(d) { return d.r * scaling * k; }).attr("height", function(d) { return d.r * scaling * k; });
       }
       
-    });
+    // });
 
     d3.select(self.frameElement).style("height", diameter + "px");
 

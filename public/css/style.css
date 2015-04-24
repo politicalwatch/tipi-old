@@ -323,6 +323,10 @@ mark{background-color: black; color: white;text-align: right;}
   pointer-events: none;
 }
 
+#scanner-title {
+  text-transform: capitalize;
+}
+
 /*forum-----------------------------------------------------*/
 .grid-block, .main, .post, .comments li, .comment-form {
   background: #fff;

@@ -45,13 +45,16 @@ if (Meteor.isServer) {
 		return Dicts.find({}, {fields: {dictgroup: 1, dict: 1, words:1, lastUpdate: 1},
 													 sort: {dictgroup: -1}});
 	});
+	Meteor.publish('allTipiDicts', function() {
+		return Dicts.find({dictgroup: "tipi"}, {fields: {dict: 1, slug: 1, iconb1: 1} });
+	});
 	Meteor.publish('singleDict', function(id) {
 		return Dicts.find(id);
 	});
 
 	Meteor.publish('allTipis', function() {
-		return Refs.find({is_tipi: true}, {fields: {ref: 1, autor: 1, titulo: 1},
-													 sort: {ref: -1}});
+		return Refs.find({is_tipi: true}, {fields: {ref: 1, autor: 1, titulo: 1, dicts: 1},
+													 sort: {fecha: -1}});
 	});
 	Meteor.publish('singleTipi', function(id) {
 		return Refs.find({_id: id, is_tipi: true});
