@@ -516,21 +516,19 @@ mark{background-color: black; color: white;text-align: right;}
 }
 
 /*About---------------------------*/
-#about {
-  padding-bottom: 40px;
-}
+#about {}
 #about hr{
   text-align: center;
   width: 50%;
   color: #fed26f;
   background-color: #fed26f;
-  height: 2px;
+  height: 1px;
 }
 #about .dictionary-block {
   text-align: center;
   min-height: 200px;
 }
-#about h2, #about .dictionary-block h3, #about .credits h4 {
+#about h2, #about .dictionary-block h3 {
   color: #fff;
 }
 #about .dictionary-block p {
@@ -540,7 +538,27 @@ mark{background-color: black; color: white;text-align: right;}
   width: 72px;
   height: 72px;
 }
+#about #social > div > div {
+  border: 2px solid #222;
+  padding: 10px;
+}
+#about .yellow-block {
+  background-color: #fed26f;
+}
+#about #social *, #about #credits * {
+  color: #222;
+}
+#about #social a {
+  font-weight: bold;
+  font-size: 18px;
+}
 
-#about .credits img {
-  width: 100px;
+#about #credits img {
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 150px;
+}
+
+#about #credits .white-block {
+  background-color: #fff;
 }

@@ -1,12 +1,12 @@
 <template name="about">
     <div id="about" class="containerglob darkpatt">
-        <section class="description">
+        <section id="description">
             <div class="row content-row">
                 <div class="col-sm-4 col-sm-offset-1 left">
                     <img src="/images/logos-tipi/logo1_blanco.svg" width="60%" alt="Logo de Tipi">
                 </div>
                 <div class="col-sm-6">
-                    <p class="desc desc-2x">
+                    <p class="desc desc-2x text-center">
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem minus sed quam doloremque porro, iusto harum provident dolores quas modi sequi repudiandae facere culpa omnis suscipit explicabo dignissimos eveniet asperiores? <br><br>
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem minus sed quam doloremque porro, iusto harum provident dolores quas modi sequi repudiandae facere culpa.
                     </p>
@@ -14,13 +14,13 @@
             </div>
         </section>
         <hr>
-        <div class="row">
-            <div class="col-sm-12">
-                <h2 class="center">Áreas de trabajo</h2>
-            </div>
-        </div>
-        <section class="dictionaries">
+        <section id="dictionaries">
             <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h2 class="center">Áreas de trabajo</h2>
+                    </div>
+                </div>
                 <div class="row content-row">
                     <div class="col-sm-4 dictionary-block">
                         <img class="dictionary-icon" src="/images/svgs/dependencia-02.svg" alt="Dependencia">
@@ -108,32 +108,50 @@
                 </div>
             </div>
         </section>
-
-        <hr>
-        <section class="credits">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h2 class="center">Créditos</h2>
-                    </div>
+        <section id="social">
+            <div class="row content-row yellow-block">
+                <div class="col-sm-6 col-sm-offset-3 text-center">
+                    <h2>Síguenos en la red</h2>
+                    <a href="https://twitter.com/tipi_ciudadano"><i class="fa fa-twitter-square"></i> @tipi_ciudadano</a>
+                    <br>
+                    <a href="https://facebook.com/tipiciudadano"><i class="fa fa-facebook-square"></i> facebook.com/tipiciudadano</a>
                 </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <h4>Un proyecto de...</h4>
-                        <img src="/images/ciecode.png" alt="">
-                        <img src="/images/clm.jpg" alt="">
-                        <img src="/images/porcausa.png" alt="">
-                    </div>
-                    <div class="col-md-4">
-                        <h4>Financiado por...</h4>
-                        <img src="/images/eea.jpg" alt="">
-                        <img src="/images/plataforma.jpg" alt="">
-                    </div>
-                    <div class="col-md-4">
-                        <h4>Con la colaboración de...</h4>
-                        <img src="/images/logoEAPN.png" alt="">
-                        <img src="/images/unicef.gif" alt="">
-                    </div>
+            </div>
+        </section>
+        <section id="credits">
+            <div class="row content-row yellow-block">
+                <div class="col-sm-12 text-center">
+                    <h2>Tipi es un proyecto de:</h2>
+                </div>
+            </div>
+            <div class="row white-block">
+                <div class="col-sm-12 center">
+                    <img src="/images/ciecode.png" alt="">
+                    <img src="/images/clm.jpg" alt="">
+                    <img src="/images/porcausa.png" alt="">
+                </div>
+            </div>
+            <div class="row content-row yellow-block">
+                <div class="col-sm-6 text-center">
+                    <h3>En colaboración con:</h3>
+                </div>
+                <div class="col-sm-6 text-center">
+                    <h3>Financiado por:</h3>
+                </div>
+            </div>
+            <div class="row content-row white-block">
+                <div class="col-sm-6 center">
+                    <img src="/images/logoEAPN.png" alt="">
+                    <img src="/images/unicef.gif" alt="">
+                </div>
+                <div class="col-sm-6 center">
+                    <img src="/images/eea.jpg" alt="">
+                    <img src="/images/plataforma.jpg" alt="">
+                </div>
+            </div>
+            <div class="row content-row yellow-block">
+                <div class="col-sm-12">
+                    <!-- Empty block -->
                 </div>
             </div>
         </section>
