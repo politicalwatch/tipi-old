@@ -43,12 +43,15 @@ Template.scannervizz.rendered = function() {
         "children": []
     }
     _.each(dicts, function(d) {
-        objd = {
-            "name": d.dict,
-            "icon": d.iconb1,
-            "size": Refs.find({"dicts": d.dict}).count()
+        n = Refs.find({"dicts": d.dict}).count();
+        if (n) {
+            objd = {
+                "name": d.dict,
+                "icon": d.iconb1,
+                "size": n
+            }
+            root["children"].push(objd);
         }
-        root["children"].push(objd);
     });
 
     var margin = 20,
