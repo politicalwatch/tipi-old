@@ -75,16 +75,13 @@ Template.scannervizz.rendered = function() {
         .attr("transform", "translate(" + diameter / 2.5 + "," + diameter / 2.5 + ")");
 
 
-    // d3.json(Meteor.absoluteUrl("/data/fixtures.json"), function(error, root) {
-    //   if (error) return console.error(error);
-
       var focus = root,
           nodes = pack.nodes(root),
           view;
       
       var image = svg.selectAll('image').data(nodes).enter().append("image")
             .attr("xlink:href", function(d){
-                  return Meteor.absoluteUrl("/images/svgs-circles/") + d.icon;
+                  return Meteor.absoluteUrl("images/svgs-circles/") + d.icon;
             })
             .attr("width", function(d) { return d.r * scaling; })
             .attr("height", function(d) { return d.r * scaling; })
