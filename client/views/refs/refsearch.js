@@ -1,23 +1,21 @@
 /* ---------------------------------------------------- +/
 
-## Items ##
-
-Code related to the items template
+## References ##
 
 /+ ---------------------------------------------------- */
 
 Template.refsearch.helpers({
-		alldicts_helper: function() {
-			return Dicts.find().fetch();
-		},
-		lastquery: function() {
-			return Session.get("searchRefs");
-		},
-		count: function() {
-			if (this.count >= 300) flash("Se han encontrado más de 300 iniciativas.", "info");
-			else if (this.count == 0) flash("No se han encontrado iniciativas que cumplan los criterios.", "info");
-		},
-	   settings: function () {
+	alldicts_helper: function() {
+		return Dicts.find().fetch();
+	},
+	lastquery: function() {
+		return Session.get("searchRefs");
+	},
+	count: function() {
+		if (this.count >= 100) flash("Se han encontrado más de 100 iniciativas.", "info");
+		else if (this.count == 0) flash("No se han encontrado iniciativas que cumplan los criterios.", "info");
+	},
+   	settings: function () {
         return {
             rowsPerPage: 30,
             showFilter: false,
@@ -48,8 +46,7 @@ Template.refsearch.helpers({
 											}}
 										]
         };
-    }
-  //
+	}
 });
 
 
@@ -66,8 +63,7 @@ Template.refsearch.rendered = function (a) {
 };
 
 Template.refsearch.events({
-	'submit form': function(e) {console.log("Form submitted");},
-	'click button.reset': function(e) {Session.set('searchRefs', {});},
+	'submit form': function(e) {},
 	'click button#exportcsv': function(e) {
 		var query = Session.get("searchRefs");
 		for( var property in query )

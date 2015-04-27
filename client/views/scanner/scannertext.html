@@ -1,0 +1,66 @@
+<template name="scannertext">
+    <div id="scanner-text" class="containerglob darkpatt" style="min-height: 95vh;">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    {{count}}
+                    <div class="row">
+                        <form class="form-horizonal" role="form">
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <input class="form-control input-lg" type="text" id="titulo" name="titulo" value="{{lastquery.titulo}}" placeholder="Título">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <select class="form-control input-lg" id="dicts" name="dicts">
+                                        <option value="">---</option>
+                                        {{#each alldicts_helper}}
+                                            <option value="{{dict}}">{{dict}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                                <div class="col-sm-4">
+                                    <input class="form-control input-lg" type="date" id="fechadesde" name="fechadesde" value="{{lastquery.fechadesde}}" placeholder="Desde">
+                                </div>
+                                <div class="col-sm-4">
+                                    <input class="form-control input-lg" type="date" id="fechahasta" name="fechahasta" value="{{lastquery.fechahasta}}" placeholder="Hasta">
+                                </div>
+                            </div>
+                            <!-- <div class="form-group">
+                                <label class="col-sm-2 control-label" for="ref">Referencia</label>
+                                <div class="col-sm-4 input-group">
+                                    <input class="form-control" type="text" id="ref" name="ref" value="{{lastquery.ref}}">
+                                </div>
+                            </div> -->
+                            <div class="form-group">
+                                <div class="col-sm-9">
+                                    <input class="form-control input-lg" type="text" id="autor" name="autor" value="{{lastquery.autor}}" placeholder="Autor">
+                                </div>
+                                <div class="col-sm-3">
+                                    <select class="form-control input-lg" id="tipoautor" name="tipoautor">
+                                    <option value="diputado">Diputado/a</option>
+                                    <option value="grupo">Grupo</option>
+                                    <option value="otro">Otro</option>
+                                </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <button class="btn btn-secondary btn-lg pull-right" type="submit"><i class="fa fa-search"></i> Buscar</button>
+                                    <button class="btn btn-secondary btn-lg pull-right" type="cancel"><i class="fa fa-repeat"></i> Restablecer</button>
+                                    <br/>
+                                    <br/>
+                                </div>
+                            </div>
+                        </form>
+                        <hr>
+                        {{#if yesfound}}
+                            {{> reactiveTable class="table table-hover" collection=tipisfound settings=settings}}
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

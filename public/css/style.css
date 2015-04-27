@@ -314,7 +314,7 @@ li.lined {
 #mdblog-archive { color: #000; background-color: lightgrey; }
 
 
-/*scanner------------------------------------------------*/
+/*scanner vizz------------------------------------------------*/
 .node {
   cursor: pointer;
 }
@@ -338,6 +338,57 @@ li.lined {
 
 #scanner-title {
   text-transform: capitalize;
+}
+
+/*scanner text---------------------------------------------*/
+#scanner-text {
+  min-height: 95vh;
+  color: #fff;
+}
+
+#scanner-text table thead tr th {
+  color: #fff;
+  font-weight: bold;
+}
+
+#scanner-text table tbody tr:hover td {
+  color: #222;
+  background-color: rgba(251,194,57,0.8);
+}
+
+#scanner-text table tbody tr:hover td a {
+  color: #222;
+}
+#scanner-text .form-control:focus {
+  box-shadow: 0 0 0;
+  -webkit-box-shadow: 0 0 0;
+  -moz-box-shadow: 0 0 0;
+}
+
+#scanner-text .form-group {
+  
+}
+
+#scanner-text input {
+  background: none repeat scroll 0% 0%;
+  color: #fbc239;
+  border: 0px;
+  border-bottom: 1px solid #000;
+  border-radius: 0px;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+}
+#scanner-text input::-webkit-input-placeholder, #scanner-text input::-moz-placeholder {
+  color:#222;
+}
+#scanner-text select {
+  background: #222;
+  color: #fbc239;
+  border: 0px;
+  border-bottom: 1px solid #000;
+  border-radius: 0px;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
 }
 
 /*forum-----------------------------------------------------*/
@@ -496,6 +547,7 @@ li.lined {
     margin-bottom: 10px;
     padding-top: 5px;
     padding-bottom: 5px;
+    min-height: 95vh;
 }
 #tipi-wrapper h3 {
     margin-top: 0px;

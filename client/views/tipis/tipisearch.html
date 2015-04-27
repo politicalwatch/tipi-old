@@ -1,13 +1,30 @@
-<template name="refsearch">
+<template name="tipisearch">
 	{{count}}
-	<div class="container">
-		<h2>Búsqueda de inicativas</h2>
-		<p>Los campos de texto serán tratados como expresiones regulares, <a href="https://www.regex101.com/" target="_blank">pruebe primero</a>.</p>
+    <div class="container">
+        <h2>Iniciativas TiPi</h2>
+        <p>Los campos de texto serán tratados como expresiones regulares, <a href="https://www.regex101.com/" target="_blank">pruebe primero</a>.</p>
 		<form class="form-horizonal" role="form">
 			<div class="form-group">
-				<label class="col-sm-2 control-label" for="texto">Título</label>
+				<label class="col-sm-2 control-label" for="titulo">Título</label>
 				<div class="col-sm-10">
 					<input class="form-control" type="text" id="titulo" name="titulo" value="{{lastquery.titulo}}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label" for="dicts">Diccionario</label>
+				<div class="col-sm-4">
+					<select class="form-control" id="dicts" name="dicts">
+						<option value="">---</option>
+						{{#each alldicts_helper}}
+							<option value="{{dict}}">{{dict}}</option>
+						{{/each}}
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label" for="ref">Referencia</label>
+				<div class="col-sm-4">
+					<input class="form-control" type="text" id="ref" name="ref" value="{{lastquery.ref}}">
 				</div>
 			</div>
 			<div class="form-group">
@@ -24,24 +41,6 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label" for="bol">Tipo Boletín</label>
-				<div class="col-sm-4">
-				<select class="form-control" id="bol" name="bol">
-					<option value="">---</option>
-					<option value="A">A</option>
-					<option value="B">B</option>
-					<option value="D">D</option>
-					<option value="session-diary">Diarios de sesiones</option>
-				</select>
-			</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-2 control-label" for="ref">Referencia</label>
-				<div class="col-sm-4">
-					<input class="form-control" type="text" id="ref" name="ref" value="{{lastquery.ref}}">
-				</div>
-			</div>
-			<div class="form-group">
 				<label class="col-sm-2 control-label" for="fechadesde">Fecha desde</label>
 				<div class="col-sm-4">
 					<input class="form-control" type="date" id="fechadesde" name="fechadesde" value="{{lastquery.fechadesde}}">
@@ -51,17 +50,6 @@
 				<label class="col-sm-2 control-label" for="fechahasta">Fecha hasta</label>
 				<div class="col-sm-4">
 					<input class="form-control" type="date" id="fechahasta" name="fechahasta" value="{{lastquery.fechahasta}}">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-2 control-label" for="dicts">Diccionario</label>
-				<div class="col-sm-4">
-					<select class="form-control" id="dicts" name="dicts">
-						<option value="">---</option>
-						{{#each alldicts_helper}}
-							<option value="{{dict}}">{{dict}}</option>
-						{{/each}}
-					</select>
 				</div>
 			</div>
 			<div class="form-group">
@@ -78,7 +66,7 @@
 			<button class="btn btn-secondary pull-right" id="exportcsv"><i class="fa fa-download"></i> Exportar a CSV</button>
 		</div>
 		{{#if yesfound}}
-			{{> reactiveTable collection=refsfound settings=settings}}
+			{{> reactiveTable collection=tipisfound settings=settings}}
 		{{/if}}
-	</div>
+    </div>
 </template>

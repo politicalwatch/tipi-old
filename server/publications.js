@@ -53,21 +53,31 @@ if (Meteor.isServer) {
 	});
 
 	Meteor.publish('allTipis', function() {
-		return Refs.find({is_tipi: true}, {fields: {ref: 1, autor: 1, titulo: 1, dicts: 1},
-													 sort: {fecha: -1}});
+		return Refs.find({is_tipi: true}, {fields: {tipotexto: 1, autor: 1, titulo: 1, dicts: 1, fecha: 1},
+													 sort: {fecha: -1},
+													 limit: 100});
 	});
+
+	Meteor.publish('allTipisSearch', function(q) {
+		// Adding Tipi filter
+		q['is_tipi'] = true;
+		return Refs.find(q, {fields: {tipotexto: 1, autor: 1, titulo: 1, dicts: 1, fecha: 1}, 
+													sort: {fecha: -1},
+													limit: 100});
+	});
+
 	Meteor.publish('singleTipi', function(id) {
 		return Refs.find({_id: id, is_tipi: true});
 	});
 
 	Meteor.publish('allRefs', function() {
-		return Refs.find({}, {fields: {bol: 1, ref: 1, gopag: 1, autor: 1, titulo: 1, dicts: 1, fecha: 1}, 
+		return Refs.find({}, {fields: {bol: 1, ref: 1, autor: 1, titulo: 1, dicts: 1, fecha: 1}, 
 													sort: {bol: -1, fecha: -1},
-													limit: 300});
+													limit: 100});
 	});
 
 	Meteor.publish('allRefsSearch', function(q) {
-		return Refs.find(q, {fields: {bol: 1, ref: 1, gopag: 1, autor: 1, titulo: 1, dicts: 1, fecha: 1}, 
+		return Refs.find(q, {fields: {bol: 1, ref: 1, autor: 1, titulo: 1, dicts: 1, fecha: 1}, 
 													sort: {fecha: -1},
 													limit: 100});
 	});
@@ -75,7 +85,7 @@ if (Meteor.isServer) {
 	Meteor.publish('allRefsContent', function() {
 		return Refs.find({}, {fields: {bol: 1, ref: 1, gopag: 1, autor: 1, titulo: 1, dicts: 1, fecha: 1, content: 1}, 
 													sort: {bol: -1, fecha: -1},
-													limit: 300});
+													limit: 100});
 	});
 
 
