@@ -61,7 +61,7 @@ if (Meteor.isServer) {
 	Meteor.publish('allTipisSearch', function(q) {
 		// Adding Tipi filter
 		q['is_tipi'] = true;
-		return Refs.find(q, {fields: {tipotexto: 1, autor: 1, titulo: 1, dicts: 1, fecha: 1}, 
+		return Refs.find(q, {fields: {ref: 1, tipotexto: 1, autor: 1, titulo: 1, dicts: 1, fecha: 1, lugar: 1}, 
 													sort: {fecha: -1},
 													limit: 100});
 	});
