@@ -42,11 +42,14 @@ if (Meteor.isServer) {
 													 sort: {dictgroup: -1}});
 	});
 	Meteor.publish('allDictsWithWords', function() {
-		return Dicts.find({}, {fields: {dictgroup: 1, dict: 1, words:1, lastUpdate: 1},
+		return Dicts.find({}, {fields: {dictgroup: 1, dict: 1, words:1, description: 1, lastUpdate: 1},
 													 sort: {dictgroup: -1}});
 	});
 	Meteor.publish('allTipiDicts', function() {
 		return Dicts.find({dictgroup: "tipi"}, {fields: {dict: 1, slug: 1, iconb1: 1} });
+	});
+	Meteor.publish('allTipiDictsWithDesc', function() {
+		return Dicts.find({dictgroup: "tipi"}, {fields: {dict: 1, slug: 1, description: 1,  icon1: 1, icon2: 2} });
 	});
 	Meteor.publish('singleDict', function(id) {
 		return Dicts.find(id);

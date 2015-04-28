@@ -30,18 +30,20 @@ Template.dictnew.events({
 		var words = $("#words").val();
 		var wordsa = words.split("\n").sort();
 		var dict  = $("#dict").val();
+		var description = $("#description").val();
 		var dictgroup = $("#dictgroup").val();
 		var date = new Date();
-		var newdict = {dict: dict, dictgroup: dictgroup, words: wordsa,
-									 createdAt: date, lastUpdate: date, 
-									 updatedBy: Meteor.user().username,
-									 createdBy: Meteor.user().username};
+		var newdict = {dict: dict, dictgroup: dictgroup, description: description, 
+									words: wordsa,
+									createdAt: date, lastUpdate: date, 
+									updatedBy: Meteor.user().username,
+									createdBy: Meteor.user().username};
 		console.log(newdict);
 		// TODO Limpiar espacios al principio y al final
 		Meteor.call('createDict', newdict, function(error, result){
-      flash('Diccionario añadido.');
-      Router.go('/dicts');
-    });
+      		flash('Diccionario añadido.', 'info');
+      		Router.go('/dicts');
+    	});
 	},
 	'click button.reset': function(e) {}
   //

@@ -3,12 +3,21 @@
         <button class="btn btn-default" id="back">← Back</button>
         {{#with dict}}
         <div class="dict">
-                <p class="lead">{{dictgroup}} - {{dict}}</p>
-                <ul>
-                {{#each words}}
-                    <li>{{this}}</li>
-                {{/each}}
-                </ul>
+                <p class="lead">
+                    {{dict}}
+                    <br>
+                    <span class="label label-info">{{dictgroup}}</span>
+                </p>
+                <p>{{description}}</p>
+                <hr>
+                <p>
+                    Términos:
+                    <ul>
+                    {{#each words}}
+                        <li>{{this}}</li>
+                    {{/each}}
+                    </ul>
+                </p>
                 <p>Última actualización: {{lastUpdate}}</p>
         </div>
         {{/with}}

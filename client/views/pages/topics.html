@@ -8,7 +8,16 @@
                         <hr>
                     </div>
                 </div>
-                <div class="row content-row">
+                <div class="content-row">
+                    {{#each dicts}}
+                        <div class="col-sm-4 dictionary-block">
+                            <img class="dictionary-icon" src="/images/svgs/{{icon2}}" alt="Imagen de {{dict}}">
+                            <h3>{{dict}}</h3>
+                            <p>{{description}}</p>
+                        </div>
+                    {{/each}}
+                </div>
+                <!-- <div class="row content-row">
                     <div class="col-sm-4 dictionary-block">
                         <img class="dictionary-icon" src="/images/svgs/sanidad-02.svg" alt="Sanidad">
                         <h3>Sanidad</h3>
@@ -92,7 +101,7 @@
                         <h3>Población reclusa</h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum obcaecati nulla modi consequuntur assumenda maiores laboriosam nisi quidem vero, suscipit velit incidunt at ex esse sequi veritatis quam ipsam. Possimus.</p>
                     </div>
-                </div>
+                </div> -->
             </div>
         </section>
     </div>
