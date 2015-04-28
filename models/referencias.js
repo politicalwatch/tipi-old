@@ -55,6 +55,26 @@ Refs.helpers({
                 }
             }
         }
+    },
+    // Tipi
+    getTipiAutor: function() {
+        if (this.autor_alt !== 'undefined' && this.autor_alt != null) {
+            return this.autor_alt;
+        } else {
+            return this.getAutor();
+        }
+    },
+    // Tipi
+    getTipiTitulo: function() {
+        if (this.titulo_alt !== 'undefined' && this.titulo_alt != null) {
+            if (this.titulo_alt != '') {
+                return this.titulo_alt;
+            } else {
+                this.titulo;
+            }
+        } else {
+            return this.titulo;
+        }
     }
 });
 

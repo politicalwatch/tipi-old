@@ -70,6 +70,10 @@ if (Meteor.isServer) {
 		return Refs.find({_id: id, is_tipi: true});
 	});
 
+	Meteor.publish('singleTipiSummarized', function(id) {
+		return Refs.find({_id: id, is_tipi: true}, {fields: {content: 0}});
+	});
+
 	Meteor.publish('allRefs', function() {
 		return Refs.find({}, {fields: {bol: 1, ref: 1, autor: 1, titulo: 1, dicts: 1, fecha: 1}, 
 													sort: {bol: -1, fecha: -1},

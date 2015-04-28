@@ -13,8 +13,36 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-4">
+                                    <select class="form-control input-lg" id="lugar" name="lugar">
+                                        <option value="">Selecciona lugar</option>
+                                        <option value="pleno">Pleno</option>
+                                        <option value="Comisión Constitucional">Comisión Constitucional</option>
+                                        <option value="Comisión de Asuntos Exteriores">Comisión de Asuntos Exteriores</option>
+                                        <option value="Comisión de Justicia">Comisión de Justicia</option>
+                                        <option value="Comisión de Interior">Comisión de Interior</option>
+                                        <option value="Comisión de Defensa">Comisión de Defensa</option>
+                                        <option value="Comisión de Economía y Competitividad">Comisión de Economía y Competitividad</option>
+                                        <option value="Comisión de Hacienda y Administraciones Públicas">Comisión de Hacienda y Administraciones Públicas</option>
+                                        <option value="Comisión de Presupuestos">Comisión de Presupuestos</option>
+                                        <option value="Comisión de Fomento">Comisión de Fomento</option>
+                                        <option value="Comisión de Educación y Deporte">Comisión de Educación y Deporte</option>
+                                        <option value="Comisión de Empleo y Seguridad Social">Comisión de Empleo y Seguridad Social</option>
+                                        <option value="Comisión de Industria, Energía y Turismo">Comisión de Industria, Energía y Turismo</option>
+                                        <option value="Comisión de Agricultura, Alimentación y Medio Ambiente">Comisión de Agricultura, Alimentación y Medio Ambiente</option>
+                                        <option value="Comisión de Sanidad y Servicios Sociales">Comisión de Sanidad y Servicios Sociales</option>
+                                        <option value="Comisión de Cooperación Internacional para el Desarrollo">Comisión de Cooperación Internacional para el Desarrollo</option>
+                                        <option value="Comisión de Cultura">Comisión de Cultura</option>
+                                        <option value="Comisión de Igualdad">Comisión de Igualdad</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input class="form-control input-lg" type="text" id="tipotexto" name="tipotexto" value="{{lastquery.tipotexto}}" placeholder="Tipo de iniciativa">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">
                                     <select class="form-control input-lg" id="dicts" name="dicts">
-                                        <option value="">---</option>
+                                        <option value="">Selecciona ámbito</option>
                                         {{#each alldicts_helper}}
                                             <option value="{{dict}}">{{dict}}</option>
                                         {{/each}}
@@ -27,22 +55,22 @@
                                     <input class="form-control input-lg" type="date" id="fechahasta" name="fechahasta" value="{{lastquery.fechahasta}}" placeholder="Hasta">
                                 </div>
                             </div>
-                            <!-- <div class="form-group">
-                                <label class="col-sm-2 control-label" for="ref">Referencia</label>
-                                <div class="col-sm-4 input-group">
-                                    <input class="form-control" type="text" id="ref" name="ref" value="{{lastquery.ref}}">
-                                </div>
-                            </div> -->
                             <div class="form-group">
                                 <div class="col-sm-9">
-                                    <input class="form-control input-lg" type="text" id="autor" name="autor" value="{{lastquery.autor}}" placeholder="Autor">
+                                    <input class="form-control input-lg" type="text" id="autor" name="autor" value="{{lastquery.autor}}" placeholder="Diputada/o">
                                 </div>
                                 <div class="col-sm-3">
-                                    <select class="form-control input-lg" id="tipoautor" name="tipoautor">
-                                    <option value="diputado">Diputado/a</option>
-                                    <option value="grupo">Grupo</option>
-                                    <option value="otro">Otro</option>
-                                </select>
+                                    <select class="form-control input-lg" id="grupootro" name="grupootro">
+                                        <option value="">o selecciona grupo</option>
+                                        <option value="Gobierno">Gobierno</option>
+                                        <option value="GP">G.P. Popular</option>
+                                        <option value="GS">G.P. Socialista</option>
+                                        <option value="GC-CIU">Grupo Catalán (CiU)</option>
+                                        <option value="GIP">G.P. La Izquierda Plural</option>
+                                        <option value="GUPyD">G.P. UPyD</option>
+                                        <option value="GV (EAJ-PNV)">G.P. Vasco (EAJ-PNV)</option>
+                                        <option value="GMx">G.P. Mixto</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -57,6 +85,10 @@
                         <hr>
                         {{#if yesfound}}
                             {{> reactiveTable class="table table-hover" collection=tipisfound settings=settings}}
+                        {{else}}
+                            <div class="col-sm-12 text-center">
+                                <h3 class="yellow-text"><i>No hay resultados que mostrar</i></h3>
+                            </div>
                         {{/if}}
                     </div>
                 </div>

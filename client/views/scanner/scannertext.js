@@ -20,7 +20,7 @@ Template.scannertext.helpers({
             rowsPerPage: 30,
             showFilter: false,
             showColumnToggles: false,
-            fields: [{ key: 'titulo', label: 'Titulo', headerClass: 'col-md-8',
+            fields: [{ key: 'titulo', label: 'Titulo', headerClass: 'col-md-6',
                                             fn: function(val, obj) {
                                                 return Spacebars.SafeString('<a href="/t/'+ obj._id._str + '">'+val+'</a>');
                                             }
@@ -33,7 +33,12 @@ Template.scannertext.helpers({
                                         },
                                         { key: 'autor', label: 'Autor', headerClass: 'col-md-2',
                                             fn: function(value, obj) {
-                                                return obj.getAutor();
+                                                return obj.getTipiAutor();
+                                            }
+                                        },
+                                        { key: 'grupo', label: 'Grupo', headerClass: 'col-md-2',
+                                            fn: function(value, obj) {
+                                                return obj.getGrupo();
                                             }
                                         }]
         };
