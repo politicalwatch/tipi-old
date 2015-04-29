@@ -1,5 +1,5 @@
 Template.forgot.events = {
-  'click input[type=submit]': function(e){
+  'click button[type=submit]': function(e){
     e.preventDefault();
 
     var options = {
@@ -14,6 +14,6 @@ Template.forgot.events = {
         flash("Password reset link sent!");
       }
     });
-
+    return false;
   }
 };

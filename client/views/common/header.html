@@ -43,11 +43,16 @@
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					{{#if currentUser}}
-						<li><a href="#">{{currentUser.username}}</a></li>
+						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-user"></i></a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="{{pathFor 'profile' username=currentUser.username}}">Mi perfil</a></li>
+								<li><a href="/" class="log-out">Salir</a></li>
+							</ul>
+						</li>
 						<!-- <li class="dropdown">
 					    	{{> notifications}}
 					    </li> -->
-						<li><a href="/" class="log-out"><i class="fa fa-sign-out"></i></a></li>
+						<li></li>
 					{{else}} 
 						<li><a href="{{pathFor 'login'}}">Entrar</a></li>
 						<li><a href="{{pathFor 'signup'}}"><b>Soy nuevo</b></a></li>
@@ -57,18 +62,12 @@
 		</div>
 	</nav>
 	{{#if hasMessages }}
-	<div class="container">
-		<div class="row">
-			<div class="col-xs-12 messages" style="padding-top: 50px">
-				{{#each messages}}
-				<div class="alert alert-dismissible alert-{{type}}" role="alert">
-					<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-					{{message}}
-				</div>
-				{{/each}}
+		{{#each messages}}
+			<div class="alert alert-dismissible alert-{{type}}" role="alert">
+				<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				{{message}}		
 			</div>
-		</div>
-	</div>
+		{{/each}}
 	{{/if}}
 
 </template>

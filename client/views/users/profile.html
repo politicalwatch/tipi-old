@@ -1,0 +1,31 @@
+<template name="profile">
+    <div id="profile" class="containerglob darkpatt">
+        <div class="container">
+            
+                <div class="row">
+                    <div class="col-sm-6 grey darkpatt">
+                        <h1><i class="fa fa-user"></i> {{username}}</h1>
+                        <hr>
+                        <h2>{{profile.firstname}} {{profile.lastname}}</h2>
+                        {{#if profile.organization}}
+                            <p><i class="fa fa-building-o"></i> {{profile.organization}}</p>
+                        {{/if}}
+                        {{#if profile.bio}}
+                            <p><i>{{profile.bio}}</i></p>
+                        {{/if}}
+                        {{#if profile.twitter}}
+                            <a href="{{profile.twitter}}" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
+                        {{/if}}
+                        {{#if profile.facebook}}
+                            <a href="{{profile.facebook}}" target="_blank"><i class="fa fa-facebook fa-2x"></i></a>
+                        {{/if}}
+                        {{#if isEqUser _id }}
+                            <br><br>
+                            <a href="{{pathFor 'profile_edit'}}">Editar mi pefil</a>
+                        {{/if}}
+                    </div>
+                </div>
+            
+        </div>
+    </div>
+</template>

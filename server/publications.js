@@ -125,8 +125,7 @@ if (Meteor.isServer) {
 	});
 
 	Meteor.publish('userInfo', function(username) {
-		// TODO: complete queried fields. Check for username.
-		return User.find({ name: username }, {fields: {}});
+		return Meteor.users.find({ username: username }, {fields: {services: 0}});
 	});
 
 	Meteor.publish('userListByType', function(user_type) {

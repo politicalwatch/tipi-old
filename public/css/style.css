@@ -131,12 +131,16 @@ img {width: 100%; height: 100%;}
 .yellow-block { background-color: #fbc239; }
 
 .container { padding-top: 50px; }
+
+.container:first-of-type { padding-top: 50px; }
+
 .containerglob { 
 	/* Do something with fullscreen images */
 	padding-left: 10px;
 	padding-right: 10px;
+  min-height: 95vh;
 }
-.containerglob > .row:first-of-type { padding-top:30px; }
+.container > .row:first-of-type, .containerglob > .row:first-of-type { padding-top:30px; }
 
 .navbar li a {
 	font-weight: bold;
@@ -329,11 +333,12 @@ li.lined {
 #scanner-vizz .label {
   font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
   text-anchor: middle;
-  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+  /*text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;*/
 }
+
 #scanner-vizz .label,
 #scanner-vizz .node--root,
-.node--leaf {
+#scanner-vizz .node--leaf {
   pointer-events: none;
 }
 
@@ -341,10 +346,12 @@ li.lined {
   text-transform: capitalize;
 }
 
-/*scanner text---------------------------------------------*/
-#scanner-text {
-  min-height: 95vh;
+/*scanner text and oher forms---------------------*/
+#scanner-text, #login, #signup, #forgot, #profile-edit {
   color: #fff;
+}
+#login h2, #signup h2, #forgot h2, #profile-edit h2 {
+  color: #fbc239;
 }
 
 #scanner-text table thead tr th {
@@ -360,17 +367,27 @@ li.lined {
 #scanner-text table tbody tr:hover td a {
   color: #222;
 }
-#scanner-text .form-control:focus {
+#scanner-text .form-control:focus,
+#login .form-control:focus,
+#signup .form-control:focus,
+#forgot .form-control:focus,
+#profile-edit .form-control:focus {
   box-shadow: 0 0 0;
   -webkit-box-shadow: 0 0 0;
   -moz-box-shadow: 0 0 0;
 }
 
-#scanner-text .form-group {
-  
-}
+#scanner-text .form-group,
+#login .form-group,
+#signup .form-group,
+#forgot .form-group
+#profile-edit .form-group {}
 
-#scanner-text input {
+#scanner-text input,
+#login input,
+#signup input,
+#forgot input,
+#profile-edit input {
   background: none repeat scroll 0% 0%;
   color: #fbc239;
   border: 0px;
@@ -379,7 +396,16 @@ li.lined {
   -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
 }
-#scanner-text input::-webkit-input-placeholder, #scanner-text input::-moz-placeholder {
+#scanner-text input::-webkit-input-placeholder,
+#scanner-text input::-moz-placeholder,
+#login input::-webkit-input-placeholder,
+#login input::-moz-placeholder,
+#signup input::-webkit-input-placeholder,
+#signup input::-moz-placeholder,
+#forgot input::-webkit-input-placeholder,
+#forgot input::-moz-placeholder
+#profile-edit::-webkit-input-placeholder,
+#profile-edit::-moz-placeholder {
   color:#222;
 }
 #scanner-text select {
@@ -512,7 +538,7 @@ li.lined {
     display: none;
 }
 
-.errors{
+.errors {
   position: fixed;
   z-index: 10000;
   padding: 10px;
@@ -522,15 +548,39 @@ li.lined {
   bottom: 0px;
   pointer-events: none;
 }
+
 .alert {
-  animation: fadeOut 2700ms ease-in 0s 1 forwards;
-  -webkit-animation: fadeOut 2700ms ease-in 0s 1 forwards;
-  -moz-animation: fadeOut 2700ms ease-in 0s 1 forwards;
-  width: 250px;
-  float: right;
-  clear: both;
-  margin-bottom: 5px;
-  pointer-events: auto;
+  position: absolute;
+  padding-top: 50px;
+  width: 100%;
+  text-align: center;
+}
+.alert-success, .alert-info {
+  color: #000;
+  background-color: #fbc239;
+  border: none;
+}
+.alert-success .close,
+.alert-success .close:hover,
+.alert-info .close,
+.alert-info .close:hover {
+  color: #000;
+  opacity: 1;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.alert-danger {
+  color: #fff;
+  background-color: red;
+  border: none;
+}
+.alert-danger .close,
+.alert-danger .close:hover {
+  color: #fff;
+  opacity: 1;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 
@@ -548,7 +598,6 @@ li.lined {
     margin-bottom: 10px;
     padding-top: 5px;
     padding-bottom: 5px;
-    min-height: 95vh;
 }
 #tipi-wrapper h3 {
     margin-top: 0px;
@@ -630,3 +679,25 @@ li.lined {
   width: 72px;
   height: 72px;
 }
+
+/*Profile-----------------------------*/
+#profile, #profile-edit {
+  color: #fff;
+}
+
+#profile p {
+  color: #fff;
+}
+
+/*Not found + Access denied-----------*/
+#not-found, #access-denied {}
+
+#not-found h2, #access-denied h2 {
+  padding-top: 100px;
+  color: #fbc239;
+}
+
+#not-found i, #access-denied i {
+  color: #fff;
+}
+

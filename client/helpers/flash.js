@@ -1,5 +1,5 @@
 // create new local collections for messages
-Messages = new Meteor.Collection('messages', {idGeneration : 'MONGO'});
+Messages = new Mongo.Collection(null);
 
 flash = function (message, messageType) {
 	var type = typeof messageType === 'undefined' ? 'success' : messageType;
