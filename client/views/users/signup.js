@@ -5,14 +5,18 @@ Template.signup.events = {
       username: $('#username').val(),
       email: $('#email').val(),
       password: $('#password').val(),
-			password2: $('#password2').val(),
+      password2: $('#password2').val(),
       profile: {
         firstname: $('#firstname').val(),
-        lastname: $('#lastname').val()
-      }
-      // Add default roles
-      // roles: ['ciudadano']
-    };
+        lastname: $('#lastname').val(),
+        bio: '',
+        organization: '',
+        website: '',
+        twitter: '',
+        facebook: '',
+      },
+      roles: ['ciudadano']
+    }
 
     if(!user.username || !user.email || !user.password){
       flash('Please fill in all fields', 'danger');

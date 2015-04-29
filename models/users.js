@@ -1,44 +1,126 @@
+// Schema = {};
+
+// Schema.UserProfile = new SimpleSchema({
+//     'firstname': {
+//         type: String,
+//         label: "Nombre"
+//     },
+//     'lastname': {
+//         type: String,
+//         label: "Apellidos"
+//     }
+// });
+
+// Schema.User = new SimpleSchema({
+//     'username': {
+//         type: String,
+//         label: "Nombre de usuario"
+//     },
+//     'emails.$.address': {
+//         type: String,
+//         label: "Correo electrónico",
+//         regEx: SimpleSchema.RegEx.Email
+//     },
+//     'password': {
+//       type: String,
+//       label: "Contraseña",
+//       min: 6
+//     },
+//     'passwordConfirmation': {
+//       type: String,
+//       min: 6,
+//       label: "Confirmar contraseña",
+//       custom: function() {
+//         if (this.value !== this.field('password').value) {
+//           return "passwordMissmatch";
+//         }
+//       }
+//     },
+//     'profile': {
+//         type: Schema.UserProfile
+//     }
+// });
+
+
 Schema = {};
 
 Schema.UserProfile = new SimpleSchema({
-    'firstname': {
+    firstname: {
         type: String,
-        label: "Nombre"
+        label: 'Nombre',
+        optional: true
     },
-    'lastname': {
+    lastname: {
         type: String,
-        label: "Apellidos"
+        label: 'Apellidos',
+        optional: true
+    },
+    bio: {
+        type: String,
+        label: 'Bio',
+        optional: true
+    },
+    organization : {
+        type: String,
+        label: 'Organización',
+        regEx: /^[a-z0-9A-z .]{3,30}$/,
+        optional: true
+    },
+    website: {
+        type: String,
+        label: 'Web',
+        regEx: SimpleSchema.RegEx.Url,
+        optional: true
+    },
+    twitter: {
+        type: String,
+        label: 'Twitter',
+        regEx: SimpleSchema.RegEx.Url,
+        optional: true
+    },
+    facebook: {
+        type: String,
+        label: 'Facebook',
+        regEx: SimpleSchema.RegEx.Url,
+        optional: true
     }
 });
 
 Schema.User = new SimpleSchema({
-    'emails.$.address': {
+    username: {
         type: String,
-        label: "Correo electrónico",
+        regEx: /^[a-z0-9A-Z_]{3,15}$/
+    },
+    emails: {
+        type: [Object],
+        optional: true
+    },
+    "emails.$.address": {
+        type: String,
         regEx: SimpleSchema.RegEx.Email
     },
-    'password': {
-      type: String,
-      label: "Contraseña",
-      min: 6
+    "emails.$.verified": {
+        type: Boolean
     },
-    'passwordConfirmation': {
-      type: String,
-      min: 6,
-      label: "Confirmar contraseña",
-      custom: function() {
-        if (this.value !== this.field('password').value) {
-          return "passwordMissmatch";
-        }
-      }
+    createdAt: {
+        type: Date
     },
-    'profile': {
-        type: Schema.UserProfile
+    profile: {
+        type: Schema.UserProfile,
+        optional: true
+    },
+    services: {
+        type: Object,
+        optional: true,
+        blackbox: true
+    },
+    roles: {
+        type: [String],
+        optional: true
     }
 });
 
 Meteor.users.attachSchema(Schema.User);
-
 
 
 
