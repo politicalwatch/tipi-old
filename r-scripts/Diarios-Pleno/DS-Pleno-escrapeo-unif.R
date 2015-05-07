@@ -22,7 +22,8 @@ library("rmongodb")
 source("../common.R")
 #listas comunes a todas las series
 source("../common-lists.R")
-source("funciones-extraccion.R")
+# source("funciones-extraccion.R")
+source("../common-funciones-diarios.R")
 
 #################################
 # Parte 1: Descarga desde la web
@@ -71,7 +72,7 @@ load(paste0(GENERATED_BASE_DIR, "allbollinks.rd"))
 # Si ya tenemos un diario descargado se marca en allbollinks
 # Nota: se sobreescribe allbollinks.rd
 for (i in 1:length(allbollinks)) {
-        fname <- paste0(GENERATED_BASE_DIR, "bocgs-proc/BOCG-D-", allbollinks[[i]]$num, ".rd")
+        fname <- paste0(GENERATED_BASE_DIR, "bocgs-proc/Diario-PD-", allbollinks[[i]]$num, ".rd")
         allbollinks[[i]]$filexists <- file.exists(fname)
 }
 save(allbollinks, file=paste0(GENERATED_BASE_DIR, "allbollinks.rd")) 
