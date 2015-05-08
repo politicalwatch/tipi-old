@@ -1,3 +1,8 @@
+Stats = new Mongo.Collection('stats');
+LatestItems = new Mongo.Collection('latest');
+StatsByDeputies = new Mongo.Collection('statsbydeputies');
+StatsByGroups = new Mongo.Collection('statsbygroups');
+
 Template.scannervizz.helpers({
     diputados: function() {
       // Dummy data
@@ -9,22 +14,12 @@ Template.scannervizz.helpers({
       };
       return dataset;
     },
-    gps: function() {
+    grupos: function() {
       // Dummy data
       dataset = []
       for (i = 0; i < 3; i++) {
         obj = new Object();
         obj.name = "Partido X";
-        dataset.push(obj);
-      };
-      return dataset;
-    },
-    whatevers: function() {
-      // Dummy data
-      dataset = []
-      for (i = 0; i < 3; i++) {
-        obj = new Object();
-        obj.name = "Whtvr " + (i+1);
         dataset.push(obj);
       };
       return dataset;
@@ -37,18 +32,31 @@ Template.scannervizz.rendered = function() {
     // D3js example: https://raw.githubusercontent.com/Slava/d3-meteor-basic/master/client.js
 
     // Load count data for vizz
-    var dicts = Dicts.find().fetch();
+    // var dicts = Dicts.find().fetch();
     var root = {
         "name": "Escaner",
         "children": []
     }
-    _.each(dicts, function(d) {
-        n = Refs.find({"dicts": d.dict}).count();
-        if (n) {
+
+    // _.each(dicts, function(d) {
+    //     n = Refs.find({"dicts": d.dict}).count();
+    //     if (n) {
+    //         objd = {
+    //             "name": d.dict,
+    //             "icon": d.iconb1,
+    //             "size": n
+    //         }
+    //         root["children"].push(objd);
+    //     }
+    // });
+    
+    stats_array = Stats.find().fetch();
+    _.each(stats_array, function(el) {
+        if (el.count > 0) {
             objd = {
-                "name": d.dict,
-                "icon": d.iconb1,
-                "size": n
+                "name": el._id,
+                "icon": Dicts.find({dict: el._id}, {fields: {iconb1: 1}}).fetch()[0].iconb1,
+                "size": el.count
             }
             root["children"].push(objd);
         }
@@ -101,11 +109,21 @@ Template.scannervizz.rendered = function() {
 
         $("#scanner-title").text(d.name);
         if ($("#scanner-title").text() == "Escaner") {
-          $("#scanner-content").addClass("hidden");
-        }
-        else {
-    
-          $("#scanner-content").removeClass("hidden");
+            $("#scanner-content").addClass("hidden");
+        } else {
+            latestitems = LatestItems.find($("#scanner-title").text()).fetch();
+            var str = '<h3>Últimas iniciativas</h3><ul>';
+            _.each(latestitems[0].items.filter(function(_,i){ return i<3 }), function(l) {
+                if (l.titulo.length > 75) {
+                    str += '<li><a href="/t/'+l.id._str+'">'+l.titulo.substring(0,75)+'...</a></li>';
+                } else {
+                    str += '<li><a href="/t/'+l.id._str+'">'+l.titulo+'</a></li>';
+                }
+            });
+            str += '</ul>';
+            $("#scanner-content").html(str);
+
+            $("#scanner-content").removeClass("hidden");
         }
 
         var focus0 = focus; focus = d;

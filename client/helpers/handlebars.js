@@ -15,8 +15,9 @@ Template.registerHelper('pluralize', function(n, thing) {
   }
 });
 
-Handlebars.registerHelper('myHelper', function(myArgument){
-    return "Hello, " + myArgument;
+Handlebars.registerHelper('trimString', function(passedString, startstring, endstring) {
+   var theString = passedString.substring( startstring, endstring );
+   return new Handlebars.SafeString(theString)
 });
 
 Handlebars.registerHelper('', function(section){
