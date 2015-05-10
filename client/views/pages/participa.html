@@ -1,0 +1,37 @@
+<template name="participa">
+  <div class="containerglob darkpatt">
+      <div class="row">
+          <div class="col-md-12 oldwhite">
+              <h1 class="left">Participa</h1>
+              <hr>
+          </div>
+      </div>
+      <div class="container">
+        <div class="row">
+            <div class="col-sm-8 text-center">
+                <h2 class="yellow-text">¿Cómo participar?</h2>
+                <p class="white-text">
+                    Queremos que TIPI sea una plataforma de encuentro, interacción e intercambio de experiencias entre ciudadanos, organizaciones, medios de comunicación y diputados.
+                </p>
+                <br>
+                <ul class="list-unstyled text-center white-text">
+                    <li class="lined">Accede a información. Entérate de toda la actividad parlamentaria sobre pobreza y exclusión social y los diputados que están detrás.</li>
+                    <li class="lined">Comenta y propón cambios en iniciativas parlamentarias que están siendo tramitadas en el Congreso de los Diputados.</li>
+                    <li class="lined">Si tienes iniciativas sobre estos temas, compártelas para que los diputados las planteen en el Parlamento.</li>
+                    <li class="lined">Contacta y pregunta a un diputado.</li>
+                    <li class="lined">Publica tus eventos o artículos en el blog e infórmate de eventos que te interesan.</li>
+                </ul>
+            </div>
+            <div class="col-sm-4 text-center">
+                {{#if currentUser}}
+                    <a href="{{pathFor 'forumAdd'}}" class="btn btn-secondary"><i class="fa fa-comments-o"></i> Iniciar conversación</a>
+                {{/if}}
+                <br><br>
+                <a href="{{pathFor 'newPosts'}}">Últimas conversaciones</a>
+                <br>
+                <a href="{{pathFor 'bestPosts'}}">Conversaciones más valoradas</a>
+            </div>
+        </div>
+      </div>
+  </div>
+</template>

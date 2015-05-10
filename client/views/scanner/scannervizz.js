@@ -110,6 +110,7 @@ Template.scannervizz.rendered = function() {
         $("#scanner-title").text(d.name);
         if ($("#scanner-title").text() == "Escaner") {
             $("#scanner-content").addClass("hidden");
+            $("#scanner-help").removeClass("hidden");
         } else {
             latestitems = LatestItems.find($("#scanner-title").text()).fetch();
             var str = '<h3>Últimas iniciativas</h3><ul>';
@@ -122,8 +123,8 @@ Template.scannervizz.rendered = function() {
             });
             str += '</ul>';
             $("#scanner-content").html(str);
-
             $("#scanner-content").removeClass("hidden");
+            $("#scanner-help").addClass("hidden");
         }
 
         var focus0 = focus; focus = d;

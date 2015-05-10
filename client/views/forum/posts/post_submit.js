@@ -1,8 +1,8 @@
-Template.postSubmit.created = function() {
+Template.forumAdd.created = function() {
   Session.set('postSubmitErrors', {});
 }
 
-Template.postSubmit.helpers({
+Template.forumAdd.helpers({
   errorMessage: function(field) {
     return Session.get('postSubmitErrors')[field];
   },
@@ -11,7 +11,7 @@ Template.postSubmit.helpers({
   }
 });
 
-Template.postSubmit.events({
+Template.forumAdd.events({
   'submit form': function(e) {
     e.preventDefault();
     
