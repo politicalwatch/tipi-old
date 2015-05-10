@@ -4,13 +4,24 @@
 # Funciones propias para descargar Diarios de Sesiones      #
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
 
-# Dado un número de boletin devuelve un URL que contiene un índice de boletines comenzando en el número dado.       
+# Dado un número de boletin devuelve un URL que contiene un índice de boletines comenzando en el número dado.   
+## Pleno y Diputación Permanente    
 urlPage <- function(num) {
         #         urlpre <- "http://www.congreso.es/portal/page/portal/Congreso/Congreso/Iniciativas?_piref73_2148295_73_1335437_1335437.next_page=/wc/servidorCGI&CMD=VERLST&CONF=BRSPUB.cnf&BASE=PU10&FMT=PUWTXLTS.fmt&DOCS="
         urlpre <- "http://www.congreso.es/portal/page/portal/Congreso/Congreso/Iniciativas?_piref73_2148295_73_1335437_1335437.next_page=/wc/servidorCGI&CMD=VERLST&CONF=BRSPUB.cnf&BASE=PU10&FMT=PUWTXLTS.fmt&DOCS="
         # Enmedio números de boletín, de 25 en 25 26-50: pag - pag+25-1, excepto el último
         #         urlpost <- "&DOCORDER=FIFO&OPDEF=Y&QUERY=%28B%29.PUBL.+%26+%28CONGRESO%29.SECC.+%26+%28D%29.ORSE."     
         urlpost <- "&DOCORDER=FIFO&OPDEF=Y&QUERY=%28D%29.PUBL.+%26+%28CONGRESO%29.SECC.+%26+%28PLENO-Y-DIPUTACI%C3%B3N-PERMANENTE%29.ORSE."
+        end <- as.integer(num+25-1)
+        med <- paste0(num, "-", ifelse(end>npubs, npubs, end))
+        return(paste0(urlpre, med, urlpost))
+}
+## Comisiones
+urlPage_c <- function(num){
+        urlpre <- "http://www.congreso.es/portal/page/portal/Congreso/Congreso/Iniciativas?_piref73_2148295_73_1335437_1335437.next_page=/wc/servidorCGI&CMD=VERLST&CONF=BRSPUB.cnf&BASE=PU10&FMT=PUWTXLTS.fmt&DOCS="
+        # Enmedio números de boletín, de 25 en 25 26-50: pag - pag+25-1, excepto el último
+        #         urlpost <- "&DOCORDER=FIFO&OPDEF=Y&QUERY=%28B%29.PUBL.+%26+%28CONGRESO%29.SECC.+%26+%28D%29.ORSE."     
+        urlpost <- "&DOCORDER=FIFO&OPDEF=Y&QUERY=%28D%29.PUBL.+%26+%28CONGRESO%29.SECC.+%26+%28COMISIONES%29.ORSE."
         end <- as.integer(num+25-1)
         med <- paste0(num, "-", ifelse(end>npubs, npubs, end))
         return(paste0(urlpre, med, urlpost))
@@ -35,6 +46,14 @@ extractlink <- function(nodo) {#nodo=bollinks[[1]]
         info$date   <- as.Date(info$datestr, "%d/%m/%Y")
         
         return(info)
+}
+
+extractComision <- function(texto){
+        comis <- "" #por defecto por si no encuentra
+        if(any(detcomis <- str_detect(string = texto, pattern = dfcomisiones$comisionbusq))){
+                comis <- dfcomisiones[detcomis, "comision"]
+        }
+        return(comis)
 }
 
 # Dada la url del boletin devuelve el árbol XML completo, uniendo distintas partes si es necesario
