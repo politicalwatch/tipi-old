@@ -32,13 +32,23 @@ Schema.UserProfile = new SimpleSchema({
         type: String,
         label: 'Twitter',
         regEx: SimpleSchema.RegEx.Url,
-        optional: true
+        optional: true,
+        autoform: {
+          afFieldInput: {
+            type: "url"
+          }
+        }
     },
     facebook: {
         type: String,
         label: 'Facebook',
         regEx: SimpleSchema.RegEx.Url,
-        optional: true
+        optional: true,
+        autoform: {
+          afFieldInput: {
+            type: "url"
+          }
+        }
     }
 });
 
