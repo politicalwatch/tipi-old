@@ -108,6 +108,11 @@ img {width: 100%; height: 100%;}
 	background-color: #000;
 }
 
+.badge-tipi {
+  background-color: #fbc239;
+  color: #222;
+}
+
 .nube {background-image: url("../images/fotomanos.jpg"); color: white; height:600px}
 .nube2{background-image: url("../images/fotomanos.jpg"); color: white; height:400px}
 .darkpatt { background: url("../images/patterns/stressed_linen.png") repeat; }

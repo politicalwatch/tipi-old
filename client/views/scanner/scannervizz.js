@@ -3,6 +3,17 @@ LatestItems = new Mongo.Collection('latest');
 StatsByDeputies = new Mongo.Collection('statsbydeputies');
 StatsByGroups = new Mongo.Collection('statsbygroups');
 
+// TODO: Moverlo a area comun
+var parliamentarygroups = {
+    'GP': 'Grupo Popular',
+    'GS': 'Grupo Socialista',
+    'GC-CiU': 'Grupo Catalán - Convergencia i Unió',
+    'GIP': 'Grupo La Izquierda Plural',
+    'GV (EAJ-PNV)': 'Grupo Vasco - EAJ PNV',
+    'GUPyD': 'Grupo Unión Progreso y Democracia',
+    'GMx': 'Grupo Mixto'
+}
+
 Template.scannervizz.helpers({
     diputados: function() {
       // Dummy data
@@ -66,11 +77,6 @@ Template.scannervizz.rendered = function() {
     diameter = 600,
     scaling = 1.3;
 
-    var color = d3.scale.linear()
-        .domain([-1, 5])
-        .range(["hsl(82,60%,100%)", "hsl(228,30%,40%)"])
-        .interpolate(d3.interpolateHcl);
-
     var pack = d3.layout.pack()
         .padding(3)
         .size([diameter - margin, diameter - margin])
@@ -112,16 +118,35 @@ Template.scannervizz.rendered = function() {
             $("#scanner-content").addClass("hidden");
             $("#scanner-help").removeClass("hidden");
         } else {
-            latestitems = LatestItems.find($("#scanner-title").text()).fetch();
-            var str = '<h3>Últimas iniciativas</h3><ul>';
-            _.each(latestitems[0].items.filter(function(_,i){ return i<3 }), function(l) {
-                if (l.titulo.length > 75) {
-                    str += '<li><a href="/t/'+l.id._str+'">'+l.titulo.substring(0,75)+'...</a></li>';
+            var str = '';
+            function sortcountfunction(a, b){
+                if (a.count >= b.count) {
+                    return -1;
                 } else {
-                    str += '<li><a href="/t/'+l.id._str+'">'+l.titulo+'</a></li>';
+                    return 1;
                 }
-            });
-            str += '</ul>';
+            }
+            sbg = StatsByGroups.findOne({_id: $("#scanner-title").text()});
+            if (sbg) {
+                str = '<h3>Grupos más activos</h3><ul class="list-unstyled">';
+                sbg.groups.sort(sortcountfunction);
+                _.each(sbg.groups.filter(function(g,i){ return ((g._id != null) && (g._id != '')) }).filter(function(g,i){ return i<3; }), function(g) {
+                    str += '<li><span class="badge badge-tipi">'+g.count+'</span> '+parliamentarygroups[g._id]+'</li>';
+                });
+                str += '</ul>';
+            }
+            latestitems = LatestItems.find($("#scanner-title").text()).fetch();
+            if (latestitems) {
+                str += '<h3>Últimas iniciativas</h3><ul>';
+                _.each(latestitems[0].items.filter(function(_,i){ return i<3 }), function(l) {
+                    if (l.titulo.length > 75) {
+                        str += '<li><a href="/t/'+l.id._str+'">'+l.titulo.substring(0,75)+'...</a></li>';
+                    } else {
+                        str += '<li><a href="/t/'+l.id._str+'">'+l.titulo+'</a></li>';
+                    }
+                });
+                str += '</ul>';
+            }
             $("#scanner-content").html(str);
             $("#scanner-content").removeClass("hidden");
             $("#scanner-help").addClass("hidden");

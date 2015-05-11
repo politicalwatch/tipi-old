@@ -89,22 +89,27 @@ if (Meteor.isServer) {
 	// Meteor.publish('tipiStatsByDeputies', function() {
 	// 	var self = this;
 	// 	pipeline = [ { $match: {is_tipi: true} }, { $group: { _id: '$autor.diputado', count: { $sum: 1 }  } } ];
-	// 	statsbydeputies = Refs.aggregate(pipeline);
+	// 	statsbydeputies = Refs.aggregate(pipeline, function() {
+	// 		//
+	// 	});
 	// 	for(i=0;i<statsbydeputies.length;i++) {
 	// 		self.added('statsbydeputies', statsbydeputies[i]._id, {count: statsbydeputies[i].count});
 	// 	}
 	// 	self.ready();
 	// });
 
-	// Meteor.publish('tipiStatsByGroups', function() {
-	// 	var self = this;
-	// 	pipeline = [ { $match: {is_tipi: true} }, { $group: { _id: '$autor.grupo', count: { $sum: 1 }  } } ];
-	// 	statsbygroups = Refs.aggregate(pipeline);
-	// 	for(i=0;i<statsbygroups.length;i++) {
-	// 		self.added('statsbygroups', statsbygroups[i]._id, {count: statsbygroups[i].count});
-	// 	}
-	// 	self.ready();
-	// });
+	Meteor.publish('tipiStatsByGroups', function() {
+		var self = this;
+		dicts = Dicts.find({dictgroup: 'tipi'}, {fields: {dict: 1}}).fetch();
+		for(i=0;i<dicts.length;i++) {
+			pipeline = [ { $match: {is_tipi: true, dicts: dicts[i].dict} }, { $group: { _id: '$autor.grupo', count: { $sum: 1 } } } ];
+			statsbygroups = Refs.aggregate(pipeline);
+			for(j=0;j<statsbygroups.length;j++) {
+				self.added('statsbygroups', dicts[i].dict, {groups: statsbygroups});
+			}
+		}
+		self.ready();
+	});
 
 	Meteor.publish('latestTipisByDicts', function() {
 		var self = this;
