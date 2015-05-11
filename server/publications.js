@@ -143,6 +143,14 @@ if (Meteor.isServer) {
 		return Meteor.users.find({ username: username }, {fields: {services: 0}});
 	});
 
+	Meteor.publish('userLatestPosts', function(username){
+		return Posts.find({ author: username }, {fields: {title: 1}, sort: {submitted: -1}, limit: 3});
+	});
+
+	Meteor.publish('userLatestComments', function(username){
+		return Comments.find({ author: username }, {fields: {body: 1, postId: 1}, sort: {submitted: -1}, limit: 3});
+	});
+
 	Meteor.publish('userListByType', function(user_type) {
 		// TODO: complete queried fields. Change collection.
 		return Tipis.find({ type: user_type }, {fields: {}});

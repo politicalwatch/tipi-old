@@ -1,11 +1,15 @@
 <template name="profile">
     <div id="profile" class="containerglob darkpatt">
         <div class="container">
-            
-                <div class="row">
-                    <div class="col-sm-6 grey darkpatt">
-                        <h1>{{username}}</h1>
-                        <hr>
+            <div class="row">
+                <div class="col-sm-12 grey darkpatt">
+                    <h1>{{userobject.username}}</h1>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-6">
+                    {{#with userobject}}
                         <h2>{{profile.firstname}} {{profile.lastname}}</h2>
                         {{#if profile.organization}}
                             <p><i class="fa fa-building-o"></i> {{profile.organization}}</p>
@@ -23,9 +27,27 @@
                             <br><br>
                             <a href="{{pathFor 'profile_edit'}}">Editar mi pefil</a>
                         {{/if}}
-                    </div>
+                    {{/with}}
                 </div>
-            
+                <div class="col-sm-6">
+                    <h3>Últimas entradas</h3>
+                    {{#if posts}}
+                        <ul class="list-unstyled">
+                            {{#each posts}}
+                                <li><a href="{{pathFor 'postPage' _id }}">"{{trimString title 0 100}}"</a></li>
+                            {{/each}}
+                        </ul>
+                    {{/if}}
+                    <h3>Últimos comentarios</h3>
+                    {{#if comments}}
+                        <ul class="list-unstyled">
+                            {{#each comments}}
+                                <li><a href="{{pathFor 'postPage' postId }}">"{{trimString body 0 100}}"</a></li>
+                            {{/each}}
+                        </ul>
+                    {{/if}}
+                </div>
+            </div>
         </div>
     </div>
 </template>
