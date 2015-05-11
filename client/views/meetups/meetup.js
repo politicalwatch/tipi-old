@@ -1,20 +1,16 @@
-Template.dict.created = function () {
-  //
+Template.event.created = function () {
+    //
 };
 
-Template.dict.helpers({
-  
-  myHelper: function () {
+Template.event.helpers({
     //
-  }
-
 });
 
-Template.dict.rendered = function () {
+Template.event.rendered = function () {
   //
 };
 
-Template.dict.events({
+Template.event.events({
 	'click #editardict': function(e, instance){
 		var item = this;
 		e.preventDefault();

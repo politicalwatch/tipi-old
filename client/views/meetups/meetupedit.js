@@ -1,18 +1,14 @@
-Template.dictedit.helpers({
+Template.eventedit.helpers({
 	wordlist: function() {
 		return this.words.sort().join("\n");
 	}
 });
 
-
-//http://www.congreso.es/portal/page/portal/Congreso/Congreso/Iniciativas?_piref73_12412194_73_1335437_1335437.next_page=/wc/servidorCGI&CMD=VERLST&BASE=IW10&FMT=INITXDSS.fmt&DOCS=1-1&DOCORDER=FIFO&OPDEF=ADJ&QUERY=%28181%2F002079*.NDOC.%29
-
-
-Template.dictedit.rendered = function () {
+Template.eventedit.rendered = function () {
   //
 };
 
-Template.dictedit.events({
+Template.eventedit.events({
 	'click #submit': function(e,a) {
 		console.log(this);
 		e.preventDefault();
