@@ -8,7 +8,6 @@ accounts-base
 accounts-password
 accounts-ui
 iron:router
-mizzao:bootstrap-3
 aldeed:collection2
 francocatena:status
 alanning:roles
@@ -34,3 +33,6 @@ dburles:collection-helpers
 mrt:mongodb-aggregation
 meteorhacks:aggregate
 yogiben:admin
+tsega:bootstrap3-datetimepicker@=3.1.3_3
+aldeed:autoform-bs-datetimepicker
+twbs:bootstrap

@@ -1,8 +1,16 @@
-Template.dicts.created = function () {
+/* ---------------------------------------------------- +/
+
+## Items ##
+
+Code related to the items template
+
+/+ ---------------------------------------------------- */
+
+Template.events.created = function () {
   //
 };
 
-Template.dicts.helpers({
+Template.events.helpers({
 	   settings: function () {
         return {
             rowsPerPage: 30,

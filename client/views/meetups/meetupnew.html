@@ -1,0 +1,23 @@
+<template name="meetupnew">
+	<div class="container">
+		{{#autoForm id="addMeetupForm" collection="Meetups" type="method" meteormethod="createMeetup"}}
+        <h2>Nuevo meetup</h2>
+        <div class="form-group">
+          {{> afFieldInput name='name' class="form-control" placeholder='Nombre'}}
+        </div>
+        <div class="form-group">
+          {{> afFieldInput name='description' class="form-control" placeholder='Descripción'}}
+        </div>
+        <div class="form-group">
+          {{> afFieldInput name='url' class="form-control" placeholder='Dirección web'}}
+        </div>
+        <div class="form-group">
+          {{> afFieldInput name='date' class="datetime form-control" placeholder='Fecha'}}
+        </div>
+        <div class="form-group">
+          {{> afFieldInput name='createdBy' type="hidden" value=currentUser.username}}
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar</button>
+      {{/autoForm}}
+	</div>
+</template>

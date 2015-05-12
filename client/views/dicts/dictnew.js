@@ -1,11 +1,3 @@
-/* ---------------------------------------------------- +/
-
-## Items ##
-
-Code related to the items template
-
-/+ ---------------------------------------------------- */
-
 Template.dictnew.helpers({
 	wordlist: function() {
 		//return this.words.sort().join("\n");

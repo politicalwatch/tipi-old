@@ -139,6 +139,20 @@ if (Meteor.isServer) {
 													limit: 100});
 	});
 
+	Meteor.publish('allMeetups', function() {
+		return Meetups.find({}, {sort: {date: -1}});
+	});
+
+	Meteor.publish('allActiveMeetups', function() {
+		// Add active mark
+		return Meetups.find({}, {sort: {date: -1}});
+	});
+
+	Meteor.publish('singleMeetup', function(id) {
+		return Meetups.find(id);
+	});
+
+
 	Meteor.publish('userInfo', function(username) {
 		return Meteor.users.find({ username: username }, {fields: {services: 0}});
 	});

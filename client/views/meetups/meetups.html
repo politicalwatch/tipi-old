@@ -1,0 +1,7 @@
+<template name="meetups">
+    <div class="container">
+        <h2>Meetups</h2>
+        <button class="btn btn-primary" id="create"><i class="fa fa-plus"></i> Añadir meetup</button> 
+        {{> reactiveTable collection=meetups settings=settings}}
+    </div>
+</template>

@@ -1,8 +1,6 @@
 AutoForm.hooks({
   editProfileForm: {
     onSubmit: function (doc) {
-        console.log(doc);
-        console.log(this);
         schemas.User.clean(doc);
         this.done();
         return false;
@@ -11,8 +9,20 @@ AutoForm.hooks({
         Router.go('profile');
     },
     onError: function(operation, error, template) {
-        flash(error, 'warning');
-        console.log(operation,error);
+        flash(error.toString(), 'warning');
+    }
+  },
+  addMeetupForm: {
+    onSubmit: function (doc) {
+        schemas.MeetupSchema.clean(doc);
+        this.done();
+        return false;
+    },
+    onSuccess:function(operation, result, template){
+        Router.go('meetups');
+    },
+    onError: function(operation, error, template) {
+        flash(error.toString(), 'warning');
     }
   }
 });

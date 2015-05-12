@@ -131,6 +131,9 @@ img {width: 100%; height: 100%;}
 #app {
 	min-height: 95vh;
 }
+#app > div {
+  padding-bottom: 40px;
+}
 
 .white-block { background-color: #fff; }
 
@@ -181,6 +184,7 @@ img {width: 100%; height: 100%;}
 .navbar-custom .nav li a:hover,
 .navbar-custom .nav li a.active,
 .navbar-custom .nav li.active,
+.navbar-custom .nav li.dropdown.open a.dropdown-toggle,
 .navbar-custom .nav li.active a {
 	outline: 0;
 	color: #222;
@@ -210,17 +214,6 @@ img {width: 100%; height: 100%;}
 .left { text-align:left; padding:30px; }
 .center{ text-align:center; padding:30px; }
 .right{ text-align:right; padding:30px; }
-
-.footer {
-	bottom: 0;
-	padding: 6px;
-	background: #000;
-	color: #eee;
-  -webkit-box-shadow: 0px -5px 10px -6px #000;
-  -moz-box-shadow: 0px -5px 10px -6px #000;
-  box-shadow: 0px -5px 10px -6px #000;
-  background-color: #000;
-}
 
 p {color: #222; font-size: 16px;}
 mark{background-color: black; color: white;text-align: right;}
@@ -703,3 +696,18 @@ li.lined:last-child {
   color: #fff;
 }
 
+/*Footer-------------------------*/
+.footer {
+  bottom: 0;
+  padding: 6px;
+  background: #000;
+  color: #eee;
+  -webkit-box-shadow: 0px -5px 10px -6px #000;
+  -moz-box-shadow: 0px -5px 10px -6px #000;
+  box-shadow: 0px -5px 10px -6px #000;
+  background-color: #000;
+}
+.footer a {
+  color: #fff;
+  padding-left: 10px;
+}
