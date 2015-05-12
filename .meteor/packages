@@ -10,7 +10,6 @@ accounts-ui
 iron:router
 mizzao:bootstrap-3
 aldeed:collection2
-houston:admin
 francocatena:status
 alanning:roles
 xolvio:md-blog
@@ -34,3 +33,4 @@ rajit:bootstrap3-datepicker
 dburles:collection-helpers
 mrt:mongodb-aggregation
 meteorhacks:aggregate
+yogiben:admin

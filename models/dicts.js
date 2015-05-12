@@ -1,12 +1,55 @@
-/* ---------------------------------------------------- +/
+Schema = {};
 
-## Items ##
+Schema.Dict = new SimpleSchema({
+    dictgroup: {
+        type: String,
+        label: 'Grupo',
+    },
+    dict: {
+        type: String,
+        label: 'Nombre',
+    },
+    slug: {
+        type: String,
+        label: 'Slug (Url corta)',
+        optional: true
+    },
+    description: {
+        type: String,
+        label: 'Descripción',
+        optional: true
+    },
+    icon1: {
+        type: String,
+        label: 'Icono1',
+        optional: true
+    },
+    icon2: {
+        type: String,
+        label: 'Icono2',
+        optional: true
+    },
+    iconb1: {
+        type: String,
+        label: 'IconoB1',
+        optional: true
+    },
+    iconb2: {
+        type: String,
+        label: 'IconoB2',
+        optional: true
+    },
+    words: {
+        type: [String],
+        label: 'Expresiones regulares',
+        optional: true
+    }
+});
 
-All code related to the Items collection goes here. 
-
-/+ ---------------------------------------------------- */
 
 Dicts = new Meteor.Collection('dicts', {idGeneration : 'MONGO'});
+
+Dicts.attachSchema(Schema.Dict);
 
 // Allow/Deny
 
