@@ -1,12 +1,42 @@
 /* ---------------------------------------------------- +/
 
-## Items ##
+## Referencias ##
 
-All code related to the Items collection goes here. 
+All code related to the Refs collection goes here. 
 
 /+ ---------------------------------------------------- */
 
+Schema = {};
+/*
+Nota: Solo ponemos los campos que queremos
+que sean propensos a ser editados
+*/
+Schema.Ref = new SimpleSchema({
+    titulo_alt: {
+        type: String,
+        label: 'Título (alternativo)',
+        optional: true
+    },
+    autor_alt: {
+        type: String,
+        label: 'Autor (alternativo)',
+        optional: true
+    },
+    is_tipi: {
+        type: Boolean,
+        label: '¿Es TIPI?',
+    },
+    dicts: {
+        type: [String],
+        label: 'Diccionarios',
+        optional: true
+    }
+});
+
+
 Refs = new Meteor.Collection('referencias', {idGeneration : 'MONGO'});
+
+Refs.attachSchema(Schema.Ref);
 
 
 /* Helpers */
