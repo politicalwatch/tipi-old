@@ -1,4 +1,6 @@
-MeetupSchema = new SimpleSchema({
+Schema = {};
+
+Schema.Meetup = new SimpleSchema({
     name: {
         type: String,
         label: 'Nombre',
@@ -28,15 +30,20 @@ MeetupSchema = new SimpleSchema({
         }
     },
     createdBy: {
-        type: String
+        type: String,
+        autoform: {
+          afFieldInput: {
+            type: "hidden"
+          }
+        }
     }
 });
 
 
 
-var Meetups = new Meteor.Collection('meetups', {idGeneration : 'MONGO'});
+Meetups = new Meteor.Collection('meetups', {idGeneration : 'MONGO'});
 
-Meetups.attachSchema(MeetupSchema);
+Meetups.attachSchema(Schema.Meetup);
 
 
 

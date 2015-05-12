@@ -9,13 +9,11 @@ AutoForm.hooks({
         Router.go('profile');
     },
     onError: function(operation, error, template) {
-        flash(error, 'warning');
+        flash(error.toString(), 'warning');
     }
   },
   addMeetupForm: {
     onSubmit: function (doc) {
-        console.log(doc);
-        console.log(this);
         schemas.MeetupSchema.clean(doc);
         this.done();
         return false;
@@ -24,7 +22,7 @@ AutoForm.hooks({
         Router.go('meetups');
     },
     onError: function(operation, error, template) {
-        flash(error, 'warning');
+        flash(error.toString(), 'warning');
     }
   }
 });

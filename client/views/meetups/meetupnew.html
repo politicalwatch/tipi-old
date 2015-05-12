@@ -14,7 +14,9 @@
         <div class="form-group">
           {{> afFieldInput name='date' class="datetime form-control" placeholder='Fecha'}}
         </div>
-        <input type="hidden" id="createdBy" name="createdBy" value="{{currentUser.username}}">
+        <div class="form-group">
+          {{> afFieldInput name='createdBy' type="hidden" value=currentUser.username}}
+        </div>
         <button type="submit" class="btn btn-primary">Enviar</button>
       {{/autoForm}}
 	</div>
