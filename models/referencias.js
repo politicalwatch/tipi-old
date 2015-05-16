@@ -12,6 +12,11 @@ Nota: Solo ponemos los campos que queremos
 que sean propensos a ser editados
 */
 Schema.Ref = new SimpleSchema({
+    titulo: {
+        type: String,
+        label: 'Título (original)',
+        optional: true
+    },
     titulo_alt: {
         type: String,
         label: 'Título (alternativo)',

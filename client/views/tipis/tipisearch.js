@@ -20,29 +20,30 @@ Template.tipisearch.helpers({
             rowsPerPage: 30,
     		showFilter: false,
             showColumnToggles: false,
-            fields: [{ key: 'ref', label: 'Referencia'},
-                                        { key: 'titulo', label: 'Titulo'},
-                                        { key: 'dicts', label: 'Diccionarios'},
-                                        { key: 'fecha', label: 'Fecha',
-                                            fn: function(val, obj) {
-                                                return moment(val).format('l');
-                                            }
-                                         },
-    									{ key: 'autor', label: 'Autor',
-                                            fn: function(value, obj) {
-                                                return obj.getAutor();
-                                            }
-                                        },
-    									{ key: 'acciones', label: 'Acciones', 
-    								       fn: function(val, obj) {
-    										 var actstr = '<a href="tipis/'+ obj._id._str + '"><span class="label label-info"><i class="fa fa-eye"></i></span></a>&nbsp;';
-    									      if (Meteor.user()) {
-    										     actstr += 
-    			'<a href="tipis/'+ obj._id._str + '/edit"><span class="label label-warning"><i class="fa fa-pencil"></i></span></a>&nbsp;';
-    										     }
-    											return Spacebars.SafeString(actstr);
-    										}}
-    									]
+            fields: [
+                { key: 'ref', label: 'Referencia'},
+                { key: 'titulo', label: 'Titulo'},
+                { key: 'dicts', label: 'Diccionarios'},
+                { key: 'fecha', label: 'Fecha',
+                    fn: function(val, obj) {
+                        return moment(val).format('l');
+                     }
+                },
+    			{ key: 'autor', label: 'Autor',
+                    fn: function(value, obj) {
+                        return obj.getAutor();
+                    }
+                },
+    			{ key: 'acciones', label: 'Acciones',
+                    fn: function(val, obj) {
+					    var actstr = '<a href="tipis/'+ obj._id._str + '"><span class="label label-info"><i class="fa fa-eye"></i></span></a>&nbsp;';
+						if (Meteor.user()) {
+                            actstr += '&nbsp;<a href=\'/admin/Refs/ObjectID(\"'+ obj._id._str + '\")/edit\'><span class="label label-warning"><i class="fa fa-pencil"></i></span></a>';
+    					}
+    					return Spacebars.SafeString(actstr);
+    				}
+                }
+    		]
         };
     }
 });
