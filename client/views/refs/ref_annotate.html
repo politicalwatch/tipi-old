@@ -3,44 +3,41 @@
         <div class="row">
             <div class="container">
                 <div class="row">
-                    {{#if currentUser}}
-                        {{#with ref}}
-                            <div class="ref well">
-                                <h3>{{bol}} - {{ref}} - {{titulo}}</h3>
-                                <hr>
-                                <p>
-                                    <strong>Terminos que aparecen:</strong>
-                                    <ul>
-                                        {{#each show_terms }}
-                                            <li>{{this}}</li>
-                                        {{/each}}
-                                    </ul>
-                                </p>
-                                <p>
-                                    <strong>Diccionarios:</strong>
-                                    <ul>
-                                        {{#each show_dicts }}
-                                            <li>{{this}}</li>
-                                        {{/each}}
-                                    </ul>
-                                </p>
-                                <!--<p>
-                                <h5>Dictionarios sugeridos:</h5>
+                    
+                    {{#with ref}}
+                        <div class="ref well">
+                            <h3>{{bol}} - {{ref}} - {{titulo}}</h3>
+                            <hr>
+                            <p>
+                                <strong>Terminos que aparecen:</strong>
                                 <ul>
-                                    {{#each dictionaries_suggested}}
+                                    {{#each show_terms }}
                                         <li>{{this}}</li>
                                     {{/each}}
                                 </ul>
-                                </p> -->
-                                <p>
-                                    <a class="btn btn-default" id="back">← Volver</a>
-                                    <a id="annotate" class="btn btn-default pull-right">Anotar</a>
-                                </p>
-                            </div>
-                        {{/with}}
-                    {{else}}
-                        <!-- Forbidden -->
-                    {{/if}}
+                            </p>
+                            <p>
+                                <strong>Diccionarios:</strong>
+                                <ul>
+                                    {{#each show_dicts }}
+                                        <li>{{this}}</li>
+                                    {{/each}}
+                                </ul>
+                            </p>
+                            <!--<p>
+                            <h5>Dictionarios sugeridos:</h5>
+                            <ul>
+                                {{#each dictionaries_suggested}}
+                                    <li>{{this}}</li>
+                                {{/each}}
+                            </ul>
+                            </p> -->
+                            <p>
+                                <a class="btn btn-default" id="back">← Volver</a>
+                                <a id="annotate" class="btn btn-default pull-right">Anotar</a>
+                            </p>
+                        </div>
+                    {{/with}}
                 </div>
             </div>
         </div>
