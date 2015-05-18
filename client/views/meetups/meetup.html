@@ -1,28 +1,16 @@
-<template name="event">
-    <div class="container">
-        <button class="btn btn-default" id="back">← Back</button>
-        {{#with dict}}
-        <div class="dict">
-                <p class="lead">
-                    {{dict}}
+<template name="meetup">
+    <div id="meetup" class="containerglob darkpatt" style="min-height: 95vh;">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1 white-text">
+                    <i class="yellow-text fa fa-calendar fa-3x"></i>
+                    <h2 class="yellow-text">{{meetup.name}}</h2>
                     <br>
-                    <span class="label label-info">{{dictgroup}}</span>
-                </p>
-                <p>{{description}}</p>
-                <hr>
-                <p>
-                    Términos:
-                    <ul>
-                    {{#each words}}
-                        <li>{{this}}</li>
-                    {{/each}}
-                    </ul>
-                </p>
-                <p>Última actualización: {{lastUpdate}}</p>
+                    <p class="white-text">{{meetup.description}}</p>
+                    <p><a href="{{meetup.url}}" target="_blank">{{meetup.url}}</a></p>
+                    <p class="grey-text">{{meetup.humanDate}}</p>
+                </div>
+            </div>
         </div>
-        {{/with}}
-        {{#if currentUser}}
-            <button class="btn btn-default" id="editardict">Editar</button> <button class="btn btn-default" id="borrardict">Borrar</button>
-        {{/if}}
     </div>
 </template>

@@ -1,23 +1,32 @@
 <template name="meetupnew">
-	<div class="container">
-		{{#autoForm id="addMeetupForm" collection="Meetups" type="method" meteormethod="createMeetup"}}
-        <h2>Nuevo meetup</h2>
-        <div class="form-group">
-          {{> afFieldInput name='name' class="form-control" placeholder='Nombre'}}
-        </div>
-        <div class="form-group">
-          {{> afFieldInput name='description' class="form-control" placeholder='Descripción'}}
-        </div>
-        <div class="form-group">
-          {{> afFieldInput name='url' class="form-control" placeholder='Dirección web'}}
-        </div>
-        <div class="form-group">
-          {{> afFieldInput name='date' class="datetime form-control" placeholder='Fecha'}}
-        </div>
-        <div class="form-group">
-          {{> afFieldInput name='createdBy' type="hidden" value=currentUser.username}}
-        </div>
-        <button type="submit" class="btn btn-primary">Enviar</button>
-      {{/autoForm}}
-	</div>
+    <div id="meetup-new" class="containerglob darkpatt" style="min-height: 95vh;">
+    	<div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <h2>Envíanos un evento</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto id nesciunt repudiandae sequi provident beatae, atque quod eligendi, totam perspiciatis accusantium fuga adipisci reprehenderit ab minus distinctio sapiente doloremque fugiat.</p>
+                </div>
+                <div class="col-sm-8">    
+            		{{#autoForm id="addMeetupForm" collection="Meetups" type="method" meteormethod="createMeetup"}}
+                        <div class="form-group">
+                          {{> afFieldInput name='name' class="form-control" placeholder='Nombre'}}
+                        </div>
+                        <div class="form-group">
+                          {{> afFieldInput name='description' class="form-control" placeholder='Descripción'}}
+                        </div>
+                        <div class="form-group">
+                          {{> afFieldInput name='url' class="form-control" placeholder='Dirección web'}}
+                        </div>
+                        <div class="form-group">
+                          {{> afFieldInput name='date' class="datetime form-control" placeholder='Fecha'}}
+                        </div>
+                        <div class="form-group">
+                          {{> afFieldInput name='createdBy' type="hidden" value=currentUser.username}}
+                        </div>
+                        <button type="submit" class="btn btn-secondary">Enviar</button>
+                    {{/autoForm}}
+                </div>
+            </div>
+    	</div>
+    </div>
 </template>

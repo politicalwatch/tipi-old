@@ -36,6 +36,10 @@ Schema.Meetup = new SimpleSchema({
             type: "hidden"
           }
         }
+    },
+    active: {
+      type: Boolean,
+      optional: true
     }
 });
 
@@ -46,18 +50,18 @@ Meetups = new Meteor.Collection('meetups', {idGeneration : 'MONGO'});
 Meetups.attachSchema(Schema.Meetup);
 
 
+Meetups.helpers({
+    humanDate: function() {
+        return moment(this.date).format('LLL');
+    }
+});
+
 
 // Allow/Deny
 
 Meetups.allow({
   insert: function(userId, meetup){
     return can.createMeetup(userId);
-  },
-  update:  function(userId, meetup, fieldNames, modifier){
-    return can.editMeetup(userId, meetup);
-  },
-  remove:  function(userId, meetup){
-    return can.removeMeetup(userId, meetup);
   }
 });
 
@@ -65,22 +69,7 @@ Meetups.allow({
 
 Meteor.methods({
   createMeetup: function(meetup){
-    console.log(meetup);
     if(can.createMeetup(Meteor.user()))
       Meetups.insert(meetup);
-  },
-  editMeetup: function(meetup){
-    if(can.editMeetup(Meteor.user())){
-      // add code here
-    } else {
-      throw new Meteor.Error(403, 'You do not have the rights to edit this item.')
-    }
-  },
-  removeMeetup: function(meetup){
-    if(can.removeMeetup(Meteor.user())){
-      Meetups.remove(meetup._id);
-    } else{
-      throw new Meteor.Error(403, 'You do not have the rights to delete this item.')
-    }
   }
 });

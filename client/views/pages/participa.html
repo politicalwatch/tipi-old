@@ -30,6 +30,14 @@
                 <a href="{{pathFor 'newPosts'}}">Últimas conversaciones</a>
                 <br>
                 <a href="{{pathFor 'bestPosts'}}">Conversaciones más valoradas</a>
+                <br>
+                <hr>
+                <br>
+                {{#if currentUser}}
+                    <a href="{{pathFor 'meetupnew'}}" class="btn btn-secondary"><i class="fa fa-calendar"></i> Envía un evento</a>
+                {{/if}}
+                <br><br>
+                <a href="{{pathFor 'meetups'}}">Últimos eventos</a>
             </div>
         </div>
       </div>

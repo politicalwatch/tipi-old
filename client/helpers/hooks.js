@@ -6,6 +6,7 @@ AutoForm.hooks({
         return false;
     },
     onSuccess:function(operation, result, template){
+        flash('Perfil actualizado', 'success');
         Router.go('profile');
     },
     onError: function(operation, error, template) {
@@ -19,6 +20,7 @@ AutoForm.hooks({
         return false;
     },
     onSuccess:function(operation, result, template){
+        flash('Evento enviado correctamente', 'success');
         Router.go('meetups');
     },
     onError: function(operation, error, template) {

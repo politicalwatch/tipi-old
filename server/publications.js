@@ -140,12 +140,12 @@ if (Meteor.isServer) {
 	});
 
 	Meteor.publish('allMeetups', function() {
-		return Meetups.find({}, {sort: {date: -1}});
+		return Meetups.find({}, {sort: {date: 1}});
 	});
 
 	Meteor.publish('allActiveMeetups', function() {
 		// Add active mark
-		return Meetups.find({}, {sort: {date: -1}});
+		return Meetups.find({active: true}, {sort: {date: 1}});
 	});
 
 	Meteor.publish('singleMeetup', function(id) {
