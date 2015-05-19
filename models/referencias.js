@@ -39,7 +39,7 @@ Schema.Ref = new SimpleSchema({
 });
 
 
-Refs = new Meteor.Collection('referencias', {idGeneration : 'MONGO'});
+Refs = new Meteor.Collection('referencias');
 
 Refs.attachSchema(Schema.Ref);
 

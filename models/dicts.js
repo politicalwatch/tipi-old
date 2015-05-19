@@ -47,7 +47,7 @@ Schema.Dict = new SimpleSchema({
 });
 
 
-Dicts = new Meteor.Collection('dicts', {idGeneration : 'MONGO'});
+Dicts = new Meteor.Collection('dicts');
 
 Dicts.attachSchema(Schema.Dict);
 

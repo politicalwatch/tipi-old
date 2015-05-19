@@ -6,7 +6,7 @@ All code related to the Items collection goes here.
 
 /+ ---------------------------------------------------- */
 
-Tipis = new Meteor.Collection('tipis', {idGeneration : 'MONGO'});
+Tipis = new Meteor.Collection('tipis');
 
 // Allow/Deny
 
