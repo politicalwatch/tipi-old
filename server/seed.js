@@ -10,7 +10,7 @@ Fill in the app with dummy data if database is empty.
 
 
 /* Microscope: Data Fixtures */
-/*if (Posts.find().count() === 0) {
+if (Posts.find().count() === 0) {
   var now = new Date().getTime();
   
   // create two users
@@ -80,7 +80,7 @@ Fill in the app with dummy data if database is empty.
       upvoters: [], votes: 0
     });
   }
-}*/
+}
 
 
 
