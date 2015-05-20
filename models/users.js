@@ -83,6 +83,11 @@ Schema.User = new SimpleSchema({
     roles: {
         type: [String],
         optional: true
+    },
+    status: {
+        type: Object,
+        optional: true,
+        blackbox: true
     }
 });
 
