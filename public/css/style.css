@@ -668,7 +668,7 @@ li.lined:last-child {
 /*Topics----------------------------*/
 #topics .dictionary-block {
   text-align: center;
-  min-height: 200px;
+  min-height: 400px;
 }
 #topics h2 {
   color: #fff;
