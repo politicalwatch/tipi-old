@@ -8,82 +8,6 @@ Fill in the app with dummy data if database is empty.
 
 // Insert fixture data here
 
-
-/* Microscope: Data Fixtures */
-if (Posts.find().count() === 0) {
-  var now = new Date().getTime();
-  
-  // create two users
-  var tomId = Meteor.users.insert({
-    profile: { name: 'Tom Coleman' }
-  });
-  var tom = Meteor.users.findOne(tomId);
-  var sachaId = Meteor.users.insert({
-    profile: { name: 'Sacha Greif' }
-  });
-  var sacha = Meteor.users.findOne(sachaId);
-  
-  var telescopeId = Posts.insert({
-    title: 'Introducing Telescope',
-    userId: sacha._id,
-    author: sacha.profile.name,
-    url: 'http://sachagreif.com/introducing-telescope/',
-    submitted: new Date(now - 7 * 3600 * 1000),
-    commentsCount: 2,
-    upvoters: [], votes: 0
-  });
-  
-  Comments.insert({
-    postId: telescopeId,
-    userId: tom._id,
-    author: tom.profile.name,
-    submitted: new Date(now - 5 * 3600 * 1000),
-    body: 'Interesting project Sacha, can I get involved?'
-  });
-  
-  Comments.insert({
-    postId: telescopeId,
-    userId: sacha._id,
-    author: sacha.profile.name,
-    submitted: new Date(now - 3 * 3600 * 1000),
-    body: 'You sure can Tom!'
-  });
-  
-  Posts.insert({
-    title: 'Meteor',
-    userId: tom._id,
-    author: tom.profile.name,
-    url: 'http://meteor.com',
-    submitted: new Date(now - 10 * 3600 * 1000),
-    commentsCount: 0,
-    upvoters: [], votes: 0
-  });
-  
-  Posts.insert({
-    title: 'The Meteor Book',
-    userId: tom._id,
-    author: tom.profile.name,
-    url: 'http://themeteorbook.com',
-    submitted: new Date(now - 12 * 3600 * 1000),
-    commentsCount: 0,
-    upvoters: [], votes: 0
-  });
-  
-  for (var i = 0; i < 10; i++) {
-    Posts.insert({
-      title: 'Test post #' + i,
-      author: sacha.profile.name,
-      userId: sacha._id,
-      url: 'http://google.com/?q=test-' + i,
-      submitted: new Date(now - i * 3600 * 1000 + 1),
-      commentsCount: 0,
-      upvoters: [], votes: 0
-    });
-  }
-}
-
-
-
 /* Dictionaries: Data Fixtures */
 
 if (Dicts.find().count() === 0) {
@@ -93,7 +17,7 @@ if (Dicts.find().count() === 0) {
         dictgroup: 'tipi',
         dict: 'sanidad',
         slug: 'sanidad',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet perspiciatis dolore veniam odio? Consectetur, commodi nostrum repellendus labore officiis a in velit distinctio. Voluptate, sed, obcaecati. Ex assumenda minima eligendi!',
+        description: 'El acceso a una sanidad pública y universal y de calidad es un requisito indispensable para la dignidad de las personas y es un factor esencial para garantizar la equidad y evitar la exclusión social de las personas y colectivos que viven en situación de especial vulnerabilidad. ',
         icon1: 'sanidad-01.svg',
         icon2: 'sanidad-02.svg',
         iconb1: 'sanidad-01.svg',
@@ -197,7 +121,7 @@ if (Dicts.find().count() === 0) {
         dictgroup: 'tipi',
         dict: 'educación',
         slug: 'educacion',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet perspiciatis dolore veniam odio? Consectetur, commodi nostrum repellendus labore officiis a in velit distinctio. Voluptate, sed, obcaecati. Ex assumenda minima eligendi!',
+        description: 'La educación es un factor que incide de forma determinante en la situación de vulnerabilidad en la que se encuentran muchas familias en España y en sus posibilidades de superarla. Una educación pública equitativa inclusiva y de calidad es esencial para acabar con las desigualdades sociales.',
         icon1: 'educacion-01.svg',
         icon2: 'educacion-02.svg',
         iconb1: 'educacion-01.svg',
@@ -271,7 +195,7 @@ if (Dicts.find().count() === 0) {
         dictgroup: 'tipi',
         dict: 'vivienda',
         slug: 'vivienda',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet perspiciatis dolore veniam odio? Consectetur, commodi nostrum repellendus labore officiis a in velit distinctio. Voluptate, sed, obcaecati. Ex assumenda minima eligendi!',
+        description: 'El acceso a una vivienda es una necesidad básica imprescindible para vivir con dignidad y seguridad. La ausencia de ésta afecta al desarrollo pleno de los derechos de las personas y las necesidades de las familias.',
         icon1: 'vivienda-01.svg',
         icon2: 'vivienda-02.svg',
         iconb1: 'vivienda-01.svg',
@@ -374,7 +298,7 @@ if (Dicts.find().count() === 0) {
         dictgroup: 'tipi',
         dict: 'renta',
         slug: 'renta',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet perspiciatis dolore veniam odio? Consectetur, commodi nostrum repellendus labore officiis a in velit distinctio. Voluptate, sed, obcaecati. Ex assumenda minima eligendi!',
+        description: 'Un sistema de prestaciones económicas dignas y adecuadas a las necesidades de las personas y las familias que garantice un nivel mínimo de renta en el acceso a bienes y servicios elementales es una piedra angular para la lucha contra la pobreza y la exclusión.',
         icon1: 'renta-01.svg',
         icon2: 'renta-02.svg',
         iconb1: 'renta-01.svg',
@@ -433,7 +357,7 @@ if (Dicts.find().count() === 0) {
         dictgroup: 'tipi',
         dict: 'empleo',
         slug: 'empleo',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet perspiciatis dolore veniam odio? Consectetur, commodi nostrum repellendus labore officiis a in velit distinctio. Voluptate, sed, obcaecati. Ex assumenda minima eligendi!',
+        description: 'El trabajo siempre han sido un elemento crucial para la cohesión y la inclusión social, pero hoy tener empleo o no tenerlo ya no es el único elemento diferencial entre la inclusión y la exclusión. La precariedad en el empleo genera, igualmente, exclusión y pobreza.',
         icon1: 'empleo-01.svg',
         icon2: 'empleo-02.svg',
         iconb1: 'empleo-01.svg',
@@ -565,7 +489,7 @@ if (Dicts.find().count() === 0) {
         dictgroup: 'tipi',
         dict: 'infancia',
         slug: 'infancia',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet perspiciatis dolore veniam odio? Consectetur, commodi nostrum repellendus labore officiis a in velit distinctio. Voluptate, sed, obcaecati. Ex assumenda minima eligendi!',
+        description: 'Todo compromiso de reducción de la pobreza y de promoción y defensa de los derechos de la infancia debe tener en cuenta la educación, salud y alimentación, así como otras actividades que fomenten su desarrollo pleno y el de sus familias.',
         icon1: 'infancia-01.svg',
         icon2: 'infancia-02.svg',
         iconb1: 'infancia-01.svg',
@@ -823,7 +747,7 @@ if (Dicts.find().count() === 0) {
         dictgroup: 'tipi',
         dict: 'inmigración y extranjería',
         slug: 'inmigracion-y-extranjeria',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet perspiciatis dolore veniam odio? Consectetur, commodi nostrum repellendus labore officiis a in velit distinctio. Voluptate, sed, obcaecati. Ex assumenda minima eligendi!',
+        description: 'La intensidad de los flujos migratorios se ha acelerado en la última década y se utilizan vías cada vez más peligrosas. Atajar la vulneración de los derechos fundamentales de las personas migrantes en nuestro país es imprescindible para evitar que se encuentren en situación de exclusión social en España. Realidades como los CIE o las redadas policiales por perfil racial vulneran el derecho a migrar.',
         icon1: 'extranjera-01.svg',
         icon2: 'extranjera-02.svg',
         iconb1: 'extranjera-01.svg',
@@ -929,7 +853,7 @@ if (Dicts.find().count() === 0) {
         dictgroup: 'tipi',
         dict: 'personas sin hogar',
         slug: 'personas-sin-hogar',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet perspiciatis dolore veniam odio? Consectetur, commodi nostrum repellendus labore officiis a in velit distinctio. Voluptate, sed, obcaecati. Ex assumenda minima eligendi!',
+        description: 'Las personas sin hogar se encuentran en una situación extrema de vulnerabilidad y exclusión social. Estas personas están en un proceso de pérdida del nicho social, afectivo y personal que afecta directamente a su desarrollo humano y requiere de políticas específicas para reducir su situación de vulnerabilidad.',
         icon1: 'sintecho-01.svg',
         icon2: 'sintecho-02.svg',
         iconb1: 'sintecho-01.svg',
@@ -1027,16 +951,16 @@ if (Dicts.find().count() === 0) {
         ],
         lastUpdate: now,
     });
-    // discapacidad diversidad funcional
+    // diversidad funcional
     Dicts.insert({
         dictgroup: 'tipi',
-        dict: 'discapacidad diversidad funcional',
-        slug: 'discapacidad-diversidad-funcional',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet perspiciatis dolore veniam odio? Consectetur, commodi nostrum repellendus labore officiis a in velit distinctio. Voluptate, sed, obcaecati. Ex assumenda minima eligendi!',
-        icon1: 'discapacidad-01.svg',
-        icon2: 'discapacidad-02.svg',
-        iconb1: 'discapacidad-01.svg',
-        iconb2: 'discapacidad-02.svg',
+        dict: 'diversidad funcional',
+        slug: 'diversidad-funcional',
+        description: 'Las personas con discapacidad o diversidad funcional constituyen uno de los grupos con mayor discriminación en cuanto a accesibilidad, empleo, educación e igualdad de derechos, siendo una prioridad para cualquier estrategia de inclusión de colectivos vulnerables.',
+        icon1: 'diversidad-01.svg',
+        icon2: 'diversidad-02.svg',
+        iconb1: 'diversidad-01.svg',
+        iconb2: 'diversidad-02.svg',
         words: [
             'Atención.*domicil',
             'Atención.*\bdependencia\b',
@@ -1082,14 +1006,14 @@ if (Dicts.find().count() === 0) {
         dictgroup: 'tipi',
         dict: 'mayores',
         slug: 'mayores',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet perspiciatis dolore veniam odio? Consectetur, commodi nostrum repellendus labore officiis a in velit distinctio. Voluptate, sed, obcaecati. Ex assumenda minima eligendi!',
+        description: 'La atención a la salud física y mental de las personas mayores y sus vínculos afectivos hacen que mejore su calidad de vida, enriqueciendo al mismo tiempo al conjunto de la sociedad. Las  prestaciones por parte de las Administraciones Públicas son esenciales para el desarrollo de estas medidas.',
         icon1: 'mayores-01.svg',
         icon2: 'mayores-02.svg',
         iconb1: 'mayores-01.svg',
         iconb2: 'mayores-02.svg',
         words: [
             'Abuel.*golondrina',
-            'Residencia.*mayor.*violencia de gŽnero',
+            'Residencia.*mayor.*violencia de género',
             'Aislamiento.*anciano',
             'Aislamiento.*persona mayor',
             'Aislamiento.*tercera edad',
@@ -1194,7 +1118,7 @@ if (Dicts.find().count() === 0) {
         dictgroup: 'tipi',
         dict: 'dependencia',
         slug: 'dependencia',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet perspiciatis dolore veniam odio? Consectetur, commodi nostrum repellendus labore officiis a in velit distinctio. Voluptate, sed, obcaecati. Ex assumenda minima eligendi!',
+        description: 'Garantizar los derechos de las personas que, por razones derivadas de la edad, la enfermedad o la discapacidad, precisan de atención para realizar las actividades básicas de la vida diaria es imprescindible para evitar el riesgo de exclusión social.',
         icon1: 'dependencia-01.svg',
         icon2: 'dependencia-02.svg',
         iconb1: 'dependencia-01.svg',
@@ -1245,12 +1169,12 @@ if (Dicts.find().count() === 0) {
         ],
         lastUpdate: now,
     });
-    // víctimas de violencia de género
+    // violencia de género
     Dicts.insert({
         dictgroup: 'tipi',
-        dict: 'víctimas de violencia de género',
-        slug: 'victimas-de-violencia-de-genero',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet perspiciatis dolore veniam odio? Consectetur, commodi nostrum repellendus labore officiis a in velit distinctio. Voluptate, sed, obcaecati. Ex assumenda minima eligendi!',
+        dict: 'violencia de género',
+        slug: 'violencia-de-genero',
+        description: 'La violencia de género, ejercida en su mayoría contra las mujeres, es fruto de la situación de subordinación a la que la sociedad relega a la mujer, siendo la mayor desigualdad en cifras de la actualidad. Es necesario proteger los derechos de las víctimas de violencia de género, especialmente de mujeres y menores para alcanzar el desarrollo pleno de todas las personas pertenecientes a la sociedad.',
         icon1: 'genero-01.svg',
         icon2: 'genero-02.svg',
         iconb1: 'genero-01.svg',
@@ -1317,7 +1241,7 @@ if (Dicts.find().count() === 0) {
         dictgroup: 'tipi',
         dict: 'población gitana',
         slug: 'poblacion-gitana',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet perspiciatis dolore veniam odio? Consectetur, commodi nostrum repellendus labore officiis a in velit distinctio. Voluptate, sed, obcaecati. Ex assumenda minima eligendi!',
+        description: 'La discriminación de la comunidad gitana, afectada por el rechazo, la marginación y/o la privación material, afecta a la garantía de sus derechos más fundamentales. Para reducir la brecha de la desigualdad se deben abordar sus necesidades específicas.',
         icon1: 'gitana-01.svg',
         icon2: 'gitana-02.svg',
         iconb1: 'gitana-01.svg',
@@ -1444,13 +1368,13 @@ if (Dicts.find().count() === 0) {
     // drogodependencia y conductas adictivas
     Dicts.insert({
         dictgroup: 'tipi',
-        dict: 'drogodependencia y conductas adictivas',
-        slug: 'drogodependencia-y-conductas-adictivas',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet perspiciatis dolore veniam odio? Consectetur, commodi nostrum repellendus labore officiis a in velit distinctio. Voluptate, sed, obcaecati. Ex assumenda minima eligendi!',
-        icon1: 'drogadiccion-01.svg',
-        icon2: 'drogadiccion-02.svg',
-        iconb1: 'drogadiccion-01.svg',
-        iconb2: 'drogadiccion-02.svg',
+        dict: 'conductas adictivas',
+        slug: 'conductas-adictivas',
+        description: 'Las personas en situación de drogodependencia, ludopatía u otras conductas adictivas se encuentran habitualmente en riesgo de exclusión social por lo que las medidas de atención, de inserción en la sociedad y de fomento de sus capacidades reducen su situación de vulnerabilidad y fomentan su dignidad como personas.',
+        icon1: 'adictivas-01.svg',
+        icon2: 'adictivas-02.svg',
+        iconb1: 'adictivas-01.svg',
+        iconb2: 'adictivas-02.svg',
         words: [
             'Acción.*Europea.*Droga ',
             'Adic.*nueva.*tecnología',
@@ -1550,7 +1474,7 @@ if (Dicts.find().count() === 0) {
         dictgroup: 'tipi',
         dict: 'población reclusa',
         slug: 'poblacion-reclusa',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet perspiciatis dolore veniam odio? Consectetur, commodi nostrum repellendus labore officiis a in velit distinctio. Voluptate, sed, obcaecati. Ex assumenda minima eligendi!',
+        description: 'La Institución Penitenciaria en España está orientada a la reeducación y la reinserción social. No obstante, las problemáticas propias y otras asociadas a este colectivo hacen que estas personas se encuentren en una situación de especial vulnerablilidad en cuanto a su inclusión y bienestar social.',
         icon1: 'reclusa-01.svg',
         icon2: 'reclusa-02.svg',
         iconb1: 'reclusa-01.svg',
