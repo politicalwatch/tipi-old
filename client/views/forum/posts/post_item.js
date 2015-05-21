@@ -7,6 +7,10 @@ Template.postItem.helpers({
     a.href = this.url;
     return a.hostname;
   },
+  topics: function() {
+    p = Posts.find({}, {fields: {topics: 1}}).fetch();
+    return p[0].topics;
+  },
   upvotedClass: function() {
     var userId = Meteor.userId();
     if (userId && !_.include(this.upvoters, userId)) {

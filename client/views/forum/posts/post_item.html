@@ -3,11 +3,14 @@
     <a href="#" class="upvote btn {{upvotedClass}}">⬆</a>
     <div class="post-content">
       <h3><a class="inverse" href="{{url}}">{{title}}</a> <small>{{domain}}</small></h3>
+      {{#each topics}}
+        <span class="label label-tipi">{{this}}</span>
+      {{/each}}
       <p>
-        {{pluralize votes "Vote"}}, submitted by {{author}}
-        {{#if ownPost}}<a class="inverse" href="{{pathFor 'postEdit'}}">Edit</a>{{/if}}
+        {{pluralize votes "Voto"}}, creada por {{author}}
+        {{#if ownPost}}<!-- add something here -->{{/if}}
       </p>
     </div>
-    <a href="{{pathFor 'postPage'}}" class="discuss inverse"><i class="fa fa-comments"></i> {{pluralize commentsCount "comment"}}</a>
+    <a href="{{pathFor 'postPage'}}" class="discuss inverse"><i class="fa fa-comments"></i> {{pluralize commentsCount "comentario"}}</a>
   </div>
 </template>

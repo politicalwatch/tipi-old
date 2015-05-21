@@ -8,16 +8,20 @@ Template.forumAdd.helpers({
   },
   errorClass: function (field) {
     return !!Session.get('postSubmitErrors')[field] ? 'has-error' : '';
+  },
+  getGetElements: function() {
+    console.log(this);
   }
 });
 
 Template.forumAdd.events({
   'submit form': function(e) {
     e.preventDefault();
-    
+
     var post = {
       url: $(e.target).find('[name=url]').val(),
-      title: $(e.target).find('[name=title]').val()
+      title: $(e.target).find('[name=title]').val(),
+      topics: $('#topics').val()
     };
     
     var errors = validatePost(post);

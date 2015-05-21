@@ -21,6 +21,11 @@ if (Meteor.isServer) {
 	  return Posts.find(id);
 	});
 
+	Meteor.publish('singlePostByUrl', function(url) {
+	  check(url, String);
+	  return Posts.find({url: url});
+	});
+
 
 	Meteor.publish('comments', function(postId) {
 	  check(postId, String);
