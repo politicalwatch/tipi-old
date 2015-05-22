@@ -2,7 +2,7 @@ options(stringsAsFactors=FALSE)
 
 GENERATED_BASE_DIR <- "gendir/"
 
-ERROR_LOG_FILE <- "/home/razieliyo/Rtipi_error.log"
+ERROR_LOG_BASE_DIR <- "/home/razieliyo/"
 
 check_in_sublists_index <- function(list2d, to_check) {
 	if( length(list2d) > 0 ) {
@@ -22,7 +22,6 @@ check_in_mongo <- function(json_query) {
 }
 
 write_error_log <- function(model, element, error) {
-	file <- file(ERROR_LOG_FILE)
-	write(c(model, toString(element), error, "\n\n"), file=ERROR_LOG_FILE, append=TRUE) #c(model, "\n", element, "\n", error), file )
-	close(file)
+	outfile = paste0(ERROR_LOG_BASE_DIR, "Rtipi_errors_", model, ".log", sep="")
+	write(c(model, toString(element), error, "\n\n"), file=outfile, append=TRUE) #c(model, "\n", element, "\n", error), file )
 }
