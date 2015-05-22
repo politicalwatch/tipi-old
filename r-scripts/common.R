@@ -21,8 +21,8 @@ check_in_mongo <- function(json_query) {
 	return(mongo.cursor.next(a))
 }
 
-write_error_log <- function(error) {
+write_error_log <- function(model, element, error) {
 	file <- file(ERROR_LOG_FILE)
-	writeLines(error, file)
+	write(c(model, toString(element), error, "\n\n"), file=ERROR_LOG_FILE, append=TRUE) #c(model, "\n", element, "\n", error), file )
 	close(file)
 }
