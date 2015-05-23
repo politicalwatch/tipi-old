@@ -59,6 +59,7 @@ for(i in 1:length(proy_listA)){
                                         lcont1$bol <- bol_listA[[d]]$codigo
                                         lcont1$url <- bol_listA[[d]]$url
                                         print(paste("falla el boletin:", bol_listA[[d]]$codigo))
+										write_error_log("serieA", bol_listA[[d]], "procesamiento erróneo")
                                         next()
                                 }
                                 #boletin procesado, enviar a MongoDB
@@ -116,6 +117,7 @@ for(i in 1:length(proy_listA)){
                                         lcont$bol <- bol_listA[[d]]$codigo
                                         lcont$url <- bol_listA[[d]]$url
                                         print(paste("falla el boletin:", bol_listA[[d]]$codigo))
+										write_error_log("serieA", bol_listA[[d]], "procesamiento erróneo")
                                         next()
                                 }
                                 #boletin procesado, enviar a MongoDB
@@ -138,6 +140,7 @@ for(i in 1:length(proy_listA)){
                                 #Primera vez.
                                 lcont2 <- try(proc_serieA(lines, codigo = bol_listA[[d]]$codigo, tramite = bol_listA[[d]]$tramite))
                                 if(class(lcont2) == "try-error"){#procesamiento erróneo
+										write_error_log("serieA", bol_listA[[d]], "procesamiento erróneo")
                                         next()
                                 }
                                 lcont2$bol <- list("bol"=lcont2$bol)
@@ -149,6 +152,7 @@ for(i in 1:length(proy_listA)){
                         if(count > 0){
                                 ltmp <- try(proc_serieA(lines, codigo = bol_listA[[d]]$codigo, tramite = bol_listA[[d]]$tramite))
                                 if(class(ltmp) == "try-error"){#procesamiento erróneo
+										write_error_log("serieA", bol_listA[[d]], "procesamiento erróneo")
                                         next()
                                 }
                                 #Añadir url

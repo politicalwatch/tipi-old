@@ -90,6 +90,7 @@ for(i in 1:length(listos_mongo)){ #i=630
 				#Añadir url
                                 lcont$url <- paste0("http://www.congreso.es", abl[num, "url"]) 
 				print(paste("falla el boletin:", num))
+				write_error_log("serieD", abl[num], "procesamiento erróneo")
 				next()
 			} else {
 				lcont <- resul

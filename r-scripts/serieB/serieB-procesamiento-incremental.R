@@ -73,6 +73,7 @@ for(i in 1:length(proy_listB)){#i=1 #for(i in 1:length(proy_listB))
 			                lcont1$bol <- bol_listB[[d]]$codigo
 			                lcont1$url <- bol_listB[[d]]$url
 			                print(paste("falla el boletin:", bol_listB[[d]]$codigo))
+							write_error_log("serieB", bol_listB[[d]], "procesamiento erróneo")
 			                next()
 			        }
 			        #boletin procesado, enviar a MongoDB
@@ -130,6 +131,7 @@ for(i in 1:length(proy_listB)){#i=1 #for(i in 1:length(proy_listB))
 			                lcont$bol <- bol_listB[[d]]$codigo
 			                lcont$url <- bol_listB[[d]]$url
 			                print(paste("falla el boletin:", bol_listB[[d]]$codigo))
+							write_error_log("serieB", bol_listB[[d]], "procesamiento erróneo")
 			                next()
 			        }
 			        #boletin procesado, enviar a MongoDB
@@ -153,6 +155,7 @@ for(i in 1:length(proy_listB)){#i=1 #for(i in 1:length(proy_listB))
 			        #Primera vez que se envía un boletín del tercer grupo.
 			        lcont2 <- try(proc_serieB(lines, codigo = bol_listB[[d]]$codigo, tramite = bol_listB[[d]]$tramite))
 			        if(class(lcont2) == "try-error"){#procesamiento erróneo
+							write_error_log("serieB", bol_listB[[d]], "procesamiento erróneo")
 			                next()
 			        }
 			        #tratar campo autor.
@@ -172,6 +175,7 @@ for(i in 1:length(proy_listB)){#i=1 #for(i in 1:length(proy_listB))
 			if(count > 0){#unir todas, si hay más de una.
 			        ltmp <- try(proc_serieB(lines, codigo = bol_listB[[d]]$codigo, tramite = bol_listB[[d]]$tramite))
 			        if(class(ltmp) == "try-error"){#procesamiento erróneo
+							write_error_log("serieB", bol_listB[[d]], "procesamiento erróneo")
 			                next()
 			        }
 			        #Añadir url

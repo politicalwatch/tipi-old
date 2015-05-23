@@ -84,6 +84,7 @@ for(i in 1:length(listos_mongo)){ #i=8 #i in 1:length(listos_mongo)
                                 lcont$url <- paste0("http://www.congreso.es", abl[num, "url"]) 
                                 print(paste("falla el boletin:", num))
                                 next()
+								write_error_log("DS-Pleno", paste0("boletin numero ",num), "procesamiento erróneo")
                         } else {
                                 lcont <- resul
                         }
