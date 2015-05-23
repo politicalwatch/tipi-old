@@ -37,7 +37,7 @@ Template.tipisearch.helpers({
     			{ key: 'acciones', label: 'Acciones',
                     fn: function(val, obj) {
 					    var actstr = '<a href="tipis/'+ obj._id._str + '"><span class="label label-info"><i class="fa fa-eye"></i></span></a>&nbsp;';
-						if (Meteor.user()) {
+						if (Roles.userIsInRole(Meteor.user(), ["admin"])) {
                             actstr += '&nbsp;<a href=\'/admin/Refs/ObjectID(\"'+ obj._id._str + '\")/edit\'><span class="label label-warning"><i class="fa fa-pencil"></i></span></a>';
     					}
     					return Spacebars.SafeString(actstr);

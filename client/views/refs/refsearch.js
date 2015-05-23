@@ -42,10 +42,12 @@ Template.refsearch.helpers({
 				{ key: 'acciones', label: 'Acciones', 
 					fn: function(val, obj) {
 				 		actstr = '';
-						actstr += '<a href="refs/'+ obj._id._str + '"><span class="label label-info"><i class="fa fa-eye"></i></span></a>';
+	  					actstr += '<a href="refs/'+ obj._id._str + '"><span class="label label-info"><i class="fa fa-eye"></i></span></a>';
 						actstr += '&nbsp;<a href="refs/'+ obj._id._str + '/annotate"><span class="label label-info"><i class="fa fa-tag"></i></span></a>';
 						actstr += '&nbsp;<a href="http://www.congreso.es/portal/page/portal/Congreso/Congreso/Iniciativas?_piref73_2148295_73_1335437_1335437.next_page=/wc/servidorCGI&CMD=VERLST&BASE=IW10&PIECE=IWD0&FMT=INITXD1S.fmt&FORM1=INITXLUS.fmt&DOCS=1-1&QUERY=%28I%29.ACIN1.+%26+%28' + encodeURIComponent(obj.ref) + '%29.ALL." target="_blank"><span class="label label-info"><i class="fa fa-institution"></i></span>';
-						actstr += '&nbsp;<a href=\'/admin/Refs/ObjectID(\"'+ obj._id._str + '\")/edit\'><span class="label label-warning"><i class="fa fa-pencil"></i></span></a>';
+						if (Roles.userIsInRole(Meteor.user(), ["admin"])) {
+							actstr += '&nbsp;<a href=\'/admin/Refs/ObjectID(\"'+ obj._id._str + '\")/edit\'><span class="label label-warning"><i class="fa fa-pencil"></i></span></a>';
+						}
 						return Spacebars.SafeString(actstr);
 					}
 				}

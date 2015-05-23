@@ -1,14 +1,22 @@
 /* ---------------------------------------------------- +/
 
-## Fixtures ##
-
-Fill in the app with dummy data if database is empty.
+Fill in the app with initial data if database is empty.
 
 /+ ---------------------------------------------------- */
 
-// Insert fixture data here
+/*
+Roles that must appear into the db
+    admin
+    manager
+    mdblog-author
+    deputy
+    organization
+*/
 
-/* Dictionaries: Data Fixtures */
+// Insert initial data here
+
+
+/* Dictionaries: Initial Data (if not exists) */
 
 if (Dicts.find().count() === 0) {
     var now = new Date().getTime();
