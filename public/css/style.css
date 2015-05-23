@@ -719,7 +719,7 @@ li.lined:last-child {
    height: 100%;
    text-align:center;
    z-index: 200;
-   background-color: #222;
+   background: url("../images/patterns/stressed_linen.png") repeat;
 }
 #overlay div {
    margin: 100px auto;
