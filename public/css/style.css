@@ -95,6 +95,9 @@ a:hover {text-decoration: underline;}
 a.inverse, a.inverse:link, a.inverse:visited {color: #222;}
 a.inverse:hover {text-decoration: underline;}
 a.btn { text-decoration: none; }
+a.btn-voted { background-color: transparent; color: #222; }
+a.btn-voted:link, a.btn-voted:hover, a.btn-voted:visited { background-color: transparent; color: #222; }
+a.disabled { cursor: default; }
 img {width: 100%; height: 100%;}
 .btn {background: black; color: white; border-color: none;}
 .btn h5 {font-family: 'Lato';}

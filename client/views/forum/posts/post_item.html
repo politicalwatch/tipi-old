@@ -2,7 +2,7 @@
   <div class="post">
     <a href="#" class="upvote btn {{upvotedClass}}">⬆</a>
     <div class="post-content">
-      <h3><a class="inverse" href="{{url}}">{{title}}</a> <small>{{domain}}</small></h3>
+      <h3><a class="inverse" href="{{pathFor 'postPage' _id=this._id}}">{{title}}</a> <small><a href="{{url}}" class="inverse">Ir al contenido</a></small></h3>
       {{#each topics}}
         <span class="label label-tipi">{{this}}</span>
       {{/each}}
@@ -11,6 +11,6 @@
         {{#if ownPost}}<!-- add something here -->{{/if}}
       </p>
     </div>
-    <a href="{{pathFor 'postPage'}}" class="discuss inverse"><i class="fa fa-comments"></i> {{pluralize commentsCount "comentario"}}</a>
+    <a href="{{pathFor 'postPage' _id=this._id}}" class="discuss inverse"><i class="fa fa-comments"></i> {{pluralize commentsCount "comentario"}}</a>
   </div>
 </template>
