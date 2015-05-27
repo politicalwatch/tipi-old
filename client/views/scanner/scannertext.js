@@ -12,7 +12,7 @@ Template.scannertext.helpers({
         return Session.get("scannerText");
     },
     count: function() {
-        if (this.count >= 100) flash("Se han encontrado más de 100 iniciativas.", "info");
+        if (this.count >= 100) flash("Se han encontrado más de 20 iniciativas.", "info");
         else if (this.count == 0) flash("No se han encontrado iniciativas que cumplan los criterios.", "info");
     },
     settings: function () {
@@ -20,27 +20,20 @@ Template.scannertext.helpers({
             rowsPerPage: 30,
             showFilter: false,
             showColumnToggles: false,
-            fields: [{ key: 'titulo', label: 'Titulo', headerClass: 'col-md-6',
+            fields: [{ key: 'titulo', label: 'Titulo', headerClass: 'col-md-7',
                                             fn: function(val, obj) {
                                                 return Spacebars.SafeString('<a href="/t/'+ obj._id._str + '">'+val+'</a>');
                                             }
                                         },
-                                        { key: 'fecha', label: 'Fecha', headerClass: 'col-md-2',
+                                        { key: 'autor_diputado', label: 'Autor', headerClass: 'col-md-2'},
+                                        { key: 'autor_grupo', label: 'Grupo', headerClass: 'col-md-2'},
+                                        { key: 'fecha', label: 'Fecha', headerClass: 'col-md-1',
                                             fn: function(val, obj) {
                                                 // return obj.relativeDate();
                                                 return moment(val).format('l');
                                             }
-                                        },
-                                        { key: 'autor', label: 'Autor', headerClass: 'col-md-2',
-                                            fn: function(value, obj) {
-                                                return obj.getTipiAutor();
-                                            }
-                                        },
-                                        { key: 'grupo', label: 'Grupo', headerClass: 'col-md-2',
-                                            fn: function(value, obj) {
-                                                return obj.getGrupo();
-                                            }
-                                        }]
+                                        }
+                                        ]
         };
     }
 });

@@ -17,22 +17,23 @@
 								<dt>Referencia</dt>
 									<dd>{{ref}}</dd>
 								<dt>Fecha</dt>
-									<dd>{{showDate}}</dd>
+									<dd>{{shortDate}}</dd>
 								<dt>Ámbito</dt>
 									<dd>{{dicts}}</dd>
-								<dt>Autor</dt>
-									{{#if autor}}
-										<dd>{{getAutor}}</dd>
-									{{/if}}
-								<dt>Grupo Parl.</dt>
-									<dd>{{getGrupo}}</dd>
+								{{#if autor_otro}}
+									<dt>Autor</dt>
+									<dd>{{autor_otro}}</dd>
+								{{else}}
+									<dt>Autor</dt>
+									<dd>{{autor_diputado}}</dd>
+									<dt>Grupo</dt>
+									<dd>{{autor_grupo}}</dd>	
+								{{/if}}
 								<dt>Lugar</dt>
 									<dd>{{lugar}}</dd>
 								{{#if currentUser}}
 								<dt>Observaciones</dt>
 									<dd>{{observaciones}}</dd>
-								<dt>Más información</dt>
-									<dd>{{masinfo}}</dd>
 								{{/if}}
 							</dl>
 							</p>

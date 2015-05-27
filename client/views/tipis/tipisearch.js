@@ -12,7 +12,7 @@ Template.tipisearch.helpers({
 		return Session.get("searchTipis");
 	},
     count: function() {
-        if (this.count >= 300) flash("Se han encontrado más de 100 iniciativas.", "info");
+        if (this.count >= 20) flash("Se han encontrado más de 20 iniciativas.", "info");
         else if (this.count == 0) flash("No se han encontrado iniciativas que cumplan los criterios.", "info");
     },
     settings: function () {
@@ -23,22 +23,17 @@ Template.tipisearch.helpers({
             fields: [
                 { key: 'ref', label: 'Referencia'},
                 { key: 'titulo', label: 'Titulo'},
-                { key: 'dicts', label: 'Diccionarios'},
                 { key: 'fecha', label: 'Fecha',
                     fn: function(val, obj) {
                         return moment(val).format('l');
                      }
                 },
-    			{ key: 'autor', label: 'Autor',
-                    fn: function(value, obj) {
-                        return obj.getAutor();
-                    }
-                },
+                { key: 'dicts', label: 'Diccionarios'},
     			{ key: 'acciones', label: 'Acciones',
                     fn: function(val, obj) {
-					    var actstr = '<a href="tipis/'+ obj._id._str + '"><span class="label label-info"><i class="fa fa-eye"></i></span></a>&nbsp;';
+					    var actstr = '<a href="tipis/'+ obj._id + '"><span class="label label-info"><i class="fa fa-eye"></i></span></a>&nbsp;';
 						if (Roles.userIsInRole(Meteor.user(), ["admin"])) {
-                            actstr += '&nbsp;<a href=\'/admin/Refs/ObjectID(\"'+ obj._id._str + '\")/edit\'><span class="label label-warning"><i class="fa fa-pencil"></i></span></a>';
+                            actstr += '&nbsp;<a href="/admin/Tipis/'+ obj._id + '/edit"><span class="label label-warning"><i class="fa fa-pencil"></i></span></a>';
     					}
     					return Spacebars.SafeString(actstr);
     				}

@@ -126,9 +126,19 @@ Template.scannervizz.rendered = function() {
                     return 1;
                 }
             }
+            str = '';
+            sbd = StatsByDeputies.findOne({_id: $("#scanner-title").text()});
+            if (sbd) {
+                str += '<h3>Diputadas/os más activas/os</h3><ul class="list-unstyled">';
+                sbd.deputies.sort(sortcountfunction);
+                _.each(sbd.deputies.filter(function(d,i){ return ((d._id != null) && (d._id != '')) }).filter(function(d,i){ return i<3; }), function(d) {
+                    str += '<li><span class="badge badge-tipi">'+d.count+'</span> '+d._id+'</li>';
+                });
+                str += '</ul>';
+            }
             sbg = StatsByGroups.findOne({_id: $("#scanner-title").text()});
             if (sbg) {
-                str = '<h3>Grupos más activos</h3><ul class="list-unstyled">';
+                str += '<h3>Grupos más activos</h3><ul class="list-unstyled">';
                 sbg.groups.sort(sortcountfunction);
                 _.each(sbg.groups.filter(function(g,i){ return ((g._id != null) && (g._id != '')) }).filter(function(g,i){ return i<3; }), function(g) {
                     str += '<li><span class="badge badge-tipi">'+g.count+'</span> '+parliamentarygroups[g._id]+'</li>';
@@ -140,9 +150,9 @@ Template.scannervizz.rendered = function() {
                 str += '<h3>Últimas iniciativas</h3><ul>';
                 _.each(latestitems[0].items.filter(function(_,i){ return i<3 }), function(l) {
                     if (l.titulo.length > 75) {
-                        str += '<li><a href="/t/'+l.id._str+'">'+l.titulo.substring(0,75)+'...</a></li>';
+                        str += '<li><a href="/t/'+l.id+'">'+l.titulo.substring(0,75)+'...</a></li>';
                     } else {
-                        str += '<li><a href="/t/'+l.id._str+'">'+l.titulo+'</a></li>';
+                        str += '<li><a href="/t/'+l.id+'">'+l.titulo+'</a></li>';
                     }
                 });
                 str += '</ul>';

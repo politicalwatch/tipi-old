@@ -12,7 +12,7 @@ Template.refsearch.helpers({
 		return Session.get("searchRefs");
 	},
 	count: function() {
-		if (this.count >= 100) flash("Se han encontrado más de 100 iniciativas.", "info");
+		if (this.count >= 20) flash("Se han encontrado más de 20 iniciativas.", "info");
 		else if (this.count == 0) flash("No se han encontrado iniciativas que cumplan los criterios.", "info");
 	},
    	settings: function () {

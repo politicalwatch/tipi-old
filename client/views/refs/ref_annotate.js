@@ -26,7 +26,7 @@ Template.refAnnotate.events({
         $('selector').css('cursor','wait');
         e.preventDefault();
         res = suggest_annotation();
-        Meteor.call('annotateRef', this._id, this.titulo, this.getAutor(), res[0], res[1], true, res[0]);
+        Meteor.call('annotateRef', this._id, res[0], res[1]);
         $('#annotate').text('Anotado!');
         $('selector').css('cursor','default');
     },

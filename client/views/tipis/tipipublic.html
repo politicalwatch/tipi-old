@@ -3,12 +3,12 @@
 		{{#with tipi}}
 			<div class="row">
 				<div class="col-md-9 tipi-titles">
-					<h2>{{getTipiTitulo}}</h2>
+					<h2>{{titulo}}</h2>
 					<hr>
 					<div class="row">
 						<div class="col-md-6">
 							<h3>{{tipotexto}} / <small><i>{{relativeDate}}</i></small></h3>
-							<a href="{{getUrl}}" target="_blank"><i class="fa fa-institution"></i> Ver en el Congreso</a>
+							<a href="{{url}}" target="_blank"><i class="fa fa-institution"></i> Ver en el Congreso</a>
 						</div>
 						<div class="col-md-6 pull-right">
 							<a href="#" class="btn btn-secondary pull-right discusslink"></a>
@@ -16,9 +16,13 @@
 					</div>
 					<div class="row tipi-metadata">
 						<div class="col-md-6">
-							<i class="fa fa-user"></i> {{getTipiAutor}}
-							<br>
-							<i class="fa fa-group"></i> {{getGrupo}}
+							{{#if autor_otro}}
+								<i class="fa fa-grupo"></i> {{autor_otro}}
+							{{else}}
+								<i class="fa fa-user"></i> {{autor_diputado}}
+								<br>
+								<i class="fa fa-group"></i> {{autor_grupo}}
+							{{/if}}
 						</div>
 						<div class="col-md-6">
 							<i class="fa fa-map-marker"></i> {{lugar}}
