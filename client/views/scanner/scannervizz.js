@@ -3,17 +3,6 @@ LatestItems = new Mongo.Collection('latest');
 StatsByDeputies = new Mongo.Collection('statsbydeputies');
 StatsByGroups = new Mongo.Collection('statsbygroups');
 
-// TODO: Moverlo a area comun
-var parliamentarygroups = {
-    'GP': 'Grupo Popular',
-    'GS': 'Grupo Socialista',
-    'GC-CiU': 'Grupo Catalán - Convergencia i Unió',
-    'GIP': 'Grupo La Izquierda Plural',
-    'GV (EAJ-PNV)': 'Grupo Vasco - EAJ PNV',
-    'GUPyD': 'Grupo Unión Progreso y Democracia',
-    'GMx': 'Grupo Mixto'
-}
-
 Template.scannervizz.helpers({
     diputados: function() {
       // Dummy data

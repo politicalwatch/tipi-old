@@ -19,9 +19,12 @@
 							{{#if autor_otro}}
 								<i class="fa fa-grupo"></i> {{autor_otro}}
 							{{else}}
-								<i class="fa fa-user"></i> {{autor_diputado}}
+								{{#each autor_diputado}}
+									<i class="fa fa-user"></i> {{this}}
+									<br/>
+								{{/each}}
 								<br>
-								<i class="fa fa-group"></i> {{autor_grupo}}
+								<i class="fa fa-group"></i> {{groupsHumanized}}
 							{{/if}}
 						</div>
 						<div class="col-md-6">

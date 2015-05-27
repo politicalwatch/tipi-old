@@ -73,7 +73,7 @@ if (Meteor.isServer) {
 	});
 
 	Meteor.publish('allTipisSearch', function(q) {
-		return Tipis.find(q, {fields: {ref: 1, tipotexto: 1, autor: 1, grupo: 1, otro: 1, titulo: 1, dicts: 1, fecha: 1, lugar: 1}, 
+		return Tipis.find(q, {fields: {ref: 1, tipotexto: 1, autor_diputado: 1, autor_grupo: 1, autor_otro: 1, titulo: 1, dicts: 1, fecha: 1, lugar: 1}, 
 													sort: {fecha: -1},
 													limit: 20});
 	});

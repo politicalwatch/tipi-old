@@ -22,9 +22,6 @@ Template.tipipublic.rendered = function () {
 };
 
 Template.tipipublic.helpers({
-    // parseContentToHTML: function() {
-    //     return Spacebars.SafeString(this.content.join("<br/>"));
-    // }
     goToConversation: function() {
         post = Posts.find().fetch();
         if (post.length > 0) {
@@ -34,8 +31,12 @@ Template.tipipublic.helpers({
         }
         return link;
     },
-    discussText: function() {
-
+    groupsHumanized: function() {
+        groups = [];
+        for(i=0;i<this.autor_grupo.length;i++) {
+            groups.push(parliamentarygroups[this.autor_grupo[i]]);
+        }
+        return groups;
     }
 });
 

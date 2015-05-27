@@ -22,11 +22,23 @@ Template.scannertext.helpers({
             showColumnToggles: false,
             fields: [{ key: 'titulo', label: 'Titulo', headerClass: 'col-md-7',
                                             fn: function(val, obj) {
-                                                return Spacebars.SafeString('<a href="/t/'+ obj._id._str + '">'+val+'</a>');
+                                                return Spacebars.SafeString('<a href="/t/'+ obj._id + '">'+val+'</a>');
                                             }
                                         },
-                                        { key: 'autor_diputado', label: 'Autor', headerClass: 'col-md-2'},
-                                        { key: 'autor_grupo', label: 'Grupo', headerClass: 'col-md-2'},
+                                        { key: 'autor_diputado', label: 'Autor', headerClass: 'col-md-2',
+                                            fn: function(val, obj) {
+                                                return Spacebars.SafeString(val.join([separator = '<br/>']));
+                                            }
+                                        },
+                                        { key: 'autor_grupo', label: 'Grupo', headerClass: 'col-md-2',
+                                            fn: function(val, obj) {
+                                                groupsHumanized = [];
+                                                for(i=0;i<val.length;i++) {
+                                                    groupsHumanized.push(parliamentarygroups[val[i]]);
+                                                }
+                                                return groupsHumanized.join([separator = ', ']);
+                                            }
+                                        },
                                         { key: 'fecha', label: 'Fecha', headerClass: 'col-md-1',
                                             fn: function(val, obj) {
                                                 // return obj.relativeDate();
