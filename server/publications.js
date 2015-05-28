@@ -90,6 +90,11 @@ if (Meteor.isServer) {
 	});
 
 	Meteor.publish('tipiStats', function() {
+		return TipiStats.find();
+	});
+
+	/*
+	Meteor.publish('tipiStats', function() {
 		var self = this;
 		pipeline = [ { $match: {} }, { $unwind: '$dicts' }, { $group: { _id: '$dicts', count: { $sum: 1 } } } ];
 		stats = Tipis.aggregate(pipeline);
@@ -133,7 +138,7 @@ if (Meteor.isServer) {
 			self.added('latest', latest_items[i]._id, {items: latest_items[i].items});
 		}
 		self.ready();
-	});
+	});*/
 
 	Meteor.publish('allRefs', function() {
 		if (this.userId) {

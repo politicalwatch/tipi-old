@@ -1,7 +1,7 @@
-Stats = new Mongo.Collection('stats');
+/*Stats = new Mongo.Collection('stats');
 LatestItems = new Mongo.Collection('latest');
 StatsByDeputies = new Mongo.Collection('statsbydeputies');
-StatsByGroups = new Mongo.Collection('statsbygroups');
+StatsByGroups = new Mongo.Collection('statsbygroups');*/
 
 Template.scannervizz.helpers({
     diputados: function() {
@@ -29,8 +29,6 @@ Template.scannervizz.helpers({
 
 Template.scannervizz.rendered = function() {
 
-    // D3js example: https://raw.githubusercontent.com/Slava/d3-meteor-basic/master/client.js
-
     // Load count data for vizz
     // var dicts = Dicts.find().fetch();
     var root = {
@@ -38,20 +36,13 @@ Template.scannervizz.rendered = function() {
         "children": []
     }
 
-    // _.each(dicts, function(d) {
-    //     n = Refs.find({"dicts": d.dict}).count();
-    //     if (n) {
-    //         objd = {
-    //             "name": d.dict,
-    //             "icon": d.iconb1,
-    //             "size": n
-    //         }
-    //         root["children"].push(objd);
-    //     }
-    // });
-    
-    stats_array = Stats.find().fetch();
-    _.each(stats_array, function(el) {
+    stats = TipiStats.find().fetch()[0];
+    overall = stats.overall;
+    statsbydeputies = stats.bydeputies;
+    statsbygroups = stats.bygroups;
+    statslatest = stats.latest;
+
+    _.each(overall, function(el) {
         if (el.count > 0) {
             objd = {
                 "name": el._id,
@@ -116,28 +107,27 @@ Template.scannervizz.rendered = function() {
                 }
             }
             str = '';
-            sbd = StatsByDeputies.findOne({_id: $("#scanner-title").text()});
+            cat = $("#scanner-title").text();
+            sbd = statsbydeputies.filter(function(d,i){ return d._id == cat });
             if (sbd) {
                 str += '<h3>Diputadas/os más activas/os</h3><ul class="list-unstyled">';
-                sbd.deputies.sort(sortcountfunction);
-                _.each(sbd.deputies.filter(function(d,i){ return ((d._id != null) && (d._id != '')) }).filter(function(d,i){ return i<3; }), function(d) {
+                _.each(sbd[0].deputies, function(d) {
                     str += '<li><span class="badge badge-tipi">'+d.count+'</span> '+d._id+'</li>';
                 });
                 str += '</ul>';
             }
-            sbg = StatsByGroups.findOne({_id: $("#scanner-title").text()});
+            sbg = statsbygroups.filter(function(g,i){ return g._id == cat });
             if (sbg) {
                 str += '<h3>Grupos más activos</h3><ul class="list-unstyled">';
-                sbg.groups.sort(sortcountfunction);
-                _.each(sbg.groups.filter(function(g,i){ return ((g._id != null) && (g._id != '')) }).filter(function(g,i){ return i<3; }), function(g) {
-                    str += '<li><span class="badge badge-tipi">'+g.count+'</span> '+parliamentarygroups[g._id]+'</li>';
+                _.each(sbg[0].groups, function(g) {
+                    str += '<li><span class="badge badge-tipi">'+g.count+'</span> '+g._id+'</li>';
                 });
                 str += '</ul>';
             }
-            latestitems = LatestItems.find($("#scanner-title").text()).fetch();
-            if (latestitems) {
+            latest = statslatest.filter(function(l,i){ return l._id == cat });
+            if (latest) {
                 str += '<h3>Últimas iniciativas</h3><ul>';
-                _.each(latestitems[0].items.filter(function(_,i){ return i<3 }), function(l) {
+                _.each(latest[0].items, function(l) {
                     if (l.titulo.length > 75) {
                         str += '<li><a href="/t/'+l.id+'">'+l.titulo.substring(0,75)+'...</a></li>';
                     } else {
