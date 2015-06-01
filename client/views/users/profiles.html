@@ -1,0 +1,50 @@
+<template name="profiles">
+    <div id="profiles" class="containerglob darkpatt">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="tabpanel">
+                        <h1>¿Quién está en TiPi?</h1>
+                        <ul class="nav nav-pills" role="tablist">
+                            <li role="presentation"><a href="#organizations" aria-controls="organizations" role="tab" data-toggle="tab">Organizaciones</a></li>
+                            <li role="presentation"><a href="#deputies" aria-controls="deputies" role="tab" data-toggle="tab">Diputadas/os</a></li>
+                            <li role="presentation" class="active"><a href="#citizens" aria-controls="citizens" role="tab" data-toggle="tab">Ciudadanía</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="citizens">
+                                <div class="row">
+                                    {{#each citizens}}
+                                        <div class="col-sm-4 col-xs-6 text-center">
+                                            <h3><a href="{{pathFor 'profile' username=username}}">{{username}}</a></h3>
+                                            <p>{{profile.firstname}} {{profile.lastname}}</p>
+                                        </div>
+                                    {{/each}}
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="deputies">
+                                <div class="row">
+                                    {{#each deputies}}
+                                        <div class="col-sm-4 col-xs-6 text-center">
+                                            <h3><a href="{{pathFor 'profile' username=username}}">{{username}}</a></h3>
+                                            <p>{{profile.firstname}} {{profile.lastname}}</p>
+                                        </div>
+                                    {{/each}}
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="organizations">
+                                <div class="row">
+                                    {{#each organizations}}
+                                        <div class="col-sm-4 col-xs-6 text-center">
+                                            <h3><a href="{{pathFor 'profile' username=username}}">{{username}}</a></h3>
+                                            <p>{{profile.firstname}}</p>
+                                        </div>
+                                    {{/each}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

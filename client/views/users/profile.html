@@ -30,16 +30,16 @@
                     {{/with}}
                 </div>
                 <div class="col-sm-6">
-                    <h3>Últimas entradas</h3>
-                    {{#if posts}}
+                    {{#if hasPosts}}
+                        <h3>Últimas entradas</h3>
                         <ul class="list-unstyled">
                             {{#each posts}}
                                 <li><a href="{{pathFor 'postPage' _id }}">"{{trimString title 0 100}}"</a></li>
                             {{/each}}
                         </ul>
                     {{/if}}
-                    <h3>Últimos comentarios</h3>
-                    {{#if comments}}
+                    {{#if hasComments}}
+                        <h3>Últimos comentarios</h3>
                         <ul class="list-unstyled">
                             {{#each comments}}
                                 <li><a href="{{pathFor 'postPage' postId }}">"{{trimString body 0 100}}"</a></li>

@@ -212,8 +212,8 @@ if (Meteor.isServer) {
 		return Comments.find({ author: username }, {fields: {body: 1, postId: 1}, sort: {submitted: -1}, limit: 3});
 	});
 
-	Meteor.publish('userListByType', function(user_type) {
-		// TODO: complete queried fields. Change collection.
+	Meteor.publish('listUsers', function(user_type) {
+		return Meteor.users.find({}, {fields: {username: 1, 'profile.firstname': 1, 'profile.lastname': 1, roles: 1}})
 	});
 
 

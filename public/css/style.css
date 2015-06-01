@@ -699,6 +699,31 @@ li.lined:last-child {
   color: #fff;
 }
 
+/*Profile-----------------------------*/
+#profiles .nav-pills {
+  text-align:center;
+  margin-bottom: 30px;
+}
+#profiles .nav-pills > li {
+    float:right;
+    display:inline-block;
+    *display:inline; /* ie7 fix */
+    zoom:1; /* hasLayout ie7 trigger */
+}
+#profiles .nav-pills > li.active > a,
+#profiles .nav-pills > li.active > a:hover,
+#profiles .nav-pills > li.active > a:focus,
+#profiles .nav-pills > li > a:hover,
+#profiles .nav-pills > li > a:focus {
+    color: #222;
+    cursor: default;
+    background-color: #fbc239;
+    border: 0px;
+}
+#profiles .nav-pills > li > a { color: #fff; }
+#profiles h1, h2, h3 { color: #fbc239; }
+#profiles p { color: #fff; }
+
 /*Not found + Access denied-----------*/
 #not-found, #access-denied {}
 
