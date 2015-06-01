@@ -54,9 +54,8 @@ Template.scannertext.helpers({
 Template.scannertext.rendered = function () {
   if(!this._rendered) {
     this._rendered = true;
-    $("#fechadesde").datepicker();
-    $("#fechahasta").datepicker();
-    // setup select
+    $("#fechadesde").datepicker(datepickeroptions);
+    $("#fechahasta").datepicker(datepickeroptions);
   }
 };
 

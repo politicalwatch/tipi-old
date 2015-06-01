@@ -25,7 +25,6 @@ mrt:moment
 meteorhacks:kadira
 d3js:d3
 sacha:spin
-zimme:select2-bootstrap3-css
 axw:json2csv
 mrt:filesaver
 rajit:bootstrap3-datepicker
@@ -33,7 +32,6 @@ dburles:collection-helpers
 mrt:mongodb-aggregation
 meteorhacks:aggregate
 yogiben:admin
-tsega:bootstrap3-datetimepicker@=3.1.3_3
 aldeed:autoform-bs-datetimepicker
 twbs:bootstrap
 mizzao:user-status

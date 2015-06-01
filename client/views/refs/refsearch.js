@@ -27,18 +27,18 @@ Template.refsearch.helpers({
             		}
             	},
 				{ key: 'ref', label: 'Referencia'},
+				/*{ key: 'autor', label: 'Autor',
+					fn: function(val, obj) {
+						return obj.getAutor();
+					}
+				},*/
+				{ key: 'titulo', label: 'Título'},
+				{ key: 'dicts', label: 'Diccionarios'},
 				{ key: 'fecha', label: 'Fecha',
 					fn: function(val, obj) {
 						return moment(val).format('l');
 					}
 				},
-				{ key: 'autor', label: 'Autor',
-					fn: function(val, obj) {
-						return obj.getAutor();
-					}
-				},
-				{ key: 'titulo', label: 'Título'},
-				{ key: 'dicts', label: 'Diccionarios'},
 				{ key: 'acciones', label: 'Acciones', 
 					fn: function(val, obj) {
 				 		actstr = '';
@@ -63,9 +63,8 @@ Template.refsearch.helpers({
 Template.refsearch.rendered = function (a) {
 	if(!this._rendered) {
 		this._rendered = true;
-		$("#fechadesde").datepicker();
-		$("#fechahasta").datepicker();
-		// setup select
+		$("#fechadesde").datepicker(datepickeroptions);
+		$("#fechahasta").datepicker(datepickeroptions);
 	}
 };
 
