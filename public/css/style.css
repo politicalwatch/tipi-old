@@ -643,6 +643,30 @@ li.lined:last-child {
     text-align: center;
     font-weight: bold;
 }
+#tipi-wrapper .quepasocon {
+    margin-top: 20px;
+    padding: 20px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    text-transform: uppercase;
+}
+#tipi-wrapper .quepasocon.complete {
+    color: #4ac948;
+    border: 3px solid #4ac948;
+}
+#tipi-wrapper .quepasocon.uncomplete {
+    color: #e60000;
+    border: 3px solid #e60000;
+}
+#tipi-wrapper .quepasocon.partially {
+    color: #ffaa00;
+    border: 3px solid #ffaa00;
+}
+#tipi-wrapper .quepasocon.pending {
+    color: #999;
+    border: 3px solid #999;
+}
 
 /*About---------------------------*/
 #about {}

@@ -2,20 +2,20 @@
 	<div id="tipi-wrapper" class="containerglob darkpatt old oldwhite">
 		{{#with tipi}}
 			<div class="row">
-				<div class="col-md-9 tipi-titles">
+				<div class="col-sm-9 tipi-titles">
 					<h2>{{titulo}}</h2>
 					<hr>
 					<div class="row">
-						<div class="col-md-6">
+						<div class="col-sm-6">
 							<h3>{{tipotexto}} / <small><i>{{relativeDate}}</i></small></h3>
 							<a href="{{url}}" target="_blank"><i class="fa fa-institution"></i> Ver en el Congreso</a>
 						</div>
-						<div class="col-md-6 pull-right">
+						<div class="col-sm-6 pull-right">
 							<a href="#" class="btn btn-secondary pull-right discusslink"></a>
 						</div>
 					</div>
 					<div class="row tipi-metadata">
-						<div class="col-md-6">
+						<div class="col-sm-6">
 							{{#if autor_otro}}
 								<i class="fa fa-grupo"></i> {{autor_otro}}
 							{{else}}
@@ -48,7 +48,7 @@
 						</div>
 					</p> -->
 				</div>
-				<div class="col-md-3 dicts-block">
+				<div class="col-sm-3 dicts-block">
 					<ul class="list-unstyled">
 						{{#each dicts}}
 						<li class="dict-block">
@@ -57,7 +57,9 @@
 						{{/each}}
 					</ul>
 					{{#if quepasocon}}
-						<div class="quepasocon">
+						<div class="quepasocon {{qpcClass}}">
+							<i class="fa fa-{{qpcIcon}} fa-2x"></i>
+							<br>
 							{{quepasocon}}
 						</div>
 					{{/if}}

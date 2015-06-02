@@ -37,6 +37,28 @@ Template.tipipublic.helpers({
             groups.push(parliamentarygroups[this.autor_grupo[i]]);
         }
         return groups;
+    },
+    qpcClass: function() {
+        if (this.quepasocon.toLowerCase() == 'cumplido') {
+            return 'complete';
+        } else if (this.quepasocon.toLowerCase() == 'no cumplido') {
+            return 'uncomplete';
+        } else if (this.quepasocon.toLowerCase() == 'parcialmente cumplido') {
+            return 'partially';
+        } else {
+            return 'pending';
+        }
+    },
+    qpcIcon: function() {
+        if (this.quepasocon.toLowerCase() == 'cumplido') {
+            return 'check-circle';
+        } else if (this.quepasocon.toLowerCase() == 'no cumplido') {
+            return 'minus-circle';
+        } else if (this.quepasocon.toLowerCase() == 'parcialmente cumplido') {
+            return 'question-circle';
+        } else {
+            return 'warning';
+        }
     }
 });
 
