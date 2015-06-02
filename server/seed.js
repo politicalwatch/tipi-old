@@ -11,6 +11,7 @@ Roles that must appear into the db
     mdblog-author
     deputy
     organization
+    media
 */
 
 // Insert initial data here

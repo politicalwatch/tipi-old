@@ -26,9 +26,9 @@
                 <div class="form-group">
                   {{> afFieldInput name='profile.facebook' class="form-control" placeholder='https://facebook.com/tucuenta'}}
                 </div>
-                <!-- {{> afQuickField name='emails.$.address'}}
-                {{> afQuickField name='password'}}
-                {{> afQuickField name='passwordConfirmation'}} -->
+                <div class="form-group">
+                  {{> afFieldInput name='profile.is_public' class="form-control"}}
+                </div>
                 <button type="submit" class="btn btn-block btn-secondary">Guardar los cambios</button>
                 <div class="text-center">
                     <a href="{{pathFor 'profile' username=currentUser.username}}">o regresa a tu perfil</a>

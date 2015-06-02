@@ -19,7 +19,7 @@ SyncedCron.add({
     name: 'Global TIPI Stats',
     schedule: function(parser) {
         // parser is a later.parse object
-        return parser.text('every 1 day');
+        return parser.text('every 8 hours');
     },
     job: function() {
         // Initialized

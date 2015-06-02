@@ -23,6 +23,12 @@
                 </ul>
             </div>
             <div class="col-sm-4 text-center">
+                <a href="{{pathFor 'profiles'}}">
+                    <h3>¿Quién está en TiPi?</h3>
+                </a>
+                <br>
+                <hr>
+                <br>
                 {{#if currentUser}}
                     <a href="{{pathFor 'forumAdd'}}" class="btn btn-secondary"><i class="fa fa-comments-o"></i> Iniciar conversación</a>
                 {{/if}}

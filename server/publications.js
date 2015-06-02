@@ -205,15 +205,21 @@ if (Meteor.isServer) {
 	});
 
 	Meteor.publish('userLatestPosts', function(username){
-		return Posts.find({ author: username }, {fields: {title: 1}, sort: {submitted: -1}, limit: 3});
+		return Posts.find({ author: username }, {fields: {title: 1, submitted: 1}, sort: {submitted: -1}, limit: 3});
 	});
 
 	Meteor.publish('userLatestComments', function(username){
-		return Comments.find({ author: username }, {fields: {body: 1, postId: 1}, sort: {submitted: -1}, limit: 3});
+		return Comments.find({ author: username }, {fields: {body: 1, postId: 1, submitted: 1}, sort: {submitted: -1}, limit: 3});
 	});
 
 	Meteor.publish('listUsers', function(user_type) {
-		return Meteor.users.find({}, {fields: {username: 1, 'profile.firstname': 1, 'profile.lastname': 1, roles: 1}})
+		if (this.userId) {
+			var user = Meteor.users.findOne({_id:this.userId});
+	  		if (Roles.userIsInRole(user, ["admin"])) {
+				return Meteor.users.find({'profile.is_public': true}, {fields: {username: 1, 'profile.firstname': 1, 'profile.lastname': 1, roles: 1, 'status.online': 1}});
+	  		}
+		}
+		return Meteor.users.find({'profile.is_public': true}, {fields: {username: 1, 'profile.firstname': 1, 'profile.lastname': 1, roles: 1}});
 	});
 
 

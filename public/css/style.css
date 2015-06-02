@@ -724,6 +724,8 @@ li.lined:last-child {
 #profiles h1, h2, h3 { color: #fbc239; }
 #profiles p { color: #fff; }
 
+#profiles .current { border: 2px dashed #fbc239; padding:5px; }
+
 /*Not found + Access denied-----------*/
 #not-found, #access-denied {}
 
