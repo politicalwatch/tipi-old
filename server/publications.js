@@ -78,7 +78,7 @@ if (Meteor.isServer) {
 													limit: 20});
 	});
 
-	Meteor.publish('singleTipi', function(id) {
+	Meteor.publish('singleTipiByManager', function(id) {
 		if (this.userId) {
 			var user = Meteor.users.findOne({_id:this.userId});
 	  		if (Roles.userIsInRole(user, ["admin","manager"])) {
@@ -87,6 +87,10 @@ if (Meteor.isServer) {
 		}
   		this.stop();
   		return;
+	});
+
+	Meteor.publish('singleTipi', function(id) {
+		return Tipis.find(id);
 	});
 
 	Meteor.publish('tipiStats', function() {
