@@ -1,14 +1,14 @@
 <template name="meetup">
-    <div id="meetup" class="containerglob darkpatt" style="min-height: 95vh;">
+    <div id="meetup" class="containerglob darkpatt {{archiveClass}}" style="min-height: 95vh;">
         <div class="container">
             <div class="row">
                 <div class="col-sm-10 col-sm-offset-1 white-text">
-                    <i class="yellow-text fa fa-calendar fa-3x"></i>
-                    <h2 class="yellow-text">{{meetup.name}}</h2>
+                    <i class="fa fa-calendar fa-3x"></i>
+                    <h2>{{meetup.name}}</h2>
                     <br>
-                    <p class="white-text">{{meetup.description}}</p>
+                    <p>{{meetup.description}}</p>
                     <p><a href="{{meetup.url}}" target="_blank">{{meetup.url}}</a></p>
-                    <p class="grey-text">{{meetup.humanDate}}</p>
+                    <p class="date">{{meetup.humanDate}}</p>
                 </div>
             </div>
         </div>

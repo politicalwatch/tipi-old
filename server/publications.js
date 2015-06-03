@@ -179,20 +179,14 @@ if (Meteor.isServer) {
   		return;
 	});
 
-	Meteor.publish('allMeetups', function() {
-		if (this.userId) {
-			var user = Meteor.users.findOne({_id:this.userId});
-	  		if (Roles.userIsInRole(user, ["admin","manager"])) {
-				return Meetups.find({}, {sort: {date: 1}});
-	  		}
-		}
-  		this.stop();
-  		return;
+	Meteor.publish('allOldMeetups', function() {
+		var now = new Date();
+		return Meetups.find({active: true, date: {$lt: now}}, {sort: {date: 1}});
 	});
 
 	Meteor.publish('allActiveMeetups', function() {
-		// Add active mark
-		return Meetups.find({active: true}, {sort: {date: 1}});
+		var now = new Date();
+		return Meetups.find({active: true, date: {$gte: now}}, {sort: {date: 1}});
 	});
 
 	Meteor.publish('singleMeetup', function(id) {

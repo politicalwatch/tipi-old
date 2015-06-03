@@ -418,7 +418,7 @@ li.lined:last-child {
 #profile-edit::-moz-placeholder,
 #meetup-new::-webkit-input-placeholder, 
 #meetup-new::-moz-placeholder {
-  color:#222;
+  color:#222; 
 }
 #scanner-text select {
   background: #222;
@@ -429,6 +429,13 @@ li.lined:last-child {
   -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
 }
+
+/*meetups----------------------------------------*/
+#meetup i, #meetup h2 { color: #fbc239; }
+#meetup p { color: #fff; }
+#meetup p.date { color: #aaa; }
+
+#meetup.archive i, #meetup.archive h2, #meetup.archive p { color: #aaa; }
 
 /*forum-----------------------------------------------------*/
 .grid-block, .main, .post, .comments li, .comment-form {
