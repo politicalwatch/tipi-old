@@ -55,9 +55,9 @@ Template.tipipublic.helpers({
         } else if (this.quepasocon.toLowerCase() == 'no cumplido') {
             return 'minus-circle';
         } else if (this.quepasocon.toLowerCase() == 'parcialmente cumplido') {
-            return 'question-circle';
+            return 'adjust';
         } else {
-            return 'warning';
+            return 'clock-o';
         }
     }
 });

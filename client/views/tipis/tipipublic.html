@@ -60,7 +60,13 @@
 						<div class="quepasocon {{qpcClass}}">
 							<i class="fa fa-{{qpcIcon}} fa-2x"></i>
 							<br>
-							{{quepasocon}}
+							<span>{{quepasocon}}</span>
+							<br>
+							<a href="{{pathFor 'quepasocon'}}" target="_blank"><small class="white-text">¿Qué es esto?</small></a>
+							{{#if quepasocon_moreinfo}}
+								<br>
+								<a href="{{quepasocon_moreinfo}}"><small class="white-text">Ampliar información</small></a>
+							{{/if}}
 						</div>
 					{{/if}}
 				</div>
