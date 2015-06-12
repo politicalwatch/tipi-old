@@ -1,0 +1,16 @@
+/* TEAM */
+Your title: Enreda
+Site: http://enreda.coop
+Twitter: @enreda
+Location: Sevilla, Spain
+
+
+/* THANKS */
+Name: Mapacino [GS (DEP) & Iskra]
+
+
+/* SITE */
+Last update: 2015/06/24
+Standards: HTML5, CSS3, JS
+Components: Meteor, MongoDB, R
+Software: SublimeText + VIM                    
