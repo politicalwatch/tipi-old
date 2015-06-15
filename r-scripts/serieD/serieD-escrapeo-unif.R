@@ -101,31 +101,20 @@ if(file.exists(paste0(GENERATED_BASE_DIR, "listos_mongo.rd"))) {
 	listos_mongo <- list()
 }
 
-guardar_boletin <- function(abl, nn) {
-	url <- paste0("http://www.congreso.es", abl[num, "url"])
-	cat(url)
-	if( substr(url, 22, 23) == "/" ) {
-	tst   <- flattenXML(getBOCG(nn, url, browse=FALSE), 0)
-	lines <- unlist(lapply(tst, function(x) str_trim(xmlValue(x))))
-	save(lines, file=paste0(GENERATED_BASE_DIR, "bocgs-proc/BOCG-D-", nn, ".rd"))
-	listos_mongo <- c(listos_mongo, nn)
-	save(listos_mongo, file=paste0(GENERATED_BASE_DIR, "listos_mongo.rd"))
-	} else {
-		write_error_log("escrapeo_serieD", paste0("url: ", url, "elemento: ", nn), "URL mal formada en el escrapeo!")
-	}
-}
-
-
 for(num in 1:nrow(abl)){#i=1
-	nn <- abl[num, "num"]
-	if (file.exists(paste0(GENERATED_BASE_DIR, "bocgs-proc/BOCG-D-", nn, ".rd"))) {
-		load(paste0(GENERATED_BASE_DIR, "bocgs-proc/BOCG-D-", nn, ".rd"))
-	} else {
-		fn_result = try(guardar_boletin(abl, nn))
-		if(class(fn_result) == "try-error") {
-			cat("ERROR!")
-		}
-	}
+        if (file.exists(paste0(GENERATED_BASE_DIR, "bocgs-proc/BOCG-D-", num, ".rd"))) {
+                load(paste0(GENERATED_BASE_DIR, "bocgs-proc/BOCG-D-", num, ".rd"))
+        } else {
+                url <- paste0("http://www.congreso.es", abl[num, "url"])
+                tst   <- flattenXML(getBOCG(num, url, browse=FALSE), 0)
+                lines <- unlist(lapply(tst, function(x) str_trim(xmlValue(x))))
+                save(lines, file=paste0(GENERATED_BASE_DIR, "bocgs-proc/BOCG-D-", num, ".rd"))
+                listos_mongo <- c(listos_mongo, num)
+                save(listos_mongo, file=paste0(GENERATED_BASE_DIR, "listos_mongo.rd"))
+        }
 }
+
+
+
 
 
