@@ -48,7 +48,6 @@ for(i in 1:length(proy_listA)){
                 q <- mongo.bson.from.JSON(paste0('{ "bol":"', bol_listA[[d]]$codigo, '" }'))
                 a <- mongo.find(mongo, mongo_collection("serieA"), q)
                 if(!mongo.cursor.next(a)){
-                        print("No presente en mongo, añadiendo.\n")
                         #Procesamiento del boletín A-1-X: Proyecto de Ley
                         if(bol_listA[[d]]$tramite %in% c("Iniciativa", "Proyecto de Ley")){
                                 #procesamos el primero y lo guardamos.
@@ -67,6 +66,7 @@ for(i in 1:length(proy_listA)){
                                         #Añadir url a cada elemento de la lista (uno por enmienda)
                                         lcont1$url <- bol_listA[[d]]$url
                                         #Enviar
+										print("No presente en mongo, añadiendo.\n")
                                         mongo.remove(mongo, mongo_collection("serieA"), criteria=list(bol=bol_listA[[d]]$codigo))
                                         lcontb <- lapply(list(lcont1), function(x) {return(mongo.bson.from.list(x))})
                                         mongo.insert.batch(mongo, mongo_collection("serieA"), lcontb)
@@ -129,6 +129,7 @@ for(i in 1:length(proy_listA)){
                                         }
                                         mongo.remove(mongo, mongo_collection("serieA"), criteria=list(bol=bol_listA[[d]]$codigo))
                                         lcontb <- lapply(lcont, function(x) {return(mongo.bson.from.list(x))})
+										print("No presente en mongo, añadiendo.\n")
                                         mongo.insert.batch(mongo, mongo_collection("serieA"), lcontb)
                                         vcontrol[d] <- 1
                                         next()
@@ -168,6 +169,7 @@ for(i in 1:length(proy_listA)){
                                         #enviar a mongo
                                         mongo.remove(mongo, mongo_collection("serieA"), criteria=list(bol=bol_listA[[d]]$codigo))
                                         lcontb2 <- lapply(list(lcont2), function(x) {return(mongo.bson.from.list(x))})
+										print("No presente en mongo, añadiendo.\n")
                                         mongo.insert.batch(mongo, mongo_collection("serieA"), lcontb2)
                                 }
                                 
