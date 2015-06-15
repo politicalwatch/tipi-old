@@ -130,7 +130,7 @@ proc_serieB <- function(lines, codigo, tramite){
         #Si es de enmiendas llamamos a la funcion proc_serieB_enmiendas y devolvemos resultado.
         #ej. B-157-5
         if(tmp$tramite %in% c("Enmiendas e índice de enmiendas al articulado", "Enmiendas")){
-          tmp <- proc_serieB_enmiendas(tmp, lines) 
+          tmp <- proc_serieB_enmiendas(tmp, codigo, lines) 
           return(tmp)
           break()
         }
@@ -203,7 +203,7 @@ proc_serieB <- function(lines, codigo, tramite){
 ## argumentos: lines que se carga con load(fichero .rd que contiene boletin)
 ## devuelve: lista tmp() con los campos procesados:
 # [1] "bol"     "ref"     "tipo"    "tramite" "titulo"  "cnt"     "fecha"   "cntpre" 
-proc_serieB_enmiendas <- function(tmp, lines){
+proc_serieB_enmiendas <- function(tmp, codigo, lines){
         ##### Procesamiento trámite 'Enmiendas'
         #Extraemos las enmiendas del texto tmp$content y generamos una lista de listas, lcont.
         
