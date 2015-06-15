@@ -55,15 +55,16 @@ Template.tipisearch.rendered = function () {
 Template.tipisearch.events({
 	'submit form': function(e) { },
 	'click button#exportcsv': function(e) {
-		var query = Session.get("searchTipis");
-		for( var property in query )
-			if( query.hasOwnProperty(property) )
-				if( query[property] == "" )
-					delete query[property];
-		var collection_data = Tipis.find(query).fetch();
-		var data = json2csv(collection_data, true, true);
-		var blob = new Blob([data], {type: "text/csv;charset=utf-8"});
-		saveAs(blob, "tipis.csv");
+        alert('Esta funcionalidad estará disponible muy pronto');
+		// var query = Session.get("searchTipis");
+		// for( var property in query )
+		// 	if( query.hasOwnProperty(property) )
+		// 		if( query[property] == "" )
+		// 			delete query[property];
+		// var collection_data = Tipis.find(query).fetch();
+		// var data = json2csv(collection_data, true, true);
+		// var blob = new Blob([data], {type: "text/csv;charset=utf-8"});
+		// saveAs(blob, "tipis.csv");
 	}
   //
 });

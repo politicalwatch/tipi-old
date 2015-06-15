@@ -71,15 +71,16 @@ Template.refsearch.rendered = function (a) {
 Template.refsearch.events({
 	'submit form': function(e) {},
 	'click button#exportcsv': function(e) {
-		var query = Session.get("searchRefs");
-		for( var property in query )
-			if( query.hasOwnProperty(property) )
-				if( query[property] == "" )
-					delete query[property];
-		var collection_data = Refs.find(query).fetch();
-		var data = json2csv(collection_data, true, true);
-		var blob = new Blob([data], {type: "text/csv;charset=utf-8"});
-		saveAs(blob, "refs.csv");
+		alert('Esta funcionalidad estará disponible muy pronto');
+		// var query = Session.get("searchRefs");
+		// for( var property in query )
+		// 	if( query.hasOwnProperty(property) )
+		// 		if( query[property] == "" )
+		// 			delete query[property];
+		// var collection_data = Refs.find(query).fetch();
+		// var data = json2csv(collection_data, true, true);
+		// var blob = new Blob([data], {type: "text/csv;charset=utf-8"});
+		// saveAs(blob, "refs.csv");
 	}
   //
 });
