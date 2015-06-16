@@ -363,11 +363,32 @@ proc_boletin <- function(lines, num){
                         tmp$titulo <- str_trim(tmp$titulo) ## Quito espacios en los extremos
                         
                         ## Autor en el título: Respuestas a preguntas orales (184)
-                        ##VERIFICAR AQUI.
-                        if(length(tmp$titulo)>0){
-                                if(str_detect(string = tmp$titulo, pattern = "^Autor: Gobierno")){
-                                tmp$autor <- "Gobierno"}
+                        ##Preguntas: 184.
+                        if(tmp$tipo == "184"){
+                                #Reasignamos la segunda línea del índice, si es que la hay.
+                                if(length(tmp$ndx)>1){
+                                        tmp$titulo <- tmp$ndx[2]
+                                }
+                                #Buscamos autor en la primera linea del indice.
+                                if(length(tmp$ndx[1])>0){
+                                        ## Si es Gobierno:
+                                        if(str_detect(string = tmp$ndx[1], pattern = "^Autor: Gobierno")){
+                                        tmp$autor <- "Gobierno"}
+                                        ## Resto de diputados.
+                                        lindiputado <- tmp$ndx[1]
+                                        if(str_detect(string = lindiputado, pattern = "^Autor")){
+                                                #eliminamos 'Autor' y buscamos
+                                                lindiputado <- str_replace(string = lindiputado, pattern = "Autor", replacement = "")
+                                                lindiputado <- str_replace(string=lindiputado, pattern = ':', replacement = "")
+                                                lindiputado <- str_trim(string = lindiputado)
+                                                dipdet <- str_detect(lindiputado, pattern = as.character(diputados$apnom))
+                                                if(any(dipdet)){
+                                                        tmp$diputados <- unique(diputados[dipdet, "apnom"])
+                                                }
+                                        }
+                                }
                         }
+                        
                         ## Trámite: Del titulo para tipos 161, 162 (proyectos no de ley)
                         if(tmp$tipo %in% c("161", "162")){
                                 if(any(dettram <- str_detect(tmp$titulo, pattern=tramitesDPNL))){
