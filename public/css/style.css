@@ -111,7 +111,9 @@ a.disabled { cursor: default; }
 img {width: 100%; height: 100%;}
 .btn {background: black; color: white; border-color: none;}
 .btn h5 {font-family: 'Lato';}
-.btn:hover {background:#fbc239;}
+.btn:hover {background:#fbc239; color: #000;}
+.btn-check { background:#fbc239; color: #000;}
+.btn-check:hover { background:#fbc239; color: #000;}
 .btn {margin:5px; border-radius: 0px;}
 .btnotro {background: grey; border-color: black; margin: 1px;color: black;}
 .yellow-text { color: #fbc239; }
