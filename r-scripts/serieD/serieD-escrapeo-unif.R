@@ -95,12 +95,6 @@ str(abl) #tantas filas como boletines pendientes de descargar y 7 campos.
 
 load(paste0(GENERATED_BASE_DIR, "abl.rd"))
 
-if(file.exists(paste0(GENERATED_BASE_DIR, "listos_mongo.rd"))) {
-	load(paste0(GENERATED_BASE_DIR, "listos_mongo.rd"))
-} else {
-	listos_mongo <- list()
-}
-
 for(num in 1:nrow(abl)){#i=1
         if (file.exists(paste0(GENERATED_BASE_DIR, "bocgs-proc/BOCG-D-", num, ".rd"))) {
                 load(paste0(GENERATED_BASE_DIR, "bocgs-proc/BOCG-D-", num, ".rd"))
@@ -109,8 +103,6 @@ for(num in 1:nrow(abl)){#i=1
                 tst   <- flattenXML(getBOCG(num, url, browse=FALSE), 0)
                 lines <- unlist(lapply(tst, function(x) str_trim(xmlValue(x))))
                 save(lines, file=paste0(GENERATED_BASE_DIR, "bocgs-proc/BOCG-D-", num, ".rd"))
-                listos_mongo <- c(listos_mongo, num)
-                save(listos_mongo, file=paste0(GENERATED_BASE_DIR, "listos_mongo.rd"))
         }
 }
 
