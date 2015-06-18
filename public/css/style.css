@@ -576,7 +576,7 @@ li.lined:last-child {
 
 .alert {
   position: absolute;
-  padding-top: 50px;
+  padding-top: 60px;
   width: 100%;
   text-align: center;
 }
@@ -608,6 +608,10 @@ li.lined:last-child {
   cursor: pointer;
 }
 
+.beta {
+  color: #fbc239;
+  margin-bottom: 10px;
+}
 
 /*refs and tipis--------------------------------------------*/
 .ref {
