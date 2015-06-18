@@ -395,6 +395,10 @@ proc_boletin <- function(lines, num){
                                         tmp$tramite <- tramitesDPNL[dettram][1]
                                 }
                         }
+                        ## Lugar 'Pleno' para las referencias tipo 162.
+                        if(tmp$tipo == "162"){
+                                tmp$lugar = "Pleno"
+                        }
                         ## Esto debe marcar el comienzo del contenido de la referencia que encotramos en el índice
                         secondref  <- grep(paste0("^", tmp$ref), lines)[2]
                         if (!is.na(secondref)) { ## Sólo ataco contenido si aparece la referencia una segunda vez
