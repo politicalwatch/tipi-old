@@ -285,7 +285,9 @@ proc_boletin <- function(lines, num){
                                 tmp$origen <- "serieD"
                                 tmp$ref  <- str_extract(lines[nref[i]], "^[0-9]{3}\\/[0-9]{5,6}")
                                 tmp$tipo <- str_split(tmp$ref, "/")[[1]][1]
-                                if(tmp$tipo %in% noprocesar){ next() }
+                                if(tmp$tipo %in% noprocesar){ 
+                                        break 
+                                }else
                                 tmp$tipotexto <- ""        
                                 tipodet <- str_detect(string = tmp$tipo, pattern = as.character(tipostexto$tipo))
                                 if (any(tipodet)) {
