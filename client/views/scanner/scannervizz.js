@@ -128,11 +128,12 @@ Template.scannervizz.rendered = function() {
             if (latest) {
                 str += '<h3>Últimas iniciativas</h3><ul>';
                 _.each(latest[0].items, function(l) {
-                    if (l.titulo.length > 75) {
+                    str += '<li><a href="/t/'+l.id+'">'+l.titulo+'</a></li>';
+                    /*if (l.titulo.length > 75) {
                         str += '<li><a href="/t/'+l.id+'">'+l.titulo.substring(0,75)+'...</a></li>';
                     } else {
                         str += '<li><a href="/t/'+l.id+'">'+l.titulo+'</a></li>';
-                    }
+                    }*/
                 });
                 str += '</ul>';
             }
