@@ -61,7 +61,9 @@ for (pag in pags) {#pag=1
         }
         # Por si se corta a medias, saber por dónde vamos
          save(allbollinks, file=paste0(GENERATED_BASE_DIR, "allbollinks.rd"))
+        cat("end pag", pag, "\n")
 }
+cat("end ALL PAGS!!\n")
 
 load(paste0(GENERATED_BASE_DIR, "allbollinks.rd"))
 #info [1] "url"     "texto"  "num"     "datestr" "date"   
@@ -81,7 +83,6 @@ save(allbollinks, file=paste0(GENERATED_BASE_DIR, "allbollinks.rd"))
 abl <- ldply(allbollinks, data.frame)
 
 # Filtrar las pendientes de descarga y guardar.
-abl <- subset(abl, !filexists)
 save(abl, file=paste0(GENERATED_BASE_DIR, "abl.rd"))  ## Fichero con los boletines pendientes de descargar/procesar
 
 str(abl) #tantas filas como boletines pendientes de descargar y 7 campos.
@@ -95,14 +96,12 @@ str(abl) #tantas filas como boletines pendientes de descargar y 7 campos.
 
 load(paste0(GENERATED_BASE_DIR, "abl.rd"))
 
-if(file.exists(paste0(GENERATED_BASE_DIR, "listos_mongo.rd"))) {
-	load(paste0(GENERATED_BASE_DIR, "listos_mongo.rd"))
-} else {
-	listos_mongo <- list()
-}
-
 for(num in 1:nrow(abl)){#num=1
+		cat("AMWAWIN\n")
 		nn <- abl[num, "num"]
+		cat("es:<", nn, ">")
+		f <- paste0(GENERATED_BASE_DIR, "bocgs-proc/Diario-PD-", nn, ".rd")
+		cat(f)
         if (file.exists(paste0(GENERATED_BASE_DIR, "bocgs-proc/Diario-PD-", nn, ".rd"))) {
                 load(paste0(GENERATED_BASE_DIR, "bocgs-proc/Diario-PD-", nn, ".rd"))
         } else {
@@ -110,8 +109,6 @@ for(num in 1:nrow(abl)){#num=1
                 tst   <- flattenXML(getBOCG(nn, url, browse=FALSE), 0)
                 lines <- unlist(lapply(tst, function(x) str_trim(xmlValue(x))))
                 save(lines, file=paste0(GENERATED_BASE_DIR, "bocgs-proc/Diario-PD-", nn, ".rd"))
-                listos_mongo <- c(listos_mongo, nn)
-                save(listos_mongo, file=paste0(GENERATED_BASE_DIR, "listos_mongo.rd"))
         }
 }
 

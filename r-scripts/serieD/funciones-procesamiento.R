@@ -285,7 +285,9 @@ proc_boletin <- function(lines, num){
                                 tmp$origen <- "serieD"
                                 tmp$ref  <- str_extract(lines[nref[i]], "^[0-9]{3}\\/[0-9]{5,6}")
                                 tmp$tipo <- str_split(tmp$ref, "/")[[1]][1]
-                                if(tmp$tipo %in% noprocesar){ next() }
+                                if(tmp$tipo %in% noprocesar){ 
+                                        break 
+                                }else
                                 tmp$tipotexto <- ""        
                                 tipodet <- str_detect(string = tmp$tipo, pattern = as.character(tipostexto$tipo))
                                 if (any(tipodet)) {
@@ -394,6 +396,10 @@ proc_boletin <- function(lines, num){
                                 if(any(dettram <- str_detect(tmp$titulo, pattern=tramitesDPNL))){
                                         tmp$tramite <- tramitesDPNL[dettram][1]
                                 }
+                        }
+                        ## Lugar 'Pleno' para las referencias tipo 162.
+                        if(tmp$tipo == "162"){
+                                tmp$lugar = "Pleno"
                         }
                         ## Esto debe marcar el comienzo del contenido de la referencia que encotramos en el índice
                         secondref  <- grep(paste0("^", tmp$ref), lines)[2]

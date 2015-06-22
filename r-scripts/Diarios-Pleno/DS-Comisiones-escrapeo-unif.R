@@ -95,7 +95,6 @@ save(allbollinks_c, file=paste0(GENERATED_BASE_DIR, "allbollinks_c.rd"))
 abl_c <- ldply(allbollinks_c, data.frame)
 
 # Filtrar las pendientes de descarga y guardar.
-abl_c <- subset(abl_c, !filexists)
 save(abl_c, file=paste0(GENERATED_BASE_DIR, "abl_c.rd"))  ## Fichero con los boletines pendientes de descargar/procesar
 
 str(abl_c) #tantas filas como boletines pendientes de descargar y 7 campos.
@@ -109,12 +108,6 @@ str(abl_c) #tantas filas como boletines pendientes de descargar y 7 campos.
 
 load(paste0(GENERATED_BASE_DIR, "abl_c.rd"))
 
-if(file.exists(paste0(GENERATED_BASE_DIR, "listos_mongo_c.rd"))) {
-	load(paste0(GENERATED_BASE_DIR, "listos_mongo_c.rd"))
-} else {
-	listos_mongo_c <- list()
-}
-
 for(num in 1:nrow(abl_c)){#num=1 #num in 1:nrow(abl_c)
 		nn <- abl_c[num, "num"]
         if (file.exists(paste0(GENERATED_BASE_DIR, "bocgs-proc/Diario-C-", nn, ".rd"))) {
@@ -124,8 +117,6 @@ for(num in 1:nrow(abl_c)){#num=1 #num in 1:nrow(abl_c)
                 tst   <- flattenXML(getBOCG(nn, url, browse=FALSE), 0)
                 lines <- unlist(lapply(tst, function(x) str_trim(xmlValue(x))))
                 save(lines, file=paste0(GENERATED_BASE_DIR, "bocgs-proc/Diario-C-", nn, ".rd"))
-                listos_mongo_c <- c(listos_mongo_c, nn)
-                save(listos_mongo_c, file=paste0(GENERATED_BASE_DIR, "listos_mongo_c.rd"))
         }
 }
 

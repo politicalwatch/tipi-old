@@ -37,7 +37,6 @@ source("../common-lists.R")
 
 ### obtener listado completo boletines
 # cargar fichero abl.rd
-load(paste0(GENERATED_BASE_DIR, "listos_mongo.rd"))
 
 #directorio para ficheros locales
 dir <- paste0(GENERATED_BASE_DIR, "bocgs-proc")
@@ -62,69 +61,60 @@ source("funciones-procesamiento.R")
 
 
 load(paste0(GENERATED_BASE_DIR, "abl.rd"))
-load(paste0(GENERATED_BASE_DIR, "listos_mongo.rd"))
-if( file.exists(paste0(GENERATED_BASE_DIR, "introducidos_mongo.rd")) )
-{
-  load(paste0(GENERATED_BASE_DIR, "introducidos_mongo.rd"))
-} else {
-  introducidos_mongo <- list()
-}
 
-pendientes <- setdiff(y = introducidos_mongo, x = listos_mongo)
+l <- list.files(paste0(GENERATED_BASE_DIR, "bocgs-proc"), pattern="BOCG-D-[0-9]+.rd")
+
 
 # bucle
-for(i in 1:length(listos_mongo)){ #i=630
-	#suponemos .rd ya existe
-	num <- listos_mongo[[i]] #num=555
-	print(num)
-	if(file.exists(paste0(dir, "/BOCG-D-", num, ".rd"))){
-		load(paste0(dir, "/BOCG-D-", num, ".rd")) #esto carga lines
-		#
-		# Procesar contenido
-		resul <- try(proc_boletin(lines, num))
-		if(class(resul) == "try-error"){
-			lcont <- vector("list")
-			lcont$bol <- "num"
-			#Añadir url
-			lcont$url <- paste0("http://www.congreso.es", abl[num, "url"]) 
-			print(paste("falla el boletin:", num))
-			write_error_log("serieD", listos_mongo[[num]], "procesamiento erróneo")
-			next()
-		} else {
-			lcont <- resul
-		}
+for(i in 1:length(l)){ #i=630
 
-		#enviar a bbdd
+	filename <- l[[i]]
+	filepath <- paste0(dir, "/", filename)
+	num <- str_match(filename, "BOCG-D-([0-9]+).rd")[2]
+	load(filepath) #esto carga lines
+	#
+	# Procesar contenido
+	resul <- try(proc_boletin(lines, num))
+	if(class(resul) == "try-error"){
+		lcont <- vector("list")
+		lcont$bol <- "num"
+		#Añadir url
+		lcont$url <- paste0("http://www.congreso.es", abl[num, "url"]) 
+		print(paste("falla el boletin:", num))
+		write_error_log("serieD", num, "procesamiento erróneo")
+		next()
+	} else {
+		lcont <- resul
+	}
 
-		if (length(lcont) > 0 & is.null(lcont$special)) {
-			#Crear campo autor con formato adecuado.
-			#Añadir url.
-			for(k in 1:length(lcont)){#k=1
-				q <- mongo.bson.from.JSON(paste0('{ "ref":"', lcont[[k]]$ref, '" }'))
-				a <- mongo.find(mongo, mongo_collection("serieD"), q)
-				if(lcont[[k]]$ref != "" && !mongo.cursor.next(a))
-				{
-					lcont2 <- list()
-					lcont2[[1]] <- crearCampoAutor(lcont[[k]])
-					lcont2[[1]]$url <- paste0("http://www.congreso.es", abl[num, "url"]) 
-					lcontb <- lapply(lcont2, function(x) {
-										 #campos que no interesa enviar
-										 x$ndx <- NULL
-										 x$cnt <- NULL
-										 #TODO. quitar algunos más.
-										 x$gopag <- NULL
-										 return(mongo.bson.from.list(x))
-					})
-					mongo.insert.batch(mongo, mongo_collection("serieD"), lcontb)
-					introducidos_mongo <- c(introducidos_mongo, num)
-					save(introducidos_mongo, file=paste0(GENERATED_BASE_DIR, "introducidos_mongo.rd"))
+	#enviar a bbdd
 
-				} else {
-					cat("ya introducido en mongo!\n")
-				}
+	if (length(lcont) > 0 & is.null(lcont$special)) {
+		#Crear campo autor con formato adecuado.
+		#Añadir url.
+		for(k in 1:length(lcont)){#k=1
+			q <- mongo.bson.from.JSON(paste0('{ "ref":"', lcont[[k]]$ref, '" }'))
+			a <- mongo.find(mongo, mongo_collection("serieD"), q)
+			if(!mongo.cursor.next(a))
+			{
+				lcont2 <- list()
+				lcont2[[1]] <- crearCampoAutor(lcont[[k]])
+				lcont2[[1]]$url <- paste0("http://www.congreso.es", abl[num, "url"]) 
+				lcontb <- lapply(lcont2, function(x) {
+										#campos que no interesa enviar
+										x$ndx <- NULL
+										x$cnt <- NULL
+										#TODO. quitar algunos más.
+										x$gopag <- NULL
+										return(mongo.bson.from.list(x))
+				})
+				mongo.insert.batch(mongo, mongo_collection("serieD"), lcontb)
+
+			} else {
+				cat("ya introducido en mongo!\n")
 			}
-
 		}
+
 	}
 }
 
