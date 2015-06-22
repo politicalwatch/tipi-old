@@ -22,6 +22,9 @@ Template.refAnnotate.events({
         history.back();
     },
     'click #annotate': function(e) {
+        alert("Esta acción está deshabilitada por haber sido automatizada.");
+        /*
+        e.preventDefault();
         $('#annotate').text('Anotando...');
         $('selector').css('cursor','wait');
         e.preventDefault();
@@ -29,6 +32,7 @@ Template.refAnnotate.events({
         Meteor.call('annotateRef', this._id, res[0], res[1]);
         $('#annotate').text('Anotado!');
         $('selector').css('cursor','default');
+        */
     },
 });
 
