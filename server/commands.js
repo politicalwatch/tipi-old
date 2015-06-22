@@ -1,15 +1,15 @@
-Commands({
-    "annotate": function () {
-        referencias = Refs.find({$or: [{annotate: { $exists: false}}, {annotate: false}]}, { fields: { _id: 1 } }).fetch();
-        dicts = Dicts.find({dictgroup: "tipi"}).fetch();
-        total = referencias.length;
-        _.each(referencias, function(r, i) {
-            console.log(i + "/" + total + " : " + r._id._str);
-            res = suggest_annotation(r._id, dicts);
-            annotateRef(r._id, res[0], res[1]);
-        });
-    }
-});
+// Commands({
+//     "annotate": function () {
+//         referencias = Refs.find({$or: [{annotate: { $exists: false}}, {annotate: false}]}, { fields: { _id: 1 } }).fetch();
+//         dicts = Dicts.find({dictgroup: "tipi"}).fetch();
+//         total = referencias.length;
+//         _.each(referencias, function(r, i) {
+//             console.log(i + "/" + total + " : " + r._id._str);
+//             res = suggest_annotation(r._id, dicts);
+//             annotateRef(r._id, res[0], res[1]);
+//         });
+//     }
+// });
 
 
 
