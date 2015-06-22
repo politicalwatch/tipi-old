@@ -81,7 +81,6 @@ save(allbollinks, file=paste0(GENERATED_BASE_DIR, "allbollinks.rd"))
 abl <- ldply(allbollinks, data.frame)
 
 # Filtrar las pendientes de descarga y guardar.
-abl <- subset(abl, !filexists)
 save(abl, file=paste0(GENERATED_BASE_DIR, "abl.rd"))  ## Fichero con los boletines pendientes de descargar/procesar
 
 str(abl) #tantas filas como boletines pendientes de descargar y 7 campos.

@@ -92,15 +92,11 @@ for(i in 1:length(l)){ #i=630
 	if (length(lcont) > 0 & is.null(lcont$special)) {
 		#Crear campo autor con formato adecuado.
 		#Añadir url.
-		print("D")
 		for(k in 1:length(lcont)){#k=1
-			print("E")
 			q <- mongo.bson.from.JSON(paste0('{ "ref":"', lcont[[k]]$ref, '" }'))
 			a <- mongo.find(mongo, mongo_collection("serieD"), q)
-				print("b");
 			if(!mongo.cursor.next(a))
 			{
-				print("a");
 				lcont2 <- list()
 				lcont2[[1]] <- crearCampoAutor(lcont[[k]])
 				lcont2[[1]]$url <- paste0("http://www.congreso.es", abl[num, "url"]) 
@@ -117,7 +113,6 @@ for(i in 1:length(l)){ #i=630
 			} else {
 				cat("ya introducido en mongo!\n")
 			}
-			print("C");
 		}
 
 	}
