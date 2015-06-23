@@ -39,10 +39,23 @@
                                         <p><i>Si eres diputado/a y quieres participar de TIPI escríbenos un correo a <span class="yellow-text">tipi[arroba]ciecode[punto]es</span> y contactaremos con usted.</i></p>
                                         {{#each content_deputies}}
                                             <div class="col-sm-4 col-xs-6 text-center diputado {{isInactive}}">
+                                                {{#if imagen}}
+                                                    <span class="foto">
+                                                        <img class="circular" src="{{imagen}}" alt="Imagen de {{nombre}}">
+                                                    </span>
+                                                {{/if}}
                                                 <h5>
                                                     {{nombre}}
                                                 </h5>
-                                                <p>{{ humanizedGroup grupo }}</p>
+                                                <p>
+                                                    {{ humanizedGroup grupo }}
+                                                    <br>
+                                                    {{#if correo}}
+                                                        {{correo}}
+                                                    {{else}}
+                                                        Sin correo
+                                                    {{/if}}
+                                                </p>
                                                 <p>
                                                 {{#if twitter}}
                                                     <a href="{{ linkToTwitter twitter }}" target="_blank">{{twitter}}</a> | 

@@ -204,12 +204,14 @@ img {width: 100%; height: 100%;}
 	background-color: #fbc239;
 }
 
+.navbar-toggle .icon-bar {background-color:#fff;}
+
 @media(min-width:768px) {
 
-	.top-nav-collapse {
-		padding: 0;
-		background-color: #000;
-	}
+    .top-nav-collapse {
+        padding: 0;
+        background-color: #000;
+    }
 
 	.navbar-custom.top-nav-collapse {
 		border-bottom: 1px solid rgba(255,255,255,.3);
@@ -786,8 +788,7 @@ li.lined:last-child {
 
 #profiles .diputado {
     padding: 5px;
-    border-bottom: 1px solid #fbc239;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 #profiles .diputado.inactive h4,
 #profiles .diputado.inactive h5,
@@ -797,6 +798,17 @@ li.lined:last-child {
 #profiles .diputado.inactive a:link,
 #profiles .diputado.inactive a:hover {
     color: #aaa;
+}
+
+#profiles .foto {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 3px solid #fbc239;
+    overflow: hidden;
+    padding: 0px;
+    display: inline-block;
+    position: relative;
 }
 
 /*Not found + Access denied-----------*/
