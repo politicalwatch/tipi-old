@@ -326,7 +326,7 @@ proc_boletin <- function(lines, num){
 #                                 }
                                 #Si se caza el Grupo, lo sobreescribimos.
                                 if(length(tmp$ndx)>0){
-                                        detgrupo <- str_detect(tmp$ndx, ignore.case("grupo[s]? parlamentario"))
+                                        detgrupo <- str_detect(tmp$ndx, ignore.case("grupo parlamentario"|"grupos parlamentarios"))
                                         if(any(detgrupo)){
                                                 lingrupo <- tmp$ndx[detgrupo] #por si hay mas de una linea en indice.
                                                 gpdet <- str_detect(string = lingrupo[1], pattern = as.character(gparlam$gparlams))
