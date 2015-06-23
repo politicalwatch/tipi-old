@@ -19,7 +19,7 @@ SyncedCron.add({
     name: 'Global TIPI Stats',
     schedule: function(parser) {
         // parser is a later.parse object
-        return parser.text('every 20 hours');
+        return parser.text('every 8 hours');
     },
     job: function() {
         // Initialized
@@ -168,11 +168,15 @@ function cleanUrl(el) {
 function parseAutorDiputado(el) {
     if (typeof el.autor !== 'undefined') {
         if ((typeof el.autor.diputado !== 'undefined') && (el.autor.diputado != '')) {
-            els = [];
-            _.each(el.autor.diputado, function(e){
-                els.push(e);
-            });
-            return els;
+            if (Array.isArray(el.autor.diputado)) {
+                els = [];
+                _.each(el.autor.diputado, function(e){
+                    els.push(e);
+                });
+                return els;
+            } else {
+                return [el.autor.diputado];
+            }
         } else {
             return [];
         }
@@ -183,10 +187,15 @@ function parseAutorDiputado(el) {
 function parseAutorGrupo(el) {
     if (typeof el.autor !== 'undefined') {
         if ((typeof el.autor.grupo !== 'undefined') && (el.autor.grupo != '')) {
-            els = [];
-            _.each(el.autor.grupo, function(e){
-                els.push(e);
-            });
+            if (Array.isArray(el.autor.grupo)) {
+                els = [];
+                _.each(el.autor.grupo, function(e){
+                    els.push(e);
+                });
+                return els;
+            } else {
+                return [el.autor.grupo];
+            }
             return els;
         } else {
             return [];
@@ -198,11 +207,15 @@ function parseAutorGrupo(el) {
 function parseAutorOtro(el) {
     if (typeof el.autor !== 'undefined') {
         if ((typeof el.autor.otro !== 'undefined') && (el.autor.otro != '')) {
-            els = [];
-            _.each(el.autor.otro, function(e){
-                els.push(e);
-            });
-            return els;
+            if (Array.isArray(el.autor.otro)) {
+                els = [];
+                _.each(el.autor.otro, function(e){
+                    els.push(e);
+                });
+                return els;
+            } else {
+                return [el.autor.otro];
+            }
         } else {
             return [];
         }

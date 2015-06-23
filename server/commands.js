@@ -1,15 +1,18 @@
-// Commands({
-//     "annotate": function () {
-//         referencias = Refs.find({$or: [{annotate: { $exists: false}}, {annotate: false}]}, { fields: { _id: 1 } }).fetch();
-//         dicts = Dicts.find({dictgroup: "tipi"}).fetch();
-//         total = referencias.length;
-//         _.each(referencias, function(r, i) {
-//             console.log(i + "/" + total + " : " + r._id._str);
-//             res = suggest_annotation(r._id, dicts);
-//             annotateRef(r._id, res[0], res[1]);
-//         });
-//     }
-// });
+/*
+Commands({
+    "annotate": function () {
+        referencias = Refs.find({$or: [{annotate: { $exists: false}}, {annotate: false}]}, { fields: { _id: 1 } }).fetch();
+        dicts = Dicts.find({dictgroup: "tipi"}).fetch();
+        total = referencias.length;
+        _.each(referencias, function(r, i) {
+            if (r._id._str != "5582c26b6cf193b7d8bc55f8") {
+                console.log(i + "/" + total + " : " + r._id._str);
+                res = suggest_annotation(r._id, dicts);
+                annotateRef(r._id, res[0], res[1]);
+            }
+        });
+    }
+});*/
 
 
 
@@ -18,7 +21,6 @@ function suggest_annotation(id, dicts) {
     ts = [];
     _.each(dicts, function(d) {
         _.each(d.words, function(w) {
-            console.log(d + " >>> " + w);
             search = new RegExp(w, 'gi');
             referenceElement = Refs.findOne(id);
             _.each(referenceElement.content, function(c){
@@ -76,11 +78,15 @@ function cleanUrl(el) {
 function parseAutorDiputado(el) {
     if (typeof el.autor !== 'undefined') {
         if ((typeof el.autor.diputado !== 'undefined') && (el.autor.diputado != '')) {
-            els = [];
-            _.each(el.autor.diputado, function(e){
-                els.push(e);
-            });
-            return els;
+            if (Array.isArray(el.autor.diputado)) {
+                els = [];
+                _.each(el.autor.diputado, function(e){
+                    els.push(e);
+                });
+                return els;
+            } else {
+                return [el.autor.diputado];
+            }
         } else {
             return [];
         }
@@ -91,10 +97,15 @@ function parseAutorDiputado(el) {
 function parseAutorGrupo(el) {
     if (typeof el.autor !== 'undefined') {
         if ((typeof el.autor.grupo !== 'undefined') && (el.autor.grupo != '')) {
-            els = [];
-            _.each(el.autor.grupo, function(e){
-                els.push(e);
-            });
+            if (Array.isArray(el.autor.grupo)) {
+                els = [];
+                _.each(el.autor.grupo, function(e){
+                    els.push(e);
+                });
+                return els;
+            } else {
+                return [el.autor.grupo];
+            }
             return els;
         } else {
             return [];
@@ -106,11 +117,15 @@ function parseAutorGrupo(el) {
 function parseAutorOtro(el) {
     if (typeof el.autor !== 'undefined') {
         if ((typeof el.autor.otro !== 'undefined') && (el.autor.otro != '')) {
-            els = [];
-            _.each(el.autor.otro, function(e){
-                els.push(e);
-            });
-            return els;
+            if (Array.isArray(el.autor.otro)) {
+                els = [];
+                _.each(el.autor.otro, function(e){
+                    els.push(e);
+                });
+                return els;
+            } else {
+                return [el.autor.otro];
+            }
         } else {
             return [];
         }
