@@ -21,9 +21,17 @@
                             </div>
                             <div role="tabpanel" class="tab-pane fade" id="deputies">
                                 <div class="row">
-                                    {{#each deputies}}
-                                        {{> profileItem}}
-                                    {{/each}}
+                                    {{#if deputies}}
+                                        {{#each deputies}}
+                                            {{> profileItem}}
+                                        {{/each}}
+                                    {{else}}
+                                        <p class="text-center">
+                                            <br>
+                                            <i>No hay diputadas/os activas/os en TIPI. ¿Quieres ser la/el primera/o?</i>
+                                            <br>
+                                        </p>
+                                    {{/if}}
                                 </div>
                                 <hr>
                                 <div class="row">

@@ -3,7 +3,8 @@ Template.profiles.helpers({
         return Meteor.users.find({roles: {$ne: 'deputy'}, roles: {$ne: 'organization'}, roles: {$ne: 'media'}}, {sort: {username: 1}});
     },
     deputies: function() {
-        return Meteor.users.find({roles: 'deputy'}, {sort: {username: 1}});
+        deps = Meteor.users.find({roles: 'deputy'}, {sort: {username: 1}}).fetch();
+        return (deps) ? deps : [];
     },
     organizations: function() {
         return Meteor.users.find({roles: 'organization'}, {sort: {username: 1}});
