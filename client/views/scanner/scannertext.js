@@ -27,7 +27,14 @@ Template.scannertext.helpers({
                                         },
                                         { key: 'autor_diputado', label: 'Autor', headerClass: 'col-md-2',
                                             fn: function(val, obj) {
-                                                return Spacebars.SafeString(val.join([separator = '<br/>']));
+                                                console.log(val.length);
+                                                if (val.length > 0) {
+                                                    return Spacebars.SafeString(val.join([separator = '<br/>']));
+                                                } else {
+                                                    if (obj.autor_otro.length > 0) {
+                                                        return Spacebars.SafeString(obj.autor_otro.join([separator = '<br/>']));
+                                                    }
+                                                }
                                             }
                                         },
                                         { key: 'autor_grupo', label: 'Grupo', headerClass: 'col-md-2',
