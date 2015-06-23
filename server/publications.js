@@ -231,4 +231,8 @@ if (Meteor.isServer) {
   		return;
 	});
 
+	Meteor.publish('diputados', function(username){
+		return Diputados.find({tipi: false}, {sort: {activo: -1, name: 1}});
+	});
+
 }

@@ -25,6 +25,26 @@
                                         {{> profileItem}}
                                     {{/each}}
                                 </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-12 text-center">
+                                        <p><i>Si eres diputado/a y quieres participar de TIPI escríbenos un correo a <span class="yellow-text">tipi[arroba]ciecode[punto]es</span> y contactaremos con usted.</i></p>
+                                        {{#each content_deputies}}
+                                            <div class="col-sm-4 col-xs-6 text-center diputado {{isInactive}}">
+                                                <h5>
+                                                    {{nombre}}
+                                                </h5>
+                                                <p>{{ humanizedGroup grupo }}</p>
+                                                <p>
+                                                {{#if twitter}}
+                                                    <a href="{{ linkToTwitter twitter }}" target="_blank">{{twitter}}</a> | 
+                                                {{/if}}
+                                                <a href="{{url}}" target="_blank">Ver ficha</a>
+                                                </p>
+                                            </div>
+                                        {{/each}}
+                                    </div>
+                                </div>
                             </div>
                             <div role="tabpanel" class="tab-pane fade" id="organizations">
                                 <div class="row">
