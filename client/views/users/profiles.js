@@ -10,5 +10,17 @@ Template.profiles.helpers({
     },
     media: function() {
         return Meteor.users.find({roles: 'media'}, {sort: {username: 1}});
+    },
+    content_deputies: function() {
+        return Diputados.find();
+    },
+    isInactive: function() {
+        return (this.activo) ? "" : "inactive";
+    },
+    humanizedGroup: function(val) {
+        return parliamentarygroups[val];
+    },
+    linkToTwitter: function(val) {
+        return "https://twitter.com/" + val.substring(1,val.length);
     }
 });
