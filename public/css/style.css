@@ -325,7 +325,7 @@ li.lined:last-child {
 
 #mdblog-new { color: #000; background-color: #ffc741; border-color: #000; }
 #mdblog-publish { color: #fff; background-color: green; }
-#mdblog-unpublish, #mdblog-delete { color: #fff; background-color: red; }
+#mdblog-unpublish, #mdblog-delete { color: #fff; background-color: #e60000; }
 #mdblog-archive { color: #000; background-color: lightgrey; }
 
 
@@ -599,7 +599,7 @@ li.lined:last-child {
 
 .alert-danger {
   color: #fff;
-  background-color: red;
+  background-color: #e60000;
   border: none;
 }
 .alert-danger .close,
@@ -757,6 +757,13 @@ li.lined:last-child {
 
 #profile p {
   color: #fff;
+}
+
+#profile a.log-out,
+#profile a.log-out:visited,
+#profile a.log-out:hover,
+#profile a.log-out:link {
+    color: #e60000;
 }
 
 /*Profile-----------------------------*/

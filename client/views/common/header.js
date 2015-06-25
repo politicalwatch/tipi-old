@@ -19,9 +19,6 @@ Template.header.helpers({
 });
 
 Template.header.events({
-  'click .log-out': function () {
-    Meteor.logout();
-  },
   'click .close': function () {
     Messages.remove({});
   }

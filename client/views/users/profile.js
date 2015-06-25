@@ -10,4 +10,10 @@ Template.profile.helpers({
     hasComments: function() {
         return Comments.find().count();
     }
+});
+
+Template.profile.events({
+    'click .log-out': function () {
+        Meteor.logout();
+    }
 })

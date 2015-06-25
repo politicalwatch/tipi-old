@@ -10,17 +10,16 @@
 				</button>
 				<a class="navbar-brand" href="{{pathFor 'homepage'}}"><img src="/images/logos-tipi/logo2_blanco.svg"></a>
 			</div>
-			<div class="collapse navbar-collapse bs-navbar-collapse">
+			<div class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
 				<ul class="nav navbar-nav">
 					<li class="{{activeRouteClass 'scannervizz'}}"><a href="{{pathFor 'scannervizz'}}">Escáner</a></li>
 					<li class="{{activeRouteClass  'topics'}}"><a href="{{pathFor 'topics'}}">Temas</a></li>
-					<!-- <li><a href="http://unmundosalvadorsoler.org/ciecode/avizor/quepasocon/" target="_blank">QPC</a></li> -->
 					<li class="{{activeRouteClass  '/blog'}}"><a href="/blog">Blog</a></li>
 					<li class="{{activeRouteClass 'participa'}}"><a href="{{pathFor 'participa'}}">Participa</a></li>
 					<li class="{{activeRouteClass  'about'}}"><a href="{{pathFor 'about'}}">Acerca</a></li>
 					{{#if isInRole 'admin,manager'}}
 						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión <span class="caret"></span></a>
-							<ul class="dropdown-menu" role="menu">
+							<ul class="dropdown-menu" role="navigation">
 								<li class="{{activeRouteClass 'refsearch'}}"><a href="{{pathFor 'refsearch'}}">Iniciativas Congreso</a></li>
 								<li class="{{activeRouteClass 'tipisearch'}}"><a href="{{pathFor 'tipisearch'}}">Iniciativas TiPi</a></li>
 								<li class="divider"></li>
@@ -31,16 +30,7 @@
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					{{#if currentUser}}
-						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{currentUser.username}} <span class="caret"></span></a>
-							<ul class="dropdown-menu" role="menu">
-								<li><a href="{{pathFor 'profile' username=currentUser.username}}">Ver perfil</a></li>
-								<li><a href="/" class="log-out">Salir</a></li>
-							</ul>
-						</li>
-						<!-- <li class="dropdown">
-					    	{{> notifications}}
-					    </li> -->
-						<li></li>
+						<li><a href="{{pathFor 'profile' username=currentUser.username}}">{{currentUser.username}}</a></li>
 					{{else}} 
 						<li><a href="{{pathFor 'login'}}">Entrar</a></li>
 						<li><a href="{{pathFor 'signup'}}"><b>Soy nuevo</b></a></li>
