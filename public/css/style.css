@@ -807,15 +807,21 @@ li.lined:last-child {
     color: #aaa;
 }
 
-#profiles .foto {
-    width: 90px;
-    height: 90px;
+.foto {
     border-radius: 50%;
     border: 3px solid #fbc239;
     overflow: hidden;
     padding: 0px;
     display: inline-block;
     position: relative;
+}
+.foto.grande {
+    width: 90px;
+    height: 90px;
+}
+.foto.mediana {
+    width: 35px;
+    height: 35px;
 }
 
 /*Not found + Access denied-----------*/
