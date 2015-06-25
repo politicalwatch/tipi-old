@@ -38,6 +38,17 @@ Template.tipipublic.helpers({
         }
         return groups;
     },
+    colorizedGroup: function(val) {
+        return parliamentarygroups_colors[val];
+    },
+    fotoDip: function(val) {
+        dip = Diputados.findOne({nombre: val});
+        if (dip) {
+            return dip.imagen;
+        } else {
+            return "";
+        }
+    },
     qpcClass: function() {
         if (this.quepasocon.toLowerCase() == 'cumplido') {
             return 'complete';

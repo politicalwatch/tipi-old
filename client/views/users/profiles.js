@@ -21,6 +21,9 @@ Template.profiles.helpers({
     humanizedGroup: function(val) {
         return parliamentarygroups[val];
     },
+    colorizedGroup: function(val) {
+        return parliamentarygroups_colors[val];
+    },
     linkToTwitter: function(val) {
         return "https://twitter.com/" + val.substring(1,val.length);
     }

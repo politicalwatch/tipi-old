@@ -18,14 +18,16 @@
 						<div class="col-sm-6">
 							<h4>¿Quién?</h4>
 							{{#if autor_otro}}
-								<i class="fa fa-grupo"></i> {{autor_otro}}
+								{{autor_otro}}
 							{{else}}
 								{{#each autor_diputado}}
-									<i class="fa fa-user"></i> {{this}}
+									<span class="foto mediana">
+										<img src="{{fotoDip this}}" />
+									</span>&nbsp;{{this}}
 									<br/>
 								{{/each}}
 								<br>
-								<i class="fa fa-group"></i> {{groupsHumanized}}
+								<span style="border-bottom: 2px solid {{colorizedGroup autor_grupo}};margin-bottom:5px;">{{groupsHumanized}}</span>
 							{{/if}}
 						</div>
 						<div class="col-md-6">

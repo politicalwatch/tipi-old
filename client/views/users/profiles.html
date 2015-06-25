@@ -40,15 +40,15 @@
                                         {{#each content_deputies}}
                                             <div class="col-sm-4 col-xs-6 text-center diputado {{isInactive}}">
                                                 {{#if imagen}}
-                                                    <span class="foto">
-                                                        <img class="circular" src="{{imagen}}" alt="Imagen de {{nombre}}">
+                                                    <span class="foto grande">
+                                                        <img src="{{imagen}}" alt="Imagen de {{nombre}}">
                                                     </span>
                                                 {{/if}}
                                                 <h5>
                                                     {{nombre}}
                                                 </h5>
                                                 <p>
-                                                    {{ humanizedGroup grupo }}
+                                                    <span style="border-bottom: 2px solid {{colorizedGroup grupo}};margin-bottom:5px;">{{ humanizedGroup grupo }}</span>
                                                     <br>
                                                     {{#if correo}}
                                                         {{correo}}

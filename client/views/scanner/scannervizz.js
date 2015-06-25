@@ -112,7 +112,12 @@ Template.scannervizz.rendered = function() {
             if (sbd) {
                 str += '<h3>Diputadas/os más activas/os</h3><ul class="list-unstyled">';
                 _.each(sbd[0].deputies, function(d) {
-                    str += '<li>'+d._id+'</li>';
+                    dip = Diputados.findOne({nombre: d._id});
+                    if (dip) {
+                        str += '<li><span class="foto mediana"><img src="'+dip.imagen+'" /></span>&nbsp;'+d._id+'</h6></li>';
+                    } else {
+                        str += '<li>'+d._id+'</li>';
+                    }
                 });
                 str += '</ul>';
             }
@@ -120,7 +125,7 @@ Template.scannervizz.rendered = function() {
             if (sbg) {
                 str += '<h3>Grupos más activos</h3><ul class="list-unstyled">';
                 _.each(sbg[0].groups, function(g) {
-                    str += '<li>'+parliamentarygroups[g._id]+'</li>';
+                    str += '<li style="border-left: 4px solid'+parliamentarygroups_colors[g._id]+';margin-bottom:5px;">&nbsp;'+parliamentarygroups[g._id]+'</li>';
                 });
                 str += '</ul>';
             }
