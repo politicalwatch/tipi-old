@@ -326,7 +326,7 @@ proc_boletin <- function(lines, num){
 #                                 }
                                 #Si se caza el Grupo, lo sobreescribimos.
                                 if(length(tmp$ndx)>0){
-                                        detgrupo <- str_detect(tmp$ndx, ignore.case("grupo parlamentario|grupos parlamentarios"))
+                                        detgrupo <- str_detect(tmp$ndx, '[Gg]rupo(s)? [Pp]arlamentario(s)?')
                                         if(any(detgrupo)){
                                                 lingrupo <- tmp$ndx[detgrupo] #por si hay mas de una linea en indice.
                                                 gpdet <- str_detect(string = lingrupo[1], pattern = as.character(gparlam$gparlams))
@@ -566,7 +566,7 @@ proc_serieD_enmiendas <- function(tmp){
         linsepenmi <- c(1:length(content))[detsepenmi]
         
         #lineas finalizadoras: 'Palacio del Congreso...'
-        detendings <- str_detect(string=content, pattern = ignore.case('^Palacio del Congreso '))
+        detendings <- str_detect(string=content, pattern = '^[Pp]alacio del [Cc]ongreso ')
         linendings <- c(1:length(content))[detendings]
         
         # ahora recorremos estas lineas linsepenmi, marcan comienzo y final de las enmiendas
