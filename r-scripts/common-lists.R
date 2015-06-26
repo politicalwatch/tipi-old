@@ -437,7 +437,7 @@ agruparUnGrupo <- function(lcont, grupo){#grupo=lgrupos[[1]]
         #         c <- 0
         #buscar el primero y coger la info básica
         indices <- which(kgrupobusq == 1)
-        if(length(indices)>1){ 
+        if(length(indices)>0){ #CAMBIO 26-JUNIO length(indices)>1
                 elemen <- lcont[[indices[1]]] 
         }
         indices <- indices[-1] #quitamos el primero
@@ -455,33 +455,6 @@ agruparUnGrupo <- function(lcont, grupo){#grupo=lgrupos[[1]]
                         }
                 }
         }
-#         
-#         #
-#         #iterar sobre el resto. Eliminar de indices
-#         
-#         
-#         #buscar el primero y coger la info básica
-#         for(k in 1:length(lcont)){
-#                 if(kgrupobusq[k] == 1){ 
-#                         elemen <- lcont[[k]] #en cuanto encuentra, sale del bucle
-#                         break()
-#                 }
-#                 if(is.null(elemen$diputados)) { elemen$diputados <- "" } 
-#         }
-#         #iterar sobre el resto
-#         #Si hay una sola enmienda por dicho grupo, devolver resultado.
-#         if(sum(kgrupobusq)>1 & length(lcont)>1){
-#                 for(k in 2:length(lcont)){
-#                         if(kgrupobusq[k] == 1){
-#                                 elemen$numenmienda <- c(elemen$numenmienda, lcont[[k]]$numenmienda)
-#                                 elemen$content <- c(elemen$content, lcont[[k]]$content)
-#                                 elemen$grupos <- unique(c(elemen$grupos, lcont[[k]]$grupos))
-#                                 if(!is.null(lcont[[k]]$diputados)){
-#                                         elemen$diputados <- c(elemen$diputados, lcont[[k]]$diputados)
-#                                 }
-#                         }
-#                 }
-#         }
         return(elemen)
 }
 
