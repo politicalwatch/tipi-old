@@ -31,6 +31,13 @@ Template.tipipublic.helpers({
         }
         return link;
     },
+    congresoURL: function() {
+        if (this.ref != '') {
+            return parseCongresoURL(this.ref);
+        } else {
+            return this.url;
+        }
+    },
     groupsHumanized: function() {
         groups = [];
         for(i=0;i<this.autor_grupo.length;i++) {

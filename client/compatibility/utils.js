@@ -23,6 +23,12 @@ var datepickeroptions = {
     todayHighlight: true
 }
 
+// congreso.es URL maker
+function parseCongresoURL(ref) {
+    var split_ref = ref.split('/');
+    return "http://www.congreso.es/portal/page/portal/Congreso/Congreso/Iniciativas?_piref73_2148295_73_1335437_1335437.next_page=/wc/servidorCGI&CMD=VERLST&BASE=IW10&PIECE=IWA0&FMT=INITXD1S.fmt&FORM1=INITXLUS.fmt&DOCS=1-1&QUERY=%28I%29.ACIN1.+%26+%28"+split_ref[0]+"%2F"+split_ref[1]+"%29.";
+}
+
 // The parameter isfrom indicates that it will be the start of the day
 function datestringToISODate(d, isfrom) {
     var dparts = d.split("/");
