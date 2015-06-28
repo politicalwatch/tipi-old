@@ -288,7 +288,7 @@ gparlam <- data.frame( gparlam = c("Grupo Parlamentario Popular en el Congreso",
                                     "IU, ICV-EUiA, CHA: La Izquierda Plural",
                                     "IU, ICV-EUiA, CHA",
                                     "Izquierda Plural",
-                                    "Unión Progreso y Democracia",
+                                    "Unión(,)? Progreso y Democracia",#modificado 26-junio
                                     "Vasco \\(EAJ-PNV\\)",
                                     "Mixto"),
                        gparlamab = c("GP",
