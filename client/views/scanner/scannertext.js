@@ -27,7 +27,6 @@ Template.scannertext.helpers({
                                         },
                                         { key: 'autor_diputado', label: 'Autor', headerClass: 'col-md-2',
                                             fn: function(val, obj) {
-                                                console.log(val.length);
                                                 if (val.length > 0) {
                                                     return Spacebars.SafeString(val.join([separator = '<br/>']));
                                                 } else {
