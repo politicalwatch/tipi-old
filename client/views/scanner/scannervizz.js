@@ -1,32 +1,3 @@
-/*Stats = new Mongo.Collection('stats');
-LatestItems = new Mongo.Collection('latest');
-StatsByDeputies = new Mongo.Collection('statsbydeputies');
-StatsByGroups = new Mongo.Collection('statsbygroups');*/
-
-Template.scannervizz.helpers({
-    diputados: function() {
-      // Dummy data
-      dataset = []
-      for (i = 0; i < 3; i++) {
-        obj = new Object();
-        obj.name = "xxx Falciani";
-        dataset.push(obj);
-      };
-      return dataset;
-    },
-    grupos: function() {
-      // Dummy data
-      dataset = []
-      for (i = 0; i < 3; i++) {
-        obj = new Object();
-        obj.name = "Partido X";
-        dataset.push(obj);
-      };
-      return dataset;
-    }
-});
-
-
 Template.scannervizz.rendered = function() {
 
     // Load count data for vizz
@@ -54,7 +25,7 @@ Template.scannervizz.rendered = function() {
     });
 
     var margin = 20,
-    diameter = 600,
+    diameter = (window.innerWidth >= 1050) ? 600 : (window.innerWidth < 768) ? window.innerWidth : window.innerWidth/2;
     scaling = 1.3;
 
     var pack = d3.layout.pack()
@@ -159,13 +130,12 @@ Template.scannervizz.rendered = function() {
       }
 
       function zoomTo(v) {
-        var k = diameter / v[2]; view = v;
+        var k = diameter / v[2];
+        view = v;
         image.attr("transform", function(d) {
             return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")";
         }).attr("width", function(d) { return d.r * scaling * k; }).attr("height", function(d) { return d.r * scaling * k; });
       }
-      
-    // });
 
     d3.select(self.frameElement).style("height", diameter + "px");
 
