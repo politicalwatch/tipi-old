@@ -611,7 +611,7 @@ proc_serieD_enmiendas <- function(tmp){
                 #extraer grupos parlamentarios.
                 gparldet <- str_detect(enmiend, gparlam$gparlams)
                 if(any(gparldet)) {
-                        tmpenmi$grupos <- gparlam[gparldet, "gparlamab"]
+                        tmpenmi$grupos <- unique(gparlam[gparldet, "gparlamab"])
                 }
                 #extraer texto de la enmienda: sobreescribimos content.
                 #desde 'Enmienda' hasta el fin.
