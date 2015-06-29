@@ -23,6 +23,119 @@ var datepickeroptions = {
     todayHighlight: true
 }
 
+
+
+/* UTILS */
+
+function cleanTipiQuery(cqry) {
+    var fdesde, fhasta, newautor, newgrupootro;
+    fdesde = fhasta = null;
+    newautor = newgrupootro = {};
+    for (var k in cqry) {
+        if( k == "fechadesde" && cqry[k] != "" ) {
+            fdesde = cqry[k];
+            delete cqry[k];
+        } else if(k == "fechahasta" && cqry[k] != "") {
+            fhasta = cqry[k];
+            delete cqry[k];
+        } else if ((k == "autor") && (cqry[k] != "")) {
+            newautor = { 'autor_diputado': {$regex: cqry['autor'], $options: "gi"} }
+            delete cqry['autor'];
+        } else if ((k == "grupootro") && (cqry[k] != "")) {
+            if (cqry['grupootro'] == 'Gobierno') {
+                newgrupootro = { 'autor_otro': cqry['grupootro'] }
+            } else {
+                newgrupootro = { 'autor_grupo': cqry['grupootro'] }
+            }
+            delete cqry['grupootro'];
+        } else if (cqry[k] == "") {
+            delete cqry[k];
+        } else if (typeof(cqry[k]) != "object") {
+            cqry[k] = {$regex: cqry[k], $options: "gi"};
+        }
+    }
+    if (newautor != {}) {
+        jQuery.extend(cqry, newautor);
+    }
+    if (newgrupootro != {}) {
+        jQuery.extend(cqry, newgrupootro);
+    }
+    if (fdesde != null && fhasta != null) {
+        cqry["fecha"] = {
+            $gte: datestringToISODate(fdesde, true),
+            $lte: datestringToISODate(fhasta, false)
+        };
+    } else if (fdesde != null && fhasta == null) {
+        cqry["fecha"] = {
+            $gte: datestringToISODate(fdesde, true)
+        };
+    } else if (fdesde == null && fhasta != null) {
+        cqry["fecha"] = {
+            $lte: datestringToISODate(fhasta, false)
+        };
+    }
+    return cqry;
+}
+
+
+function cleanRefQuery(cqry) {
+    var fdesde, fhasta, hayautor, tipoautor;
+    fdesde = fhasta = null;
+    hayautor = false;
+    tipoautor = '';
+    for (var k in cqry) {
+        if( k == "fechadesde" && cqry[k] != "" ) {
+            fdesde = cqry[k];
+            delete cqry[k];
+        } else if(k == "fechahasta" && cqry[k] != "") {
+            fhasta = cqry[k];
+            delete cqry[k];
+        } else if (k == "autor") {
+            hayautor = true;
+        } else if (k == "tipoautor") {
+            tipoautor = cqry[k];
+            delete cqry[k];
+        } else if (cqry[k] == "") {
+            delete cqry[k];
+        } else if (typeof(cqry[k]) != "object") {
+            cqry[k] = {$regex: cqry[k], $options: "gi"};
+        }
+    }
+    if (fdesde != null && fhasta != null) {
+        cqry["fecha"] = {
+            $gte: datestringToISODate(fdesde, true),
+            $lte: datestringToISODate(fhasta, false)
+        };
+    } else if (fdesde != null && fhasta == null) {
+        cqry["fecha"] = {
+            $gte: datestringToISODate(fdesde, true)
+        };
+    } else if (fdesde == null && fhasta != null) {
+        cqry["fecha"] = {
+            $lte: datestringToISODate(fhasta, false)
+        };
+    }
+    if (hayautor) {
+        newautor = {};
+        if (tipoautor == 'diputado') {
+            newautor = { 'autor.diputado': {$regex: cqry['autor'], $options: "gi"} }
+        } if (tipoautor == 'grupo') {
+            newautor = { 'autor.grupo': {$regex: cqry['autor'], $options: "gi"} }
+        } if (tipoautor == 'otro') {
+            newautor = { 'autor.otro': {$regex: cqry['autor'], $options: "gi"} }
+        } else {
+            //
+        }
+        delete cqry['autor'];
+        jQuery.extend(cqry, newautor);
+    }
+    return cqry;
+}
+
+
+
+
+
 // congreso.es URL maker
 function parseCongresoURL(ref) {
     var split_ref = ref.split('/');
