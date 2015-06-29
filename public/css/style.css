@@ -735,7 +735,10 @@ li.lined:last-child {
   text-align: center;
   min-height: 400px;
 }
-#topics h2 {
+#topics h1, #topic h1 {
+  text-transform: capitalize;
+}
+#topics h2, #topic h2 {
   color: #fff;
 }
 #topics .dictionary-block h3 {
@@ -745,7 +748,8 @@ li.lined:last-child {
 #topics .dictionary-block p {
   color: #fff;
 }
-#topics .dictionary-block .dictionary-icon {
+#topics .dictionary-block .dictionary-icon,
+#topic .dictionary-icon {
   width: 72px;
   height: 72px;
 }

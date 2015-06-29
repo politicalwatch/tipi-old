@@ -66,7 +66,10 @@ if (Meteor.isServer) {
 	Meteor.publish('singleDict', function(id) {
 		return Dicts.find(id);
 	});
-
+	Meteor.publish('singleDictBySlug', function(slug) {
+		return Dicts.find({slug: slug}, {fields: {dict: 1, icon1: 1, icon2: 2}});
+	});
+	
 	Meteor.publish('allTipis', function() {
 		return Tipis.find({}, {fields: {autor: 1, grupo: 1, otro: 1, titulo: 1, dicts: 1, fecha: 1},
 													 sort: {fecha: -1}});
