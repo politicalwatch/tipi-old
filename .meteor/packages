@@ -38,3 +38,4 @@ twbs:bootstrap
 mizzao:user-status
 percolate:synced-cron
 # npaton:commands
+email
