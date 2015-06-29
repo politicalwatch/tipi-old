@@ -28,18 +28,24 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label" for="autor">Autor</label>
-				<div class="col-sm-6">
-					<input class="form-control" type="text" id="autor" name="autor" value="{{lastquery.autor}}">
-				</div>
-				<div class="col-sm-4">
-					<select class="form-control" id="tipoautor" name="tipoautor">
-					<option value="diputado">Diputado/a</option>
-					<option value="grupo">Grupo</option>
-					<option value="otro">Otro</option>
-				</select>
-				</div>
-			</div>
+				<label class="col-sm-2 control-label" for="ref">Diputada/o</label>
+                <div class="col-sm-7">
+                    <input class="form-control input-lg" type="text" id="autor" name="autor" value="{{lastquery.autor}}">
+                </div>
+                <div class="col-sm-3">
+                    <select class="form-control input-lg" id="grupootro" name="grupootro">
+                        <option value="">o selecciona autor</option>
+                        <option value="Gobierno">Gobierno</option>
+                        <option value="GP">G.P. Popular</option>
+                        <option value="GS">G.P. Socialista</option>
+                        <option value="GC-CIU">Grupo Catalán (CiU)</option>
+                        <option value="GIP">G.P. La Izquierda Plural</option>
+                        <option value="GUPyD">G.P. UPyD</option>
+                        <option value="GV (EAJ-PNV)">G.P. Vasco (EAJ-PNV)</option>
+                        <option value="GMx">G.P. Mixto</option>
+                    </select>
+                </div>
+            </div>
 			<div class="form-group">
 				<label class="col-sm-2 control-label" for="fechadesde">Fecha desde</label>
 				<div class="col-sm-4">
