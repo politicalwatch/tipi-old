@@ -103,6 +103,11 @@ Template.scannervizz.rendered = function() {
             latest = statslatest.filter(function(l,i){ return l._id == cat });
             if (latest) {
                 str += '<h3>Últimas iniciativas</h3><ul>';
+                latest[0].items = latest[0].items.sort(function (a, b) {
+                    if (a.fecha < b.fecha) return 1;
+                    if (b.fecha < a.fecha) return -1;
+                    return 0;
+                });
                 _.each(latest[0].items, function(l) {
                     str += '<li><a href="/t/'+l.id+'">'+l.titulo+'</a></li>';
                     /*if (l.titulo.length > 75) {

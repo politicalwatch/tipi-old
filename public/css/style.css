@@ -738,7 +738,7 @@ li.lined:last-child {
 #topics h1, #topic h1 {
   text-transform: capitalize;
 }
-#topics h2, #topic h2 {
+#topics h2, #topic h2, #topic h4 {
   color: #fff;
 }
 #topics .dictionary-block h3 {
