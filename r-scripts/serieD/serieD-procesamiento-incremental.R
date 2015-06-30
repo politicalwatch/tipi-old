@@ -64,6 +64,36 @@ load(paste0(GENERATED_BASE_DIR, "abl.rd"))
 
 l <- list.files(paste0(GENERATED_BASE_DIR, "bocgs-proc"), pattern="BOCG-D-[0-9]+.rd")
 
+procesar_elemento <- function(lcont, k) {
+	presente_mongo = FALSE
+	if( is.null(lcont[[k]]$numenmienda) ) {
+		q <- mongo.bson.from.JSON(paste0('{ "bol": "', lcont[[k]]$bol, '", "ref":"', lcont[[k]]$ref, '" }'))
+		a <- mongo.find(mongo, mongo_collection("serieD"), q)
+		presente_mongo <- mongo.cursor.next(a)
+	} else {
+		q <- mongo.bson.from.JSON(paste0('{ "autor":{"grupo":"', unique(lcont[[k]]$grupos), '"}, "bol": "', lcont[[k]]$bol, '", "ref":"', lcont[[k]]$ref, '" }'))
+		a <- mongo.find(mongo, mongo_collection("serieD"), q)
+		presente_mongo <- mongo.cursor.next(a)
+	}
+	if(!presente_mongo)
+	{
+		lcont2 <- list()
+		lcont2[[1]] <- crearCampoAutor(lcont[[k]])
+		lcont2[[1]]$url <- paste0("http://www.congreso.es", abl[num, "url"]) 
+		lcontb <- lapply(lcont2, function(x) {
+							 #campos que no interesa enviar
+							 x$ndx <- NULL
+							 x$cnt <- NULL
+							 #TODO. quitar algunos más.
+							 x$gopag <- NULL
+							 return(mongo.bson.from.list(x))
+	})
+		mongo.insert.batch(mongo, mongo_collection("serieD"), lcontb)
+
+	} else {
+		cat("ya introducido en mongo!\n")
+	}
+}
 
 # bucle
 for(i in 1:length(l)){ #i=630
@@ -93,41 +123,11 @@ for(i in 1:length(l)){ #i=630
 		#Crear campo autor con formato adecuado.
 		#Añadir url.
 		for(k in 1:length(lcont)){#k=1
-			presente_mongo = FALSE
-			if( is.null(lcont[[k]]$numenmienda) ) {
-				print("ES NULL")
-				q <- mongo.bson.from.JSON(paste0('{ "bol": "', lcont[[k]]$bol, '", "ref":"', lcont[[k]]$ref, '" }'))
-				a <- mongo.find(mongo, mongo_collection("serieD"), q)
-				presente_mongo <- mongo.cursor.next(a)
-			} else {
-				print("NO null")
-				print(filename)
-				print(class(lcont[[k]]$grupos))
-				print(lcont[[k]]$grupos)
-				q <- mongo.bson.from.JSON(paste0('{ "autor":{"grupo":"', lcont[[k]]$grupos, '"}, "bol": "', lcont[[k]]$bol, '", "ref":"', lcont[[k]]$ref, '" }'))
-				a <- mongo.find(mongo, mongo_collection("serieD"), q)
-				presente_mongo <- mongo.cursor.next(a)
-			}
-			if(!presente_mongo)
-			{
-				lcont2 <- list()
-				lcont2[[1]] <- crearCampoAutor(lcont[[k]])
-				lcont2[[1]]$url <- paste0("http://www.congreso.es", abl[num, "url"]) 
-				lcontb <- lapply(lcont2, function(x) {
-										#campos que no interesa enviar
-										x$ndx <- NULL
-										x$cnt <- NULL
-										#TODO. quitar algunos más.
-										x$gopag <- NULL
-										return(mongo.bson.from.list(x))
-				})
-				mongo.insert.batch(mongo, mongo_collection("serieD"), lcontb)
-
-			} else {
-				cat("ya introducido en mongo!\n")
+			resul <- try(procesar_elemento(lcont, k))
+			if( class(resul) == "try-error" ) {
+				write_error_log("serieD_procesamiento", filename, "falló subelemento")
 			}
 		}
-
 	}
 }
 
