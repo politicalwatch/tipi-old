@@ -23,5 +23,5 @@ check_in_mongo <- function(json_query) {
 
 write_error_log <- function(model, element, error) {
 	outfile = paste0(ERROR_LOG_BASE_DIR, "Rtipi_errors_", model, ".log", sep="")
-	write(c(model, toString(element), error, "\n\n"), file=outfile, append=TRUE) #c(model, "\n", element, "\n", error), file )
+	write(c(Sys.time(), "\n", model, toString(element), error, "\n\n"), file=outfile, append=TRUE) #c(model, "\n", element, "\n", error), file )
 }
