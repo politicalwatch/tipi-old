@@ -1,18 +1,23 @@
 /*
 Commands({
     "annotate": function () {
+        console.log("Starting process...");
+        console.log("Fetching documents...");
         referencias = Refs.find({$or: [{annotate: { $exists: false}}, {annotate: false}]}, { fields: { _id: 1 } }).fetch();
+        console.log("Documents fetched: " + referencias.length);
         dicts = Dicts.find({dictgroup: "tipi"}).fetch();
         total = referencias.length;
         _.each(referencias, function(r, i) {
-            if (r._id._str != "5582c26b6cf193b7d8bc55f8") {
+            // if (r._id._str != "5582c26b6cf193b7d8bc55f8") {
                 console.log(i + "/" + total + " : " + r._id._str);
                 res = suggest_annotation(r._id, dicts);
                 annotateRef(r._id, res[0], res[1]);
-            }
+            // }
         });
+        console.log("Process finished!");
     }
-});*/
+});
+*/
 
 
 
