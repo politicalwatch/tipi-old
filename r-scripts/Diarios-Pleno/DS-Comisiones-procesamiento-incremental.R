@@ -101,6 +101,7 @@ for(i in 1:length(l)){ #i=8 #i in 1:length(listos_mongo)
 				lcont2[[1]] <- crearCampoAutor(lcont[[k]])
 				lcont2[[1]]$url <- paste0("http://www.congreso.es", abl_c[num, "url"]) 
 				lcont2[[1]]$lugar <- abl_c[num, "comision"]
+				lcont2[[1]]$origen <- "DiariosC"
 				lcontb <- lapply(lcont2, function(x) {
 									 #campos que no interesa enviar
 									 #                                         x$ndx <- NULL
