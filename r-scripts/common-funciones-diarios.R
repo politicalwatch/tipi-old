@@ -213,7 +213,7 @@ proc_DS <- function(lines, num){
                         tmp$titulo <- str_replace(tmp$titulo, "- ", "") ## Quito espacios duplicados
                         tmp$titulo <- str_replace(tmp$titulo, '\\(Número de expediente [0-9]{3}\\/[0-9]{5,6}\\)', "")
                         tmp$titulo <- str_replace(tmp$titulo, "\\.", "") #quitar el punto
-                        tmp$titulo <- tolower(tmp$titulo)
+                        tmp$titulo <- capitalize(tolower(tmp$titulo))
                         tmp$titulo <- str_trim(tmp$titulo) ## Quito espacios en los extremos
                         #
                         #Origen
@@ -282,7 +282,7 @@ proc_DS <- function(lines, num){
                         tmp$titulo <- str_replace(tmp$titulo, "- ", "") ## Quito espacios duplicados
                         tmp$titulo <- str_replace(tmp$titulo, '\\(Número de expediente [0-9]{3}\\/[0-9]{5,6}.*\\)', "")
                         tmp$titulo <- str_replace(tmp$titulo, "\\.", "") #quitar el punto
-                        #                 tmp$titulo <- tolower(tmp$titulo)
+                        tmp$titulo <- capitalize(tolower(tmp$titulo))
                         tmp$titulo <- str_trim(tmp$titulo) ## Quito espacios en los extremos
                         #
                         # Extraer Grupos parlamentarios.
