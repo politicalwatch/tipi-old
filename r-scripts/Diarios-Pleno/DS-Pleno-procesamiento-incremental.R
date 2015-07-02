@@ -40,6 +40,7 @@ library("XML")
 library("RCurl")
 library("plyr")
 library("stringr")
+library("Hmisc")
 library("RSQLite")
 library("rmongodb")
 
