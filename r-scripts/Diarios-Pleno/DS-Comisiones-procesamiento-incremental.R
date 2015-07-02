@@ -73,6 +73,8 @@ for(i in 1:length(l)){ #i=8 #i in 1:length(listos_mongo)
 		lcont$bol <- "num"
 		#Añadir url
 		lcont$url <- paste0("http://www.congreso.es", abl_c[num, "url"]) 
+		#Añadir fecha
+		lcont$fecha <- abl_c[num, "date"]
 		print(paste("falla el boletin:", num))
 		write_error_log("DS-Comisiones", num, "procesamiento erróneo")
 		next()
@@ -101,6 +103,7 @@ for(i in 1:length(l)){ #i=8 #i in 1:length(listos_mongo)
 				lcont2 <- list()
 				lcont2[[1]] <- crearCampoAutor(lcont[[k]])
 				lcont2[[1]]$url <- paste0("http://www.congreso.es", abl_c[num, "url"]) 
+				lcont2[[1]]$fecha <- abl_c[num, "date"]
 				lcont2[[1]]$lugar <- abl_c[num, "comision"]
 				lcont2[[1]]$origen <- "DiariosC"
 				lcontb <- lapply(lcont2, function(x) {
