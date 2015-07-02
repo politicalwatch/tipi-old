@@ -70,7 +70,9 @@ for(i in 1:length(l)){ #i=8 #i in 1:length(listos_mongo)
 		lcont <- vector("list")
 		lcont$bol <- "num"
 		#Añadir url
-		lcont$url <- paste0("http://www.congreso.es", abl[num, "url"]) 
+		lcont$url <- paste0("http://www.congreso.es", abl[num, "url"])
+		#Añadir fecha
+		lcont$fecha <- abl[num, "date"]
 		print(paste("falla el boletin:", num))
 		next()
 		write_error_log("DS-Pleno", paste0("boletin numero ",num), "procesamiento erróneo")
@@ -99,6 +101,7 @@ for(i in 1:length(l)){ #i=8 #i in 1:length(listos_mongo)
 				lcont2 <- list()
 				lcont2[[1]] <- crearCampoAutor(lcont[[k]])
 				lcont2[[1]]$url <- paste0("http://www.congreso.es", abl[num, "url"]) 
+				lcont2[[1]]$fecha <- abl[num, "date"]
 				lcont2[[1]]$origen <- "DiariosPD"
 				lcontb <- lapply(lcont2, function(x) {return(mongo.bson.from.list(x))})
 				mongo.insert.batch(mongo, mongo_collection("diariosPD"), lcontb)
