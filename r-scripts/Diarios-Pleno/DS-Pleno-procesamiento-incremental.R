@@ -102,7 +102,7 @@ for(i in 1:length(l)){ #i=8 #i in 1:length(listos_mongo)
 				lcont2[[1]] <- crearCampoAutor(lcont[[k]])
 				lcont2[[1]]$url <- paste0("http://www.congreso.es", abl[num, "url"]) 
 				lcont2[[1]]$fecha <- abl[num, "date"]
-				lcont2[[1]]$origen <- "DiariosPD"
+				lcont2[[1]]$origen <- "diariosPD"
 				lcontb <- lapply(lcont2, function(x) {return(mongo.bson.from.list(x))})
 				mongo.insert.batch(mongo, mongo_collection("diariosPD"), lcontb)
 			}
