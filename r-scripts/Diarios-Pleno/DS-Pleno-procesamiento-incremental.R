@@ -46,8 +46,9 @@ library("rmongodb")
 
 source("../mongodb-conn.R")
 # Cargar código procesamiento
-source("funciones-procesamiento.R")
-source("funciones-extraccion.R")
+source("../common-funciones-diarios.R")
+# source("funciones-procesamiento.R")
+# source("funciones-extraccion.R")
 
 # Presupone ficheros locales guardados: 
 ## bocgs-proc/Diario-PD-num.rd : siendo num un parámetro (número de boletín)
@@ -71,8 +72,6 @@ for(i in 1:length(l)){ #i=8 #i in 1:length(listos_mongo)
 		lcont$bol <- "num"
 		#Añadir url
 		lcont$url <- paste0("http://www.congreso.es", abl[num, "url"])
-		#Añadir fecha
-		lcont$fecha <- as.POSIXct(abl[num, "date"], tz="CET")
 		print(paste("falla el boletin:", num))
 		next()
 		write_error_log("DS-Pleno", paste0("boletin numero ",num), "procesamiento erróneo")
@@ -88,7 +87,7 @@ for(i in 1:length(l)){ #i=8 #i in 1:length(listos_mongo)
 	lcont2 <- lcont
 	if (length(lcont2) > 0 & is.null(lcont2$special)){
 		#Añadir url y procesar campo autor
-		for(k in 1:length(lcont)){#k=1
+		for(k in 1:length(lcont)){#k=1 #
 			ref <- lcont[[k]]$ref
 			bol <- lcont[[k]]$bol
 			print(ref)
