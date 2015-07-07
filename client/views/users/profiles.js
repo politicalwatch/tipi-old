@@ -1,6 +1,6 @@
 Template.profiles.helpers({
     citizens: function() {
-        return Meteor.users.find({roles: {$ne: 'deputy'}, roles: {$ne: 'organization'}, roles: {$ne: 'media'}}, {sort: {username: 1}});
+        return Meteor.users.find({roles: {$nin: ['deputy', 'organization', 'media']}}, {sort: {username: 1}});
     },
     deputies: function() {
         deps = Meteor.users.find({roles: 'deputy'}, {sort: {username: 1}}).fetch();
