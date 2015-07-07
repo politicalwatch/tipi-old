@@ -199,7 +199,7 @@ proc_DS <- function(lines, num){
                         tmp <- list()
                         tmp$bol <- num
                         #Origen
-                        tmp$origen <- "DS"
+                        # tmp$origen <- "DS"
                         #
                         ini <- linnumexp[i]
                         fin <- linnumexp[length(linnumexp)] #caso del ultimo
@@ -213,11 +213,9 @@ proc_DS <- function(lines, num){
                         tmp$titulo <- str_replace(tmp$titulo, "- ", "") ## Quito espacios duplicados
                         tmp$titulo <- str_replace(tmp$titulo, '\\(Número de expediente [0-9]{3}\\/[0-9]{5,6}\\)', "")
                         tmp$titulo <- str_replace(tmp$titulo, "\\.", "") #quitar el punto
-                        tmp$titulo <- tolower(tmp$titulo)
+                        tmp$titulo <- capitalize(tolower(tmp$titulo))
                         tmp$titulo <- str_trim(tmp$titulo) ## Quito espacios en los extremos
                         #
-                        #Origen
-                        tmp$origen <- "DS"
                         #Referencia
                         tmp$ref <- ""
                         if(any(str_detect(string = linfirst, pattern = '[0-9]{3}\\/[0-9]{5,6}'))){
@@ -259,7 +257,7 @@ proc_DS <- function(lines, num){
                         #Boletin: DECIDIR TIPO DE CODIGO. Depende del escrapeo.
                         tmp$bol <- as.character(num)
                         #Origen
-                        tmp$origen <- "DS"
+                        # tmp$origen <- "DS"
                         
                         #Referencia: se extrae de (Número de expediente)...en la primera linea
                         tmp$ref <- ""
@@ -280,9 +278,10 @@ proc_DS <- function(lines, num){
                         tmp$titulo <- linfirst
                         #Limpiar titulo
                         tmp$titulo <- str_replace(tmp$titulo, "- ", "") ## Quito espacios duplicados
+                        tmp$titulo <- str_replace(tmp$titulo, "\\...", "") ##quito puntos suspensivos
                         tmp$titulo <- str_replace(tmp$titulo, '\\(Número de expediente [0-9]{3}\\/[0-9]{5,6}.*\\)', "")
                         tmp$titulo <- str_replace(tmp$titulo, "\\.", "") #quitar el punto
-                        #                 tmp$titulo <- tolower(tmp$titulo)
+                        tmp$titulo <- capitalize(tolower(tmp$titulo))
                         tmp$titulo <- str_trim(tmp$titulo) ## Quito espacios en los extremos
                         #
                         # Extraer Grupos parlamentarios.
