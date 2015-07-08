@@ -19,7 +19,7 @@ SyncedCron.add({
     name: 'Global TIPI Stats',
     schedule: function(parser) {
         // parser is a later.parse object
-        return parser.text('every 8 hours');
+        return parser.text('every 10 hours');
     },
     job: function() {
         // Initialized
@@ -85,15 +85,18 @@ SyncedCron.add({
 });
 
 
-/*
+
 SyncedCron.add({
     name: 'Annotate References to TIPI',
     schedule: function(parser) {
         // parser is a later.parse object
-        return parser.text('every 1 minute');
+        return parser.text('every 20 hours');
     },
     job: function() {
+        console.log("Starting process...");
+        console.log("Fetching documents...");
         referencias = Refs.find({$or: [{annotate: { $exists: false}}, {annotate: false}]}, { fields: { _id: 1 } }).fetch();
+        console.log("Documents fetched: " + referencias.length);
         dicts = Dicts.find({dictgroup: "tipi"}).fetch();
         total = referencias.length;
         _.each(referencias, function(r, i) {
@@ -101,16 +104,16 @@ SyncedCron.add({
             res = suggest_annotation(r._id, dicts);
             annotateRef(r._id, res[0], res[1]);
         });
+        console.log("Process finished!");
     }
 });
-*/
+
 
 function suggest_annotation(id, dicts) {
     ds = [];
     ts = [];
     _.each(dicts, function(d) {
         _.each(d.words, function(w) {
-            console.log(d + " >>> " + w);
             search = new RegExp(w, 'gi');
             referenceElement = Refs.findOne(id);
             _.each(referenceElement.content, function(c){
@@ -223,7 +226,6 @@ function parseAutorOtro(el) {
         return [];
     }
 }
-
 
 
 
