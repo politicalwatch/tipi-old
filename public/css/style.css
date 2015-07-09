@@ -824,10 +824,12 @@ li.lined:last-child {
     width: 90px;
     height: 90px;
 }
+.foto.grande img { width: 90px; }
 .foto.mediana {
     width: 35px;
     height: 35px;
 }
+.foto.mediana img { width: 35px; }
 
 /*Not found + Access denied-----------*/
 #not-found, #access-denied {}

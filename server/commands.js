@@ -15,7 +15,29 @@ Commands({
             // }
         });
         console.log("Process finished!");
+    },
+    "deletedots": function() {
+        referencias = Refs.find({origen: "serieD", titulo: {$regex: /\.\.\./}}).fetch();
+        total = referencias.length;
+        _.each(referencias, function(r, i) {
+            console.log(i + "/" + total);
+            titulo = r.titulo.replace('...', '');
+            Refs.update(r._id, {$set: {titulo: titulo}});
+            Tipis.update({original: r._id._str}, {$set: {titulo: titulo}});
+        });
+    },
+    "capitalizetitle": function() {
+        referencias = Refs.find({ $or: [{origen: "diariosC"}, {origen: "diariosPD"}] }).fetch();
+        total = referencias.length;
+        _.each(referencias, function(r, i) {
+            console.log(i + "/" + total);
+            r.titulo = r.titulo.toLowerCase();
+            titulo = r.titulo.charAt(0).toUpperCase() + r.titulo.slice(1);
+            Refs.update(r._id, {$set: {titulo: titulo}});
+            Tipis.update({original: r._id._str}, {$set: {titulo: titulo}});
+        });
     }
+
 });
 */
 

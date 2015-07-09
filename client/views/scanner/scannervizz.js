@@ -14,7 +14,7 @@ Template.scannervizz.rendered = function() {
     statslatest = stats.latest;
 
     _.each(overall, function(el) {
-        if (el.count > 0) {
+        if ( (el.count > 0) && (! _.isNull(el._id)) ) {
             objd = {
                 "name": el._id,
                 "icon": Dicts.find({dict: el._id}, {fields: {iconb1: 1}}).fetch()[0].iconb1,
