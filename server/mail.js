@@ -1,18 +1,18 @@
 Meteor.startup(function() {
     return Meteor.Mandrill.config({
-        username: "tipi@ciecode.es",
-        key: "8U6BZmsWlIIIYICTIbAXBg"
+        username: Meteor.settings.mandrill.username,
+        key: Meteor.settings.mandrill.key
     });
 });
 
 
 Meteor.methods({
-    tipiSendEmail: function (from, to, subject, text) {
-        check([from, to, subject, text], [String]);
+    tipiSendEmail: function (to, subject, text) {
+        check([to, subject, text], [String]);
         this.unblock();
 
         Meteor.Mandrill.send({
-            from: from,
+            from: 'tipi@ciecode.es',
             to: to,
             subject: subject,
             html: text

@@ -15,11 +15,14 @@ function sortbydatefunction(a, b) {
 }
 
 
+/***************************** TIPI STATS ******************************/
+
+
 SyncedCron.add({
-    name: 'Global TIPI Stats',
+    name: 'TIPI Stats',
     schedule: function(parser) {
         // parser is a later.parse object
-        return parser.text('every 10 hours');
+        return parser.text('every 8 hours');
     },
     job: function() {
         // Initialized
@@ -85,12 +88,50 @@ SyncedCron.add({
 });
 
 
+/***************************** TIPI ALERTS ******************************/
+
+
+SyncedCron.add({
+    name: 'TIPI Alerts',
+    schedule: function(parser) {
+        // parser is a later.parse object
+        return parser.text('every 10 hours');
+    },
+    job: function() {
+        var subject = '';
+        var body = '';
+        dicts = Dicts.find({dictgroup: 'tipi'}, {fields: {dict: 1}}).fetch();
+        _.each(dicts, function(dict) {
+            alerts = TipiAlerts.findOne({_id: dict.dict});
+            if (!_.isUndefined(alerts) && !_.isUndefined(alerts.items)) {
+                subject = '[TIPI] Alertas de ' + dict.dict;
+                body = "<ul>";
+                _.each(alerts.items, function(item) {
+                    body += '<li><a href="' + Meteor.settings.url + '/t/' + item.id + '">' + item.titulo + '</a> ('+ moment(item.fecha).startOf('day').fromNow() +')</li>';
+                });
+                body += '</ul><br/><br/>';
+                body += '<p style="font-size:10px">Para darse de baja de las Alertas TIPI acceda a su perfil de usuario y cambie su configuración.</p>';
+                user_list = Meteor.users.find({"profile.dicts": dict.dict}).fetch();
+                _.each(user_list, function(user) {
+                    Meteor.call('tipiSendEmail', user.emails[0].address, subject, body);
+                });
+                TipiAlerts.remove({_id: dict.dict});
+            }
+            subject = '';
+            body = '';
+        });
+    }
+});
+
+
+/***************************** ANNOTATE REFERENCES TO TIPI ******************************/
+
 
 SyncedCron.add({
     name: 'Annotate References to TIPI',
     schedule: function(parser) {
         // parser is a later.parse object
-        return parser.text('every 20 hours');
+        return parser.text('every 12 hours');
     },
     job: function() {
         console.log("Starting process...");
@@ -261,7 +302,13 @@ function annotateRef(id, _dicts, _terms) {
             }
             t = Tipis.insert(tipi);
             if (t) {
+                var alert_id = t;
+                var alert_titulo = titulo;
+                var alert_fecha = r.fecha;
                 // Tipi successfully inserted
+                _.each(_dicts, function(dict) {
+                    TipiAlerts.upsert({_id: dict.dict}, {$addToSet: {items: {id: alert_id, titulo: alert_titulo, fecha: alert_fecha}}});
+                });
                 Refs.update(id, {$set: {dicts: _dicts, terms: _terms, annotate: true, is_tipi: true}});
             } else {
                 // Do nothing (this code will be run once again)

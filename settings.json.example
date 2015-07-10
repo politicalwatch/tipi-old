@@ -1,6 +1,7 @@
 {
     "name": "tipi",
     "version": "0.1.0",
+    "url": "http://tipiciudadano.es",
     "engines": {
         "node": "0.8.24"
     },
@@ -24,6 +25,10 @@
 			"sortBy": {"date": -1}
 		}
 	},
+    "mandrill": {
+        "username": "",
+        "key": ""
+    },
 	"kadira": {
     	"appId": "",
     	"appSecret": ""
