@@ -102,20 +102,22 @@ SyncedCron.add({
         var body = '';
         dicts = Dicts.find({dictgroup: 'tipi'}, {fields: {dict: 1}}).fetch();
         _.each(dicts, function(dict) {
-            alerts = TipiAlerts.findOne({_id: dict.dict});
+            alerts = TipiAlerts.findOne({dict: dict.dict});
             if (!_.isUndefined(alerts) && !_.isUndefined(alerts.items)) {
                 subject = '[TIPI] Alertas de ' + dict.dict;
                 body = "<ul>";
-                _.each(alerts.items, function(item) {
-                    body += '<li><a href="' + Meteor.settings.url + '/t/' + item.id + '">' + item.titulo + '</a> ('+ moment(item.fecha).startOf('day').fromNow() +')</li>';
-                });
-                body += '</ul><br/><br/>';
-                body += '<p style="font-size:10px">Para darse de baja de las Alertas TIPI acceda a su perfil de usuario y cambie su configuración.</p>';
-                user_list = Meteor.users.find({"profile.dicts": dict.dict}).fetch();
-                _.each(user_list, function(user) {
-                    Meteor.call('tipiSendEmail', user.emails[0].address, subject, body);
-                });
-                TipiAlerts.remove({_id: dict.dict});
+                if (alerts.items.length > 0) {
+                    _.each(alerts.items, function(item) {
+                        body += '<li><a href="' + Meteor.settings.url + '/t/' + item.id + '">' + item.titulo + '</a> ('+ moment(item.fecha).startOf('day').fromNow() +')</li>';
+                    });
+                    body += '</ul><br/><br/>';
+                    body += '<p style="font-size:10px">Para darse de baja de las Alertas TIPI acceda a su perfil de usuario y cambie su configuración.</p>';
+                    user_list = Meteor.users.find({"profile.dicts": dict.dict}).fetch();
+                    _.each(user_list, function(user) {
+                        Meteor.call('tipiSendEmail', user.emails[0].address, subject, body);
+                    });
+                    TipiAlerts.update({dict: dict.dict}, {$set: {items: []}});
+                }
             }
             subject = '';
             body = '';
@@ -307,7 +309,7 @@ function annotateRef(id, _dicts, _terms) {
                 var alert_fecha = r.fecha;
                 // Tipi successfully inserted
                 _.each(_dicts, function(dict) {
-                    TipiAlerts.upsert({_id: dict.dict}, {$addToSet: {items: {id: alert_id, titulo: alert_titulo, fecha: alert_fecha}}});
+                    TipiAlerts.update({dict: dict}, {$addToSet: {items: {id: alert_id, titulo: alert_titulo, fecha: alert_fecha}}});
                 });
                 Refs.update(id, {$set: {dicts: _dicts, terms: _terms, annotate: true, is_tipi: true}});
             } else {

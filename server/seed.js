@@ -16,3 +16,9 @@ Roles that must appear into the db
 
 // Insert initial data here
 
+if (TipiAlerts.find().count() == 0) {
+    dicts = Dicts.find({dictgroup: 'tipi'}, {fields: {dict: 1}}).fetch();
+    _.each(dicts, function(dict) {
+        TipiAlerts.insert({dict: dict.dict, items: []});
+    });            
+}
