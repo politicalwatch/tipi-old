@@ -11,7 +11,9 @@
 							<a href="{{congresoURL}}" target="_blank"><i class="fa fa-institution"></i> Ver en el Congreso</a>
 						</div>
 						<div class="col-sm-6 pull-right">
-							<a href="#" class="btn btn-secondary pull-right discusslink"></a>
+							{{#if currentUser}}
+								<a href="#" class="btn btn-secondary pull-right discusslink"></a>
+							{{/if}}
 						</div>
 					</div>
 					<div class="row tipi-metadata">
@@ -79,15 +81,17 @@
 		{{/with}}
 	</div>
 
-	<div id="overlay">
-		<div>
-			<input id="conversation-title" name="conversation-title" type="text" value="" placeholder="Agrega un título">
-			<br>
-			<br>
-			<p>
-				<a id="start-conversation" href="#">Iniciar conversación</a><span class="white-text">&nbsp;&nbsp;o&nbsp;&nbsp;</span><a id="close-dialog" href="#">Cancelar</a>
-			</p>
+	{{#if currentUser}}
+		<div id="overlay">
+			<div>
+				<input id="conversation-title" name="conversation-title" type="text" value="" placeholder="Agrega un título">
+				<br>
+				<br>
+				<p>
+					<a id="start-conversation" href="#">Iniciar conversación</a><span class="white-text">&nbsp;&nbsp;o&nbsp;&nbsp;</span><a id="close-dialog" href="#">Cancelar</a>
+				</p>
+			</div>
 		</div>
-	</div>
+	{{/if}}
 
 </template>
