@@ -8,6 +8,36 @@ Template.tipisearch.helpers({
     alldicts_helper: function() {
         return Dicts.find().fetch();
     },
+    origen_helper: function() {
+        return [
+            {'value': 'serieA', 'text': 'Serie A'},
+            {'value': 'serieB', 'text': 'Serie B'},
+            {'value': 'serieD', 'text': 'Serie D'},
+            {'value': 'diariosC', 'text': 'Diarios (Comisiones)'},
+            {'value': 'diariosPD', 'text': 'Diarios (Plenos y Diputación permanente)'}
+        ];
+    },
+    origen_helper: function() {
+        return [
+            {'value': 'serieA', 'text': 'Serie A'},
+            {'value': 'serieB', 'text': 'Serie B'},
+            {'value': 'serieD', 'text': 'Serie D'},
+            {'value': 'diariosC', 'text': 'Diarios (Comisiones)'},
+            {'value': 'diariosPD', 'text': 'Diarios (Plenos y Diputación permanente)'}
+        ];
+    },
+    grupootro_helper: function() {
+        return [
+            {'value': 'Gobierno', 'text': 'Gobierno'},
+            {'value': 'GP', 'text': 'G.P. Popular'},
+            {'value': 'GS', 'text': 'G.P. Socialista'},
+            {'value': 'GC-CiU', 'text': 'Grupo Catalán (CiU)'},
+            {'value': 'GIP', 'text': 'G.P. La Izquierda Plural'},
+            {'value': 'GUPyD', 'text': 'G.P. UPyD'},
+            {'value': 'GV (EAJ-PNV)', 'text': 'G.P. Vasco (EAJ-PNV)'},
+            {'value': 'GMx', 'text': 'G.P. Mixto'}
+        ];    
+    },
 	lastquery: function() {
 		return Session.get("searchTipis");
 	},

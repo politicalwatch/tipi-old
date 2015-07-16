@@ -16,7 +16,11 @@
                                     <select class="form-control input-lg" id="dicts" name="dicts">
                                         <option value="">Selecciona ámbito</option>
                                         {{#each alldicts_helper}}
-                                            <option value="{{dict}}">{{dict}}</option>
+                                            {{#if eq lastquery.dicts dict }}
+                                                <option value="{{dict}}" selected="selected">{{dict}}</option>
+                                            {{else}}
+                                                <option value="{{dict}}">{{dict}}</option>
+                                            {{/if}}
                                         {{/each}}
                                     </select>
                                 </div>
@@ -34,14 +38,13 @@
                                 <div class="col-sm-3">
                                     <select class="form-control input-lg" id="grupootro" name="grupootro">
                                         <option value="">o selecciona autor</option>
-                                        <option value="Gobierno">Gobierno</option>
-                                        <option value="GP">G.P. Popular</option>
-                                        <option value="GS">G.P. Socialista</option>
-                                        <option value="GC-CiU">Grupo Catalán (CiU)</option>
-                                        <option value="GIP">G.P. La Izquierda Plural</option>
-                                        <option value="GUPyD">G.P. UPyD</option>
-                                        <option value="GV (EAJ-PNV)">G.P. Vasco (EAJ-PNV)</option>
-                                        <option value="GMx">G.P. Mixto</option>
+                                        {{#each grupootro_helper}}
+                                            {{#if eq lastquery.grupootro value }}
+                                                <option value="{{value}}" selected="selected">{{text}}</option>
+                                            {{else}}
+                                                <option value="{{value}}">{{text}}</option>
+                                            {{/if}}
+                                        {{/each}}
                                     </select>
                                 </div>
                             </div>
@@ -49,69 +52,25 @@
                                 <div class="col-sm-4">
                                     <select class="form-control input-lg" id="lugar" name="lugar">
                                         <option value="">Selecciona lugar</option>
-                                        <option value="pleno">Pleno</option>
-                                        <option value="Comisión Constitucional">Comisión Constitucional</option>
-                                        <option value="Comisión de Asuntos Exteriores">Comisión de Asuntos Exteriores</option>
-                                        <option value="Comisión de Justicia">Comisión de Justicia</option>
-                                        <option value="Comisión de Interior">Comisión de Interior</option>
-                                        <option value="Comisión de Defensa">Comisión de Defensa</option>
-                                        <option value="Comisión de Economía y Competitividad">Comisión de Economía y Competitividad</option>
-                                        <option value="Comisión de Hacienda y Administraciones Públicas">Comisión de Hacienda y Administraciones Públicas</option>
-                                        <option value="Comisión de Presupuestos">Comisión de Presupuestos</option>
-                                        <option value="Comisión de Fomento">Comisión de Fomento</option>
-                                        <option value="Comisión de Educación y Deporte">Comisión de Educación y Deporte</option>
-                                        <option value="Comisión de Empleo y Seguridad Social">Comisión de Empleo y Seguridad Social</option>
-                                        <option value="Comisión de Industria, Energía y Turismo">Comisión de Industria, Energía y Turismo</option>
-                                        <option value="Comisión de Agricultura, Alimentación y Medio Ambiente">Comisión de Agricultura, Alimentación y Medio Ambiente</option>
-                                        <option value="Comisión de Sanidad y Servicios Sociales">Comisión de Sanidad y Servicios Sociales</option>
-                                        <option value="Comisión de Cooperación Internacional para el Desarrollo">Comisión de Cooperación Internacional para el Desarrollo</option>
-                                        <option value="Comisión de Cultura">Comisión de Cultura</option>
-                                        <option value="Comisión de Igualdad">Comisión de Igualdad</option>
+                                        {{#each lugares_helper}}
+                                            {{#if eq lastquery.lugar this }}
+                                                <option value="{{this}}" selected="selected">{{this}}</option>
+                                            {{else}}
+                                                <option value="{{this}}">{{this}}</option>
+                                            {{/if}}
+                                        {{/each}}
                                     </select>
                                 </div>
                                 <div class="col-sm-6">
                                     <select class="form-control input-lg" name="tipotexto" id="tipotexto">
                                         <option value="">Seleccione tipo de iniciativa</option>
-                                        <option value="Proposición de Ley">Proposición de Ley</option>
-                                        <option value="Enmienda a Proposición de Ley">Enmienda a Proposición de Ley</option>
-                                        <option value="Proyecto de Ley">Proyecto de Ley</option>
-                                        <option value="Enmienda a Proyecto de Ley">Enmienda a Proyecto de Ley</option>
-                                        <option value="Real decreto ley">Real decreto ley</option>
-                                        <option value="Real decreto legislativo">Real decreto legislativo</option>
-                                        <option value="Solicitud creación subcomisiones y ponencias">Solicitud creación subcomisiones y ponencias</option>
-                                        <option value="Solicitud creación comisión">Solicitud creación comisión</option>
-                                        <option value="Proposiciones no de Ley presentadas en Comisión">Proposiciones no de Ley presentadas en Comisión</option>
-                                        <option value="Proposiciones no de Ley presentadas en Pleno">Proposiciones no de Ley presentadas en Pleno</option>
-                                        <option value="Enmienda a Proposición no de Ley">Enmienda a Proposición no de Ley</option>
-                                        <option value="Interpelación ordinaria">Interpelación ordinaria</option>
-                                        <option value="Interpelación urgente">Interpelación urgente</option>
-                                        <option value="Moción consecuencia de interpelación urgente">Moción consecuencia de interpelación urgente</option>
-                                        <option value="Enmienda a Moción">Enmienda a Moción</option>
-                                        <option value="Pregunta oral a la Corporación RTVE">Pregunta oral a la Corporación RTVE</option>
-                                        <option value="Pregunta a la Corporación RTVE con respuesta escrita">Pregunta a la Corporación RTVE con respuesta escrita</option>
-                                        <option value="Pregunta oral en Pleno">Pregunta oral en Pleno</option>
-                                        <option value="Pregunta oral al Gobierno en Comisión">Pregunta oral al Gobierno en Comisión</option>
-                                        <option value="Pregunta al Gobierno con respuesta escrita">Pregunta al Gobierno con respuesta escrita</option>
-                                        <option value="Solicitud de informe a la Administración del Estado">Solicitud de informe a la Administración del Estado</option>
-                                        <option value="Solicitud de informe a Comunidad Autónoma">Solicitud de informe a Comunidad Autónoma</option>
-                                        <option value="Solicitud de informe a Entidad Local">Solicitud de informe a Entidad Local</option>
-                                        <option value="Solicitud de informe a otra Entidad Pública">Solicitud de informe a otra Entidad Pública</option>
-                                        <option value="Solicitud de informe a la Administración del Estado">Solicitud de informe a la Administración del Estado</option>
-                                        <option value="Comunicación del Gobierno">Comunicación del Gobierno</option>
-                                        <option value="Planes y programas">Planes y programas</option>
-                                        <option value="Comparecencia del Gobierno ante el Pleno">Comparecencia del Gobierno ante el Pleno</option>
-                                        <option value="Comparecencia">Comparecencia</option>
-                                        <option value="Comparecencia del Gobierno en Comisión">Comparecencia del Gobierno en Comisión</option>
-                                        <option value="Otras comparecencias en Comisión">Otras comparecencias en Comisión</option>
-                                        <option value="Comparecencia del Gobierno en Comisión Mixta solicitada en el Senado">Comparecencia del Gobierno en Comisión Mixta solicitada en el Senado</option>
-                                        <option value="Comparec. autoridades y funcionarios en Com. Mx. solicitada en Senado">Comparec. autoridades y funcionarios en Com. Mx. solicitada en Senado</option>
-                                        <option value="Otras comparecencias en Comisión Mixta solicitadas en el Senado">Otras comparecencias en Comisión Mixta solicitadas en el Senado</option>
-                                        <option value="Información sobre secretos oficiales">Información sobre secretos oficiales</option>
-                                        <option value="Objetivo de estabilidad presupuestaria">Objetivo de estabilidad presupuestaria</option>
-                                        <option value="Documentación remitida a Comisiones para su conocimiento">Documentación remitida a Comisiones para su conocimiento</option>
-                                        <option value="Funciones del Pleno">Funciones del Pleno</option>
-                                        <option value="Funciones de la Diputación Permanente">Funciones de la Diputación Permanente</option>
-                                        <option value="Operaciones de las Fuerzas Armadas en el exterior">Operaciones de las Fuerzas Armadas en el exterior</option>
+                                        {{#each tipos_helper}}
+                                            {{#if eq lastquery.tipotexto this }}
+                                                <option value="{{this}}" selected="selected">{{this}}</option>
+                                            {{else}}
+                                                <option value="{{this}}">{{this}}</option>
+                                            {{/if}}
+                                        {{/each}}
                                     </select>
                                     <!-- <input class="form-control input-lg" type="text" id="tipotexto" name="tipotexto" value="{{lastquery.tipotexto}}" placeholder="Tipo de iniciativa"> -->
                                 </div>

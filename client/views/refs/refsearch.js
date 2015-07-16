@@ -8,6 +8,22 @@ Template.refsearch.helpers({
 	alldicts_helper: function() {
 		return Dicts.find().fetch();
 	},
+	tipoautor_helper: function() {
+		return [
+			{'value': 'diputado', 'text': 'Diputado/a'},
+	        {'value': 'grupo', 'text': 'Grupo'},
+	        {'value': 'otro', 'text': 'Otro'}
+		];
+	},
+	origen_helper: function() {
+		return [
+			{'value': 'serieA', 'text': 'Serie A'},
+	        {'value': 'serieB', 'text': 'Serie B'},
+	        {'value': 'serieD', 'text': 'Serie D'},
+	        {'value': 'diariosC', 'text': 'Diarios (Comisiones)'},
+	        {'value': 'diariosPD', 'text': 'Diarios (Plenos y Diputación permanente)'}
+		];
+	},
 	lastquery: function() {
 		return Session.get("searchRefs");
 	},

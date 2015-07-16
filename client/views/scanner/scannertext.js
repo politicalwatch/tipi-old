@@ -8,6 +8,84 @@ Template.scannertext.helpers({
     alldicts_helper: function() {
         return Dicts.find().fetch();
     },
+    grupootro_helper: function() {
+        return [
+            {'value': 'Gobierno', 'text': 'Gobierno'},
+            {'value': 'GP', 'text': 'G.P. Popular'},
+            {'value': 'GS', 'text': 'G.P. Socialista'},
+            {'value': 'GC-CiU', 'text': 'Grupo Catalán (CiU)'},
+            {'value': 'GIP', 'text': 'G.P. La Izquierda Plural'},
+            {'value': 'GUPyD', 'text': 'G.P. UPyD'},
+            {'value': 'GV (EAJ-PNV)', 'text': 'G.P. Vasco (EAJ-PNV)'},
+            {'value': 'GMx', 'text': 'G.P. Mixto'}
+        ];    
+    },
+    lugares_helper: function() {
+        return [
+            "Pleno",
+            "Comisión Constitucional",
+            "Comisión de Asuntos Exteriores",
+            "Comisión de Justicia",
+            "Comisión de Interior",
+            "Comisión de Defensa",
+            "Comisión de Economía y Competitividad",
+            "Comisión de Hacienda y Administraciones Públicas",
+            "Comisión de Presupuestos",
+            "Comisión de Fomento",
+            "Comisión de Educación y Deporte",
+            "Comisión de Empleo y Seguridad Social",
+            "Comisión de Industria, Energía y Turismo",
+            "Comisión de Agricultura, Alimentación y Medio Ambiente",
+            "Comisión de Sanidad y Servicios Sociales",
+            "Comisión de Cooperación Internacional para el Desarrollo",
+            "Comisión de Cultura",
+            "Comisión de Igualdad"
+        ];
+    },
+    tipos_helper: function() {
+        return [
+            "Proposición de Ley",
+            "Enmienda a Proposición de Ley",
+            "Proyecto de Ley",
+            "Enmienda a Proyecto de Ley",
+            "Real decreto ley",
+            "Real decreto legislativo",
+            "Solicitud creación subcomisiones y ponencias",
+            "Solicitud creación comisión",
+            "Proposiciones no de Ley presentadas en Comisión",
+            "Proposiciones no de Ley presentadas en Pleno",
+            "Enmienda a Proposición no de Ley",
+            "Interpelación ordinaria",
+            "Interpelación urgente",
+            "Moción consecuencia de interpelación urgente",
+            "Enmienda a Moción",
+            "Pregunta oral a la Corporación RTVE",
+            "Pregunta a la Corporación RTVE con respuesta escrita",
+            "Pregunta oral en Pleno",
+            "Pregunta oral al Gobierno en Comisión",
+            "Pregunta al Gobierno con respuesta escrita",
+            "Solicitud de informe a la Administración del Estado",
+            "Solicitud de informe a Comunidad Autónoma",
+            "Solicitud de informe a Entidad Local",
+            "Solicitud de informe a otra Entidad Pública",
+            "Solicitud de informe a la Administración del Estado",
+            "Comunicación del Gobierno",
+            "Planes y programas",
+            "Comparecencia del Gobierno ante el Pleno",
+            "Comparecencia",
+            "Comparecencia del Gobierno en Comisión",
+            "Otras comparecencias en Comisión",
+            "Comparecencia del Gobierno en Comisión Mixta solicitada en el Senado",
+            "Comparec. autoridades y funcionarios en Com. Mx. solicitada en Senado",
+            "Otras comparecencias en Comisión Mixta solicitadas en el Senado",
+            "Información sobre secretos oficiales",
+            "Objetivo de estabilidad presupuestaria",
+            "Documentación remitida a Comisiones para su conocimiento",
+            "Funciones del Pleno",
+            "Funciones de la Diputación Permanente",
+            "Operaciones de las Fuerzas Armadas en el exterior"
+        ];
+    },
     lastquery: function() {
         return Session.get("scannerText");
     },

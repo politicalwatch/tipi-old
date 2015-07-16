@@ -23,3 +23,11 @@ Handlebars.registerHelper('trimString', function(passedString, startstring, ends
 Handlebars.registerHelper('', function(section){
   return "";
 });
+
+Handlebars.registerHelper('eq', function(v1, v2, options) {
+  if(v1 == v2){
+    return true
+  } else {
+    return false
+  }
+});
