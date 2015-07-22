@@ -324,6 +324,12 @@ li.lined:last-child {
 	color: #ffc741;
 }
 
+@media(max-width:800px) {
+  .blog-post .blog-img {
+    width: 100%;
+  }
+}
+
 #mdblog-new { color: #000; background-color: #ffc741; border-color: #000; }
 #mdblog-publish { color: #fff; background-color: green; }
 #mdblog-unpublish, #mdblog-delete { color: #fff; background-color: #e60000; }

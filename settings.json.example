@@ -25,6 +25,9 @@
 			"sortBy": {"date": -1}
 		}
 	},
+    "S3Bucket": "",
+    "AWSAccessKeyId": "",
+    "AWSSecretAccessKey": "",
     "mandrill": {
         "username": "",
         "key": ""
