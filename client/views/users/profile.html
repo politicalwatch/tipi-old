@@ -2,8 +2,24 @@
     <div id="profile" class="containerglob darkpatt">
         <div class="container">
             <div class="row">
-                <div class="col-sm-12 grey darkpatt">
-                    <h1>{{userobject.username}}</h1>
+                <div class="col-sm-12 grey darkpatt text-center">
+                    {{#with userobject}}
+                        {{#if isEqUser _id }}
+                            <div class="image-upload">
+                                <label for="image-input">
+                                    <span class="foto grande">
+                                        <img src="{{avatarUrl}}" />
+                                    </span>
+                                </label>
+                                <input id="image-input" type="file" />
+                            </div>
+                        {{else}}
+                            <span class="foto grande">
+                                <img src="{{avatarUrl}}" />
+                            </span>
+                        {{/if}}
+                        <h1>{{username}}</h1>
+                    {{/with}}
                 </div>
             </div>
             <hr>

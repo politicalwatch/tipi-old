@@ -1,7 +1,13 @@
 <template name="profileItem">
     <div class="col-sm-4 col-xs-6 text-center {{isCurrent _id}}">
         <h3>
-            <a href="{{pathFor 'profile' username=username}}">{{username}}</a>
+            <span class="foto grande">
+                <img src="{{avatarUrl}}" />
+            </span>
+            <br>
+            <a href="{{pathFor 'profile' username=username}}">
+                {{username}}
+            </a>
             {{#if status.online}}
                 <i class="fa fa-circle" style="color: #4AC948;"></i>
             {{/if}}

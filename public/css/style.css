@@ -837,6 +837,10 @@ li.lined:last-child {
 }
 .foto.mediana img { width: 35px; }
 
+.image-upload label { cursor: pointer; }
+#image-input { display: none; }
+
+
 /*Not found + Access denied-----------*/
 #not-found, #access-denied {}
 
