@@ -7,7 +7,7 @@ Template.login.events = {
       if(error){
         flash(error.reason, 'danger');
       }else{
-        Router.go('/');
+        Router.go('/profile/' + username);
         flash('Ya estás dentro de TiPi', 'success');
       }
     });

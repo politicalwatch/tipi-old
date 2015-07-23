@@ -1,5 +1,6 @@
 <template name="login">
     <div id="login" class="containerglob darkpatt">
+        {{count}}
         <div class="container">
             <div class="row">
                 <div class="col-sm-4 col-sm-offset-4">
@@ -12,8 +13,8 @@
                             <input id="password" class="form-control text-center" type="password" value="" placeholder="Contraseña" />
                         </div>
                         <div class="form-actions">
-                            <!-- <a class="inverse" href="/forgot">Olvidé mi contraseña</a> -->
                             <button type="submit" class="btn btn-block btn-secondary">Entrar</button>
+                            <a href="/forgot">Olvidé mi contraseña</a>
                         </div>
                     </form>
                 </div>
