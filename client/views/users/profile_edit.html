@@ -30,9 +30,9 @@
                   {{> afFieldInput name='profile.is_public' class="form-control"}}
                 </div>
                 <br>
-                <div class="form-group text-center">
+                <div id="alerts" class="form-group text-center">
                   <div class="controls">
-                      <h4>Ámbitos de interés (suscripción)</h4>
+                      <h4>Ámbitos de interés para alertas personalizadas</h4>
                       {{#each currentUser.profile.dicts}}
                           <button class="btn btn-check btn-xs btn-remove-dict" dict="{{this}}" user="{{currentUser._id}}">{{this}}</button>
                       {{/each}}

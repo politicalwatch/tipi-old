@@ -13,6 +13,9 @@
                 <p class="white-text">
                     Queremos que TIPI sea una plataforma de encuentro, interacción e intercambio de experiencias entre ciudadanos, organizaciones, medios de comunicación y diputados.
                 </p>
+                <p class="white-text">
+                    Date de alta en nuestro <a href="{{pathFor 'login' }}">Sistema de Alertas</a> y que no se te escape nada.
+                </p>
                 <br><br>
                 <div class="row">
                     <div class="col-sm-6">
@@ -52,8 +55,8 @@
                 <br>
                 {{#if currentUser}}
                     <a href="{{pathFor 'forumAdd'}}" class="btn btn-secondary"><i class="fa fa-comments-o"></i> Iniciar conversación</a>
+                    <br><br>
                 {{/if}}
-                <br><br>
                 <a href="{{pathFor 'newPosts'}}">Últimas conversaciones</a>
                 <br>
                 <a href="{{pathFor 'bestPosts'}}">Conversaciones más valoradas</a>
@@ -62,8 +65,8 @@
                 <br>
                 {{#if currentUser}}
                     <a href="{{pathFor 'meetupnew'}}" class="btn btn-secondary"><i class="fa fa-calendar"></i> Envía un evento</a>
+                    <br><br>
                 {{/if}}
-                <br><br>
                 <a href="{{pathFor 'meetups'}}">Próximos eventos</a>
                 <br>
                 <a href="{{pathFor 'oldmeetups'}}">Eventos anteriores</a>
