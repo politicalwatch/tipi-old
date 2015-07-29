@@ -6,6 +6,7 @@ All publications-related code.
 
 /+ ---------------------------------------------------- */
 
+
 if (Meteor.isServer) {
 
 	Meteor.publish('posts', function(options) {
@@ -70,12 +71,13 @@ if (Meteor.isServer) {
 		return Dicts.find({slug: slug}, {fields: {dict: 1, icon1: 1, icon2: 2}});
 	});
 	
-	Meteor.publish('allTipis', function() {
+	Meteor.publish('allTipis', function() { 
 		return Tipis.find({}, {fields: {autor: 1, grupo: 1, otro: 1, titulo: 1, dicts: 1, fecha: 1},
 													 sort: {fecha: -1}});
 	});
 
 	Meteor.publish('allTipisSearch', function(q) {
+        q['invisible'] = false;
 		return Tipis.find(q, {fields: {ref: 1, tipotexto: 1, autor_diputado: 1, autor_grupo: 1, autor_otro: 1, titulo: 1, dicts: 1, fecha: 1, lugar: 1}, 
 													sort: {fecha: -1},
 													limit: 20});
@@ -100,53 +102,6 @@ if (Meteor.isServer) {
 		return TipiStats.find();
 	});
 
-	/*
-	Meteor.publish('tipiStats', function() {
-		var self = this;
-		pipeline = [ { $match: {} }, { $unwind: '$dicts' }, { $group: { _id: '$dicts', count: { $sum: 1 } } } ];
-		stats = Tipis.aggregate(pipeline);
-		for(i=0;i<stats.length;i++) {
-			self.added('stats', stats[i]._id, {count: stats[i].count});
-		}
-		self.ready();
-	});
-
-	Meteor.publish('tipiStatsByDeputies', function() {
-		var self = this;
-		dicts = Dicts.find({dictgroup: 'tipi'}, {fields: {dict: 1}}).fetch();
-		for(i=0;i<dicts.length;i++) {
-			pipeline = [ { $match: {dicts: dicts[i].dict} }, { $unwind: '$autor_diputado' }, { $group: { _id: '$autor_diputado', count: { $sum: 1 } } } ];
-			statsbydeputies = Tipis.aggregate(pipeline);
-			for(j=0;j<statsbydeputies.length;j++) {
-				self.added('statsbydeputies', dicts[i].dict, {deputies: statsbydeputies});
-			}
-		}
-		self.ready();
-	});
-
-	Meteor.publish('tipiStatsByGroups', function() {
-		var self = this;
-		dicts = Dicts.find({dictgroup: 'tipi'}, {fields: {dict: 1}}).fetch();
-		for(i=0;i<dicts.length;i++) {
-			pipeline = [ { $match: {dicts: dicts[i].dict} }, { $unwind: '$autor_grupo' }, { $group: { _id: '$autor_grupo', count: { $sum: 1 } } } ];
-			statsbygroups = Tipis.aggregate(pipeline);
-			for(j=0;j<statsbygroups.length;j++) {
-				self.added('statsbygroups', dicts[i].dict, {groups: statsbygroups});
-			}
-		}
-		self.ready();
-	});
-
-	Meteor.publish('latestTipisByDicts', function() {
-		var self = this;
-		pipeline = [ { $match: {} }, { $sort: {fecha: -1} }, { $unwind: '$dicts' }, { $group: { _id: '$dicts', items: { $push:  { id: "$_id", titulo: "$titulo", fecha: "$fecha" } } } } ];
-		latest_items = Tipis.aggregate(pipeline);
-		for(i=0;i<latest_items.length;i++) {
-			self.added('latest', latest_items[i]._id, {items: latest_items[i].items});
-		}
-		self.ready();
-	});*/
-
 	Meteor.publish('allRefs', function() {
 		if (this.userId) {
 			var user = Meteor.users.findOne({_id:this.userId});
@@ -160,7 +115,8 @@ if (Meteor.isServer) {
   		return;
 	});
 
-	Meteor.publish('allRefsSearch', function(q) {
+	Meteor.publish('allRefsSearch', function(q) { 
+        q['invisible'] = false;
 		if (this.userId) {
 			var user = Meteor.users.findOne({_id:this.userId});
 	  		if (Roles.userIsInRole(user, ["admin","manager"])) {

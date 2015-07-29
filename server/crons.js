@@ -323,6 +323,30 @@ function annotateRef(id, _dicts, _terms) {
     }
 }
 
+
+/***************************** REF and TIPI invisible docs ******************************/
+
+var diarios_blacklist = [ '121', '120', '122', '123', '125', '130', '132', '154', '155', '156', '158', '161', '162', '170', '172', '173', '178', '179', '180', '181', '184', '186', '187', '188', '189', '193', '200', '201', '221', '222', '223', '224', '430', '043', '052', '062', '299' ]
+
+SyncedCron.add({
+    name: 'MAKE invisibles',
+    schedule: function(parser) {
+        // parser is a later.parse object
+        return parser.text('every 6 hours');
+    },
+    job: function() {
+        // Update invisibles
+        Refs.update( { $or: [ {origen: "diariosC"}, {origen: "diariosPD"}], tipo: {$in: diarios_blacklist}}, {$set: {invisible: true}}, { multi: true } );
+        Tipis.update( { $or: [ {origen: "diariosC"}, {origen: "diariosPD"}], tipo: {$in: diarios_blacklist}}, {$set: {invisible: true}}, { multi: true } );
+        // Update new documents to visible
+        Refs.update( { invisible: {$exists: false} }, {$set: {invisible: false}}, { multi: true } );
+        Tipis.update( { invisible: {$exists: false} }, {$set: {invisible: false}}, { multi: true } );
+
+    }
+});
+
+
+
 /* Tools */
 
 function onlyUnique (value, index, self) { 
