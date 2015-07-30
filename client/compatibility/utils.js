@@ -30,7 +30,7 @@ var datepickeroptions = {
 function cleanTipiQuery(cqry) {
     var fdesde, fhasta, newautor, newgrupootro;
     fdesde = fhasta = null;
-    newautor = newgrupootro = {};
+    newautor = newgrupootro = tipo = {};
     for (var k in cqry) {
         if( k == "fechadesde" && cqry[k] != "" ) {
             fdesde = cqry[k];
@@ -40,15 +40,19 @@ function cleanTipiQuery(cqry) {
             delete cqry[k];
         } else if ((k == "autor") && (cqry[k] != "")) {
             newautor = { 'autor_diputado': {$regex: cqry['autor'], $options: "gi"} }
-            delete cqry['autor'];
+            delete cqry[k];
         } else if ((k == "grupootro") && (cqry[k] != "")) {
             if (cqry['grupootro'] == 'Gobierno') {
                 newgrupootro = { 'autor_otro': cqry['grupootro'] }
             } else {
                 newgrupootro = { 'autor_grupo': cqry['grupootro'] }
             }
-            delete cqry['grupootro'];
-        } else if (cqry[k] == "") {
+            delete cqry[k];
+        } else if( k == "tipotexto" && cqry[k] != "" ) {
+            tipo = {'tipo': cqry[k]}
+            delete cqry[k];
+        }
+        else if (cqry[k] == "") {
             delete cqry[k];
         } else if (typeof(cqry[k]) != "object") {
             cqry[k] = {$regex: cqry[k], $options: "gi"};
@@ -59,6 +63,9 @@ function cleanTipiQuery(cqry) {
     }
     if (newgrupootro != {}) {
         jQuery.extend(cqry, newgrupootro);
+    }
+    if (tipo != {}) {
+        jQuery.extend(cqry, tipo);
     }
     if (fdesde != null && fhasta != null) {
         cqry["fecha"] = {
@@ -74,6 +81,7 @@ function cleanTipiQuery(cqry) {
             $lte: datestringToISODate(fhasta, false)
         };
     }
+    console.log(cqry);
     return cqry;
 }
 
