@@ -64,7 +64,6 @@ Template.scannertext.helpers({
             {'value': '161', 'text': 'Enmienda a Proposición no de Ley en Comisión'},
             {'value': '162', 'text': 'Proposiciones no de Ley en Pleno'},
             {'value': '162', 'text': 'Enmienda a Proposición no de Ley en Pleno'},
-            {'value': '170', 'text': 'Interpelación ordinaria'},
             {'value': '172', 'text': 'Interpelación urgente'},
             {'value': '173', 'text': 'Moción consecuencia de interpelación urgente'},
             {'value': '173', 'text': 'Enmienda a Moción'},
