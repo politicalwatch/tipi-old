@@ -94,14 +94,15 @@ Template.scannertext.helpers({
     settings: function () {
         return {
             rowsPerPage: 30,
+            showNavigation: 'never',
             showFilter: false,
             showColumnToggles: false,
-            fields: [{ key: 'titulo', label: 'Titulo', headerClass: 'col-md-7',
+            fields: [{ key: 'titulo', label: 'Titulo', sortable: true, sortOrder: 1, sortDirection: -1, headerClass: 'col-md-7',
                                             fn: function(val, obj) {
                                                 return Spacebars.SafeString('<a href="/t/'+ obj._id + '">'+val+'</a>');
                                             }
                                         },
-                                        { key: 'autor_diputado', label: 'Autor', headerClass: 'col-md-2',
+                                        { key: 'autor_diputado',  label: 'Autor', sortable: false, headerClass: 'col-md-2',
                                             fn: function(val, obj) {
                                                 if (val.length > 0) {
                                                     return Spacebars.SafeString(val.join([separator = '<br/>']));
@@ -112,7 +113,7 @@ Template.scannertext.helpers({
                                                 }
                                             }
                                         },
-                                        { key: 'autor_grupo', label: 'Grupo', headerClass: 'col-md-2',
+                                        { key: 'autor_grupo', label: 'Grupo', sortable: false, headerClass: 'col-md-2',
                                             fn: function(val, obj) {
                                                 groupsHumanized = [];
                                                 for(i=0;i<val.length;i++) {
@@ -121,9 +122,8 @@ Template.scannertext.helpers({
                                                 return groupsHumanized.join([separator = ', ']);
                                             }
                                         },
-                                        { key: 'fecha', label: 'Fecha', headerClass: 'col-md-1',
+                                        { key: 'fecha', label: 'Fecha', sortable: true, sortOrder: 0, sortDirection: -1, headerClass: 'col-md-1',
                                             fn: function(val, obj) {
-                                                // return obj.relativeDate();
                                                 return moment(val).format('l');
                                             }
                                         }

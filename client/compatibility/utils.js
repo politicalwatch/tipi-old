@@ -81,7 +81,6 @@ function cleanTipiQuery(cqry) {
             $lte: datestringToISODate(fhasta, false)
         };
     }
-    console.log(cqry);
     return cqry;
 }
 

@@ -61,7 +61,7 @@
                                         {{/each}}
                                     </select>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-8">
                                     <select class="form-control input-lg" name="tipotexto" id="tipotexto">
                                         <option value="">Seleccione tipo de iniciativa</option>
                                         {{#each tipos_helper}}
@@ -86,7 +86,7 @@
                         </form>
                         <hr>
                         {{#if yesfound}}
-                            {{> reactiveTable class="table table-hover" collection=tipisfound settings=settings}}
+                        {{> reactiveTable class="table table-hover" collection=tipisfound settings=settings}}
                         {{else}}
                             <div class="col-sm-12 text-center">
                                 <h3 class="yellow-text"><i>No hay resultados que mostrar</i></h3>
