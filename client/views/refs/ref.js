@@ -12,7 +12,12 @@ Template.ref.rendered = function () {
 
 Template.ref.helpers({
     contentHighlighted: function() {
-        str = this.content.join("<br/>");
+        str = '';
+        if (_.isArray(this.content)) {
+          str = this.content.join("<br/>");
+        } else {
+          str = this.content;
+        }
         if (this.terms !== 'undefined') {
             for(i=0;i<this.terms.length;i++) {
                 regex = new RegExp(this.terms[i], 'gi');
@@ -20,6 +25,13 @@ Template.ref.helpers({
             }
         }
         return new Handlebars.SafeString(str);
+    },
+    contentFormatted: function() {
+        if (_.isArray(this.content)) {
+          return new Handlebars.SafeString(this.content.join("<br/>"));
+        } else {
+          return this.content;
+        }
     }
 });
 
