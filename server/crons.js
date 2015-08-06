@@ -32,7 +32,7 @@ SyncedCron.add({
         var date = new Date();
 
         // Overall
-        pipeline = [ { $match: {} }, { $unwind: '$dicts' }, { $group: { _id: '$dicts', count: { $sum: 1 } } } ];
+        pipeline = [ { $match: {invisible: false} }, { $unwind: '$dicts' }, { $group: { _id: '$dicts', count: { $sum: 1 } } } ];
         stats = Tipis.aggregate(pipeline);
         s['overall'] = [];
         for(i=0;i<stats.length;i++) {
@@ -42,7 +42,7 @@ SyncedCron.add({
         // By deputies
         s['bydeputies'] = [];
         for(i=0;i<dicts.length;i++) {
-            pipeline = [ { $match: {dicts: dicts[i].dict} }, { $unwind: '$autor_diputado' }, { $group: { _id: '$autor_diputado', count: { $sum: 1 } } } ];
+            pipeline = [ { $match: {dicts: dicts[i].dict, invisible: false} }, { $unwind: '$autor_diputado' }, { $group: { _id: '$autor_diputado', count: { $sum: 1 } } } ];
             statsbydeputies = Tipis.aggregate(pipeline);
             if (statsbydeputies.length > 0) {
                 subdoc = {}
@@ -56,7 +56,7 @@ SyncedCron.add({
         // By groups
         s['bygroups'] = [];
         for(i=0;i<dicts.length;i++) {
-            pipeline = [ { $match: {dicts: dicts[i].dict} }, { $unwind: '$autor_grupo' }, { $group: { _id: '$autor_grupo', count: { $sum: 1 } } } ];
+            pipeline = [ { $match: {dicts: dicts[i].dict, invisible: false} }, { $unwind: '$autor_grupo' }, { $group: { _id: '$autor_grupo', count: { $sum: 1 } } } ];
             statsbygroups = Tipis.aggregate(pipeline);
             if (statsbygroups.length > 0) {
                 subdoc = {}
@@ -69,7 +69,7 @@ SyncedCron.add({
 
         // Latest
         s['latest'] = [];
-        pipeline = [ { $match: {} }, { $sort: {fecha: -1} }, { $unwind: '$dicts' }, { $group: { _id: '$dicts', items: { $push:  { id: "$_id", titulo: "$titulo", fecha: "$fecha" } } } } ];
+        pipeline = [ { $match: {invisible: false} }, { $sort: {fecha: -1} }, { $unwind: '$dicts' }, { $group: { _id: '$dicts', items: { $push:  { id: "$_id", titulo: "$titulo", fecha: "$fecha" } } } } ];
         latest_items = Tipis.aggregate(pipeline);
         for(i=0;i<latest_items.length;i++) {
             subdoc = {}
