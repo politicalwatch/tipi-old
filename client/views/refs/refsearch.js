@@ -32,22 +32,17 @@ Template.refsearch.helpers({
 		else if (this.count == 0) flash("No se han encontrado iniciativas que cumplan los criterios.", "info");
 	},
    	settings: function () {
-        return {
+          return {
             rowsPerPage: 30,
             showFilter: false,
 			showColumnToggles: false,
             fields: [
-            	{ key: 'bol', label: 'Bol.', sort: 'descending',
-            		fn: function(val, obj) {
-            			return obj.getBol();
-            		}
-            	},
+            	                { key: 'bol', label: 'Bol.', sort: 'descending',
+            		          fn: function(val, obj) {
+            			    return obj.getBol();
+            		          }
+            	                },
 				{ key: 'ref', label: 'Referencia'},
-				/*{ key: 'autor', label: 'Autor',
-					fn: function(val, obj) {
-						return obj.getAutor();
-					}
-				},*/
 				{ key: 'titulo', label: 'Título'},
 				{ key: 'dicts', label: 'Diccionarios'},
 				{ key: 'fecha', label: 'Fecha',
@@ -56,19 +51,30 @@ Template.refsearch.helpers({
 					}
 				},
 				{ key: 'acciones', label: 'Acciones', 
-					fn: function(val, obj) {
-				 		actstr = '';
-	  					actstr += '<a href="refs/'+ obj._id._str + '"><span class="label label-info"><i class="fa fa-eye"></i></span></a>';
-						actstr += '&nbsp;<a href="refs/'+ obj._id._str + '/annotate"><span class="label label-info"><i class="fa fa-tag"></i></span></a>';
-						actstr += '&nbsp;<a href="http://www.congreso.es/portal/page/portal/Congreso/Congreso/Iniciativas?_piref73_2148295_73_1335437_1335437.next_page=/wc/servidorCGI&CMD=VERLST&BASE=IW10&PIECE=IWD0&FMT=INITXD1S.fmt&FORM1=INITXLUS.fmt&DOCS=1-1&QUERY=%28I%29.ACIN1.+%26+%28' + encodeURIComponent(obj.ref) + '%29.ALL." target="_blank"><span class="label label-info"><i class="fa fa-institution"></i></span>';
-						if (Roles.userIsInRole(Meteor.user(), ["admin"])) {
-							actstr += '&nbsp;<a href=\'/admin/Refs/ObjectID(\"'+ obj._id._str + '\")/edit\'><span class="label label-warning"><i class="fa fa-pencil"></i></span></a>';
-						}
-						return Spacebars.SafeString(actstr);
-					}
+				  fn: function(val, obj) {
+				    actstr = '';
+	  			    actstr += '<a href="refs/'+ obj._id._str + '"><span class="label label-info"><i class="fa fa-eye"></i></span></a>';
+				    actstr += '&nbsp;<a href="refs/'+ obj._id._str + '/annotate"><span class="label label-info"><i class="fa fa-tag"></i></span></a>';
+				    actstr += '&nbsp;<a href="http://www.congreso.es/portal/page/portal/Congreso/Congreso/Iniciativas?_piref73_2148295_73_1335437_1335437.next_page=/wc/servidorCGI&CMD=VERLST&BASE=IW10&PIECE=IWD0&FMT=INITXD1S.fmt&FORM1=INITXLUS.fmt&DOCS=1-1&QUERY=%28I%29.ACIN1.+%26+%28' + encodeURIComponent(obj.ref) + '%29.ALL." target="_blank"><span class="label label-info"><i class="fa fa-institution"></i></span></a>';
+				    if (Roles.userIsInRole(Meteor.user(), ["admin"])) {
+                                      if (obj.is_tipi) {
+				        actstr += '&nbsp;<span class="label label-warning"><i class="fa fa-check"></i></span>';
+                                      } else {
+                                        if (obj.annotate) {
+                                          var icon = "bookmark";
+                                          var message = "Marcarlo para volver a ser etiquetada";
+                                        } else {
+                                          var icon = "bookmark-o";
+                                          var message = "Pendiente de etiquetado";
+                                        }
+				        actstr += '&nbsp;<a class="unmark" title="'+message+'" href="#" data-id="'+obj._id._str+'"><span class="label label-warning"><i class="fa fa-'+icon+'"></i></span></a>';
+                                      }
+                                    }
+				    return Spacebars.SafeString(actstr);
+				  }
 				}
-			]
-        };
+		  ]
+          };
 	}
 });
 
@@ -86,6 +92,21 @@ Template.refsearch.rendered = function (a) {
 
 Template.refsearch.events({
 	'submit form': function(e) {},
+        'click .unmark': function(e) {
+	  e.preventDefault();
+          var oid = new Mongo.ObjectID(e.currentTarget.attributes[0].value);
+          ref = Refs.findOne(oid);
+          if (ref.annotate) {
+            if (!ref.is_tipi) {
+	      Meteor.call('unmarkRef', oid, function(error, result){
+                if (result > 0) {
+      	          flash('Referencia lista para volver a ser etiquetada.', 'info');
+                  e.currentTarget.innerHTML = Spacebars.SafeString('<span class="label label-warning"><i class="fa fa-bookmark-o"></i></span>');
+                }
+    	      });
+            }
+          }
+        },
 	'click button#exportcsv': function(e) {
 		var query = Session.get("searchRefs");
 		

@@ -120,7 +120,7 @@ if (Meteor.isServer) {
 		if (this.userId) {
 			var user = Meteor.users.findOne({_id:this.userId});
 	  		if (Roles.userIsInRole(user, ["admin","manager"])) {
-				return Refs.find(q, {fields: {bol: 1, ref: 1, autor: 1, titulo: 1, dicts: 1, fecha: 1}, 
+				return Refs.find(q, {fields: {bol: 1, ref: 1, autor: 1, titulo: 1, dicts: 1, fecha: 1, annotate: 1, is_tipi: 1}, 
 															sort: {fecha: -1},
 															limit: 20});
 	  		}
