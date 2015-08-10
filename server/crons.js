@@ -190,7 +190,11 @@ function cleanTramite(el) {
         if (typeof el.tramite.tramite !== 'undefined') {
             return el.tramite.tramite;
         } else {
-            return el.tramite;
+            if (_.isArray(el.tramite)) {
+                return el.tramite[0];
+            } else {
+                return el.tramite;
+            }
         }
     } else {
         return '';
