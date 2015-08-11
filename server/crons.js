@@ -165,6 +165,10 @@ function suggest_annotation(id, dicts) {
                     ds.push(d.dict);
                 }
             });
+            if (referenceElement.titulo.search(search) != -1) {
+                ts.push(w);
+                ds.push(d.dict);
+            }
         });
     });
     ds = ds.filter(onlyUnique);
