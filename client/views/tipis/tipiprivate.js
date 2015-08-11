@@ -11,7 +11,9 @@ Template.tipiprivate.created = function () {
 };
 
 Template.tipiprivate.helpers({
-  //
+  humanizedGroups: function() {
+    return (this.autor_grupo) ? parliamentarygroups[this.autor_grupo] : '';
+  }
 });
 
 Template.tipiprivate.rendered = function () {

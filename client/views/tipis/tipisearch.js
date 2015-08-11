@@ -53,13 +53,18 @@ Template.tipisearch.helpers({
             fields: [
                 { key: 'ref', label: 'Referencia'},
                 { key: 'titulo', label: 'Titulo'},
+                { key: 'autor_mixed', label: 'Autor',
+                        fn: function(val, obj) {
+                          return (obj.autor_otro.length > 0) ? obj.autor_otro : (obj.autor_grupo.length > 0) ? parliamentarygroups[obj.autor_grupo] : (obj.autor_diputado) ? obj.autor_diputado : '';
+                        }
+                },
+                { key: 'dicts', label: 'Diccionarios'},
                 { key: 'fecha', label: 'Fecha',
                     fn: function(val, obj) {
                         return moment(val).format('l');
                      }
                 },
-                { key: 'dicts', label: 'Diccionarios'},
-    			{ key: 'acciones', label: 'Acciones',
+    		{ key: 'acciones', label: 'Acciones',
                     fn: function(val, obj) {
 					    var actstr = '<a href="tipis/'+ obj._id + '"><span class="label label-info"><i class="fa fa-eye"></i></span></a>&nbsp;';
 						if (Roles.userIsInRole(Meteor.user(), ["admin"])) {

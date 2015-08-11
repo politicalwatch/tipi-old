@@ -44,6 +44,11 @@ Template.refsearch.helpers({
             	                },
 				{ key: 'ref', label: 'Referencia'},
 				{ key: 'titulo', label: 'Título'},
+                                { key: 'autor_mixed', label: 'Autor',
+                                        fn: function(val, obj) {
+                                          return obj.getAutor();
+                                        }
+                                },
 				{ key: 'dicts', label: 'Diccionarios'},
 				{ key: 'fecha', label: 'Fecha',
 					fn: function(val, obj) {
