@@ -130,7 +130,7 @@ tipostexto <- data.frame(tipo = c(120,
                                       "Moción",
                                       "Enmienda a Moción",
                                       "Pregunta oral",
-                                      "Pregunta oral para respuesta escrita",
+                                      "Pregunta escrita para RTVE",#issue 179
                                       "Pregunta oral",
                                       "Pregunta oral",
                                       "Pregunta para respuesta escrita",
