@@ -158,10 +158,10 @@ tipostexto <- data.frame(tipo = c(120,
                                       "Operaciones Fuerzas Armadas exterior"))
                                       
 #tipos en serie D que no se procesarán.
-noprocesar <- c("052", "062", "186", "187", "188", "189", "193", "200", "201", "221", "222", "223", "224", "299","430")
+noprocesar <- c("99999999")
 
 #tipos adicionales a excluir en Diarios de Sesiones
-noprocesarDS <- c("052", "062", "186", "187", "188", "189", "193", "200", "201", "221", "222", "223", "224", "299","430")
+noprocesarDS <- c("99999999")
 
 #++++++++++++++++++++++++#
 #    2. Comisiones       #
