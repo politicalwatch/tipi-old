@@ -138,7 +138,7 @@ SyncedCron.add({
     job: function() {
         console.log("Starting process...");
         console.log("Fetching documents...");
-        referencias = Refs.find({$or: [{annotate: { $exists: false}}, {annotate: false}]}, { fields: { _id: 1 } }).fetch();
+        referencias = Refs.find({$or: [{annotate: { $exists: false}}, {annotate: false}], invisible: false}, { fields: { _id: 1 } }).fetch();
         console.log("Documents fetched: " + referencias.length);
         dicts = Dicts.find({dictgroup: "tipi"}).fetch();
         total = referencias.length;
@@ -334,6 +334,8 @@ function annotateRef(id, _dicts, _terms) {
 
 /***************************** REF and TIPI invisible docs ******************************/
 
+var blacklist = ['070', '080', '084', '110', '111', '112', '127', '221', '222', '223', '052', '062', '186', '187', '188', '189', '193', '224', '095', '200', '201', '430', '042', '093', '094', '410', '411', '412', '413', '023', '230', '232', '233', '235', '240', '244', '245', '285', '250', '251', '252', '253', '259', '260', '261', '262', '401', '440', '276', '282', '140', '004', '005']
+
 var diarios_blacklist = [ '121', '120', '122', '123', '125', '130', '132', '154', '155', '156', '158', '161', '162', '170', '172', '173', '178', '179', '180', '181', '184', '186', '187', '188', '189', '193', '200', '201', '221', '222', '223', '224', '430', '043', '052', '062', '299' ]
 
 SyncedCron.add({
@@ -343,13 +345,13 @@ SyncedCron.add({
         return parser.text('every 6 hours');
     },
     job: function() {
-        // Update invisibles
-        Refs.update( { $or: [ {origen: "diariosC"}, {origen: "diariosPD"}], tipo: {$in: diarios_blacklist}}, {$set: {invisible: true}}, { multi: true } );
-        Tipis.update( { $or: [ {origen: "diariosC"}, {origen: "diariosPD"}], tipo: {$in: diarios_blacklist}}, {$set: {invisible: true}}, { multi: true } );
-        // Update new documents to visible
-        Refs.update( { invisible: {$exists: false} }, {$set: {invisible: false}}, { multi: true } );
-        Tipis.update( { invisible: {$exists: false} }, {$set: {invisible: false}}, { multi: true } );
-
+        // Make invisibles (Global)
+        Refs.update( { tipo: {$in: blacklist}, invisible: {$exists: false} }, {$set: {invisible: true}}, { multi: true } );
+        // Update invisibles (Diarios C and PD)
+        Refs.update( { $or: [ {origen: "diariosC"}, {origen: "diariosPD"}], tipo: {$in: diarios_blacklist}, invisible: {$exists: false} }, {$set: {invisible: true}}, { multi: true } );
+        // Update all new documents (except blackilist documents) to visible
+        Refs.update( { tipo: {$nin: blacklist}, invisible: {$exists: false} }, {$set: {invisible: false}}, { multi: true } );
+        Refs.update( { $or: [ {origen: "diariosC"}, {origen: "diariosPD"}], tipo: {$nin: diarios_blacklist}, invisible: {$exists: false} }, {$set: {invisible: false}}, { multi: true } );
     }
 });
 
