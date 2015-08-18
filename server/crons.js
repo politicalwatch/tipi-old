@@ -160,14 +160,18 @@ function suggest_annotation(id, dicts) {
             search = new RegExp(w, 'gi');
             referenceElement = Refs.findOne(id);
             _.each(referenceElement.content, function(c){
-                if (c.search(search) != -1) {
+                if (!_.isUndefined(c)) {
+                    if (c.search(search) != -1) {
+                        ts.push(w);
+                        ds.push(d.dict);
+                    }
+                }
+            });
+            if (!_.isUndefined(referenceElement.titulo)) {
+                if (referenceElement.titulo.search(search) != -1) {
                     ts.push(w);
                     ds.push(d.dict);
                 }
-            });
-            if (referenceElement.titulo.search(search) != -1) {
-                ts.push(w);
-                ds.push(d.dict);
             }
         });
     });
