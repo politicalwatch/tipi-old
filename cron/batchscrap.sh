@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-BASE_DIR=/home/tipiuser/tipi/
+BASE_DIR=~/dev/tipi/
 
 function scrapnproc {
 	cd "$BASE_DIR"/r-scripts/"$1"

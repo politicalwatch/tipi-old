@@ -2,7 +2,7 @@ options(stringsAsFactors=FALSE)
 
 GENERATED_BASE_DIR <- "gendir/"
 
-ERROR_LOG_BASE_DIR <- "/home/razieliyo/"
+ERROR_LOG_BASE_DIR <- "~/tmp/"
 
 check_in_sublists_index <- function(list2d, to_check) {
 	if( length(list2d) > 0 ) {

@@ -93,7 +93,7 @@ for(i in 1:length(l)){ #i=8 #i in 1:length(listos_mongo)
 			print(ref)
 			print(bol)
 			q <- mongo.bson.from.JSON(paste0('{ "ref":"', lcont[[k]]$ref, '", "bol":"', lcont[[k]]$bol, '" }'))
-			a <- mongo.find(mongo, mongo_collection("diariosPD"), q)
+			a <- mongo.find(mongo, mongo_collection("referencias"), q)
 				print("b");
 			if(!mongo.cursor.next(a))
 			{
@@ -103,7 +103,7 @@ for(i in 1:length(l)){ #i=8 #i in 1:length(listos_mongo)
 				lcont2[[1]]$fecha <- as.POSIXct(abl[num, "date"], tz="CET")
 				lcont2[[1]]$origen <- "diariosPD"
 				lcontb <- lapply(lcont2, function(x) {return(mongo.bson.from.list(x))})
-				mongo.insert.batch(mongo, mongo_collection("diariosPD"), lcontb)
+				mongo.insert.batch(mongo, mongo_collection("referencias"), lcontb)
 			}
 			else
 			{

@@ -40,7 +40,7 @@ for(i in 1:length(proy_listA)){
                 load(paste0(bol_listA[[d]]$filename)) # carga lines, que contiene el texto a procesar
                 
                 q <- mongo.bson.from.JSON(paste0('{ "bol":"', bol_listA[[d]]$codigo, '" }'))
-                a <- mongo.find(mongo, mongo_collection("serieApruebas"), q)
+                a <- mongo.find(mongo, mongo_collection("referencias"), q)
                 if(!mongo.cursor.next(a)){
                         print("No presente en mongo, añadiendo.\n")
                         #Procesamiento del boletín A-1-X: Proyecto de Ley
@@ -60,9 +60,9 @@ for(i in 1:length(proy_listA)){
                                         #Añadir url a cada elemento de la lista (uno por enmienda)
                                         lcont1$url <- bol_listA[[d]]$url
                                         #Enviar
-                                        mongo.remove(mongo, mongo_collection("serieApruebas"), criteria=list(bol=bol_listA[[d]]$codigo))
+                                        mongo.remove(mongo, mongo_collection("referencias"), criteria=list(bol=bol_listA[[d]]$codigo))
                                         lcontb <- lapply(list(lcont1), function(x) {return(mongo.bson.from.list(x))})
-                                        mongo.insert.batch(mongo, mongo_collection("serieApruebas"), lcontb)
+                                        mongo.insert.batch(mongo, mongo_collection("referencias"), lcontb)
                                 }
                                 vcontrol[d] <- 1
                         }
@@ -94,9 +94,9 @@ for(i in 1:length(proy_listA)){
                                                 lcont[[k]]$url <- bol_listA[[d]]$url
                                                 lcont[[k]]$created <- as.POSIXct(Sys.time(), tz="CET")
                                         }
-                                        mongo.remove(mongo, mongo_collection("serieApruebas"), criteria=list(bol=bol_listA[[d]]$codigo))
+                                        mongo.remove(mongo, mongo_collection("referencias"), criteria=list(bol=bol_listA[[d]]$codigo))
                                         lcontb <- lapply(lcont, function(x) {return(mongo.bson.from.list(x))})
-                                        mongo.insert.batch(mongo, mongo_collection("serieApruebas"), lcontb)
+                                        mongo.insert.batch(mongo, mongo_collection("referencias"), lcontb)
                                         vcontrol[d] <- 1
                                         next()
                                 }
@@ -131,9 +131,9 @@ for(i in 1:length(proy_listA)){
                                 rm(ltmp)
                                 if(sum(vcontrol)==length(vcontrol)){#ya hemos procesado todo
                                         #enviar a mongo
-                                        #                                         mongo.remove(mongo, mongo_collection("serieApruebas"), criteria=list(bol=bol_listA[[d]]$codigo))
+                                        #                                         mongo.remove(mongo, mongo_collection("referencias"), criteria=list(bol=bol_listA[[d]]$codigo))
                                         lcontb2 <- lapply(list(lcont2), function(x) {return(mongo.bson.from.list(x))})
-                                        mongo.insert.batch(mongo, mongo_collection("serieApruebas"), lcontb2)
+                                        mongo.insert.batch(mongo, mongo_collection("referencias"), lcontb2)
                                 }
                                 
                         }

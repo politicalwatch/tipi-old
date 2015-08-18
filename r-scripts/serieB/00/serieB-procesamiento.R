@@ -53,12 +53,12 @@ for(i in 1:length(proy_listB)){#i=1 #for(i in 1:length(proy_listB))
       if ( class(lcont) != "try-error" & length(lcont[[1]]) == 1 ) {
         #URL como campo adicional a enviar a mongoDB
         lcont$url <- bol_listB[[d]]$url
-        mongo.remove(mongo, mongo_collection("serieB"), criteria=list(bol=bol_listB[[d]]$codigo))
+        mongo.remove(mongo, mongo_collection("referencias"), criteria=list(bol=bol_listB[[d]]$codigo))
         lcontb <- lapply(list(lcont), function(x) {
           return(mongo.bson.from.list(lcont))
         })
         cat(" ", length(lcontb), "\n")
-        mongo.insert.batch(mongo, mongo_collection("serieB"), lcontb)
+        mongo.insert.batch(mongo, mongo_collection("referencias"), lcontb)
       }
       #caso de boletin con enmiendas. Ej B-157-5.
       #el primer elemento seria a su vez una lista (con mas de 1 elemento), luego length()>1
@@ -66,11 +66,11 @@ for(i in 1:length(proy_listB)){#i=1 #for(i in 1:length(proy_listB))
               for(k in 1:length(lcont)){
                       lcont[[k]]$url <- bol_listB[[d]]$url
               }
-              mongo.remove(mongo, mongo_collection("serieB"), criteria=list(bol=bol_listB[[d]]$codigo))
+              mongo.remove(mongo, mongo_collection("referencias"), criteria=list(bol=bol_listB[[d]]$codigo))
               lcontb <- lapply(lcont, function(x) {
                       return(mongo.bson.from.list(x))
               })
-              mongo.insert.batch(mg, mongo_collection("serieB"), lcontb)
+              mongo.insert.batch(mg, mongo_collection("referencias"), lcontb)
       }
     }
 }

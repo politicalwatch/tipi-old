@@ -68,11 +68,11 @@ procesar_elemento <- function(lcont, k) {
 	presente_mongo = FALSE
 	if( is.null(lcont[[k]]$numenmienda) ) {
 		q <- mongo.bson.from.JSON(paste0('{ "bol": "', lcont[[k]]$bol, '", "ref":"', lcont[[k]]$ref, '" }'))
-		a <- mongo.find(mongo, mongo_collection("serieD"), q)
+		a <- mongo.find(mongo, mongo_collection("referencias"), q)
 		presente_mongo <- mongo.cursor.next(a)
 	} else {
 		q <- mongo.bson.from.JSON(paste0('{ "autor":{"grupo":"', unique(lcont[[k]]$grupos), '"}, "bol": "', lcont[[k]]$bol, '", "ref":"', lcont[[k]]$ref, '" }'))
-		a <- mongo.find(mongo, mongo_collection("serieD"), q)
+		a <- mongo.find(mongo, mongo_collection("referencias"), q)
 		presente_mongo <- mongo.cursor.next(a)
 	}
 	if(!presente_mongo)
@@ -88,7 +88,7 @@ procesar_elemento <- function(lcont, k) {
 							 x$gopag <- NULL
 							 return(mongo.bson.from.list(x))
 	})
-		mongo.insert.batch(mongo, mongo_collection("serieD"), lcontb)
+		mongo.insert.batch(mongo, mongo_collection("referencias"), lcontb)
 
 	} else {
 		cat("ya introducido en mongo!\n")

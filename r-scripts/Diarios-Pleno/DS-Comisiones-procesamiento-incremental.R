@@ -96,7 +96,7 @@ for(i in 1:length(l)){ #i=8 #i in 1:length(listos_mongo)
 			print(ref)
 			print(bol)
 			q <- mongo.bson.from.JSON(paste0('{ "ref":"', lcont[[k]]$ref, '", "bol":"', lcont[[k]]$bol, '" }'))
-			a <- mongo.find(mongo, mongo_collection("diariosC"), q)
+			a <- mongo.find(mongo, mongo_collection("referencias"), q)
 			print("b");
 			if(!mongo.cursor.next(a))
 			{
@@ -115,7 +115,7 @@ for(i in 1:length(l)){ #i=8 #i in 1:length(listos_mongo)
 									 return(mongo.bson.from.list(x))
 				})
 				#enviar a bbdd
-				mongo.insert.batch(mongo, mongo_collection("diariosC"), lcontb)
+				mongo.insert.batch(mongo, mongo_collection("referencias"), lcontb)
 			}
 			else
 			{
