@@ -15,12 +15,15 @@ Template.scannervizz.rendered = function() {
 
     _.each(overall, function(el) {
         if ( (el.count > 0) && (! _.isNull(el._id)) ) {
-            objd = {
-                "name": el._id,
-                "icon": Dicts.find({dict: el._id}, {fields: {iconb1: 1}}).fetch()[0].iconb1,
-                "size": el.count
+            dictobj = Dicts.findOne({dict: el._id}, {fields: {iconb1: 1}});
+            if (!_.isUndefined(dictobj)) {
+              objd = {
+                  "name": el._id,
+                  "icon": dictobj.iconb1,
+                  "size": el.count
+              }
+              root["children"].push(objd);
             }
-            root["children"].push(objd);
         }
     });
 

@@ -36,7 +36,9 @@ SyncedCron.add({
         stats = Tipis.aggregate(pipeline);
         s['overall'] = [];
         for(i=0;i<stats.length;i++) {
-            s['overall'].push(stats[i]);
+            if (!_.isNull(stats[i]._id)) {
+                s['overall'].push(stats[i]);
+            }
         }
 
         // By deputies
