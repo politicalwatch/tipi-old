@@ -180,7 +180,9 @@ proc_DS <- function(lines, num){
         names(lines) <- NULL
         
         #Identificar lineas separadoras
-        exprclave <- '^(Se reanuda|^Comienza|^Se abre) la sesión a las(.*)de la mañana' 
+        #exprclave <- '^(Se reanuda|^Comienza|^Se abre) la sesión a las(.*)de la mañana' 
+        #[cambio INES 19-08-2015]
+        exprclave <- '^(Se reanuda|^Comienza|^Se abre) la sesión a las(.*)de la' 
         
         # pr <- 'Comienza la  sesión a las nueve de la mañana.'
         # grep(exprclave, pr, ignore.case = TRUE)
@@ -223,7 +225,7 @@ proc_DS <- function(lines, num){
                         }
                         tmp$tipo <- str_split(tmp$ref, "/")[[1]][1]
                         ## FILTRO por tipos. Si no es de los tipos a considerar pasar al siguiente.
-                        if(!tmp$tipo %in% c("130", "132", "154", "155", "156", "158", "180", "181", "210", "211", "212", "213", "214")) { next }
+                        #if(!tmp$tipo %in% c("130", "132", "154", "155", "156", "158", "180", "181", "210", "211", "212", "213", "214")) { next }
                 }
         }else{
                 #Linea desde donde empezar a buscar iniciativas
