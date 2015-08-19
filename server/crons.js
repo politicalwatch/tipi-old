@@ -316,6 +316,9 @@ function annotateRef(id, _dicts, _terms) {
                 'quepasocon': '',
                 'original': r._id._str
             }
+            if (typeof r.numenmienda !== 'undefined') {
+                tipi['numenmienda'] = (_.isArray(r.numenmienda)) ? r.numenmienda : [r.numenmienda];
+            }
             t = Tipis.insert(tipi);
             if (t) {
                 var alert_id = t;
@@ -363,6 +366,30 @@ SyncedCron.add({
 
 
 
+/***************************** REF and TIPI invisible docs ******************************/
+
+SyncedCron.add({
+    name: 'Passing numenmiendas',
+    schedule: function(parser) {
+        // parser is a later.parse object
+        return parser.text('every 3 hours');
+    },
+    job: function() {
+      tipis = Tipis.find({}, {fields: {_id: 1, original: 1}}).fetch();
+      _.each(tipis, function(t) {
+        oid = new Mongo.ObjectID(t.original)
+        r = Refs.findOne(oid, {fields: {numenmienda: 1}});
+        if (!_.isUndefined(r.numenmienda)) {
+          ne = (_.isArray(r.numenmienda)) ? r.numenmienda : [r.numenmienda];
+          Tipis.update( { _id: t._id }, {$set: { numenmienda: ne } } );
+        }
+      });
+    }
+});
+
+
+
+
 /* Tools */
 
 function onlyUnique (value, index, self) { 
@@ -371,5 +398,6 @@ function onlyUnique (value, index, self) {
 
 
 
+/*========== RUN ==========*/
 
 SyncedCron.start();
