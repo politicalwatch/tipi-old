@@ -43,6 +43,11 @@ Template.scannertext.helpers({
         ];
     },
     tipos_helper: function() {
+      return [
+        "Proyecto de Ley",
+        "Enmienda a Proyecto de Ley"
+      ];
+      /*
         return [
             {'value': '121', 'text': 'Proyecto de Ley'},
             {'value': '121', 'text': 'Enmienda a Proyecto de Ley'},
@@ -82,6 +87,7 @@ Template.scannertext.helpers({
             {'value': '043', 'text': 'Propuestas de Resolución'},
             {'value': '095', 'text': 'Operaciones de las Fuerzas Armadas en el exterior'}
         ];
+        */
     },
     lastquery: function() {
         return Session.get("scannerText");

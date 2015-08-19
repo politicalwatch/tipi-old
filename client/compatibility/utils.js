@@ -23,6 +23,18 @@ var datepickeroptions = {
     todayHighlight: true
 }
 
+function builderQueryFrom(type) {
+  switch(type) {
+      case 'Proyecto de Ley':
+          return {tipo: "121", numenmienda: {$exists: 0}}
+          break;
+      case 'Enmienda a Proyecto de Ley':
+          return {tipo: "121", numenmienda: {$exists: 1}}
+          break;
+      default:
+          return {}
+  }
+}
 
 
 /* UTILS */
@@ -48,8 +60,8 @@ function cleanTipiQuery(cqry) {
                 newgrupootro = { 'autor_grupo': cqry['grupootro'] }
             }
             delete cqry[k];
-        } else if( k == "tipotexto" && cqry[k] != "" ) {
-            tipo = {'tipo': cqry[k]}
+        } else if( k == "vtipo" && cqry[k] != "" ) {
+            tipo = builderQueryFrom(cqry[k]);
             delete cqry[k];
         }
         else if (cqry[k] == "") {

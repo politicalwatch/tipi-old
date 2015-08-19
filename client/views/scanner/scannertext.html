@@ -62,13 +62,13 @@
                                     </select>
                                 </div>
                                 <div class="col-sm-8">
-                                    <select class="form-control input-lg" name="tipotexto" id="tipotexto">
+                                    <select class="form-control input-lg" name="vtipo" id="vtipo">
                                         <option value="">Seleccione tipo de iniciativa</option>
                                         {{#each tipos_helper}}
-                                            {{#if eq lastquery.tipotexto value }}
-                                                <option value="{{value}}" selected="selected">{{text}}</option>
+                                            {{#if eq lastquery.vtipo this }}
+                                                <option value="{{this}}" selected="selected">{{this}}</option>
                                             {{else}}
-                                                <option value="{{value}}">{{text}}</option>
+                                                <option value="{{this}}">{{this}}</option>
                                             {{/if}}
                                         {{/each}}
                                     </select>
