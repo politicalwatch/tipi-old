@@ -45,7 +45,23 @@ Template.scannertext.helpers({
     tipos_helper: function() {
       return [
         "Proyecto de Ley",
-        "Enmienda a Proyecto de Ley"
+        "Enmienda a Proyecto de Ley",
+        "Proposición de Ley",
+        "Enmienda a Proposición de Ley",
+        "Real Decreto Ley",
+        "Real Decreto Legislativo",
+        "Solicitud creación comisiones, subcomisiones y ponencias",
+        "Proposición no de Ley",
+        "Enmienda a Proposición no de Ley",
+        "Interpelación",
+        "Moción consecuencia de Interpelación",
+        "Enmienda a Moción",
+        "Pregunta oral",
+        "Pregunta para respuesta escrita",
+        "Pregunta oral",
+        "Pregunta para respuesta escrita",
+        "Comparecencia",
+        "Planes, Programas y Dictámenes"
       ];
       /*
         return [

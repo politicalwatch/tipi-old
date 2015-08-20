@@ -75,6 +75,21 @@
                         {{/each}}
                     </select>
                 </div>
+                <label class="col-sm-2 control-label" for="dicts">Iniciativa</label>
+                <div class="col-sm-4">
+                    <select class="form-control input-lg" name="vtipo" id="vtipo">
+                        <option value="">---</option>
+                        {{#each tipos_helper}}
+                            {{#if eq lastquery.vtipo this }}
+                                <option value="{{this}}" selected="selected">{{this}}</option>
+                            {{else}}
+                                <option value="{{this}}">{{this}}</option>
+                            {{/if}}
+                        {{/each}}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
             </div>
 			<div class="form-group">
 				<div class="col-sm-12">
