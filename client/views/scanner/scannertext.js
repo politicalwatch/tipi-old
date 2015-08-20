@@ -43,6 +43,27 @@ Template.scannertext.helpers({
         ];
     },
     tipos_helper: function() {
+      return [
+        "Proyecto de Ley",
+        "Enmienda a Proyecto de Ley",
+        "Proposición de Ley",
+        "Enmienda a Proposición de Ley",
+        "Real Decreto Ley",
+        "Real Decreto Legislativo",
+        "Solicitud creación comisiones, subcomisiones y ponencias",
+        "Proposición no de Ley",
+        "Enmienda a Proposición no de Ley",
+        "Interpelación",
+        "Moción consecuencia de Interpelación",
+        "Enmienda a Moción",
+        "Pregunta oral",
+        "Pregunta para respuesta escrita",
+        "Pregunta oral",
+        "Pregunta para respuesta escrita",
+        "Comparecencia",
+        "Planes, Programas y Dictámenes"
+      ];
+      /*
         return [
             {'value': '121', 'text': 'Proyecto de Ley'},
             {'value': '121', 'text': 'Enmienda a Proyecto de Ley'},
@@ -82,6 +103,7 @@ Template.scannertext.helpers({
             {'value': '043', 'text': 'Propuestas de Resolución'},
             {'value': '095', 'text': 'Operaciones de las Fuerzas Armadas en el exterior'}
         ];
+        */
     },
     lastquery: function() {
         return Session.get("scannerText");

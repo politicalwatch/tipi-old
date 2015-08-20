@@ -23,6 +23,74 @@ var datepickeroptions = {
     todayHighlight: true
 }
 
+function builderQueryFrom(type) {
+  var q = {}
+  var enmienda = { numenmienda: {$exists: 1, $not: {$size: 0} } }
+  var noenmienda = { $or: [{numenmienda: {$exists: 0}}, {numenmienda: {$size: 0}}] }
+  switch(type) {
+      case 'Proyecto de Ley':
+          q = {tipo: "121"}
+          jQuery.extend(q, noenmienda);
+          break;
+      case 'Enmienda a Proyecto de Ley':
+          q = {tipo: "121"}
+          jQuery.extend(q, enmienda);
+          break;
+      case 'Proposición de Ley':
+          q = {tipo: {$in: ["120", "122", "123", "125"]}}
+          jQuery.extend(q, noenmienda);
+          break;
+      case 'Enmienda a Proposición de Ley':
+          q = {tipo: {$in: ["120", "122", "123", "125"]}}
+          jQuery.extend(q, enmienda);
+          break;
+      case 'Real Decreto Ley':
+          q = {tipo: "130"}
+          break;
+      case 'Real Decreto Legislativo':
+          q = {tipo: "132"}
+          break;
+      case 'Solicitud creación comisiones, subcomisiones y ponencias':
+          q = {tipo: {$in: ["154", "155", "156", "158"]}}
+          jQuery.extend(q);
+          break;
+      case 'Proposición no de Ley':
+          q = {tipo: {$in: ["161", "162"]}}
+          jQuery.extend(q, noenmienda);
+          break;
+      case 'Enmienda a Proposición no de Ley':
+          q = {tipo: {$in: ["161", "162"]}}
+          jQuery.extend(q, enmienda);
+          break;
+      case 'Interpelación':
+          q = {tipo: {$in: ["170", "172"]}}
+          break;
+      case 'Moción consecuencia de Interpelación':
+          q = {tipo: "173"}
+          jQuery.extend(q, noenmienda);
+          break;
+      case 'Enmienda a Moción':
+          q = {tipo: "173"}
+          jQuery.extend(q, enmienda);
+          break;
+      case 'Pregunta oral':
+          q = {tipo: {$in: ["178", "180", "181"]}}
+          break;
+      case 'Pregunta para respuesta escrita':
+          q = {tipo: {$in: ["179", "184"]}}
+          break;
+      case 'Comparecencia':
+          q = {tipo: {$in: ["1210", "211", "212", "213", "214", "219"]}}
+          break;
+      case 'Planes, Programas y Dictámenes':
+          q = {tipo: "043"}
+          break;
+      default:
+          return {}
+          break;
+  }
+  return q;
+}
 
 
 /* UTILS */
@@ -48,8 +116,8 @@ function cleanTipiQuery(cqry) {
                 newgrupootro = { 'autor_grupo': cqry['grupootro'] }
             }
             delete cqry[k];
-        } else if( k == "tipotexto" && cqry[k] != "" ) {
-            tipo = {'tipo': cqry[k]}
+        } else if( k == "vtipo" && cqry[k] != "" ) {
+            tipo = builderQueryFrom(cqry[k]);
             delete cqry[k];
         }
         else if (cqry[k] == "") {
