@@ -50,7 +50,7 @@ function builderQueryFrom(type) {
       case 'Real Decreto Legislativo':
           q = {tipo: "132"}
           break;
-      case 'Solicitud creación comisiones, subcomisiones y ponencias':
+      case 'Comisiones, Subcomisiones y Ponencias':
           q = {tipo: {$in: ["154", "155", "156", "158"]}}
           jQuery.extend(q);
           break;
