@@ -59,7 +59,7 @@ Template.refsearch.helpers({
 				  fn: function(val, obj) {
 				    actstr = '';
 	  			    actstr += '<a href="refs/'+ obj._id._str + '"><span class="label label-info"><i class="fa fa-eye"></i></span></a>';
-				    actstr += '&nbsp;<a href="refs/'+ obj._id._str + '/annotate"><span class="label label-info"><i class="fa fa-tag"></i></span></a>';
+				    // actstr += '&nbsp;<a href="refs/'+ obj._id._str + '/annotate"><span class="label label-info"><i class="fa fa-tag"></i></span></a>';
 				    actstr += '&nbsp;<a href="http://www.congreso.es/portal/page/portal/Congreso/Congreso/Iniciativas?_piref73_2148295_73_1335437_1335437.next_page=/wc/servidorCGI&CMD=VERLST&BASE=IW10&PIECE=IWD0&FMT=INITXD1S.fmt&FORM1=INITXLUS.fmt&DOCS=1-1&QUERY=%28I%29.ACIN1.+%26+%28' + encodeURIComponent(obj.ref) + '%29.ALL." target="_blank"><span class="label label-info"><i class="fa fa-institution"></i></span></a>';
 				    if (Roles.userIsInRole(Meteor.user(), ["admin"])) {
                                       if (obj.is_tipi) {
@@ -73,6 +73,7 @@ Template.refsearch.helpers({
                                           var message = "Pendiente de etiquetado";
                                         }
 				        actstr += '&nbsp;<a class="unmark" title="'+message+'" href="#" data-id="'+obj._id._str+'"><span class="label label-warning"><i class="fa fa-'+icon+'"></i></span></a>';
+				        actstr += '&nbsp;<a class="copytotipi" title="Copiar a Tipi" href="#" data-id="'+obj._id._str+'"><span class="label label-success"><i class="fa fa-copy"></i></span></a>';
                                       }
                                     }
 				    return Spacebars.SafeString(actstr);
@@ -110,6 +111,19 @@ Template.refsearch.events({
                 }
     	      });
             }
+          }
+        },
+        'click .copytotipi': function(e) {
+          e.preventDefault();
+          var oid = new Mongo.ObjectID(e.currentTarget.attributes[0].value);
+          ref = Refs.findOne(oid);
+          if (!ref.is_tipi) {
+            Meteor.call('copyToTipi', oid, function(error, result){
+              if (result > 0) {
+                flash('Referencia copiada a Tipi.', 'info');
+                e.currentTarget.innerHTML = Spacebars.SafeString('');
+              }
+            });
           }
         },
 	'click button#exportcsv': function(e) {
