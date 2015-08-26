@@ -100,7 +100,7 @@ Template.refsearch.events({
 	'submit form': function(e) {},
         'click .unmark': function(e) {
 	  e.preventDefault();
-          var oid = new Mongo.ObjectID(e.currentTarget.attributes[0].value);
+          var oid = new Mongo.ObjectID(e.currentTarget.attributes['data-id'].value);
           ref = Refs.findOne(oid);
           if (ref.annotate) {
             if (!ref.is_tipi) {
@@ -115,7 +115,7 @@ Template.refsearch.events({
         },
         'click .copytotipi': function(e) {
           e.preventDefault();
-          var oid = new Mongo.ObjectID(e.currentTarget.attributes[0].value);
+          var oid = new Mongo.ObjectID(e.currentTarget.attributes['data-id'].value);
           ref = Refs.findOne(oid);
           if (!ref.is_tipi) {
             Meteor.call('copyToTipi', oid, function(error, result){
