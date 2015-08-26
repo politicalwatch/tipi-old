@@ -140,7 +140,7 @@ SyncedCron.add({
     job: function() {
         console.log("Starting process...");
         console.log("Fetching documents...");
-        referencias = Refs.find({$or: [{annotate: { $exists: false}}, {annotate: false}], invisible: false}, { fields: { _id: 1 }, limit: 20 }).fetch();
+        referencias = Refs.find({$or: [{annotate: { $exists: false}}, {annotate: false}], invisible: false}, { fields: { _id: 1 }, limit: 50 }).fetch();
         console.log("Documents fetched: " + referencias.length);
         dicts = Dicts.find({dictgroup: "tipi"}).fetch();
         total = referencias.length;
