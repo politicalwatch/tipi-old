@@ -135,12 +135,12 @@ SyncedCron.add({
     name: 'Annotate References to TIPI',
     schedule: function(parser) {
         // parser is a later.parse object
-        return parser.text('every 10 minutes');
+        return parser.text('every 30 minutes');
     },
     job: function() {
         console.log("Starting process...");
         console.log("Fetching documents...");
-        referencias = Refs.find({$or: [{annotate: { $exists: false}}, {annotate: false}], invisible: false}, { fields: { _id: 1 } }).fetch();
+        referencias = Refs.find({$or: [{annotate: { $exists: false}}, {annotate: false}], invisible: false}, { fields: { _id: 1 }, limit: 20 }).fetch();
         console.log("Documents fetched: " + referencias.length);
         dicts = Dicts.find({dictgroup: "tipi"}).fetch();
         total = referencias.length;
