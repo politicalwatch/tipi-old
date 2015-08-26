@@ -135,7 +135,7 @@ SyncedCron.add({
     name: 'Annotate References to TIPI',
     schedule: function(parser) {
         // parser is a later.parse object
-        return parser.text('every 12 hours');
+        return parser.text('every 10 minutes');
     },
     job: function() {
         console.log("Starting process...");
