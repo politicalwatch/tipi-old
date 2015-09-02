@@ -37,6 +37,7 @@ tsega:bootstrap3-datetimepicker@=3.1.3_3
 twbs:bootstrap
 mizzao:user-status
 percolate:synced-cron
-wylio:mandrill@=0.2.1
+email
+wylio:mandrill
 # npaton:commands
 edgee:slingshot
