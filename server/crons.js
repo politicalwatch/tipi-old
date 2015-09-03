@@ -135,9 +135,10 @@ SyncedCron.add({
     name: 'Annotate References to TIPI',
     schedule: function(parser) {
         // parser is a later.parse object
-        return parser.text('every 30000 hours');
+        return parser.text('every 30 minutes');
     },
     job: function() {
+        /*
         console.log("Starting process...");
         console.log("Fetching documents...");
         referencias = Refs.find({$or: [{annotate: { $exists: false}}, {annotate: false}], invisible: false}, { fields: { _id: 1 }, limit: 50 }).fetch();
@@ -150,6 +151,7 @@ SyncedCron.add({
             annotateRef(r._id, res[0], res[1]);
         });
         console.log("Process finished!");
+        */
     }
 });
 
