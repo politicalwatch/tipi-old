@@ -135,7 +135,7 @@ SyncedCron.add({
     name: 'Annotate References to TIPI',
     schedule: function(parser) {
         // parser is a later.parse object
-        return parser.text('every 30 minutes');
+        return parser.text('every 30000 hours');
     },
     job: function() {
         console.log("Starting process...");
@@ -351,7 +351,7 @@ SyncedCron.add({
     name: 'MAKE invisibles',
     schedule: function(parser) {
         // parser is a later.parse object
-        return parser.text('every 6 hours');
+        return parser.text('every 3 hours');
     },
     job: function() {
         // Make invisibles (Global)
