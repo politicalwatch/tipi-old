@@ -28,12 +28,6 @@
     "S3Bucket": "",
     "AWSAccessKeyId": "",
     "AWSSecretAccessKey": "",
-    "mandrill": {
-        "username": "",
-        "key": ""
-    },
-	"kadira": {
-    	"appId": "",
-    	"appSecret": ""
-  	}
+    "mandrillUsername": "",
+    "mandrillKey": ""
 }
