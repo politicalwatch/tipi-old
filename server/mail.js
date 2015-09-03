@@ -1,4 +1,6 @@
 Meteor.startup(function() {
+    console.log(Meteor.settings.mandrill.username);
+    console.log(Meteor.settings.mandrill.key);
     return Mandrill.config({
         'username': Meteor.settings.mandrill.username,
         'key': Meteor.settings.mandrill.key
