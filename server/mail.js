@@ -1,7 +1,7 @@
 Meteor.startup(function() {
     return Mandrill.config({
-        username: Meteor.settings.mandrill.username,
-        key: Meteor.settings.mandrill.key
+        'username': Meteor.settings.mandrill.username,
+        'key': Meteor.settings.mandrill.key
     });
 });
 
