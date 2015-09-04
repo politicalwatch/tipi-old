@@ -368,6 +368,33 @@ SyncedCron.add({
 
 
 
+
+/*
+SyncedCron.add({
+    name: 'Herramienta Auditoria TIPI',
+    schedule: function(parser) {
+        // parser is a later.parse object
+        return parser.text('every 20 minutes');
+    },
+    job: function() {
+        referencias = Refs.find({is_tipi: true}, { fields: { _id: 1 } }).fetch();
+        var dup = 0;
+        total = referencias.length;
+        _.each(referencias, function(r, i) {
+          console.log(i + "/" + total);
+          tcount = Tipis.find({original: r._id._str}).count();
+          if (tcount > 1) {
+            dup += 1;
+          }
+        });
+        console.log("Number of duplicates: " + dup);
+    }
+});
+*/
+
+
+
+
 /* Tools */
 
 function onlyUnique (value, index, self) { 
