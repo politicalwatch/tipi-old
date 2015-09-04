@@ -52,13 +52,13 @@ Template.scannertext.helpers({
         "Real Decreto Legislativo",
         "Comisiones, Subcomisiones y Ponencias",
         "Proposición no de Ley",
-        "Enmienda a Proposición no de Ley",
+        /*"Enmienda a Proposición no de Ley",*/
         "Interpelación",
         "Moción consecuencia de Interpelación",
-        "Enmienda a Moción",
+        /*"Enmienda a Moción",*/
         "Pregunta oral",
         "Pregunta para respuesta escrita",
-        "Comparecencia",
+        /*"Comparecencia",*/
         "Planes, Programas y Dictámenes"
       ];
       /*
