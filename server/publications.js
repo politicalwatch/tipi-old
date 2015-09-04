@@ -72,11 +72,12 @@ if (Meteor.isServer) {
 	});
 	
 	Meteor.publish('allTipis', function() { 
-		return Tipis.find({}, {fields: {autor: 1, grupo: 1, otro: 1, titulo: 1, dicts: 1, fecha: 1},
+		return Tipis.find({invisible: false}, {fields: {autor: 1, grupo: 1, otro: 1, titulo: 1, dicts: 1, fecha: 1},
 													 sort: {fecha: -1}});
 	});
 
 	Meteor.publish('allTipisSearch', function(q) {
+                q['invisible'] = false;
 		return Tipis.find(q, {fields: {ref: 1, tipotexto: 1, autor_diputado: 1, autor_grupo: 1, autor_otro: 1, titulo: 1, dicts: 1, fecha: 1, lugar: 1}, 
 													sort: {fecha: -1},
 													limit: 20});
@@ -105,7 +106,7 @@ if (Meteor.isServer) {
 		if (this.userId) {
 			var user = Meteor.users.findOne({_id:this.userId});
 	  		if (Roles.userIsInRole(user, ["admin","manager"])) {
-				return Refs.find({}, {fields: {bol: 1, ref: 1, autor: 1, titulo: 1, dicts: 1, fecha: 1}, 
+				return Refs.find({invisible: false}, {fields: {bol: 1, ref: 1, autor: 1, titulo: 1, dicts: 1, fecha: 1}, 
 															sort: {bol: -1, fecha: -1},
 															limit: 20});
 	  		}
@@ -132,7 +133,7 @@ if (Meteor.isServer) {
 		if (this.userId) {
 			var user = Meteor.users.findOne({_id:this.userId});
 	  		if (Roles.userIsInRole(user, ["admin","manager"])) {
-				return Refs.find({}, {fields: {bol: 1, ref: 1, gopag: 1, autor: 1, titulo: 1, dicts: 1, fecha: 1, content: 1}, 
+				return Refs.find({invisible: false}, {fields: {bol: 1, ref: 1, gopag: 1, autor: 1, titulo: 1, dicts: 1, fecha: 1, content: 1}, 
 															sort: {bol: -1, fecha: -1},
 															limit: 20});
 	  		}
