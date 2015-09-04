@@ -23,7 +23,10 @@
 				]
 			},
 			"sortBy": {"date": -1}
-		}
+		},
+                "analyticsSettings": {
+                    "Google Analytics" : {"trackingId": "Your tracking ID"}
+                }
 	},
     "S3Bucket": "",
     "AWSAccessKeyId": "",
