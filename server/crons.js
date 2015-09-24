@@ -135,13 +135,13 @@ SyncedCron.add({
     name: 'Annotate References to TIPI',
     schedule: function(parser) {
         // parser is a later.parse object
-        return parser.text('every 30 minutes');
+        return parser.text('every 2 hours');
     },
-    job: function() {
-        /*
+    job: function() { 
         console.log("Starting process...");
         console.log("Fetching documents...");
-        referencias = Refs.find({$or: [{annotate: { $exists: false}}, {annotate: false}], invisible: false}, { fields: { _id: 1 }, limit: 50 }).fetch();
+        // referencias = Refs.find({$or: [{annotate: { $exists: false}}, {annotate: false}], invisible: false}, { fields: { _id: 1 }, limit: 50 }).fetch();
+        referencias = Refs.find({$or: [{annotate: { $exists: false}}, {annotate: false}], invisible: false}, { fields: { _id: 1 } }).fetch();
         console.log("Documents fetched: " + referencias.length);
         dicts = Dicts.find({dictgroup: "tipi"}).fetch();
         total = referencias.length;
@@ -151,7 +151,7 @@ SyncedCron.add({
             annotateRef(r._id, res[0], res[1]);
         });
         console.log("Process finished!");
-        */
+        
     }
 });
 
@@ -316,6 +316,7 @@ function annotateRef(id, _dicts, _terms) {
                 'relacionadas': [],
                 'observaciones': '',
                 'quepasocon': '',
+                'invisible': false,
                 'original': r._id._str
             }
             if (typeof r.numenmienda !== 'undefined') {
@@ -363,9 +364,15 @@ SyncedCron.add({
         // Update all new documents (except blackilist documents) to visible
         Refs.update( { tipo: {$nin: blacklist}, invisible: {$exists: false} }, {$set: {invisible: false}}, { multi: true } );
         Refs.update( { $or: [ {origen: "diariosC"}, {origen: "diariosPD"}], tipo: {$nin: diarios_blacklist}, invisible: {$exists: false} }, {$set: {invisible: false}}, { multi: true } );
+        
+        // ###
+        Tipis.update({tipo: {$in: ["161", "162"]}, numenmienda: {$exists: 1, $not: {$size: 0}}, invisible: false}, {$set: {invisible: true}}, {multi: true});
+        Tipis.update({tipo: {$in: ["173"]}, numenmienda: {$exists: 1, $not: {$size: 0}}, invisible: false}, {$set: {invisible: true}}, {multi: true});
+        Tipis.update({tipo: {$in: ["210", "211", "212", "213", "214", "219"]}, invisible: false}, {$set: {invisible: true}}, {multi: true});
+        // ###
+
     }
 });
-
 
 
 
@@ -374,7 +381,7 @@ SyncedCron.add({
     name: 'Herramienta Auditoria TIPI',
     schedule: function(parser) {
         // parser is a later.parse object
-        return parser.text('every 20 minutes');
+        return parser.text('every 2 minutes');
     },
     job: function() {
         referencias = Refs.find({is_tipi: true}, { fields: { _id: 1 } }).fetch();

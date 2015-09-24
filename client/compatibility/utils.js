@@ -80,7 +80,7 @@ function builderQueryFrom(type) {
           q = {tipo: {$in: ["179", "184"]}}
           break;
       case 'Comparecencia':
-          q = {tipo: {$in: ["1210", "211", "212", "213", "214", "219"]}}
+          q = {tipo: {$in: ["210", "211", "212", "213", "214", "219"]}}
           break;
       case 'Planes, Programas y Dictámenes':
           q = {tipo: "043"}
