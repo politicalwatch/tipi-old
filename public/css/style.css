@@ -193,15 +193,22 @@ a.disabled { cursor: default; }
 
 .navbar-custom a { color: #fff; }
 
-.navbar-custom .nav li a:hover,
-.navbar-custom .nav li a.active,
+.navbar-custom .nav li a.menuitem:hover,
+.navbar-custom .nav li a.menuitemactive,
 .navbar-custom .nav li.active,
 .navbar-custom .nav li.dropdown.open a.dropdown-toggle,
 .navbar-custom .nav li.active a {
 	outline: 0;
-	color: #222;
-	background-color: #fbc239;
+	color: #fbc239;
+        background-color: #000;
+        border-bottom: 2px solid;
 }
+.navbar-custom .nav li a.go-to-user { color: #fbc239; }
+.navbar-custom .nav li a.go-to-user:hover { color: #fcd77c; background-color: #000; }
+.navbar-custom .nav li a.go-to-user .fa-inverse { color: #000; }
+.navbar-custom .nav li a.go-to-login { color: #888; }
+.navbar-custom .nav li a.go-to-login:hover { color: #aaa; background-color: #000; }
+.navbar-custom .nav li a.go-to-login .fa-inverse { color: #000; }
 
 .navbar-toggle .icon-bar {background-color:#fff;}
 
