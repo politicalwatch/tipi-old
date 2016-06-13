@@ -4,6 +4,7 @@
 # but you can also edit it by hand.
 
 standard-app-packages
+email
 accounts-base
 accounts-password
 accounts-ui
@@ -11,7 +12,6 @@ iron:router
 aldeed:collection2
 francocatena:status
 alanning:roles
-xolvio:md-blog
 aldeed:simple-schema
 aldeed:autoform
 aldeed:autoform-select2
@@ -36,9 +36,10 @@ aldeed:autoform-bs-datetimepicker
 tsega:bootstrap3-datetimepicker@=3.1.3_3
 twbs:bootstrap
 mizzao:user-status
-percolate:synced-cron
-email
 wylio:mandrill
-# npaton:commands
-edgee:slingshot
 okgrow:analytics
+percolate:synced-cron
+
+# Deleted packages
+# xolvio:md-blog
+# edgee:slingshot

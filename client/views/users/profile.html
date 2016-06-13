@@ -3,31 +3,9 @@
         {{count}}
         <div class="container">
             <div class="row">
-                <div class="col-sm-12 grey darkpatt text-center">
-                    {{#with userobject}}
-                        {{#if isEqUser _id }}
-                            <div class="image-upload">
-                                <label for="image-input">
-                                    <span class="foto grande">
-                                        <img src="{{avatarUrl}}" />
-                                    </span>
-                                </label>
-                                <input id="image-input" type="file" />
-                            </div>
-                        {{else}}
-                            <span class="foto grande">
-                                <img src="{{avatarUrl}}" />
-                            </span>
-                        {{/if}}
-                        <h1>{{username}}</h1>
-                    {{/with}}
-                </div>
-            </div>
-            <hr>
-            <div class="row">
                 <div class="col-sm-6">
                     {{#with userobject}}
-                        <h2>{{profile.firstname}} {{profile.lastname}}</h2>
+                    <h2>{{profile.firstname}} {{profile.lastname}} <small>({{username}})</small></h2>
                         {{#if profile.organization}}
                             <p><i class="fa fa-building-o"></i> {{profile.organization}}</p>
                         {{/if}}

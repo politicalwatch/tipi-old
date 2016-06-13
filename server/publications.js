@@ -173,10 +173,10 @@ if (Meteor.isServer) {
 		if (this.userId) {
 			var user = Meteor.users.findOne({_id:this.userId});
 	  		if (Roles.userIsInRole(user, ["admin"])) {
-				return Meteor.users.find({'profile.is_public': true}, {fields: {username: 1, 'profile.avatar': 1, 'profile.firstname': 1, 'profile.lastname': 1, roles: 1, 'status.online': 1, 'emails.0.address': 1}});
+				return Meteor.users.find({'profile.is_public': true}, {fields: {username: 1, 'profile.firstname': 1, 'profile.lastname': 1, roles: 1, 'status.online': 1, 'emails.0.address': 1}});
 	  		}
 		}
-		return Meteor.users.find({'profile.is_public': true}, {fields: {username: 1, 'profile.avatar': 1, 'profile.firstname': 1, 'profile.lastname': 1, roles: 1}});
+		return Meteor.users.find({'profile.is_public': true}, {fields: {username: 1, 'profile.firstname': 1, 'profile.lastname': 1, roles: 1}});
 	});
 
 	Meteor.publish('exportUsers', function(user_type) {

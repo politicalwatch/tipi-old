@@ -11,10 +11,9 @@
 				<a class="navbar-brand" href="{{pathFor 'homepage'}}"><img src="/images/logos-tipi/logo2_blanco.svg"></a>
 			</div>
 			<div class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
-				<ul class="nav navbar-nav">
+				<ul class="nav navbar-nav navbar-right">
 					<li class="{{activeRouteClass 'scannervizz'}}"><a href="{{pathFor 'scannervizz'}}">Escáner</a></li>
 					<li class="{{activeRouteClass  'topics'}}"><a href="{{pathFor 'topics'}}">Temas</a></li>
-					<li class="{{activeRouteClass  '/blog'}}"><a href="/blog">Blog</a></li>
 					<li class="{{activeRouteClass 'participa'}}"><a href="{{pathFor 'participa'}}">Participa</a></li>
 					<li class="{{activeRouteClass  'about'}}"><a href="{{pathFor 'about'}}">Acerca</a></li>
 					{{#if isInRole 'admin,manager'}}
@@ -27,8 +26,6 @@
 							</ul>
 						</li>
 					{{/if}}
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
 					{{#if currentUser}}
 						<li><a href="{{pathFor 'profile' username=currentUser.username}}">{{currentUser.username}}</a></li>
 					{{else}} 
