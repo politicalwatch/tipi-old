@@ -412,4 +412,4 @@ function onlyUnique (value, index, self) {
 
 /*========== RUN ==========*/
 
-SyncedCron.start();
+// SyncedCron.start();
