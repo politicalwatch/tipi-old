@@ -142,21 +142,6 @@ if (Meteor.isServer) {
   		return;
 	});
 
-	Meteor.publish('allOldMeetups', function() {
-		var now = new Date();
-		return Meetups.find({active: true, date: {$lt: now}}, {sort: {date: 1}});
-	});
-
-	Meteor.publish('allActiveMeetups', function() {
-		var now = new Date();
-		return Meetups.find({active: true, date: {$gte: now}}, {sort: {date: 1}});
-	});
-
-	Meteor.publish('singleMeetup', function(id) {
-		return Meetups.find(id);
-	});
-
-
 	Meteor.publish('userInfo', function(username) {
 		return Meteor.users.find({ username: username }, {fields: {services: 0}});
 	});
