@@ -3,7 +3,7 @@
         {{count}}
         <div class="container">
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-12">
                     {{#with userobject}}
                     <h2>{{profile.firstname}} {{profile.lastname}} <small>({{username}})</small></h2>
                         {{#if profile.organization}}
@@ -25,24 +25,6 @@
                             <a href="/" class="log-out"><i class="fa fa-power-off"></i> Cerrar sesión</a>
                         {{/if}}
                     {{/with}}
-                </div>
-                <div class="col-sm-6">
-                    {{#if hasPosts}}
-                        <h3 class="white-text">Últimas entradas</h3>
-                        <ul class="list-unstyled">
-                            {{#each posts}}
-                                <li><a href="{{pathFor 'postPage' _id }}">{{trimString title 0 100}}</a><small class="grey-text"> - {{relativeDate}}</small></li>
-                            {{/each}}
-                        </ul>
-                    {{/if}}
-                    {{#if hasComments}}
-                        <h3 class="white-text">Últimos comentarios</h3>
-                        <ul class="list-unstyled">
-                            {{#each comments}}
-                                <li><a href="{{pathFor 'postPage' postId }}">{{trimString body 0 100}}</a><small class="grey-text"> - {{relativeDate}}</small></li>
-                            {{/each}}
-                        </ul>
-                    {{/if}}
                 </div>
             </div>
         </div>

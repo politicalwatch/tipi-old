@@ -4,12 +4,6 @@ Template.profile.helpers({
             return true;
         return false;
     },
-    hasPosts: function() {
-        return Posts.find().count();
-    },
-    hasComments: function() {
-        return Comments.find().count();
-    }
 });
 
 Template.profile.events({

@@ -9,36 +9,6 @@ All publications-related code.
 
 if (Meteor.isServer) {
 
-	Meteor.publish('posts', function(options) {
-	  check(options, {
-	    sort: Object,
-	    limit: Number
-	  });
-	  return Posts.find({}, options);
-	});
-
-	Meteor.publish('singlePost', function(id) {
-	  check(id, String);
-	  return Posts.find(id);
-	});
-
-	Meteor.publish('singlePostByUrl', function(url) {
-	  check(url, String);
-	  return Posts.find({url: url});
-	});
-
-
-	Meteor.publish('comments', function(postId) {
-	  check(postId, String);
-	  return Comments.find({postId: postId});
-	});
-
-	Meteor.publish('notifications', function() {
-	  return Notifications.find({userId: this.userId, read: false});
-	});
-	
-
-
 	Meteor.publish('singleRef', function(id) {
 		if (this.userId) {
 			var user = Meteor.users.findOne({_id:this.userId});
@@ -144,14 +114,6 @@ if (Meteor.isServer) {
 
 	Meteor.publish('userInfo', function(username) {
 		return Meteor.users.find({ username: username }, {fields: {services: 0}});
-	});
-
-	Meteor.publish('userLatestPosts', function(username){
-		return Posts.find({ author: username }, {fields: {title: 1, submitted: 1}, sort: {submitted: -1}, limit: 3});
-	});
-
-	Meteor.publish('userLatestComments', function(username){
-		return Comments.find({ author: username }, {fields: {body: 1, postId: 1, submitted: 1}, sort: {submitted: -1}, limit: 3});
 	});
 
 	Meteor.publish('listUsers', function(user_type) {
