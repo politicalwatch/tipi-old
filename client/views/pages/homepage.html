@@ -40,19 +40,11 @@
                 <h1 class="text-center">Últimas novedades</h1>
                 <div class="container">    
                     <div class="row">
-                        <div class="col-md-4 latest">
+                        <div class="col-md-6 latest">
                             <h3 class="lato">Escáner</h3>
                             <a href="{{pathFor 'scannervizz'}}"><img src="/images/scannervizz.png" alt="Previa del Escaner" style="width:80%; vertical-align:center;"></a>
                         </div>
-                        <div class="col-md-4 latest">
-                            <h3 class="lato">Blog</h3>
-                            <ul class="list-unstyled">
-                                {{#each lastEntries}}
-                                <li class="lined"><a href="{{pathFor route='blogPost'}}">{{title}}</a></li>
-                                {{/each}}
-                            </ul>
-                        </div>
-                        <div class="col-md-4 latest">
+                        <div class="col-md-6 latest">
                             <h3>Periodismo de datos</h3>
                             <a href="http://porcausa.org/datos/" target="_blank"><img src="/images/porcausa2.png" alt="Logo PorCausa.org" style="width:50%; vertical-align:center;"></a>
                         </div>
