@@ -38,8 +38,8 @@ twbs:bootstrap
 mizzao:user-status
 wylio:mandrill
 okgrow:analytics
-percolate:synced-cron
 
 # Deleted packages
 # xolvio:md-blog
 # edgee:slingshot
+# percolate:synced-cron
