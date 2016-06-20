@@ -53,6 +53,9 @@ Template.tipipublic.helpers({
         } else {
             return 'clock-o';
         }
+    },
+    unique_terms: function() {
+        return _.uniq(this.terms).join([separator=' | ']);
     }
 });
 
