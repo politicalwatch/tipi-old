@@ -6,102 +6,61 @@
 
 Template.scannertext.helpers({
     alldicts_helper: function() {
-        return Dicts.find().fetch();
+        return Dicts.find({}, {sort: {dict: 1}}).fetch();
     },
     grupootro_helper: function() {
         return [
             {'value': 'Gobierno', 'text': 'Gobierno'},
-            {'value': 'GP', 'text': 'G.P. Popular'},
-            {'value': 'GS', 'text': 'G.P. Socialista'},
             {'value': 'GC-CiU', 'text': 'Grupo Catalán (CiU)'},
             {'value': 'GIP', 'text': 'G.P. La Izquierda Plural'},
+            {'value': 'GMx', 'text': 'G.P. Mixto'},
+            {'value': 'GP', 'text': 'G.P. Popular'},
+            {'value': 'GS', 'text': 'G.P. Socialista'},
             {'value': 'GUPyD', 'text': 'G.P. UPyD'},
             {'value': 'GV (EAJ-PNV)', 'text': 'G.P. Vasco (EAJ-PNV)'},
-            {'value': 'GMx', 'text': 'G.P. Mixto'}
         ];    
     },
     lugares_helper: function() {
         return [
-            "Pleno",
             "Comisión Constitucional",
-            "Comisión de Asuntos Exteriores",
-            "Comisión de Justicia",
-            "Comisión de Interior",
-            "Comisión de Defensa",
-            "Comisión de Economía y Competitividad",
-            "Comisión de Hacienda y Administraciones Públicas",
-            "Comisión de Presupuestos",
-            "Comisión de Fomento",
-            "Comisión de Educación y Deporte",
-            "Comisión de Empleo y Seguridad Social",
-            "Comisión de Industria, Energía y Turismo",
             "Comisión de Agricultura, Alimentación y Medio Ambiente",
-            "Comisión de Sanidad y Servicios Sociales",
+            "Comisión de Asuntos Exteriores",
             "Comisión de Cooperación Internacional para el Desarrollo",
             "Comisión de Cultura",
-            "Comisión de Igualdad"
+            "Comisión de Defensa",
+            "Comisión de Economía y Competitividad",
+            "Comisión de Educación y Deporte",
+            "Comisión de Empleo y Seguridad Social",
+            "Comisión de Fomento",
+            "Comisión de Hacienda y Administraciones Públicas",
+            "Comisión de Igualdad",
+            "Comisión de Industria, Energía y Turismo",
+            "Comisión de Interior",
+            "Comisión de Justicia",
+            "Comisión de Presupuestos",
+            "Comisión de Sanidad y Servicios Sociales",
+            "Pleno",
         ];
     },
     tipos_helper: function() {
       return [
-        "Proyecto de Ley",
-        "Enmienda a Proyecto de Ley",
-        "Proposición de Ley",
-        "Enmienda a Proposición de Ley",
-        "Real Decreto Ley",
-        "Real Decreto Legislativo",
         "Comisiones, Subcomisiones y Ponencias",
-        "Proposición no de Ley",
+        /*"Comparecencia",*/
+        /*"Enmienda a Moción",*/
+        "Enmienda a Proposición de Ley",
         /*"Enmienda a Proposición no de Ley",*/
+        "Enmienda a Proyecto de Ley",
         "Interpelación",
         "Moción consecuencia de Interpelación",
-        /*"Enmienda a Moción",*/
+        "Planes, Programas y Dictámenes",
         "Pregunta oral",
         "Pregunta para respuesta escrita",
-        /*"Comparecencia",*/
-        "Planes, Programas y Dictámenes"
+        "Proposición de Ley",
+        "Proposición no de Ley",
+        "Proyecto de Ley",
+        "Real Decreto Legislativo",
+        "Real Decreto Ley",
       ];
-      /*
-        return [
-            {'value': '121', 'text': 'Proyecto de Ley'},
-            {'value': '121', 'text': 'Enmienda a Proyecto de Ley'},
-            {'value': '120', 'text': 'Iniciativa Legislativa Popular'},
-            {'value': '120', 'text': 'Enmienda a Iniciativa Legislativa Popular'},
-            {'value': '122', 'text': 'Proposición de Ley de Grupos Parlamentarios'},
-            {'value': '122', 'text': 'Enmienda a Proposición de Ley de Grupos Parlamentarios'},
-            {'value': '123', 'text': 'Proposición de Ley de Diputados'},
-            {'value': '123', 'text': 'Enmienda a Proposición de Ley de Diputados'},
-            {'value': '125', 'text': 'Proposición de Ley de CCAA'},
-            {'value': '125', 'text': 'Enmienda a Proposición de Ley de CCAA'},
-            {'value': '130', 'text': 'Real Decreto Ley'},
-            {'value': '132', 'text': 'Real Decreto Legislativo'},
-            {'value': '154', 'text': 'Subcomisiones y Ponencias'},
-            {'value': '155', 'text': 'Solicitud creación Comisión Permanente'},
-            {'value': '156', 'text': 'Solicitud creación Comisión de Investigación'},
-            {'value': '158', 'text': 'Solicitud creación Subcomisiones y Ponencias'},
-            {'value': '161', 'text': 'Proposiciones no de Ley en Comisión'},
-            {'value': '161', 'text': 'Enmienda a Proposición no de Ley en Comisión'},
-            {'value': '162', 'text': 'Proposiciones no de Ley en Pleno'},
-            {'value': '162', 'text': 'Enmienda a Proposición no de Ley en Pleno'},
-            {'value': '172', 'text': 'Interpelación urgente'},
-            {'value': '173', 'text': 'Moción consecuencia de interpelación urgente'},
-            {'value': '173', 'text': 'Enmienda a Moción'},
-            {'value': '178', 'text': 'Pregunta oral a RTVE'},
-            {'value': '179', 'text': 'Pregunta escrita para RTVE'},
-            {'value': '180', 'text': 'Pregunta oral en Pleno'},
-            {'value': '181', 'text': 'Pregunta oral en Comisión'},
-            {'value': '184', 'text': 'Pregunta para respuesta escrita'},
-            {'value': '210', 'text': 'Comparecencia del Gobierno ante el Pleno'},
-            {'value': '211', 'text': 'Otras comparecencias'},
-            {'value': '212', 'text': 'Comparecencia de autoridades y funcionarios en Comisión'},
-            {'value': '213', 'text': 'Comparecencia del Gobierno en Comisión (art. 44)'},
-            {'value': '214', 'text': 'Comparecencia del Gobierno en Comisión (arts. 202 y 203)'},
-            {'value': '219', 'text': 'Otras comparecencias en Comisión'},
-            {'value': '043', 'text': 'Planes, Programas y Dictámenes'},
-            {'value': '043', 'text': 'Propuestas de Resolución'},
-            {'value': '095', 'text': 'Operaciones de las Fuerzas Armadas en el exterior'}
-        ];
-        */
     },
     lastquery: function() {
         return Session.get("scannerText");
