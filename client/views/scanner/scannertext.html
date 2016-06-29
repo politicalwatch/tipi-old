@@ -83,7 +83,9 @@
                                 </div>
                             </div>
                         </form>
-                        <hr>
+                        <div class="col-sm-12">
+                                <a href="#" class="pull-right" id="exportcsv"><i class="fa fa-download"></i> Exportar datos a CSV</a>
+                        </div>
                         {{#if yesfound}}
                           {{> reactiveTable class="table table-hover" collection=tipisfound settings=settings}}
                           <p class="white-text italic">Nota: en algunos casos en la comparecencias el autor Gobierno incluye comparecencias de otras autoridades y funcionarios.</p>

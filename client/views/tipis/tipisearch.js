@@ -67,8 +67,9 @@ Template.tipisearch.helpers({
     },
     settings: function () {
         return {
-            rowsPerPage: 30,
-    		showFilter: false,
+            rowsPerPage: Meteor.settings.public.reactiveTable.rowsPerPage,
+            // showNavigation: 'never',
+    	    showFilter: false,
             showColumnToggles: false,
             fields: [
                 { key: 'ref', label: 'Referencia'},

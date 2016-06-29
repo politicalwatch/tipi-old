@@ -33,9 +33,10 @@ Template.refsearch.helpers({
 	},
    	settings: function () {
           return {
-            rowsPerPage: 30,
+            rowsPerPage: Meteor.settings.public.reactiveTable.rowsPerPage,
+            // showNavigation: 'never',
             showFilter: false,
-			showColumnToggles: false,
+            showColumnToggles: false,
             fields: [
             	                { key: 'bol', label: 'Bol.', sort: 'descending',
             		          fn: function(val, obj) {

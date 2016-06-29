@@ -1,36 +1,21 @@
 {
     "name": "tipi",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "url": "http://tipiciudadano.es",
     "engines": {
         "node": "0.8.24"
     },
-	"public": {
-		"blog": {
-			"name": "Blog",
-			"description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
-			"prettify": {
-				"syntax-highlighting": true,
-				"element-classes": [
-				{
-					"locator": "img",
-					"classes": [""]
-				},
-				{
-					"locator": "button",
-					"classes": ["btn", "btn-default"]
-				}
-				]
-			},
-			"sortBy": {"date": -1}
-		},
-                "analyticsSettings": {
-                    "Google Analytics" : {"trackingId": "Your tracking ID"}
-                }
-	},
-    "S3Bucket": "",
-    "AWSAccessKeyId": "",
-    "AWSSecretAccessKey": "",
+    "public": {
+        "analyticsSettings": {
+            "Google Analytics": {"trackingId": ""}
+        },
+        "reactiveTable": {
+            "rowsPerPage": 20
+        },
+        "queryParams": {
+            "limit": 1000
+        }
+    },
     "mandrillUsername": "",
     "mandrillKey": ""
 }

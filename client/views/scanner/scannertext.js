@@ -71,8 +71,8 @@ Template.scannertext.helpers({
     },
     settings: function () {
         return {
-            rowsPerPage: 30,
-            showNavigation: 'never',
+            rowsPerPage: Meteor.settings.public.reactiveTable.rowsPerPage,
+            // showNavigation: 'never',
             showFilter: false,
             showColumnToggles: false,
             fields: [{ key: 'titulo', label: 'Titulo', sortable: true, sortOrder: 1, sortDirection: -1, headerClass: 'col-md-7',
@@ -82,6 +82,7 @@ Template.scannertext.helpers({
                                         },
                                         { key: 'autor_diputado',  label: 'Autor', sortable: false, headerClass: 'col-md-2',
                                             fn: function(val, obj) {
+                                              if (!_.isNull(val)) {
                                                 if (val.length > 0) {
                                                     return Spacebars.SafeString(val.join([separator = '<br/>']));
                                                 } else {
@@ -89,6 +90,10 @@ Template.scannertext.helpers({
                                                         return Spacebars.SafeString(obj.autor_otro.join([separator = '<br/>']));
                                                     }
                                                 }
+
+                                              } else {
+                                                return '';
+                                              }
                                             }
                                         },
                                         { key: 'autor_grupo', label: 'Grupo', sortable: false, headerClass: 'col-md-2',
@@ -120,6 +125,12 @@ Template.scannertext.rendered = function () {
 };
 
 Template.scannertext.events({
-    'submit form': function(e) { }
-    // 'click .reset': function(e) { console.log("reiniciando formulario..."); Session.set('scannerText', {}); }
+    'submit form': function(e) { },
+    'click a#exportcsv': function(e) {
+        var query = Session.get("scannerText");
+        var collection_data = Tipis.find(cleanTipiQuery(query)).fetch();
+        var data = json2csv(collection_data, true, true);
+        var blob = new Blob([data], {type: "text/csv;charset=utf-8"});
+        saveAs(blob, "tipis.csv");
+    }
 });
