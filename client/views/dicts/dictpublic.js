@@ -41,5 +41,8 @@ Template.topic.helpers({
             if (b.fecha < a.fecha) return 1;
             return 0;
         });
+    },
+    initiatives: function() {
+      return Tipis.find();
     }
 });
