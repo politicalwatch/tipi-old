@@ -66,8 +66,17 @@ Template.scannertext.helpers({
         return Session.get("scannerText");
     },
     count: function() {
-        if (this.count >= 100) flash("Se han encontrado más de 20 iniciativas.", "info");
-        else if (this.count == 0) flash("No se han encontrado iniciativas que cumplan los criterios.", "info");
+        if (this.searched) {
+            if (this.count == 0) {
+                flash("No se han encontrado iniciativas que cumplan los criterios.", "danger");
+            } else {
+                if (this.count >= Meteor.settings.public.queryParams.limit) {
+                    flash("Demasiadas iniciativas encontradas. Se mostrarán solo las " + Meteor.settings.public.queryParams.limit + " últimas.", "info");
+                } else {
+                    flash("Se han encontrado " + this.count + " iniciativas.", "info");
+                }
+            }
+        }
     },
     settings: function () {
         return {
@@ -77,7 +86,7 @@ Template.scannertext.helpers({
             showColumnToggles: false,
             fields: [{ key: 'titulo', label: 'Titulo', sortable: true, sortOrder: 1, sortDirection: -1, headerClass: 'col-md-7',
                                             fn: function(val, obj) {
-                                                return Spacebars.SafeString('<a href="/t/'+ obj._id + '">'+val+'</a>');
+                                                return Spacebars.SafeString('<a href="/t/'+ obj._id + '"><strong>'+val+'</strong></a>');
                                             }
                                         },
                                         { key: 'autor_diputado',  label: 'Autor', sortable: false, headerClass: 'col-md-2',
@@ -118,19 +127,32 @@ Template.scannertext.helpers({
 
 Template.scannertext.rendered = function () {
   if(!this._rendered) {
-    this._rendered = true;
-    $("#fechadesde").datepicker(datepickeroptions);
-    $("#fechahasta").datepicker(datepickeroptions);
+      this._rendered = true;
+      $('.adv-search-block').hide();
+      $('.adv-search-link.hide-block').hide();
+      $("#fechadesde").datepicker(datepickeroptions);
+      $("#fechahasta").datepicker(datepickeroptions);
   }
 };
 
 Template.scannertext.events({
     'submit form': function(e) { },
     'click a#exportcsv': function(e) {
+        e.preventDefault();
         var query = Session.get("scannerText");
         var collection_data = Tipis.find(cleanTipiQuery(query)).fetch();
         var data = json2csv(collection_data, true, true);
         var blob = new Blob([data], {type: "text/csv;charset=utf-8"});
         saveAs(blob, "tipis.csv");
+    },
+    'click .adv-search-link': function(e) {
+        e.preventDefault();
+        $(e.currentTarget).hide();
+        $('.adv-search-block').toggle(0, function() {
+            if ($('.adv-search-block').is(':visible'))
+                $('.adv-search-link.hide-block').show();
+            else 
+                $('.adv-search-link.show-block').show();
+        });
     }
 });
