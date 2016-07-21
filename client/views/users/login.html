@@ -1,11 +1,10 @@
 <template name="login">
-    <div id="login" class="containerglob darkpatt">
-        {{count}}
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-4 col-sm-offset-4">
-                    <form class="text-center">
-                        <h2>Accede a TIPI</h2>
+    <div id="login" class="container page">
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-4">
+                <form class="text-center form-horizontal">
+                    <fieldset>
+                        <legend>Accede a Tipi</legend>
                         <div class="form-group">
                             <input id="username" class="form-control text-center" type="text" value="" placeholder="Nombre de usuario" />
                         </div>
@@ -13,13 +12,13 @@
                             <input id="password" class="form-control text-center" type="password" value="" placeholder="Contraseña" />
                         </div>
                         <div class="form-actions">
-                            <button type="submit" class="btn btn-block btn-secondary">Entrar</button>
-                            <a href="/forgot">Olvidé mi contraseña</a>
+                            <button type="submit" class="btn btn-block btn-primary">Entrar</button>
+                            <a href="{{pathFor 'forgot'}}">Olvidé mi contraseña</a>
                              <br/>
                             <a href="{{pathFor 'signup'}}"><b>Soy nuevo</b></a>
                         </div>
-                    </form>
-                </div>
+                    </fieldset>
+                </form>
             </div>
         </div>
     </div>

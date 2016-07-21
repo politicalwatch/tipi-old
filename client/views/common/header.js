@@ -1,10 +1,4 @@
 Template.header.helpers({
-  messages: function () {
-    return Messages.find();
-  },
-  hasMessages: function() {
-    return Messages.find().count() != 0;
-  },
   isLoggedIn: function () {
     return !!Meteor.user();
   },
@@ -15,11 +9,5 @@ Template.header.helpers({
       return Router.current() && Router.current().route.getName() === name
     });
     return active && 'active';
-  }
-});
-
-Template.header.events({
-  'click .close': function () {
-    Messages.remove({});
   }
 });

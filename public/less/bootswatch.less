@@ -341,11 +341,83 @@ a.list-group-item {
 
 
 
+
+
+// Generics =================================================================
+
+#app {
+    /*margin-bottom: @padding-base-vertical*4;*/
+}
+
+.page {
+    margin-bottom: @padding-base-vertical*6;
+}
+
+.icon {
+    font-size: 12em;
+}
+
+// Home =================================================================
+
+#home {
+    #stats {
+        background-color: @brand-primary;
+        color: @brand-secondary;
+        margin-top: -25px;
+        min-height: 400px;
+        padding-top: @padding-base-vertical*6;
+    }
+    #ctas {
+        background-color: @brand-secondary;
+        color: @brand-primary;
+        min-height: 250px;
+        padding-top: @padding-base-vertical*4;
+        padding-bottom: @padding-base-vertical*4;
+        .cta > .full {
+            background-color: @brand-primary;
+            color: @brand-secondary;
+            text-align: center;
+            padding-top: @padding-base-vertical*2;
+            padding-bottom: @padding-base-vertical*2;
+        }
+        .cta > .empty {
+            background-color: @brand-primary;
+            height: @padding-base-horizontal;
+            margin-bottom: @padding-base-vertical;
+        }
+        .cta > .empty.sm {
+            height: @padding-base-vertical/2;
+        }
+        .cta > .empty.xs {
+            height: @padding-base-vertical/4;
+        }
+        .subscribe {
+            padding-top: @padding-base-vertical*6;
+            padding-bottom: @padding-base-vertical*6;
+        }
+    }
+}
+
+@brand-primary-light: lighten(@brand-primary, 5%);
+@brand-primary-xlight: lighten(@brand-primary, 15%);
+
+.bullet { font-size: 16px; }
+.bullet .marker { stroke: @brand-primary-light; stroke-width: 2px;  }
+.bullet .tick { fill: @brand-primary-xlight;  }
+.bullet .tick line { stroke: @brand-primary-light; stroke-width: .5px;  }
+.bullet .range.s0 { fill: @brand-primary-light  }
+.bullet .range.s1 { fill: @brand-primary-light  }
+.bullet .range.s2 { fill: @brand-primary-light  }
+.bullet .measure.s0 { fill: @brand-secondary;  }
+.bullet .measure.s1 { fill: @brand-secondary;  }
+.bullet .title { font-size: 14px; font-weight: bold; fill: @brand-secondary;  }
+.bullet .subtitle { fill: lighten(@brand-secondary, 15%);  }
+
+
 // Footer =================================================================
 
 #footerline {
     background-color: @brand-alt;
-    margin-top: @padding-base-vertical*4;
     height: 5px;
 }
 
@@ -374,7 +446,3 @@ a.list-group-item {
 #credits {
     background-color: darken(@brand-primary, 3%);
 }
-
-
-
-// Custom styles =================================================================

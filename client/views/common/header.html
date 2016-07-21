@@ -1,60 +1,39 @@
 <template name="header">
-  <nav class="navbar navbar-default">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".bs-navbar-collapse">
-                                    <span class="sr-only">Toggle navigation</span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="{{pathFor 'scannervizz'}}"><img src="/images/logos-tipi/logo2_blanco.svg"></a>
-			</div>
-			<div class="collapse navbar-collapse bs-navbar-collapse">
-				<ul class="nav navbar-nav navbar-right">
-                                      <li class="{{activeRouteClass 'scannertext'}}"><a class="menuitem" href="{{pathFor 'scannertext'}}">Buscar</a></li>
-                                      {{#if isInRole 'admin,manager'}}
-                                              <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión <span class="caret"></span></a>
-                                                      <ul class="dropdown-menu" role="navigation">
-                                                              <li class="{{activeRouteClass 'refsearch'}}"><a href="{{pathFor 'refsearch'}}">Iniciativas Congreso</a></li>
-                                                              <li class="{{activeRouteClass 'tipisearch'}}"><a href="{{pathFor 'tipisearch'}}">Iniciativas TiPi</a></li>
-                                                              <li class="divider"></li>
-                                                              <li class="{{activeRouteClass 'dicts'}}"><a href="{{pathFor 'dicts'}}">Diccionarios</a></li>
-                                                      </ul>
-                                              </li>
-                                      {{/if}}
-                                      {{#if currentUser}}
-                                          <li>
-                                              <a href="{{pathFor 'profile' username=currentUser.username}}" class="go-to-user">Perfil</a>
-                                          </li>
-                                      {{else}} 
-                                          <li>
-                                              <a href="{{pathFor 'login'}}" class="go-to-login">Acceder</a>
-                                          </li>
-                                      {{/if}}
-				</ul>
-			</div>
-		</div>
-	</nav>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-12" style="color:#813450;height:3px;"></div>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{{pathFor 'home'}}"><img src="/images/logos-tipi/logo2_blanco.svg"></a>
+            </div>
+            <div class="collapse navbar-collapse bs-navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="{{activeRouteClass 'scannertext'}}"><a class="menuitem" href="{{pathFor 'scannertext'}}">Buscar</a></li>
+                    {{#if isInRole 'admin,manager'}}
+                        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="navigation">
+                                <li class="{{activeRouteClass 'refsearch'}}"><a href="{{pathFor 'refsearch'}}">Iniciativas Congreso</a></li>
+                                <li class="{{activeRouteClass 'tipisearch'}}"><a href="{{pathFor 'tipisearch'}}">Iniciativas TiPi</a></li>
+                                <li class="divider"></li>
+                                <li class="{{activeRouteClass 'dicts'}}"><a href="{{pathFor 'dicts'}}">Diccionarios</a></li>
+                            </ul>
+                        </li>
+                    {{/if}}
+                    {{#if currentUser}}
+                        <li>
+                            <a href="{{pathFor 'profile' username=currentUser.username}}" class="go-to-user">Perfil</a>
+                        </li>
+                    {{else}} 
+                        <li>
+                            <a href="{{pathFor 'login'}}" class="go-to-login">Acceder</a>
+                        </li>
+                    {{/if}}
+                </ul>
             </div>
         </div>
-        {{#if hasMessages }}
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12">
-                        {{#each messages}}
-                                <div class="alert alert-dismissible alert-{{type}}" role="alert">
-                                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                        {{message}}		
-                                </div>
-                        {{/each}}
-                        
-                    </div>
-                </div>
-            </div>
-        {{/if}}
-
+    </nav>
 </template>
