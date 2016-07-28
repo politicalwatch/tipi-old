@@ -189,9 +189,29 @@ if (Meteor.isServer) {
             return Tipis.find(
               {autor_diputado: dipobject.nombre},
               {  
+                fields: {ref: 1, tipotexto: 1, titulo: 1, dicts: 1, fecha: 1, lugar: 1}, 
+                sort: {fecha: 1},
+                limit: 10
+              }
+            );
+          }
+          this.stop();
+          return;
+        });
+
+	Meteor.publish('singleGroupById', function(id) {
+	    return Grupos.find(id);
+	});
+
+        Meteor.publish('limitedTipiListByGroup', function(id) {
+          var groupobject = Grupos.findOne(id, {fields: {nombre: 1}});
+          if (groupobject) {
+            return Tipis.find(
+              {autor_grupo: groupobject.acronimo},
+              {  
                 fields: {ref: 1, tipotexto: 1, autor_diputado: 1, titulo: 1, dicts: 1, fecha: 1, lugar: 1}, 
                 sort: {fecha: 1},
-                limit: 5
+                limit: 10
               }
             );
           }

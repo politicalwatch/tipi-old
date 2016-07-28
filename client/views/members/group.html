@@ -1,25 +1,15 @@
-<template name="deputy">
-  <div id="deputy">
+<template name="group">
+  <div id="group">
       <div class="container page">
           <div class="row">
               <div class="col-sm-12">
-                  <img src="{{deputy.imagen}}" alt="Foto de {{deputy.nombre}}">
-                  <h2>{{deputy.nombre}}</h2>
-                  <h5>{{group}}</h5>
-                  <ul class="list-unstyled">
-                      {{#if deputy.correo}}
-                          <li>{{deputy.correo}}</li>
-                      {{/if}}
-                      {{#if deputy.twitter}}
-                          <li>{{deputy.twitter}}</li>
-                      {{/if}}
-                  </ul>
+                  <h2>{{group.nombre}}</h2>
                   <h5 class="white-text">Últimas iniciativas</h5>
                   {{#if hasTipis}}
                       <div class="row">
                           {{#each tipis}}
                               <div class="col-sm-10">
-                                  <a href="/t/{{_id}}">{{titulo}}</a> 
+                                  <a href="/t/{{_id}}">{{titulo}}</a>
                               </div>
                               <div class="col-sm-2">
                                   <small class="text-muted">{{relativeDate fecha}}</small>
