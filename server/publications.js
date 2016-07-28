@@ -179,6 +179,26 @@ if (Meteor.isServer) {
   		return;
 	});
 
+	Meteor.publish('singleDeputyById', function(id) {
+	    return Diputados.find(id);
+	});
+
+        Meteor.publish('limitedTipiListByDeputy', function(id) {
+          var dipobject = Diputados.findOne(id, {fields: {nombre: 1}});
+          if (dipobject) {
+            return Tipis.find(
+              {autor_diputado: dipobject.nombre},
+              {  
+                fields: {ref: 1, tipotexto: 1, autor_diputado: 1, titulo: 1, dicts: 1, fecha: 1, lugar: 1}, 
+                sort: {fecha: 1},
+                limit: 5
+              }
+            );
+          }
+          this.stop();
+          return;
+        });
+
 	Meteor.publish('userInfo', function(username) {
 		return Meteor.users.find({ username: username }, {fields: {services: 0}});
 	});
