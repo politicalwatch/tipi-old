@@ -62,6 +62,20 @@ Template.scannertext.helpers({
         "Real Decreto Ley",
       ];
     },
+    dip_autocomplete_settings: function() {
+        return {
+            position: "bottom",
+            limit: 10,
+            rules: [
+                {
+                    token: '',
+                    collection: Diputados,
+                    field: "nombre",
+                    template: Template.dipAutocomplete
+                }
+            ]
+        };
+    },
     lastquery: function() {
         return Session.get("scannerText");
     },

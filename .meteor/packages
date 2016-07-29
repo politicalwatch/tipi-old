@@ -44,3 +44,4 @@ okgrow:analytics
 # percolate:synced-cron
 standard-minifier-css
 standard-minifier-js
+mizzao:autocomplete

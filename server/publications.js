@@ -179,6 +179,24 @@ if (Meteor.isServer) {
   		return;
 	});
 
+	Meteor.publish('allDeputies', function(username){
+		return Diputados.find(
+                  {tipi: false},
+                  {
+                    sort: {activo: -1, name: 1}
+                  }
+                );
+	});
+        
+        Meteor.publish('allDeputyNames', function() {
+            return Diputados.find(
+                {},
+                {
+                    fields: {nombre: 1}
+                }
+            );
+        });
+
 	Meteor.publish('singleDeputyById', function(id) {
 	    return Diputados.find(id);
 	});
@@ -257,15 +275,6 @@ if (Meteor.isServer) {
 		}
 		this.stop();
   		return;
-	});
-
-	Meteor.publish('diputados', function(username){
-		return Diputados.find(
-                  {tipi: false},
-                  {
-                    sort: {activo: -1, name: 1}
-                  }
-                );
 	});
 
 }

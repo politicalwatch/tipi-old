@@ -50,7 +50,8 @@
                             </div>
                             <label for="autor" class="col-sm-1 control-label">Diputado/a</label>
                             <div class="col-sm-7">
-                                <input class="form-control" type="text" id="autor" name="autor" value="{{lastquery.autor}}" placeholder="Escriba el nombre de un/a diputado/a">
+                                {{> inputAutocomplete settings=dip_autocomplete_settings id="autor" name="autor" class="form-control" placeholder="Apellidos, Nombre" value=lastquery.autor}}
+                                <!-- <input class="form&#45;control" type="text" id="autor" name="autor" value="{{lastquery.autor}}" placeholder="Escriba el nombre de un/a diputado/a"> -->
                             </div>
                         </div>
                         <div class="adv-search-block">
