@@ -357,6 +357,14 @@ a.list-group-item {
     font-size: 12em;
 }
 
+.navbar-nav {
+    li {
+        a {
+            font-weight: bold;
+        }
+    }
+}
+
 /* Overwrite automcomplete css styles */
 .-autocomplete-item {
     cursor: pointer;
@@ -369,12 +377,28 @@ a.list-group-item {
 // Home =================================================================
 
 #home {
+    #intro {
+        background-color: @brand-primary;
+        margin-top: -25px;
+        .big-logo {
+            padding-top: @padding-base-vertical*2;
+            padding-bottom: @padding-base-vertical*4;
+            width: 75%;
+        }
+    }
     #stats {
         background-color: @brand-primary;
         color: @brand-secondary;
-        margin-top: -25px;
         min-height: 400px;
-        padding-top: @padding-base-vertical*6;
+        padding-top: @padding-base-vertical*4;
+        padding-bottom: @padding-base-vertical*4;
+        #graph {
+            padding-bottom: @padding-base-vertical*2;
+        }
+        small {
+            font-style: italic;
+            color: @brand-primary-xlight;
+        }
     }
     #ctas {
         background-color: @brand-secondary;
