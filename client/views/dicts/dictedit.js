@@ -16,11 +16,8 @@ Template.dictedit.events({
 	'click #submit': function(e,a) {
 		console.log(this);
 		e.preventDefault();
-		console.log("Edit dict submitted");
 		var words = $("#words").val();
 		var wordsa = words.split("\n").sort();
-		//var oid = new Mongo.ObjectID(this._id);
-		console.log("here");
 		Dicts.update({_id: this._id}, {$set: {dict: this.dict, dictgroup: this.dictgroup, description: this.description,
 									words: wordsa, lastUpdate: new Date(), updatedBy: Meteor.user().username}})
 	},

@@ -23,6 +23,12 @@ var datepickeroptions = {
     todayHighlight: true
 }
 
+// Generate app based collection ids
+function generateId(id) {
+    // Id based on Mongo ObjectIds
+    return new Mongo.ObjectID(id);
+}
+
 function builderQueryFrom(type) {
   var q = {}
   var enmienda = { numenmienda: {$exists: 1, $not: {$size: 0} } }
