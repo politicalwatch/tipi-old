@@ -11,27 +11,17 @@
                 <a class="navbar-brand" href="{{pathFor 'home'}}"><img src="/images/logos-tipi/logo2_blanco.svg"></a>
             </div>
             <div class="collapse navbar-collapse bs-navbar-collapse">
+                {{#if currentUser}}
+                {{else}}
+                    <form class="navbar-form navbar-right">
+                        <a href="{{pathFor 'login'}}" class="btn btn-sm btn-tipi">Accede</a>
+                    </form>
+                {{/if}}
                 <ul class="nav navbar-nav navbar-right">
                     <li class="{{activeRouteClass 'scannertext'}}"><a class="menuitem" href="{{pathFor 'scannertext'}}">Buscar</a></li>
                     <li class="{{activeRouteClass 'topics'}}"><a class="menuitem" href="{{pathFor 'topics'}}">Temas</a></li>
-                    {{#if isInRole 'admin,manager'}}
-                        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión <span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="navigation">
-                                <li class="{{activeRouteClass 'refsearch'}}"><a href="{{pathFor 'refsearch'}}">Iniciativas Congreso</a></li>
-                                <li class="{{activeRouteClass 'tipisearch'}}"><a href="{{pathFor 'tipisearch'}}">Iniciativas TiPi</a></li>
-                                <li class="divider"></li>
-                                <li class="{{activeRouteClass 'dicts'}}"><a href="{{pathFor 'dicts'}}">Diccionarios</a></li>
-                            </ul>
-                        </li>
-                    {{/if}}
                     {{#if currentUser}}
-                        <li>
-                        <a href="{{pathFor 'profile' username=currentUser.username}}" class="go-to-user {{[activeRouteClass 'profile']}}">Perfil</a>
-                        </li>
-                    {{else}} 
-                        <li>
-                        <a href="{{pathFor 'login'}}" class="go-to-login {{activeRouteClass 'login'}}">Accede</a>
-                        </li>
+                        <li class="{{activeRouteClass 'profile'}}"><a href="{{pathFor 'profile' username=currentUser.username}}" class="go-to-user">Perfil</a></li>
                     {{/if}}
                 </ul>
             </div>
