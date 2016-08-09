@@ -7,6 +7,9 @@ Code related to the tipi template
 /+ ---------------------------------------------------- */
 
 Template.tipi.helpers({
+    searchUrl: function() {
+        return Session.get('searchUrl') || Router.path('search');
+    },
     congresoURL: function() {
         if (this.ref != '') {
             return parseCongresoURL(this.ref);

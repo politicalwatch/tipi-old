@@ -4,6 +4,8 @@
 
 /+ ---------------------------------------------------- */
 
+Template.search.renderer
+
 Template.search.helpers({
     alldicts_helper: function() {
         return Dicts.find({}, {sort: {dict: 1}}).fetch();
@@ -156,6 +158,7 @@ Template.search.helpers({
 Template.search.rendered = function () {
   if(!this._rendered) {
       this._rendered = true;
+      Session.set('searchUrl', window.location.href);
       $('.adv-search-block').hide();
       $('.adv-search-link.hide-block').hide();
       $("#fechadesde").datepicker(datepickeroptions);
