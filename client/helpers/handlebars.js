@@ -26,8 +26,16 @@ Handlebars.registerHelper('', function(section){
 
 Handlebars.registerHelper('eq', function(v1, v2, options) {
   if(v1 == v2){
-    return true
+    return true;
   } else {
-    return false
+    return false;
+  }
+});
+
+Handlebars.registerHelper('neq', function(v1, v2, options) {
+  if(v1 != v2){
+    return true;
+  } else {
+    return false;
   }
 });
