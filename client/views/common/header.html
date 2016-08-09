@@ -18,7 +18,7 @@
                     </form>
                 {{/if}}
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="{{activeRouteClass 'scannertext'}}"><a class="menuitem" href="{{pathFor 'scannertext'}}">Buscar</a></li>
+                    <li class="{{activeRouteClass 'search'}}"><a class="menuitem" href="{{pathFor 'search'}}">Buscar</a></li>
                     <li class="{{activeRouteClass 'topics'}}"><a class="menuitem" href="{{pathFor 'topics'}}">Temas</a></li>
                     {{#if currentUser}}
                         <li class="{{activeRouteClass 'profile'}}"><a href="{{pathFor 'profile' username=currentUser.username}}" class="go-to-user">Perfil</a></li>

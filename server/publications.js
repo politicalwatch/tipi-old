@@ -261,20 +261,4 @@ if (Meteor.isServer) {
                 );
 	});
 
-	Meteor.publish('exportUsers', function(user_type) {
-		if (this.userId) {
-			var user = Meteor.users.findOne({_id:this.userId});
-	  		if (Roles.userIsInRole(user, ["admin"])) {
-				return Meteor.users.find(
-                                  {},
-                                  {
-                                    fields: {username: 1, 'profile.firstname': 1, 'profile.lastname': 1, 'emails.0.address': 1}
-                                  }
-                                );
-	  		}
-		}
-		this.stop();
-  		return;
-	});
-
 }

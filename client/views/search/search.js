@@ -1,10 +1,10 @@
 /* ---------------------------------------------------- +/
 
-## Public Tipis ##
+## Tipis ##
 
 /+ ---------------------------------------------------- */
 
-Template.scannertext.helpers({
+Template.search.helpers({
     alldicts_helper: function() {
         return Dicts.find({}, {sort: {dict: 1}}).fetch();
     },
@@ -77,7 +77,7 @@ Template.scannertext.helpers({
         };
     },
     lastquery: function() {
-        return Session.get("scannerText");
+        return Session.get("search");
     },
     count: function() {
         if (this.searched) {
@@ -98,61 +98,62 @@ Template.scannertext.helpers({
             // showNavigation: 'never',
             showFilter: false,
             showColumnToggles: false,
-            fields: [{ key: 'titulo', label: 'Titulo', sortable: true, sortOrder: 1, sortDirection: -1, headerClass: 'col-md-7',
-                                            fn: function(val, obj) {
-                                                var str = '';
-						if (Roles.userIsInRole(Meteor.user(), ["admin"])) {
-                                                    str += '<div class="btn-group">';
-                                                      str += '<a href="#" class="btn btn-secondary btn-xs dropdown-toggle" data-toggle="dropdown"><i class="fa fa-caret-square-o-down"></i></a>';
-                                                      str += '<ul class="dropdown-menu">';
-                                                        str += '<li><a href="t/'+ obj._id + '" target="_blank"><i class="fa fa-file-o"></i> Ver iniciativa</a></li>';
-                                                        str += '<li><a href="/admin/Tipis/'+ obj._id + '/edit" target="_blank"><i class="fa fa-pencil"></i> Editar iniciativa</a></li>';
-                                                        str += '<li><a href="tipis/'+ obj.url + '" target="_blank"><i class="fa fa-institution"></i> Ver en Congreso.es</a></li>';
-                                                      str += '</ul>';
-                                                    str += '</div>';
-                                                    str += '&nbsp;&nbsp;';
-                                                }
-                                                str += '<a href="/t/'+ obj._id + '"><strong>'+val+'</strong></a>';
-                                                return Spacebars.SafeString(str);
-                                            }
-                                        },
-                                        { key: 'autor_diputado',  label: 'Autor', sortable: false, headerClass: 'col-md-2',
-                                            fn: function(val, obj) {
-                                              if (!_.isNull(val)) {
-                                                if (val.length > 0) {
-                                                    return Spacebars.SafeString(val.join([separator = '<br/>']));
-                                                } else {
-                                                    if (obj.autor_otro.length > 0) {
-                                                        return Spacebars.SafeString(obj.autor_otro.join([separator = '<br/>']));
-                                                    }
-                                                }
+            fields: [
+                { key: 'titulo', label: 'Titulo', sortable: true, sortOrder: 1, sortDirection: -1, headerClass: 'col-md-7',
+                    fn: function(val, obj) {
+                        var str = '';
+                        if (Roles.userIsInRole(Meteor.user(), ["admin"])) {
+                            str += '<div class="btn-group">';
+                              str += '<a href="#" class="btn btn-secondary btn-xs dropdown-toggle" data-toggle="dropdown"><i class="fa fa-caret-square-o-down"></i></a>';
+                              str += '<ul class="dropdown-menu">';
+                                str += '<li><a href="tipis/'+ obj._id + '"><i class="fa fa-file-o"></i> Ver iniciativa</a></li>';
+                                str += '<li><a href="/admin/Tipis/'+ obj._id + '/edit"><i class="fa fa-pencil"></i> Editar iniciativa</a></li>';
+                                str += '<li><a href="tipis/'+ obj.url + '"><i class="fa fa-institution"></i> Ver en Congreso.es</a></li>';
+                              str += '</ul>';
+                            str += '</div>';
+                            str += '&nbsp;&nbsp;';
+                        }
+                        str += '<a href="/tipis/'+ obj._id + '"><strong>'+val+'</strong></a>';
+                        return Spacebars.SafeString(str);
+                    }
+                },
+                { key: 'autor_diputado',  label: 'Autor', sortable: false, headerClass: 'col-md-2',
+                    fn: function(val, obj) {
+                      if (!_.isNull(val)) {
+                        if (val.length > 0) {
+                            return Spacebars.SafeString(val.join([separator = '<br/>']));
+                        } else {
+                            if (obj.autor_otro.length > 0) {
+                                return Spacebars.SafeString(obj.autor_otro.join([separator = '<br/>']));
+                            }
+                        }
 
-                                              } else {
-                                                return '';
-                                              }
-                                            }
-                                        },
-                                        { key: 'autor_grupo', label: 'Grupo', sortable: false, headerClass: 'col-md-2',
-                                            fn: function(val, obj) {
-                                                groupsHumanized = [];
-                                                for(i=0;i<val.length;i++) {
-                                                    groupsHumanized.push(parliamentarygroups[val[i]]);
-                                                }
-                                                return groupsHumanized.join([separator = ', ']);
-                                            }
-                                        },
-                                        { key: 'fecha', label: 'Fecha', sortable: true, sortOrder: 0, sortDirection: -1, headerClass: 'col-md-1',
-                                            fn: function(val, obj) {
-                                                return moment(val).format('l');
-                                            }
-                                        }
-                                        ]
+                      } else {
+                        return '';
+                      }
+                    }
+                },
+                { key: 'autor_grupo', label: 'Grupo', sortable: false, headerClass: 'col-md-2',
+                    fn: function(val, obj) {
+                        groupsHumanized = [];
+                        for(i=0;i<val.length;i++) {
+                            groupsHumanized.push(parliamentarygroups[val[i]]);
+                        }
+                        return groupsHumanized.join([separator = ', ']);
+                    }
+                },
+                { key: 'fecha', label: 'Fecha', sortable: true, sortOrder: 0, sortDirection: -1, headerClass: 'col-md-1',
+                    fn: function(val, obj) {
+                        return moment(val).format('l');
+                    }
+                }
+            ]
         };
     }
 });
 
 
-Template.scannertext.rendered = function () {
+Template.search.rendered = function () {
   if(!this._rendered) {
       this._rendered = true;
       $('.adv-search-block').hide();
@@ -162,11 +163,11 @@ Template.scannertext.rendered = function () {
   }
 };
 
-Template.scannertext.events({
+Template.search.events({
     'submit form': function(e) { },
     'click a#exportcsv': function(e) {
         e.preventDefault();
-        var query = Session.get("scannerText");
+        var query = Session.get("search");
         var collection_data = Tipis.find(cleanTipiQuery(query)).fetch();
         var data = json2csv(collection_data, true, true);
         var blob = new Blob([data], {type: "text/csv;charset=utf-8"});

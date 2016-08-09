@@ -1,5 +1,5 @@
-<template name="scannertext">
-    <div id="scanner-text" class="container page">
+<template name="search">
+    <div id="search" class="container page">
         <div class="row">
             <div class="col-sm-12">
                 {{count}}
@@ -124,7 +124,7 @@
                 {{#if searched}}
                     {{#if yesfound}}
                         <div class="well search-actions">
-                            <a href="{{pathFor 'scannertext'}}">
+                            <a href="{{pathFor 'search'}}">
                                 <i class="fa fa fa-times-circle-o"></i> Limpiar criterios de búsqueda
                             </a>
                             <a href="#" class="pull-right" id="exportcsv">

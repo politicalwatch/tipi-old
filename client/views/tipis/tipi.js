@@ -1,12 +1,12 @@
 /* ---------------------------------------------------- +/
 
-## Public Tipi ##
+## Tipi ##
 
-Code related to the public tipi template
+Code related to the tipi template
 
 /+ ---------------------------------------------------- */
 
-Template.tipipublic.helpers({
+Template.tipi.helpers({
     congresoURL: function() {
         if (this.ref != '') {
             return parseCongresoURL(this.ref);
@@ -59,7 +59,7 @@ Template.tipipublic.helpers({
     }
 });
 
-Template.tipipublic.events({
+Template.tipi.events({
     // 'click #toogle-content': function(e) {
     //     e.preventDefault();
     //     if ($('#content-block').hasClass('hide')) {

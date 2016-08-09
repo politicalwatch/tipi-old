@@ -1,25 +1,49 @@
 <template name="dict">
-    <div class="container">
-        <button class="btn btn-default" id="back">← Back</button>
-        {{#with dict}}
-        <div class="dict">
-                <p class="lead">
-                    {{dict}}
-                    <br>
-                    <span class="label label-info">{{dictgroup}}</span>
-                </p>
-                <p>{{description}}</p>
+    <div id="dict" class="containerglob darkpatt">
+        <section id="dictionary">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 old oldwhite">
+                        <h1 class="text-center">{{dict}}</h1>
+                        <hr>
+                    </div>
+                </div>
+                <div class="row content-row">
+                    <div class="col-sm-6">
+                        <h3>Diputadas/os más activas/os</h3>
+                        {{#each deputies}}
+                          <h4>
+                            <span class="foto mediana">
+                                <img src="{{fotoDip _id}}" />
+                            </span>
+                            {{_id}}
+                          </h4>
+                        {{/each}}
+                    </div>
+                    <div class="col-sm-6">
+                        <h3>Grupos más activos</h3>
+                        {{#each groups}}
+                          <h4><span style="border-bottom: 2px solid {{colorizedGroup _id}};margin-bottom:5px;">{{groupsHumanized _id}}</span></h4>
+                        {{/each}}
+                    </div>
+                </div>
                 <hr>
-                <p>
-                    Términos:
-                    <ul>
-                    {{#each words}}
-                        <li>{{this}}</li>
-                    {{/each}}
-                    </ul>
-                </p>
-                <p>Última actualización: {{lastUpdate}}</p>
-        </div>
-        {{/with}}
+                <div class="row content-row">
+                    <div class="col-sm-12">
+                        <h3 class="white-text">Últimas iniciativas</h3>
+                        <div class="row">
+                          {{#each initiatives}}
+                          <div class="col-sm-10">
+                            <a href="/t/{{_id}}">{{titulo}}</a> 
+                          </div>
+                          <div class="col-sm-2">
+                            <small class="grey-text">{{relativeDate fecha}}</small>
+                          </div>
+                          {{/each}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 </template>

@@ -1,7 +1,23 @@
 <template name="dicts">
-    <div class="container">
-        <h2>Diccionarios</h2>
-        <!-- <button class="btn btn-primary" id="create"><i class="fa fa-plus"></i> Añadir diccionario</button> -->
-        {{> reactiveTable collection=dicts settings=settings}}
+    <div id="dicts" class="containerglob darkpatt">
+        <section id="dictionaries">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 old oldwhite">
+                        <h1 class="center">Temas TIPI</h1>
+                        <hr>
+                    </div>
+                </div>
+                <div class="row content-row">
+                    {{#each dicts}}
+                        <div class="col-sm-4 dictionary-block">
+                            <img class="dictionary-icon" src="/images/svgs/{{icon2}}" alt="Imagen de {{dict}}">
+                            <h3><a href="{{ pathFor 'topic' slug=slug }}">{{dict}}</a></h3>
+                            <p>{{description}}</p>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+        </section>
     </div>
 </template>

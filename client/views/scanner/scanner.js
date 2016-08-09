@@ -1,4 +1,4 @@
-Template.scannervizz.rendered = function() {
+Template.scanner.rendered = function() {
 
     // Load count data for vizz
     // var dicts = Dicts.find().fetch();
