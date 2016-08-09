@@ -13,7 +13,11 @@
                                                           / <small><i>{{relativeDate}}</i></small>
                                                         {{/if}}
                                                       </h3>
-                                                      <a href="{{congresoURL}}" target="_blank"><i class="fa fa-institution"></i> Ver en el Congreso</a>
+                                                      {{#if isInRole 'admin'}}
+                                                          <a href="/admin/Tipis/{{_id}}/edit"><i class="fa fa-pencil"></i> Editar la iniciativa</a>
+                                                      {{/if}}
+                                                      <br>
+                                                      <a href="{{congresoURL}}" target="_blank"><i class="fa fa-institution"></i> Ver en Congreso.es</a>
                                               </div>
 					</div>
 					<div class="row tipi-metadata">

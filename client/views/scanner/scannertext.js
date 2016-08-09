@@ -100,7 +100,20 @@ Template.scannertext.helpers({
             showColumnToggles: false,
             fields: [{ key: 'titulo', label: 'Titulo', sortable: true, sortOrder: 1, sortDirection: -1, headerClass: 'col-md-7',
                                             fn: function(val, obj) {
-                                                return Spacebars.SafeString('<a href="/t/'+ obj._id + '"><strong>'+val+'</strong></a>');
+                                                var str = '';
+						if (Roles.userIsInRole(Meteor.user(), ["admin"])) {
+                                                    str += '<div class="btn-group">';
+                                                      str += '<a href="#" class="btn btn-secondary btn-xs dropdown-toggle" data-toggle="dropdown"><i class="fa fa-caret-square-o-down"></i></a>';
+                                                      str += '<ul class="dropdown-menu">';
+                                                        str += '<li><a href="t/'+ obj._id + '" target="_blank"><i class="fa fa-file-o"></i> Ver iniciativa</a></li>';
+                                                        str += '<li><a href="/admin/Tipis/'+ obj._id + '/edit" target="_blank"><i class="fa fa-pencil"></i> Editar iniciativa</a></li>';
+                                                        str += '<li><a href="tipis/'+ obj.url + '" target="_blank"><i class="fa fa-institution"></i> Ver en Congreso.es</a></li>';
+                                                      str += '</ul>';
+                                                    str += '</div>';
+                                                    str += '&nbsp;&nbsp;';
+                                                }
+                                                str += '<a href="/t/'+ obj._id + '"><strong>'+val+'</strong></a>';
+                                                return Spacebars.SafeString(str);
                                             }
                                         },
                                         { key: 'autor_diputado',  label: 'Autor', sortable: false, headerClass: 'col-md-2',
