@@ -426,6 +426,18 @@ a.list-group-item {
             text-align: center;
             padding-top: @padding-base-vertical*2;
             padding-bottom: @padding-base-vertical*2;
+            a {
+               color: @brand-secondary;
+               &:hover {
+                   color: @brand-secondary;
+               }
+            }
+            small {
+                strong {
+                    color: @brand-secondary;
+                    text-transform: capitalize;
+                }
+            }
         }
         .cta > .empty {
             background-color: @brand-primary;

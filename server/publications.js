@@ -141,7 +141,11 @@ if (Meteor.isServer) {
     });
 
     Meteor.publish('userInfo', function(username) {
-            return Meteor.users.find({ username: username }, {fields: {services: 0}});
+        return Meteor.users.find({ username: username }, {fields: {services: 0}});
+    });
+
+    Meteor.publish('activeBanners', function() {
+        return Banners.find({activo: true});
     });
 
 
