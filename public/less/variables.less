@@ -16,7 +16,7 @@
 
 @brand-primary:         @gray-darker;
 @brand-secondary:       #FBC239;
-@brand-alt:             #CC8F09;
+@brand-alt:             darken(@brand-secondary, 15%);
 @brand-success:         #18BC9C;
 @brand-info:            #3498DB;
 @brand-warning:         #F39C12;
@@ -449,20 +449,20 @@
 //
 //##
 
-@pagination-color:                     #fff;
-@pagination-bg:                        @brand-success;
+@pagination-color:                     @brand-primary;
+@pagination-bg:                        @brand-secondary;
 @pagination-border:                    transparent;
 
-@pagination-hover-color:               #fff;
-@pagination-hover-bg:                  darken(@brand-success, 15%);
+@pagination-hover-color:               @brand-primary;
+@pagination-hover-bg:                  @brand-alt;
 @pagination-hover-border:              transparent;
 
-@pagination-active-color:              #fff;
-@pagination-active-bg:                 darken(@brand-success, 15%);
+@pagination-active-color:              @brand-primary;
+@pagination-active-bg:                 @brand-alt;
 @pagination-active-border:             transparent;
 
 @pagination-disabled-color:            @gray-lighter;
-@pagination-disabled-bg:               lighten(@brand-success, 15%);
+@pagination-disabled-bg:               @brand-alt;
 @pagination-disabled-border:           transparent;
 
 

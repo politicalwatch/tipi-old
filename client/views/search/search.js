@@ -4,7 +4,13 @@
 
 /+ ---------------------------------------------------- */
 
-Template.search.renderer
+Template.search.onCreated(function () {
+  var currentPage = new ReactiveVar(Session.get('current-page') || 0);
+  this.currentPage = currentPage;
+  this.autorun(function () {
+    Session.set('current-page', currentPage.get());
+  });
+});
 
 Template.search.helpers({
     alldicts_helper: function() {
@@ -94,10 +100,22 @@ Template.search.helpers({
             }
         }
     },
+    arrayNumPages: function() {
+        npages = Math.ceil(this.count / Meteor.settings.public.reactiveTable.rowsPerPage);
+        if (npages > 1) {
+            return [...Array(npages).keys()].map(x => x+1);
+        } else {
+            return [];
+        }
+    },
+    currentPage: function() {
+        return Template.instance().currentPage.get() + 1;
+    },
     settings: function () {
         return {
+            currentPage: Template.instance().currentPage,
             rowsPerPage: Meteor.settings.public.reactiveTable.rowsPerPage,
-            // showNavigation: 'never',
+            showNavigation: 'never',
             showFilter: false,
             showColumnToggles: false,
             fields: [
@@ -185,5 +203,13 @@ Template.search.events({
             else 
                 $('.adv-search-link.show-block').show();
         });
+    },
+    'click .pagination a': function(e) {
+        e.preventDefault();
+        val = parseInt(e.currentTarget.innerText) - 1;
+        Template.instance().currentPage.set(val);
+        Session.set('current-page', Template.instance().currentPage.get());
+        // Go to top after changing currentPage
+        $('body').animate({ scrollTop: 0 }, 0);
     }
 });
