@@ -4,6 +4,19 @@
 
 /+ ---------------------------------------------------- */
 
+function hasValue(val) {
+    return val != '';
+}
+
+function isAdvancedSearch() {
+    return hasValue(this.fechadesde.value)
+        || hasValue(this.fechahasta.value)
+        || hasValue(this.lugar.value)
+        || hasValue(this.ref.value)
+        || hasValue(this.vtipo.value)
+        || hasValue(this.titulo.value);
+}
+
 Template.search.onCreated(function () {
   var currentPage = new ReactiveVar(Session.get('current-page') || 0);
   this.currentPage = currentPage;
@@ -177,10 +190,15 @@ Template.search.rendered = function () {
   if(!this._rendered) {
       this._rendered = true;
       Session.set('searchUrl', window.location.href);
-      $('.adv-search-block').hide();
-      $('.adv-search-link.hide-block').hide();
       $("#fechadesde").datepicker(datepickeroptions);
       $("#fechahasta").datepicker(datepickeroptions);
+      if (isAdvancedSearch()) {
+          $('.adv-search-block').show();
+          $('.adv-search-link.hide-block').show();
+      } else {
+          $('.adv-search-block').hide();
+          $('.adv-search-link.hide-block').hide();
+      }
   }
 };
 
