@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-git clone git@bitbucket.org:enreda/tipi.git
+git clone git@github.com:CIECODE-Madrid/tipi.git
 cd tipi
 curl https://install.meteor.com | /bin/sh
 ```
@@ -20,7 +20,3 @@ meteor --settings=settings.json
 
 Open a browser and type [localhost:3000](localhost:3000)
 
-
-## MongoDB credentials setup
-
-Create a copy of `r-scripts/mongodb-creds.R.example` as `r-scripts/mongodb-creds.R` and change credentials there.
