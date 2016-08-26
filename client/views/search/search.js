@@ -121,8 +121,25 @@ Template.search.helpers({
             return [];
         }
     },
+    hasPrevious: function() {
+        if (Template.instance().currentPage.get() > 0) {
+            return "";
+        } else {
+            return "disabled";
+        }
+    },
+    hasNext: function() {
+        if (Template.instance().currentPage.get() + 1 < Math.ceil(this.count / Meteor.settings.public.reactiveTable.rowsPerPage)) {
+            return "";
+        } else {
+            return "disabled";
+        }
+    },
     currentPage: function() {
         return Template.instance().currentPage.get() + 1;
+    },
+    totalPages: function() {
+        return Math.ceil(this.count / Meteor.settings.public.reactiveTable.rowsPerPage);
     },
     settings: function () {
         return {
@@ -222,10 +239,16 @@ Template.search.events({
                 $('.adv-search-link.show-block').show();
         });
     },
-    'click .pagination a': function(e) {
+    'click .pager .previous': function(e) {
         e.preventDefault();
-        val = parseInt(e.currentTarget.innerText) - 1;
-        Template.instance().currentPage.set(val);
+        Template.instance().currentPage.set(parseInt(Template.instance().currentPage.get()) - 1);
+        Session.set('current-page', Template.instance().currentPage.get());
+        // Go to top after changing currentPage
+        $('body').animate({ scrollTop: 0 }, 0);
+    },
+    'click .pager .next': function(e) {
+        e.preventDefault();
+        Template.instance().currentPage.set(parseInt(Template.instance().currentPage.get()) + 1);
         Session.set('current-page', Template.instance().currentPage.get());
         // Go to top after changing currentPage
         $('body').animate({ scrollTop: 0 }, 0);

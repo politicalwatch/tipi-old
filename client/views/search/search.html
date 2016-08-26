@@ -132,20 +132,14 @@
                             </a>
                         </div>
                         {{> reactiveTable class="table table-striped table-hover" collection=tipisfound settings=settings}}
-                        <div class="row">
-                            <div class="col-sm-12 text-center">
-                                <ul class="pagination">
-                                    {{#each arrayNumPages}}
-                                        {{#if eq this currentPage }}
-                                            <li class="active"><a href="#">{{this}}</a></li>
-                                        {{else}}
-                                            <li><a href="#">{{this}}</a></li>
-                                        {{/if}}
-                                    {{/each}}
-                                </ul>
-                            </div>
-                        </div>
+                        <ul class="pager row">
+                            <li class="col-sm-2 {{hasPrevious}}"><a href="#" class="previous">Anterior</a></li>
+                            <li class="col-sm-8"><strong>Página {{currentPage}} de {{totalPages}}</strong></li>
+                            <li class="col-sm-2 pull-right {{hasNext}}"><a href="#" class="next">Siguiente</a></li>
+                        </ul>
+
                         {{! <p class="white-text italic">Nota: en algunos casos en la comparecencias el autor Gobierno incluye comparecencias de otras autoridades y funcionarios.</p> }}
+
                     {{/if}}
                 {{else}}
                     <h4 class="text-muted text-center">Comience con una búsqueda basica y vaya aprendiendo a usar la herramienta</h4>
