@@ -122,18 +122,10 @@ Template.search.helpers({
         }
     },
     hasPrevious: function() {
-        if (Template.instance().currentPage.get() > 0) {
-            return "";
-        } else {
-            return "disabled";
-        }
+        return Template.instance().currentPage.get() > 0;
     },
     hasNext: function() {
-        if (Template.instance().currentPage.get() + 1 < Math.ceil(this.count / Meteor.settings.public.reactiveTable.rowsPerPage)) {
-            return "";
-        } else {
-            return "disabled";
-        }
+        return Template.instance().currentPage.get() + 1 < Math.ceil(this.count / Meteor.settings.public.reactiveTable.rowsPerPage);j
     },
     currentPage: function() {
         return Template.instance().currentPage.get() + 1;

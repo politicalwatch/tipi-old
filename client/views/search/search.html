@@ -133,9 +133,17 @@
                         </div>
                         {{> reactiveTable class="table table-striped table-hover" collection=tipisfound settings=settings}}
                         <ul class="pager row">
-                            <li class="col-sm-2 {{hasPrevious}}"><a href="#" class="previous">Anterior</a></li>
+                            <li class="col-sm-2">
+                                {{#if hasPrevious}}
+                                    <a href="#" class="previous">Anterior</a>
+                                {{/if}}
+                            </li>
                             <li class="col-sm-8"><strong>Página {{currentPage}} de {{totalPages}}</strong></li>
-                            <li class="col-sm-2 pull-right {{hasNext}}"><a href="#" class="next">Siguiente</a></li>
+                            <li class="col-sm-2 pull-right">
+                                {{#if hasNext}}
+                                    <a href="#" class="next">Siguiente</a>
+                                {{/if}}
+                            </li>
                         </ul>
 
                         {{! <p class="white-text italic">Nota: en algunos casos en la comparecencias el autor Gobierno incluye comparecencias de otras autoridades y funcionarios.</p> }}
