@@ -4,9 +4,9 @@ Template.profileEdit.helpers({
     },
     otherDicts: function() {
         myDicts = Meteor.users.findOne({}, {fields: {'profile.dicts': 1}});
-        allDicts = Dicts.find({}, {fields: {dict: 1}}).fetch();
+        allTipiDicts = Dicts.find({}, {fields: {dict: 1}}).fetch();
         dicts = [];
-        _.each(allDicts, function(d) {
+        _.each(allTipiDicts, function(d) {
             dicts.push(d.dict);
         });
         return _.difference(dicts, myDicts.profile.dicts);
