@@ -1,0 +1,13 @@
+<template name="apidoc">
+
+<div id="apidoc" class="container page">
+        <div class="row">
+            <div class="col-sm-8">
+            	API DOC
+            	{{#each dicts}}
+            	  {{dict}} - {{slug}}
+            	{{/each}}
+            </div>
+        </div>
+    </div>
+</template>
