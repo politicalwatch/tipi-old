@@ -55,7 +55,18 @@ if (Meteor.isServer) {
     });
 
     Meteor.publish('singleTipi', function(id) {
-      return Tipis.find(id);
+        return Tipis.find(id);
+    });
+
+    Meteor.publish('relatedTipis', function(id) {
+        tipiobject = Tipis.findOne(id);
+        return Tipis.find(
+            {ref: tipiobject.ref},
+            {
+                fields: {ref: 1, titulo: 1, tipotexto: 1, autor_diputado: 1, autor_grupo: 1, autor_otro: 1},
+                sort: {tipotexto: 1}
+            }
+        );
     });
 
     Meteor.publish('limitedTipiListByDict', function(dictslug) {

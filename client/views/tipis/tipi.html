@@ -51,22 +51,6 @@
                                           <h4>Téminos encontrados:</h4>
                                           {{unique_terms}}
                                         </div>
-					<!-- <p>
-						<i>Iniciativas relacionadas (not now)</i>
-					</p> -->
-					<!-- <p>
-						<div class="text-center">
-							<a href="#" id="toogle-content"><i class="fa fa-angle-double-down"></i> Mostrar contenido <i class="fa fa-angle-double-down"></i></a>
-						</div>
-						<div id="content-block" class="hide">
-							<div class="well">
-								{{parseContentToHTML}}
-							</div>
-							<div class="text-center">
-								<a href="#tipi-wrapper"><i class="fa fa-angle-up"></i> Subir <i class="fa fa-angle-up"></i></a>
-							</div>
-						</div>
-					</p> -->
 				</div>
 				<div class="col-sm-3 dicts-block">
 					<h4 class="text-center">Vinculado con:</h4>
@@ -93,6 +77,15 @@
 				</div>
 			</div>
 		{{/with}}
+                <hr>
+                <div class="related">
+                    <h4>Iniciativas relacionadas</h4>
+                    <ul>
+                        {{#each related}}
+                            <li>{{tipotexto}} - {{autor_grupo}}</li>
+                        {{/each}}
+                    </ul>
+                </div>
 	</div>
 
 </template>
