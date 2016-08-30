@@ -8,6 +8,8 @@ All publications-related code.
 
 
 if (Meteor.isServer) {
+    
+    var tipidictgroup = 'tipi';
 
     Meteor.publish('tipiStats', function() {
             return TipiStats.find();
@@ -15,44 +17,33 @@ if (Meteor.isServer) {
 
     Meteor.publish('allSlugsInDicts', function() {
             return Dicts.find(
-              {dictgroup: "tipi"},
+              {dictgroup:tipidictgroup},
               {
                 fields: {dict: 1, slug: 1},
               }
             );
     });
-
-    Meteor.publish('allDicts', function() {
-            return Dicts.find(
-              {},
-              {
-                fields: {dictgroup: 1, dict: 1, lastUpdate: 1},
-                sort: {dictgroup: -1}
-              }
-            );
-    });
-
     Meteor.publish('allTipiDicts', function() {
             return Dicts.find(
-              {dictgroup: "tipi"},
+              {dictgroup: tipidictgroup},
               {
-                fields: {dict: 1, slug: 1, iconb1: 1}
+                  fields: {dict: 1, slug: 1, iconb1: 1}
               }
             );
     });
 
     Meteor.publish('allTipiDictsWithDesc', function() {
             return Dicts.find(
-              {dictgroup: "tipi"},
+              {dictgroup: tipidictgroup},
               {
                 fields: {dict: 1, slug: 1, description: 1,  icon1: 1, icon2: 2}
               }
             );
     });
 
-    Meteor.publish('singleDictBySlug', function(slug) {
+    Meteor.publish('singleTipiDictBySlug', function(slug) {
             return Dicts.find(
-              {slug: slug},
+              {dictgroup: tipidictgroup, slug: slug},
               {
                 fields: {dict: 1, icon1: 1, icon2: 2}
               }
@@ -76,7 +67,7 @@ if (Meteor.isServer) {
     });
 
     Meteor.publish('limitedTipiListByDict', function(dictslug) {
-      var dictobject = Dicts.findOne({slug: dictslug}, {fields: {dict: 1}});
+      var dictobject = Dicts.findOne({dictgroup: tipidictgroup, slug: dictslug}, {fields: {dict: 1}});
       if (dictobject) {
         return Tipis.find(
           {dicts: dictobject.dict},
@@ -176,9 +167,9 @@ if (Meteor.isServer) {
             return;
     });
 
-    Meteor.publish('allDictsWithWords', function() {
+    Meteor.publish('allTipiDictsWithWords', function() {
             return Dicts.find(
-              {},
+              {dictgroup: tipidictgroup},
               {
                 fields: {dictgroup: 1, dict: 1, words:1, description: 1, lastUpdate: 1},
                 sort: {dictgroup: -1}
