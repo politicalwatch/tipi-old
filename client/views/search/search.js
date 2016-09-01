@@ -14,6 +14,7 @@ function isAdvancedSearch() {
         || hasValue(this.lugar.value)
         || hasValue(this.ref.value)
         || hasValue(this.vtipo.value)
+        || hasValue(this.tramitacion.value)
         || hasValue(this.titulo.value);
 }
 
@@ -61,6 +62,16 @@ Template.search.helpers({
             "Comisión de Presupuestos",
             "Comisión de Sanidad y Servicios Sociales",
             "Pleno",
+        ];
+    },
+    tramitaciones_helper: function() {
+        return [
+            "Aprobada",
+            "Aprobada con modificaciones",
+            "En tramitación",
+            "Rechazada",
+            "Caducada",
+            "Retirada"
         ];
     },
     tipos_helper: function() {

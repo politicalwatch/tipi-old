@@ -98,10 +98,25 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label for="tramitacion" class="col-sm-1 control-label">Estado</label>
+                                <div class="col-sm-3">
+                                    <select class="form-control" name="tramitacion" id="tramitacion">
+                                        <option value="">Cualquiera</option>
+                                        {{#each tramitaciones_helper}}
+                                            {{#if eq lastquery.tramitacion this }}
+                                                <option value="{{this}}" selected="selected">{{this}}</option>
+                                            {{else}}
+                                                <option value="{{this}}">{{this}}</option>
+                                            {{/if}}
+                                        {{/each}}
+                                    </select>
+                                </div>
                                 <label for="titulo" class="col-sm-1 control-label">Título</label>
-                                <div class="col-sm-11">
+                                <div class="col-sm-7">
                                     <input class="form-control" type="text" id="titulo" name="titulo" value="{{lastquery.titulo}}" placeholder="Nota: Se admiten expresiones regulares">
                                 </div>
+                            </div>
+                            <div class="form-group">
                             </div>
                         </div>
                         <div class="form-group">
