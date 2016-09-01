@@ -10,13 +10,6 @@ Template.tipi.helpers({
     searchUrl: function() {
         return Session.get('searchUrl') || Router.path('search');
     },
-    congresoURL: function() {
-        if (this.ref != '') {
-            return parseCongresoURL(this.ref);
-        } else {
-            return this.url;
-        }
-    },
     groupsHumanized: function() {
         groups = [];
         for(i=0;i<this.autor_grupo.length;i++) {
