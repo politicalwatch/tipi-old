@@ -5,7 +5,7 @@ Commands({
         console.log("Fetching documents...");
         referencias = Refs.find({$or: [{annotate: { $exists: false}}, {annotate: false}]}, { fields: { _id: 1 } }).fetch();
         console.log("Documents fetched: " + referencias.length);
-        dicts = Dicts.find({dictgroup: "tipi"}).fetch();
+        dicts = Dicts.find({group: "tipi"}).fetch();
         total = referencias.length;
         _.each(referencias, function(r, i) {
             // if (r._id._str != "5582c26b6cf193b7d8bc55f8") {

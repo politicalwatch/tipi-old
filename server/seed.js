@@ -8,7 +8,6 @@ Fill in the app with initial data if database is empty.
 Roles that must appear into the db
     admin
     manager
-    mdblog-author
     deputy
     organization
     media
@@ -17,8 +16,8 @@ Roles that must appear into the db
 // Insert initial data here
 
 if (TipiAlerts.find().count() == 0) {
-    dicts = Dicts.find({dictgroup: 'tipi'}, {fields: {dict: 1}}).fetch();
+    dicts = Dicts.find({group: 'tipi'}, {fields: {name: 1}}).fetch();
     _.each(dicts, function(dict) {
-        TipiAlerts.insert({dict: dict.dict, items: []});
-    });            
+        TipiAlerts.insert({dict: dict.name, items: []});
+    }); 
 }

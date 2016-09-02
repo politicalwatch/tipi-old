@@ -11,8 +11,8 @@
                 <div class="row content-row">
                     {{#each dicts}}
                         <div class="col-sm-4 dictionary-block">
-                            <img class="dictionary-icon" src="/images/svgs/{{icon2}}" alt="Imagen de {{dict}}">
-                            <h3><a href="{{ pathFor 'dict' slug=slug }}">{{dict}}</a></h3>
+                            <img class="dictionary-icon" src="/images/svgs/{{icon2}}" alt="Imagen de {{name}}">
+                            <h3><a href="{{ pathFor 'dict' slug=slug }}">{{name}}</a></h3>
                             <p>{{description}}</p>
                         </div>
                     {{/each}}

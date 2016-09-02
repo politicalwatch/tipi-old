@@ -27,8 +27,8 @@ Template.search.onCreated(function () {
 });
 
 Template.search.helpers({
-    alldicts_helper: function() {
-        return Dicts.find({}, {sort: {dict: 1}}).fetch();
+    dicts_helper: function() {
+        return Dicts.find({}, {sort: {name: 1}}).fetch();
     },
     grupootro_helper: function() {
         return [

@@ -11,11 +11,11 @@
                             <div class="col-sm-3">
                                 <select class="form-control" id="dicts" name="dicts">
                                     <option value="">Todos</option>
-                                    {{#each alldicts_helper}}
-                                        {{#if eq lastquery.dicts dict }}
-                                            <option value="{{dict}}" selected="selected">{{dict}}</option>
+                                    {{#each dicts_helper}}
+                                        {{#if eq lastquery.dicts name }}
+                                            <option value="{{name}}" selected="selected">{{name}}</option>
                                         {{else}}
-                                            <option value="{{dict}}">{{dict}}</option>
+                                            <option value="{{name}}">{{name}}</option>
                                         {{/if}}
                                     {{/each}}
                                 </select>
@@ -24,11 +24,11 @@
                             <div class="col-sm-7">
                                 <select class="form-control" id="terms" name="terms">
                                     <option value="">Todos</option>
-                                    {{#each alldicts_helper}}
-                                        {{#if eq lastquery.dicts dict }}
-                                            <option value="{{dict}}" selected="selected">{{dict}}</option>
+                                    {{#each dicts_helper}}
+                                        {{#if eq lastquery.dicts name }}
+                                            <option value="{{name}}" selected="selected">{{name}}</option>
                                         {{else}}
-                                            <option value="{{dict}}">{{dict}}</option>
+                                            <option value="{{name}}">{{name}}</option>
                                         {{/if}}
                                     {{/each}}
                                 </select>

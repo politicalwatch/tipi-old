@@ -15,37 +15,37 @@ if (Meteor.isServer) {
             return TipiStats.find();
     });
 
-    Meteor.publish('allSlugsInDicts', function() {
+    Meteor.publish('allSlugsInTipiDicts', function() {
             return Dicts.find(
-              {dictgroup:tipidictgroup},
+              {group: tipidictgroup},
               {
-                fields: {dict: 1, slug: 1},
+                fields: {name: 1, slug: 1},
               }
             );
     });
     Meteor.publish('allTipiDicts', function() {
             return Dicts.find(
-              {dictgroup: tipidictgroup},
+              {group: tipidictgroup},
               {
-                  fields: {dict: 1, slug: 1, iconb1: 1}
+                  fields: {name: 1, slug: 1, iconb1: 1}
               }
             );
     });
 
     Meteor.publish('allTipiDictsWithDesc', function() {
             return Dicts.find(
-              {dictgroup: tipidictgroup},
+              {group: tipidictgroup},
               {
-                fields: {dict: 1, slug: 1, description: 1,  icon1: 1, icon2: 2}
+                fields: {name: 1, slug: 1, description: 1,  icon1: 1, icon2: 2}
               }
             );
     });
 
     Meteor.publish('singleTipiDictBySlug', function(slug) {
             return Dicts.find(
-              {dictgroup: tipidictgroup, slug: slug},
+              {group: tipidictgroup, slug: slug},
               {
-                fields: {dict: 1, icon1: 1, icon2: 2}
+                fields: {name: 1, icon1: 1, icon2: 2}
               }
             );
     });
@@ -78,10 +78,10 @@ if (Meteor.isServer) {
     });
 
     Meteor.publish('limitedTipiListByDict', function(dictslug) {
-      var dictobject = Dicts.findOne({dictgroup: tipidictgroup, slug: dictslug}, {fields: {dict: 1}});
+      var dictobject = Dicts.findOne({group: tipidictgroup, slug: dictslug}, {fields: {name: 1}});
       if (dictobject) {
         return Tipis.find(
-          {dicts: dictobject.dict},
+          {dicts: dictobject.name},
           {  
             fields: {ref: 1, tipotexto: 1, autor_diputado: 1, autor_grupo: 1, autor_otro: 1, titulo: 1, dicts: 1, fecha: 1, lugar: 1}, 
             sort: {fecha: 1},

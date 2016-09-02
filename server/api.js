@@ -18,54 +18,36 @@ Api.addRoute('tipis/', {
 
     	
     	if (this.queryParams.dict){
-    		dict= Dicts.find({slug:this.queryParams.dict,dictgroup:"tipi"},{fields:{dict:1}}).fetch();
-    		console.log(dict);
-    		if (dict.length>0){
-
+    		dict = Dicts.find({slug: this.queryParams.dict, group: "tipi"},{fields: {name: 1}}).fetch();
+    		if (dict.length>0) {
     			return Tipis.find({dicts:dict[0].dict}, {limit: limit, skip : pag }).fetch();
-    		}else{
+    		} else {
     			return {
-					  statusCode: 404,
-					  body: []
-						}
-				}
-					 
-    	}else{
-    		return Tipis.find({}, {limit: limit, skip : pag }).fetch();
-
+			    statusCode: 404,
+			    body: []
+			}
+		}			 
+    	} else {
+    	    return Tipis.find({}, {limit: limit, skip: pag }).fetch();
     	}
-
-    					//endget},
-						
-	},
-
-}
-);
+    }
+});
 
 
 
 Api.addRoute('tipis/:_id', {
 	get: function () {
-		var oid = new Meteor.Collection.ObjectID(this.urlParams._id);
-		var tipi=Tipis.findOne(oid);
-		if (tipi){
-			return tipi
+            var oid = new Meteor.Collection.ObjectID(this.urlParams._id);
+            var tipi=Tipis.findOne(oid);
+            if (tipi){
+                return tipi
+            } else {
+                    return {
+                        statusCode: 404,
+                        body: []
+                    }
+            }
+	}
+});
 
-		}else{
-
-			return {
-		  			statusCode: 404,
-		  			body: []
-					}
-
-		}
-
-	},
-
-}
-);
-
-
-
-
-};//end
+}; //end
