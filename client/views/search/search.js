@@ -18,9 +18,26 @@ function isAdvancedSearch() {
         || hasValue(this.titulo.value);
 }
 
+function getTermsFromDict(d) {
+    dict = Dicts.find(
+        {name: d},
+        {
+            fields: {terms: 1},
+            sort: {'terms.humanterm': 1}
+        }).fetch();
+    if (dict.length > 0) {
+        res = dict[0].terms;
+    } else {
+        res = [];
+    }
+    return res;
+}
+
 Template.search.onCreated(function () {
   var currentPage = new ReactiveVar(Session.get('current-page') || 0);
   this.currentPage = currentPage;
+  var currentTerms = new ReactiveVar([]);
+  this.currentTerms = currentTerms;
   this.autorun(function () {
     Session.set('current-page', currentPage.get());
   });
@@ -28,7 +45,15 @@ Template.search.onCreated(function () {
 
 Template.search.helpers({
     dicts_helper: function() {
-        return Dicts.find({}, {sort: {name: 1}}).fetch();
+        return Dicts.find(
+            {},
+            {
+                fields: {name: 1},
+                sort: {name: 1}
+            }).fetch();
+    },
+    terms_helper: function() {
+        return Template.instance().currentTerms.get();
     },
     grupootro_helper: function() {
         return [
@@ -219,6 +244,8 @@ Template.search.rendered = function () {
           $('.adv-search-block').hide();
           $('.adv-search-link.hide-block').hide();
       }
+      search = Session.get("search");
+      Template.instance().currentTerms.set(getTermsFromDict(search.dicts));
   }
 };
 
@@ -241,6 +268,9 @@ Template.search.events({
             else 
                 $('.adv-search-link.show-block').show();
         });
+    },
+    'change #dicts': function(e) {
+        Template.instance().currentTerms.set(getTermsFromDict($('#dicts').val()));
     },
     'click .pager .previous': function(e) {
         e.preventDefault();

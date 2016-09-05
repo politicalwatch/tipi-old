@@ -41,6 +41,15 @@ if (Meteor.isServer) {
             );
     });
 
+    Meteor.publish('allTipiDictsWithTerms', function() {
+            return Dicts.find(
+              {group: tipidictgroup},
+              {
+                  fields: {name: 1, slug: 1, iconb1: 1, terms: 1}
+              }
+            );
+    });
+
     Meteor.publish('singleTipiDictBySlug', function(slug) {
             return Dicts.find(
               {group: tipidictgroup, slug: slug},
