@@ -1,16 +1,11 @@
 <template name="dicts">
-    <div id="dicts" class="containerglob darkpatt">
-        <section id="dictionaries">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12 old oldwhite">
-                        <h1 class="center">Temas TIPI</h1>
-                        <hr>
-                    </div>
-                </div>
-                <div class="row content-row">
+    <div id="dicts">
+        {{> pageTitle title="Temas"}}
+        <div class="container page">
+            <div class="row">
+                <div class="col-sm-12">
                     {{#each dicts}}
-                        <div class="col-sm-4 dictionary-block">
+                        <div class="col-sm-4 text-center">
                             <img class="dictionary-icon" src="/images/svgs/{{icon2}}" alt="Imagen de {{name}}">
                             <h3><a href="{{ pathFor 'dict' slug=slug }}">{{name}}</a></h3>
                             <p>{{description}}</p>
@@ -18,6 +13,6 @@
                     {{/each}}
                 </div>
             </div>
-        </section>
+        </div>
     </div>
 </template>
