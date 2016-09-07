@@ -1,11 +1,13 @@
 <template name="pageTitle">
-    <div class="page-title">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    <h1>{{title}}</h1>
+    {{#if hasTitle}}
+        <div class="page-title">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1>{{title}}</h1>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    {{/if}}
 </template>

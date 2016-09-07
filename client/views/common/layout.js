@@ -1,3 +1,3 @@
 Template.layout.helpers({
-    
+    //add helpers here...
 })

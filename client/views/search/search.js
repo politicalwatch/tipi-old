@@ -41,6 +41,19 @@ Template.search.onCreated(function () {
   this.autorun(function () {
     Session.set('current-page', currentPage.get());
   });
+      // Build messages
+  data = Template.instance().data;
+  if (data.searched) {
+      if (data.count == 0) {
+          flash("No se han encontrado iniciativas que cumplan los criterios.", "danger");
+      } else {
+          if (data.count >= Meteor.settings.public.queryParams.limit) {
+              flash("Demasiadas iniciativas encontradas. Se mostrarán solo las " + Meteor.settings.public.queryParams.limit + " últimas.", "info");
+          } else {
+              flash("Se han encontrado " + data.count + " iniciativas.", "info");
+          }
+      }
+  }
 });
 
 Template.search.helpers({
@@ -135,19 +148,6 @@ Template.search.helpers({
     },
     lastquery: function() {
         return Session.get("search");
-    },
-    count: function() {
-        if (this.searched) {
-            if (this.count == 0) {
-                flash("No se han encontrado iniciativas que cumplan los criterios.", "danger");
-            } else {
-                if (this.count >= Meteor.settings.public.queryParams.limit) {
-                    flash("Demasiadas iniciativas encontradas. Se mostrarán solo las " + Meteor.settings.public.queryParams.limit + " últimas.", "info");
-                } else {
-                    flash("Se han encontrado " + this.count + " iniciativas.", "info");
-                }
-            }
-        }
     },
     arrayNumPages: function() {
         npages = Math.ceil(this.count / Meteor.settings.public.reactiveTable.rowsPerPage);

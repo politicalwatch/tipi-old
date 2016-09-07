@@ -20,10 +20,6 @@ Handlebars.registerHelper('trimString', function(passedString, startstring, ends
    return new Handlebars.SafeString(theString)
 });
 
-Handlebars.registerHelper('', function(section){
-  return "";
-});
-
 Handlebars.registerHelper('eq', function(v1, v2, options) {
   if(v1 == v2){
     return true;
