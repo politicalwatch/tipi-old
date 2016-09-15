@@ -1,3 +1,9 @@
+Template.dict.onCreated(function() {
+    name = Dicts.findOne().name.capitalize();
+    $('.page-title h1').html(name);
+    document.title = name + ' | ' + document.title;
+});
+
 Template.dict.helpers({
     dict: function() {
         dict_array = Dicts.find().fetch();

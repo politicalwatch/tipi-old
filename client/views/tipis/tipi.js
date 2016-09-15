@@ -7,7 +7,9 @@ Code related to the tipi template
 /+ ---------------------------------------------------- */
 
 Template.tipi.onCreated(function() {
-    $('.page-title h1').html(Tipis.findOne().titulo);
+    title = Tipis.findOne().titulo;
+    $('.page-title h1').html(title);
+    document.title = title + ' | ' + document.title;
 });
 
 Template.tipi.helpers({

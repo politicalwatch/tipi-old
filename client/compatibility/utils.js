@@ -180,3 +180,8 @@ function datestringToISODate(d, isfrom) {
         return new Date(dparts[2], dparts[1]-1, dparts[0], 23, 59, 59)
     }
 }
+
+String.prototype.capitalize = function() {
+    return this.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase();  });
+};
+
