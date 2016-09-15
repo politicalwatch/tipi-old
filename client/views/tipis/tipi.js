@@ -46,6 +46,9 @@ Template.tipi.helpers({
             return "";
         }
     },
+    hasRelated: function() {
+        return this.related.length > 0;
+    },
     qpcClass: function() {
         if (this.quepasocon.toLowerCase() == 'cumplido') {
             return 'complete';

@@ -32,12 +32,14 @@
                 </div>
             {{/with}}
         </div>
-        <hr>
-        <div class="row">
-            <div class="col-sm-12">
-                {{> related_elements meta="Actos relacionados durante su tramitación parlamentaria" value=related}}
+        {{#if hasRelated}}
+            <hr>
+            <div class="row">
+                <div class="col-sm-12">
+                    {{> related_elements meta="Actos relacionados durante su tramitación parlamentaria" value=related}}
+                </div>
             </div>
-        </div>
+        {{/if}}
     </div>
     {{#if emptySearch}}
         {{> faq_infoblock }}
