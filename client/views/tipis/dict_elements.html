@@ -5,12 +5,12 @@
         <ul class="list-unstyled">
             {{#each dicts}}
                 <li class="value">
-                {{this}}
+                <a href="/buscar?dicts={{this}}">{{this}}</a>
                 <br>
                 <small>
                     (Por mencionar:
                     {{#each getTerms ../terms this}}
-                        {{this}},&nbsp;
+                        <a href="/buscar?terms={{this}}">{{this}}</a>,&nbsp;
                     {{/each}}
                     )
                 </small>
