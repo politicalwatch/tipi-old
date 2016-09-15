@@ -177,7 +177,7 @@ Template.search.helpers({
             showFilter: false,
             showColumnToggles: false,
             fields: [
-                { key: 'titulo', label: 'Titulo', sortable: true, sortOrder: 1, sortDirection: -1, headerClass: 'col-md-7',
+                { key: 'titulo', label: 'Titulo', sortable: true, sortOrder: 1, sortDirection: -1, headerClass: 'col-md-6',
                     fn: function(val, obj) {
                         var str = '';
                         if (Roles.userIsInRole(Meteor.user(), ["admin"])) {
@@ -211,13 +211,18 @@ Template.search.helpers({
                       }
                     }
                 },
-                { key: 'autor_grupo', label: 'Grupo', sortable: false, headerClass: 'col-md-2',
+                { key: 'autor_grupo', label: 'Grupo', sortable: false, headerClass: 'col-md-1',
                     fn: function(val, obj) {
                         groupsHumanized = [];
                         for(i=0;i<val.length;i++) {
                             groupsHumanized.push(parliamentarygroups[val[i]]);
                         }
                         return groupsHumanized.join([separator = ', ']);
+                    }
+                },
+                { key: 'dicts', label: 'Temas', sortable: true, sortOrder: 0, sortDirection: -1, headerClass: 'col-md-2', cellClass: 'capitalize-text',
+                    fn: function(val, obj) {
+                        return val.join(', ');
                     }
                 },
                 { key: 'fecha', label: 'Fecha', sortable: true, sortOrder: 0, sortDirection: -1, headerClass: 'col-md-1',
