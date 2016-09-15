@@ -1,0 +1,21 @@
+<template name="dict_elements">
+    <p>
+        <span class="meta">{{meta}}</span>
+        <br>
+        <ul class="list-unstyled">
+            {{#each dicts}}
+                <li class="value">
+                {{this}}
+                <br>
+                <small>
+                    (Por mencionar:
+                    {{#each getTerms ../terms this}}
+                        {{this}},&nbsp;
+                    {{/each}}
+                    )
+                </small>
+                </li>
+            {{/each}}
+        </ul>
+    </p>
+</template>

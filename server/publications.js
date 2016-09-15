@@ -60,7 +60,6 @@ if (Meteor.isServer) {
     });
     
     Meteor.publish('allTipisSearch', function(q) {
-            q['invisible'] = false;
             return Tipis.find(
               q,
               {
@@ -72,13 +71,13 @@ if (Meteor.isServer) {
     });
 
     Meteor.publish('singleTipi', function(id) {
-        return Tipis.find(id);
+        return Tipis.find({"_id": id});
     });
 
     Meteor.publish('relatedTipis', function(id) {
-        tipiobject = Tipis.findOne(id);
+        tipiobject = Tipis.find({"_id": id}).fetch();
         return Tipis.find(
-            {ref: tipiobject.ref},
+            {ref: tipiobject[0].ref},
             {
                 fields: {ref: 1, titulo: 1, tipotexto: 1, autor_diputado: 1, autor_grupo: 1, autor_otro: 1},
                 sort: {tipotexto: 1}

@@ -1,91 +1,54 @@
 <template name="tipi">
-	<div id="tipi-wrapper" class="containerglob darkpatt old oldwhite">
-		{{#with tipi}}
-			<div class="row">
-				<div class="col-sm-9 tipi-titles">
-                                        <ul class="breadcrumb">
-                                            <li>
-                                                <a href="{{searchUrl}}">Búsqueda</a>
-                                            </li>
-                                            <li class="active">Iniciativa</li>
-                                        </ul>
-					<h2>{{titulo}}</h2>
-					<hr>
-					<div class="row">
-                                              <div class="col-sm-12">
-                                                      <h3>
-                                                        {{tipotexto}}
-                                                        {{#if fecha}}
-                                                          / <small><i>{{relativeDate}}</i></small>
-                                                        {{/if}}
-                                                      </h3>
-                                                      {{#if isInRole 'admin'}}
-                                                          <a href="/admin/Tipis/{{_id}}/edit"><i class="fa fa-pencil"></i> Editar la iniciativa</a>
-                                                      {{/if}}
-                                                      <br>
-                                                      <a href="{{url}}" target="_blank"><i class="fa fa-institution"></i> Ver en Congreso.es</a>
-                                              </div>
-					</div>
-					<div class="row tipi-metadata">
-						<div class="col-sm-6">
-							<h4>¿Quién?</h4>
-							{{#if autor_otro}}
-								{{autor_otro}}
-							{{else}}
-								{{#each autor_diputado}}
-									<span class="foto mediana">
-										<img src="{{fotoDip this}}" />
-									</span>&nbsp;{{this}}
-									<br/>
-								{{/each}}
-								<br>
-								<span style="border-bottom: 2px solid {{colorizedGroup autor_grupo}};margin-bottom:5px;">{{groupsHumanized}}</span>
-							{{/if}}
-						</div>
-						<div class="col-md-6">
-							<h4>¿Dónde?</h4>
-							<i class="fa fa-map-marker"></i> {{lugar}}
-						</div>
-					</div>
-                                        <div class="terms">
-                                          <h4>Téminos encontrados:</h4>
-                                          {{unique_terms}}
-                                        </div>
-				</div>
-				<div class="col-sm-3 dicts-block">
-					<h4 class="text-center">Vinculado con:</h4>
-					<ul class="list-unstyled">
-						{{#each dicts}}
-						<li class="dict-block">
-							{{this}}
-						</li>
-						{{/each}}
-					</ul>
-					{{#if quepasocon}}
-						<div class="quepasocon {{qpcClass}}">
-							<i class="fa fa-{{qpcIcon}} fa-2x"></i>
-							<br>
-							<span>{{quepasocon}}</span>
-							<br>
-							<a href="{{pathFor 'quepasocon'}}" target="_blank"><small class="white-text">¿Qué es esto?</small></a>
-							{{#if quepasocon_moreinfo}}
-								<br>
-								<a href="{{quepasocon_moreinfo}}"><small class="white-text">Ampliar información</small></a>
-							{{/if}}
-						</div>
-					{{/if}}
-				</div>
-			</div>
-		{{/with}}
-                <hr>
-                <div class="related">
-                    <h4>Iniciativas relacionadas</h4>
-                    <ul>
-                        {{#each related}}
-                            <li>{{tipotexto}} - {{autor_grupo}}</li>
-                        {{/each}}
-                    </ul>
+    <div id="initiative" class="container page">
+        <div class="row">
+            {{#with tipi}}
+                <div class="col-sm-9">
+                    {{> text_element meta='Tipo de acto parlamentario' value=tipotexto}}
+                    {{#if hasAutor}}
+                        {{> text_element meta='Autor/a' value=getAutor}}
+                    {{/if}}
+                    {{#if autor_grupo}}
+                        {{> text_element meta='Grupo parlamentario' value=groupsHumanized}}
+                    {{/if}}
+                    {{> text_element meta='Lugar' value=lugar}}
+                    {{> text_element meta='Fecha' value=fecha}}
+                    <div class="capitalize">
+                        {{> dict_elements meta='Temas tratados' dicts=dicts terms=terms }}
+                    </div>
+                    {{> text_element meta='Estado de la tramitación' value=tramitacion}}
                 </div>
-	</div>
+                <div class="col-sm-3">
+                    {{#if isInRole 'admin'}}
+                        <a class="btn btn-primary btn-block" href="/admin/Tipis/{{_id}}/edit">Edita la iniciativa</a>
+                        <br/>
+                    {{/if}}
+                    <div class="well">
+                        <p class="text-center congress-link">
+                            <a href="{{url}}" target="_blank" title="Ver {{tituto}} en su fuente original">
+                                <i class="fa fa-institution fa-2x"></i><br/>Consulta en la web del Congreso toda la información sobre su tramitación parlamentaria
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            {{/with}}
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-12">
+                {{> related_elements meta="Actos relacionados durante su tramitación parlamentaria" value=related}}
+            </div>
+        </div>
+    </div>
+    {{#if emptySearch}}
+        <div id="faq-infoblock">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p>¿Quieres pistas para saber cómo construir tu propia búsqueda?<br/><strong><a href="#">Accede a la página de preguntas frecuentes</a></strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{/if}}
 
 </template>

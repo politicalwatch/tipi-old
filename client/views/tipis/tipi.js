@@ -6,9 +6,27 @@ Code related to the tipi template
 
 /+ ---------------------------------------------------- */
 
+Template.tipi.onCreated(function() {
+    $('.page-title h1').html(Tipis.findOne().titulo);
+});
+
 Template.tipi.helpers({
     searchUrl: function() {
         return Session.get('searchUrl') || Router.path('search');
+    },
+    emptySearch: function() {
+        if (Session.get('searchUrl')) return false
+        else return true
+    },
+    hasAutor: function() {
+        return !_.isEmpty(this.autor_otro) || !_.isEmpty(this.autor_diputado);
+    },
+    getAutor: function() {
+        if (!_.isEmpty(this.autor_otro)) {
+            return this.autor_otro;
+        } else {
+            return this.autor_diputado;
+        }
     },
     groupsHumanized: function() {
         groups = [];
@@ -49,9 +67,6 @@ Template.tipi.helpers({
         } else {
             return 'clock-o';
         }
-    },
-    unique_terms: function() {
-        return _.uniq(this.terms).join([separator=' | ']);
     }
 });
 

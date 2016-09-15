@@ -104,13 +104,16 @@ function builderQueryFrom(type) {
 function cleanTipiQuery(cqry) {
     var fdesde, fhasta, newautor, newgrupootro;
     fdesde = fhasta = null;
-    newautor = newgrupootro = tipo = {};
+    newautor = newgrupootro = tipo = term = {};
     for (var k in cqry) {
-        if( k == "fechadesde" && cqry[k] != "" ) {
+        if (k == "fechadesde" && cqry[k] != "" ) {
             fdesde = cqry[k];
             delete cqry[k];
-        } else if(k == "fechahasta" && cqry[k] != "") {
+        } else if (k == "fechahasta" && cqry[k] != "") {
             fhasta = cqry[k];
+            delete cqry[k];
+        } else if (k == 'terms' && cqry[k] != "") {
+            term = {'terms.humanterm': cqry[k]};
             delete cqry[k];
         } else if ((k == "autor") && (cqry[k] != "")) {
             newautor = { 'autor_diputado': {$regex: cqry['autor'], $options: "gi"} }
@@ -131,6 +134,9 @@ function cleanTipiQuery(cqry) {
         } else if (typeof(cqry[k]) != "object") {
             cqry[k] = {$regex: cqry[k], $options: "gi"};
         }
+    }
+    if (term != {}) {
+        jQuery.extend(cqry, term)
     }
     if (newautor != {}) {
         jQuery.extend(cqry, newautor);

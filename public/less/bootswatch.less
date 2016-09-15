@@ -349,6 +349,13 @@ a.list-group-item {
     /*margin-bottom: @padding-base-vertical*4;*/
 }
 
+a {
+    color: @brand-primary;
+    &:hover {
+        color: @brand-secondary;
+    }
+}
+
 .page-title {
     background-color: @brand-secondary;
     padding-top: @padding-base-vertical;
@@ -493,6 +500,55 @@ a.list-group-item {
 .bullet .measure.s1 { fill: @brand-secondary;  }
 .bullet .title { font-size: 14px; font-weight: bold; fill: @brand-secondary;  }
 .bullet .subtitle { fill: lighten(@brand-secondary, 15%);  }
+
+
+// Iniciativa =================================================================
+
+#initiative {
+    .meta {
+        font-size: 0.9em;
+        text-transform: uppercase;
+        color: @gray; 
+    }
+    .value {
+        font-size: 1.5em;
+        font-weight: bold;
+        small {
+            font-size: 0.8em;
+            font-weight: normal;
+        }
+    }
+    .capitalize {
+        .value {
+            text-transform: capitalize;
+            small {
+                text-transform: none;
+                color: darken(@gray, 10%);
+                font-size: 0.7em;
+            }
+        }
+    }
+    .congress-link {
+        font-size: 1.1em;
+        font-weight: bold;
+        a {
+            color: @brand-primary;
+                &:hover {
+                    color: @brand-primary;
+                }
+        }
+    }
+}
+
+
+// Footer =================================================================
+
+#faq-infoblock {
+    padding-top: @padding-base-vertical*6;
+    padding-bottom: @padding-base-vertical*6;
+    background-color: #ecf0f1;
+    font-size: 1.3em;
+}
 
 
 // Footer =================================================================

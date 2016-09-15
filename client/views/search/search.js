@@ -186,7 +186,7 @@ Template.search.helpers({
                               str += '<ul class="dropdown-menu">';
                                 str += '<li><a href="tipis/'+ obj._id + '"><i class="fa fa-file-o"></i> Ver iniciativa</a></li>';
                                 str += '<li><a href="/admin/Tipis/'+ obj._id + '/edit"><i class="fa fa-pencil"></i> Editar iniciativa</a></li>';
-                                str += '<li><a href="tipis/'+ obj.url + '"><i class="fa fa-institution"></i> Ver en Congreso.es</a></li>';
+                                str += '<li><a href="'+ obj.url + '"><i class="fa fa-institution"></i> Ver en Congreso.es</a></li>';
                               str += '</ul>';
                             str += '</div>';
                             str += '&nbsp;&nbsp;';
