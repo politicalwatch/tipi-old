@@ -220,7 +220,7 @@ Template.search.helpers({
                         return groupsHumanized.join([separator = ', ']);
                     }
                 },
-                { key: 'dicts', label: 'Temas', sortable: true, sortOrder: 0, sortDirection: -1, headerClass: 'col-md-2', cellClass: 'capitalize-text',
+                { key: 'dicts', label: 'Temas', headerClass: 'col-md-2', cellClass: 'capitalize-text',
                     fn: function(val, obj) {
                         return val.join(', ');
                     }
