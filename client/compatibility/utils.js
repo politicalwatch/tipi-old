@@ -1,3 +1,17 @@
+ShareIt.configure({
+    sites: {
+        'facebook': {
+            'appId': null
+        },
+        'twitter': {},
+        'googleplus': null,
+        'pinterest': null
+    },
+    classes: "btn",
+    iconOnly: false,
+    applyColors: true,
+});
+
 var parliamentarygroups = {
     'GP': 'Grupo Popular',
     'GS': 'Grupo Socialista',

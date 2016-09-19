@@ -72,6 +72,9 @@ Template.tipi.helpers({
         } else {
             return 'clock-o';
         }
+    },
+    shareData: function() {
+        return {title: this.titulo, author: Meteor.settings.public.twitter_account, url: window.location.href}
     }
 });
 

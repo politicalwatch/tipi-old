@@ -2,7 +2,7 @@
     <div id="initiative" class="container page">
         <div class="row">
             {{#with tipi}}
-                <div class="col-sm-9">
+                <div class="col-sm-8">
                     {{> text_element meta='Tipo de acto parlamentario' value=tipotexto}}
                     {{#if hasAutor}}
                         {{> text_element meta='Autor/a' value=getAutor}}
@@ -17,7 +17,7 @@
                     </div>
                     {{> text_element meta='Estado de la tramitación' value=tramitacion}}
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-4 text-center">
                     {{#if isInRole 'admin'}}
                         <a class="btn btn-primary btn-block" href="/admin/Tipis/{{_id}}/edit">Edita la iniciativa</a>
                         <br/>
@@ -29,6 +29,7 @@
                             </a>
                         </p>
                     </div>
+                    {{>shareit shareData}}
                 </div>
             {{/with}}
         </div>

@@ -14,7 +14,8 @@
         },
         "queryParams": {
             "limit": 1000
-        }
+        },
+        "twitter_account": "Tipi_Ciudadano"
     },
     "mandrillUsername": "",
     "mandrillKey": ""
