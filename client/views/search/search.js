@@ -215,12 +215,12 @@ Template.search.helpers({
                     fn: function(val, obj) {
                         groupsHumanized = [];
                         for(i=0;i<val.length;i++) {
-                            groupsHumanized.push(parliamentarygroups[val[i]]);
+                            groupsHumanized.push(val[i]);
                         }
                         return groupsHumanized.join([separator = ', ']);
                     }
                 },
-                { key: 'dicts', label: 'Temas', headerClass: 'col-md-2', cellClass: 'capitalize-text',
+                { key: 'dicts.tipi', label: 'Temas', headerClass: 'col-md-2', cellClass: 'capitalize-text',
                     fn: function(val, obj) {
                         return val.join(', ');
                     }
@@ -259,7 +259,7 @@ Template.search.events({
     'click a#exportcsv': function(e) {
         e.preventDefault();
         var query = Session.get("search");
-        var collection_data = Tipis.find(cleanTipiQuery(query)).fetch();
+        var collection_data = Iniciativas.find(cleanTipiQuery(query)).fetch();
         var data = json2csv(collection_data, true, true);
         var blob = new Blob([data], {type: "text/csv;charset=utf-8"});
         saveAs(blob, "tipis.csv");

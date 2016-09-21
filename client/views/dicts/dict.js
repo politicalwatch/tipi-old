@@ -49,6 +49,6 @@ Template.dict.helpers({
         });
     },
     initiatives: function() {
-      return Tipis.find();
+      return Iniciativas.find();
     }
 });

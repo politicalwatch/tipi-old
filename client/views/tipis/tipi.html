@@ -2,18 +2,18 @@
     <div id="initiative" class="container page">
         <div class="row">
             {{#with tipi}}
-                <div class="col-sm-8">
+                <div class="col-sm-8 keyvalues">
                     {{> text_element meta='Tipo de acto parlamentario' value=tipotexto}}
                     {{#if hasAutor}}
                         {{> text_element meta='Autor/a' value=getAutor}}
                     {{/if}}
                     {{#if autor_grupo}}
-                        {{> text_element meta='Grupo parlamentario' value=groupsHumanized}}
+                        {{> text_element meta='Grupo parlamentario' value=getGrupo}}
                     {{/if}}
                     {{> text_element meta='Lugar' value=lugar}}
-                    {{> text_element meta='Fecha' value=fecha}}
+                    {{> text_element meta='Fecha' value=getFecha}}
                     <div class="capitalize">
-                        {{> dict_elements meta='Temas tratados' dicts=dicts terms=terms }}
+                        {{> dict_elements meta='Temas tratados' dicts=dicts.tipi terms=terms.tipi }}
                     </div>
                     {{> text_element meta='Estado de la tramitación' value=tramitacion}}
                 </div>

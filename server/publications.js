@@ -9,15 +9,13 @@ All publications-related code.
 
 if (Meteor.isServer) {
     
-    var tipidictgroup = 'tipi';
-
     Meteor.publish('tipiStats', function() {
             return TipiStats.find();
     });
 
     Meteor.publish('allSlugsInTipiDicts', function() {
             return Dicts.find(
-              {group: tipidictgroup},
+              {group: "tipi"},
               {
                 fields: {name: 1, slug: 1},
               }
@@ -25,7 +23,7 @@ if (Meteor.isServer) {
     });
     Meteor.publish('allTipiDicts', function() {
             return Dicts.find(
-              {group: tipidictgroup},
+              {group: "tipi"},
               {
                   fields: {name: 1, slug: 1, iconb1: 1}
               }
@@ -34,7 +32,7 @@ if (Meteor.isServer) {
 
     Meteor.publish('allTipiDictsWithDesc', function() {
             return Dicts.find(
-              {group: tipidictgroup},
+              {group: "tipi"},
               {
                 fields: {name: 1, slug: 1, description: 1,  icon1: 1, icon2: 2}
               }
@@ -43,7 +41,7 @@ if (Meteor.isServer) {
 
     Meteor.publish('allTipiDictsWithTerms', function() {
             return Dicts.find(
-              {group: tipidictgroup},
+              {group: "tipi"},
               {
                   fields: {name: 1, slug: 1, iconb1: 1, terms: 1}
               }
@@ -52,7 +50,7 @@ if (Meteor.isServer) {
 
     Meteor.publish('singleTipiDictBySlug', function(slug) {
             return Dicts.find(
-              {group: tipidictgroup, slug: slug},
+              {group: "tipi", slug: slug},
               {
                 fields: {name: 1, icon1: 1, icon2: 2}
               }
@@ -60,38 +58,41 @@ if (Meteor.isServer) {
     });
     
     Meteor.publish('allTipisSearch', function(q) {
-            return Tipis.find(
-              q,
-              {
-                fields: {ref: 1, titulo: 1, tipotexto: 1, autor_diputado: 1, autor_grupo: 1, autor_otro: 1, lugar: 1, dicts: 1, terms: 1, fecha: 1}, 
-                sort: {fecha: 1},
-                limit: Meteor.settings.public.queryParams.limit
-              }
-            );
+        return Iniciativas.find(
+          q,
+          {
+            fields: {ref: 1, titulo: 1, tipotexto: 1, autor_diputado: 1, autor_grupo: 1, autor_otro: 1, lugar: 1, dicts: 1, terms: 1, fecha: 1}, 
+            sort: {fecha: 1},
+            limit: Meteor.settings.public.queryParams.limit
+          }
+        );
     });
 
     Meteor.publish('singleTipi', function(id) {
-        return Tipis.find({"_id": id});
+        initiative = Iniciativas.find({"_id": id, "is.tipi": true});
+        if (initiative) return initiative;
+        this.stop();
+        return;
     });
 
     Meteor.publish('relatedTipis', function(id) {
-        tipiobject = Tipis.find({"_id": id}).fetch();
-        return Tipis.find(
-            {ref: tipiobject[0].ref},
+        tipiobject = Iniciativas.find({"_id": id, "is.tipi": true}).fetch();
+        return Iniciativas.find(
+            {ref: tipiobject[0].ref, "is.tipi": true},
             {
-                fields: {ref: 1, titulo: 1, tipotexto: 1, autor_diputado: 1, autor_grupo: 1, autor_otro: 1},
+                fields: {ref: 1, titulo: 1, tipotexto: 1, autor_diputado: 1, autor_grupo: 1, autor_otro: 1, 'is.tipi': 1},
                 sort: {tipotexto: 1}
             }
         );
     });
 
     Meteor.publish('limitedTipiListByDict', function(dictslug) {
-      var dictobject = Dicts.findOne({group: tipidictgroup, slug: dictslug}, {fields: {name: 1}});
+      var dictobject = Dicts.findOne({group: "tipi", slug: dictslug}, {fields: {name: 1}});
       if (dictobject) {
-        return Tipis.find(
-          {dicts: dictobject.name},
+        return Iniciativas.find(
+          {'dicts.tipi': dictobject.name, 'is.tipi': true},
           {  
-            fields: {ref: 1, tipotexto: 1, autor_diputado: 1, autor_grupo: 1, autor_otro: 1, titulo: 1, dicts: 1, fecha: 1, lugar: 1}, 
+            fields: {ref: 1, tipotexto: 1, autor_diputado: 1, autor_grupo: 1, autor_otro: 1, titulo: 1, 'dicts.tiipi': 1, fecha: 1, lugar: 1}, 
             sort: {fecha: 1},
             limit: 20
           }
@@ -126,10 +127,10 @@ if (Meteor.isServer) {
     Meteor.publish('limitedTipiListByDeputy', function(id) {
       var dipobject = Diputados.findOne(id, {fields: {nombre: 1}});
       if (dipobject) {
-        return Tipis.find(
-          {autor_diputado: dipobject.nombre},
+        return Iniciativas.find(
+          {autor_diputado: dipobject.nombre, 'is.tipi': true},
           {  
-            fields: {ref: 1, tipotexto: 1, titulo: 1, dicts: 1, fecha: 1, lugar: 1}, 
+            fields: {ref: 1, tipotexto: 1, titulo: 1, 'dicts.tipi': 1, fecha: 1, lugar: 1}, 
             sort: {fecha: 1},
             limit: 10
           }
@@ -146,10 +147,10 @@ if (Meteor.isServer) {
     Meteor.publish('limitedTipiListByGroup', function(id) {
       var groupobject = Grupos.findOne(id, {fields: {nombre: 1}});
       if (groupobject) {
-        return Tipis.find(
-          {autor_grupo: groupobject.acronimo},
+        return Iniciativas.find(
+          {autor_grupo: groupobject.acronimo, 'is.tipi': true},
           {  
-            fields: {ref: 1, tipotexto: 1, autor_diputado: 1, titulo: 1, dicts: 1, fecha: 1, lugar: 1}, 
+            fields: {ref: 1, tipotexto: 1, autor_diputado: 1, titulo: 1, 'dicts.tipi': 1, fecha: 1, lugar: 1}, 
             sort: {fecha: 1},
             limit: 10
           }

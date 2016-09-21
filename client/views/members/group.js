@@ -6,6 +6,6 @@ Template.group.onCreated(function() {
 
 Template.group.helpers({
     hasTipis: function() {
-        return Tipis.find().count() > 0;
+        return Iniciativas.find().count() > 0;
     }
 });

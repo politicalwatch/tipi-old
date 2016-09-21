@@ -7,7 +7,7 @@ Code related to the tipi template
 /+ ---------------------------------------------------- */
 
 Template.tipi.onCreated(function() {
-    title = Tipis.findOne().titulo;
+    title = Iniciativas.findOne().titulo;
     $('.page-title h1').html(title);
     document.title = title + ' | ' + document.title;
 });
@@ -27,17 +27,20 @@ Template.tipi.helpers({
         if (!_.isEmpty(this.autor_otro)) {
             return this.autor_otro;
         } else {
-            return this.autor_diputado;
+            return Spacebars.SafeString(this.autor_diputado.join([separator = '<br/>']));
+;
         }
     },
-    groupsHumanized: function() {
-        groups = [];
-        for(i=0;i<this.autor_grupo.length;i++) {
-            groups.push(parliamentarygroups[this.autor_grupo[i]]);
-        }
-        return groups;
+    getFecha: function() {
+        return moment(this.fecha).format('LL');
     },
-    colorizedGroup: function(val) {
+    getGrupo: function() {
+
+        //     groups.push(this.autor_grupo[i]);
+        // }
+        return Spacebars.SafeString(this.autor_grupo.join([separator = '<br/>']));
+},
+colorizedGroup: function(val) {
         return parliamentarygroups_colors[val];
     },
     fotoDip: function(val) {

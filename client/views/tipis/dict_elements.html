@@ -1,21 +1,23 @@
 <template name="dict_elements">
-    <p>
-        <span class="meta">{{meta}}</span>
-        <br>
-        <ul class="list-unstyled">
-            {{#each dicts}}
-                <li class="value">
-                <a href="/buscar?dicts={{this}}">{{this}}</a>
-                <br>
-                <small>
-                    (Por mencionar:
-                    {{#each getTerms ../terms this}}
-                        <a href="/buscar?terms={{this}}">{{this}}</a>,&nbsp;
-                    {{/each}}
-                    )
-                </small>
-                </li>
-            {{/each}}
-        </ul>
-    </p>
+    {{#if dicts}}
+        <p>
+            <span class="meta">{{meta}}</span>
+            <br>
+            <ul class="list-unstyled">
+                {{#each dicts}}
+                    <li class="value">
+                    <a href="/buscar?dicts={{this}}">{{this}}</a>
+                    <br>
+                    <small>
+                        (Por mencionar:
+                        {{#each getTerms ../terms this}}
+                            <a href="/buscar?terms={{this}}">{{this}}</a>,&nbsp;
+                        {{/each}}
+                        )
+                    </small>
+                    </li>
+                {{/each}}
+            </ul>
+        </p>
+    {{/if}}
 </template>

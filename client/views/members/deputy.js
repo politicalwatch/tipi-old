@@ -9,6 +9,6 @@ Template.deputy.helpers({
         return parliamentarygroups[this.deputy.grupo];
     },
     hasTipis: function() {
-        return Tipis.find().count() > 0;
+        return Iniciativas.find().count() > 0;
     }
 });

@@ -1,11 +1,19 @@
 <template name="related_elements">
     <div class="related">
-        <span class="meta">{{meta}}</span>
-        <ul class="list-unstyled">
-            {{#each value}}
-            <li class="value"><a href="/tipis/{{_id._str}}">{{tipotexto}} <small>({{getAutor}})</small></a></li>
-            {{/each}}
-            
-        </ul>
+        {{#if value}}
+            <span class="meta">{{meta}}</span>
+            <ul class="list-unstyled">
+                {{#each value}}
+                    <li class="value">
+                        {{#if value.is.tipi}}
+                            <a href="/tipis/{{_id._str}}">{{tipotexto}} <small>({{getAutor}})</small></a>
+                        {{else}}
+                            <span class="text-muted">{{tipotexto}} <small>({{getAutor}})</small></span>
+                        {{/if}}
+                    </li>
+                {{/each}}
+                
+            </ul>
+        {{/if}}
     </div>
 </template>

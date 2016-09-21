@@ -116,9 +116,9 @@ function builderQueryFrom(type) {
 /* UTILS */
 
 function cleanTipiQuery(cqry) {
-    var fdesde, fhasta, newautor, newgrupootro;
+    var fdesde, fhasta, newautor, newgrupootro, dict, term;
     fdesde = fhasta = null;
-    newautor = newgrupootro = tipo = term = {};
+    newautor = newgrupootro = tipo = dict = term = {};
     for (var k in cqry) {
         if (k == "fechadesde" && cqry[k] != "" ) {
             fdesde = cqry[k];
@@ -126,8 +126,11 @@ function cleanTipiQuery(cqry) {
         } else if (k == "fechahasta" && cqry[k] != "") {
             fhasta = cqry[k];
             delete cqry[k];
+        } else if (k == 'dicts' && cqry[k] != "") {
+            dict = {"dicts.tipi": cqry[k]}
+            delete cqry[k];
         } else if (k == 'terms' && cqry[k] != "") {
-            term = {'terms.humanterm': cqry[k]};
+            term = {"terms.tipi.humanterm": cqry[k]}
             delete cqry[k];
         } else if ((k == "autor") && (cqry[k] != "")) {
             newautor = { 'autor_diputado': {$regex: cqry['autor'], $options: "gi"} }
@@ -145,12 +148,16 @@ function cleanTipiQuery(cqry) {
         }
         else if (cqry[k] == "") {
             delete cqry[k];
-        } else if (typeof(cqry[k]) != "object") {
-            cqry[k] = {$regex: cqry[k], $options: "gi"};
         }
+        // else if (typeof(cqry[k]) != "object") {
+        //     cqry[k] = {$regex: cqry[k], $options: "gi"};
+        // }
+    }
+    if (dict != {}) {
+        jQuery.extend(cqry, dict);
     }
     if (term != {}) {
-        jQuery.extend(cqry, term)
+        jQuery.extend(cqry, term);
     }
     if (newautor != {}) {
         jQuery.extend(cqry, newautor);
@@ -175,6 +182,7 @@ function cleanTipiQuery(cqry) {
             $lte: datestringToISODate(fhasta, false)
         };
     }
+    jQuery.extend(cqry, {"is.tipi": true});
     return cqry;
 }
 
