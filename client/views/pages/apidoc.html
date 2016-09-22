@@ -62,8 +62,6 @@
 						url: "",<br>
 						fecha: "",<br>
 						autor_otro: [ ],<br>
-						contenido: [ ],<br>
-						autor_grupo: [],<br>
 						tramitacion: "",<br>
 						titulo: "",<br>
 						ref: "",<br>
@@ -86,10 +84,6 @@
 					]<br>
             	</div>
 
-            	<h4>Diccionarios disponibles</h4>
-            	{{#each dicts}}
-            	  {{name}} - {{slug}} <br>
-            	{{/each}}
 
 				<h4>Errores</h4>
             	<table class="api-errors">
@@ -207,7 +201,6 @@
 						url: "",<br>
 						fecha: "",<br>
 						autor_otro: [ ],<br>
-						contenido: [ ],<br>
 						autor_grupo: [],<br>
 						tramitacion: "",<br>
 						titulo: "",<br>
@@ -471,5 +464,27 @@
 				</table>
             </div>
         </div>
+        <hr/>
+    <div class="row">
+        <div class="col-sm-8">
+            <h4>Diccionarios disponibles</h4>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Slug (a usar)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {{#each dicts}}
+                  <tr>
+                      <td>{{name}}</td>
+                      <td>{{slug}}</td>
+                  </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
     </div>
 </template>

@@ -187,6 +187,21 @@ function cleanTipiQuery(cqry) {
 }
 
 
+function getOverallStats(n) {
+    if (typeof n !== "undefined") elements_in_vizz = n;
+    else elements_in_vizz = Dicts.find().count();
+    stats = TipiStats.find().fetch()[0];
+    overall = _.sortBy(stats.overall, function(item) { return item.count; });
+    data = [];
+    total = Iniciativas.find().count();
+    for(i=overall.length-1;i>overall.length-1-elements_in_vizz;i--) {
+        percentage = parseFloat((overall[i]['count']/total)*100).toFixed(2);
+        data.push({'title': overall[i]['_id'], 'subtitle': percentage+"%", 'ranges': [total], 'measures': [overall[i]['count']]});
+    }
+    return data;
+}
+
+
 // congreso.es URL maker
 function parseCongresoURL(ref) {
     var split_ref = ref.split('/');
