@@ -20,7 +20,7 @@ Api.addRoute('tipis/', {
     	if (this.queryParams.dict){
     		dict = Dicts.find({slug: this.queryParams.dict, group: "tipi"},{fields: {name: 1}}).fetch();
     		if (dict.length>0) {
-    			return Iniciativas.find({'is.tipi':true,'dicts.tipi':dict[0].name}, {limit: limit, skip : pag }).fetch();
+    			return Iniciativas.find({'is.tipi':true,'dicts.tipi':dict[0].name}, {fields:  {contenido: 0},limit: limit, skip : pag },{_id:1,autor_diputado:1,lugar:1,tipotexto:1,tipo:1}).fetch();
     		} else {
     			return {
 			    statusCode: 404,
@@ -29,7 +29,9 @@ Api.addRoute('tipis/', {
 		}			 
     	} else {
             
-    	    return Iniciativas.find({}, {limit: limit, skip: pag }).fetch();
+    	    return Iniciativas.find(
+    	    	{}
+    	    	 ,{fields:  {contenido: 0},limit: limit, skip: pag }).fetch();
     	}
     }
 });
