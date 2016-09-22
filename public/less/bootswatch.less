@@ -442,9 +442,15 @@ a {
         #graph {
             padding-bottom: @padding-base-vertical*2;
         }
-        small {
+        p {
             font-style: italic;
-            color: @brand-primary-xlight;
+            color: @brand-secondary;
+            a {
+                color: @brand-secondary;
+                &:hover {
+                    color: @brand-secondary;
+                }
+            }
         }
     }
     #ctas {
@@ -553,7 +559,7 @@ a {
 }
 
 
-// Footer =================================================================
+// FAQ =================================================================
 
 #faq-infoblock {
     padding-top: @padding-base-vertical*6;
@@ -594,6 +600,15 @@ a {
 
 #credits {
     background-color: darken(@brand-primary, 3%);
+}
+
+
+// Stats =================================================================
+
+#stats {
+    background-color: @brand-primary;
+    padding-top: @padding-base-vertical*4;
+    padding-bottom: @padding-base-vertical*6;
 }
 
 // Not found =================================================================

@@ -7116,9 +7116,15 @@ fieldset[disabled] .btn-tipi.focus {
 #home #stats #graph {
   padding-bottom: 20px;
 }
-#home #stats small {
+#home #stats p {
   font-style: italic;
-  color: #494949;
+  color: #FBC239;
+}
+#home #stats p a {
+  color: #FBC239;
+}
+#home #stats p a:hover {
+  color: #FBC239;
 }
 #home #ctas {
   background-color: #FBC239;
@@ -7275,17 +7281,28 @@ fieldset[disabled] .btn-tipi.focus {
 #credits {
   background-color: #1b1b1b;
 }
+#stats {
+  background-color: #222222;
+  padding-top: 40px;
+  padding-bottom: 60px;
+}
 #not-found {
   padding: 10%;
 }
 #not-found img {
   width: 300px;
 }
+#not-found a {
+  margin-top: 10px;
+}
 #access-denied {
   padding: 10%;
 }
 #access-denied img {
   width: 300px;
+}
+#access-denied a {
+  margin-top: 10px;
 }
 .info-api {
   border: 1px solid #b4bcc2;
@@ -7315,4 +7332,14 @@ fieldset[disabled] .btn-tipi.focus {
   background-color: #222222;
   color: white;
   margin-bottom: 10px;
+}
+.cookie-policy {
+  width: 100%;
+  bottom: 0px;
+  right: 0px;
+  background-color: #7b8a8b;
+  border-color: #7b8a8b;
+}
+.alert {
+  margin-bottom: 0px;
 }

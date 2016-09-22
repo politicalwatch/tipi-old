@@ -30,11 +30,21 @@ if (Meteor.isServer) {
               }
             );
     });
+
     Meteor.publish('allTipiDicts', function() {
             return Dicts.find(
               {group: "tipi"},
               {
                   fields: {name: 1, slug: 1, iconb1: 1}
+              }
+            );
+    });
+
+    Meteor.publish('basicTipiDicts', function() {
+            return Dicts.find(
+              {group: "tipi"},
+              {
+                  fields: {_id: 1, name: 1}
               }
             );
     });
@@ -66,6 +76,15 @@ if (Meteor.isServer) {
             );
     });
     
+    Meteor.publish('basicTipis', function(q) {
+        return Iniciativas.find(
+            {'is.tipi': true},
+          {
+            fields: {_id: 1}
+          }
+        );
+    });
+
     Meteor.publish('allTipisSearch', function(q) {
         return Iniciativas.find(
           q,
