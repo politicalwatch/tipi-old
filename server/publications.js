@@ -13,6 +13,15 @@ if (Meteor.isServer) {
             return TipiStats.find();
     });
 
+    Meteor.publish('tipiStatsOverall', function() {
+            return TipiStats.find(
+                {},
+                {
+                    fields: {overall: 1},
+                    sort: {count: -1},
+                });
+    });
+
     Meteor.publish('allSlugsInTipiDicts', function() {
             return Dicts.find(
               {group: "tipi"},
