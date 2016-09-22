@@ -3,10 +3,472 @@
 <div id="apidoc" class="container page">
         <div class="row">
             <div class="col-sm-8">
-            	API DOC
+            	<h3>Obtener iniciativas</h3>
+
+            	<div class="code-api">
+            	<p>/api/v1/tipis</p>
+            	</div>
+				<h4>Parámetros</h4>
+            	<div class="info-api">
+	            	<table>
+					<thead>
+					<tr>
+						<th>Parámetro</th>
+						<th>Valor</th>
+						<th>Valor por defecto</th>
+						<th>Descripción</th>
+						<th>Tipo de parámetro</th>
+						<th>Tipo de dato</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<td>dict</td>
+						<td>Opcional</td>
+						<td></td>
+						<td>c</td>
+						<td>d</td>
+						</tr>
+					<tr>
+						<td>limit</td>
+						<td>Opcional</td>
+						<td>10</td>
+						<td>c</td>
+						<td>d</td>
+					</tr>
+					<tr>
+						<td>offset</td>
+						<td>Opcional</td>
+						<td>0</td>
+						<td>c</td>
+						<td>d</td>
+					</tr>
+					</tbody>
+				</table>
+            	</div>
+				<div class="code-api">
+            	<p>/api/v1/tipis?offset=1&limit=1</p>
+            	</div>
+				<h4>Respuesta</h4>
+            	<div class="info-api">
+            	<p>[</p>
+            	<div class="api-response-1">
+					{<br>
+					<p class="api-response-2">_id: {},<br>
+						autor_diputado: [ ],<br>
+						lugar: "",<br>
+						tipotexto: "",<br>
+						tipo: "",<br>
+						url: "",<br>
+						fecha: "",<br>
+						autor_otro: [ ],<br>
+						contenido: [ ],<br>
+						autor_grupo: [],<br>
+						tramitacion: "",<br>
+						titulo: "",<br>
+						ref: "",<br>
+						fechafin: "",<br>
+						dicts: {<br>
+						tipi: [ ]<br>
+						},<br>
+						terms: {<br>
+						tipi: [ ]<br>
+						},<br>
+						is: {<br>
+						tipi: <br>
+						},<br>
+						annotate: {<br>
+						tipi: <br>
+						}<br>
+					</p>
+					}<br>
+				</div>
+					]<br>
+            	</div>
+
+            	<h4>Diccionarios disponibles</h4>
             	{{#each dicts}}
-            	  {{name}} - {{slug}}
+            	  {{name}} - {{slug}} <br>
             	{{/each}}
+
+				<h4>Errores</h4>
+            	<table class="api-errors">
+					<thead>
+						<tr>
+							<th>Código HTTP</th>
+							<th>Motivo</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><code>404</code></td>
+							<td>Si falla o no se ha podido encontrar el slug.</td>
+						</tr>
+					<tr>
+						<td><code>405</code></td>
+						<td>Si el método es POST o cualquier otra función.</td>
+					</tr>
+				</tbody>
+				</table>
+            	
+            	<h3>Obtener iniciativas por diccionario</h3>
+            	<div class="code-api">
+            	<p>/api/v1/tipis/:_id</p>
+            	</div>
+            	<h4>Parámetros</h4>
+            	<div class="info-api">
+	            	<table>
+					<thead>
+					<tr>
+						<th>Parámetro</th>
+						<th>Valor</th>
+						<th>Valor por defecto</th>
+						<th>Descripción</th>
+						<th>Tipo de parámetro</th>
+						<th>Tipo de dato</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<td>_id</td>
+						<td>Opcional</td>
+						<td></td>
+						<td>ID del diccionaro en la base de datos</td>
+						<td>id.path</td>
+						<td></td>
+						</tr>
+					</tbody>
+				</table>
+            	</div>
+
+				<h4>Errores</h4>
+				<table class="api-errors">
+					<thead>
+						<tr>
+							<th>Código HTTP</th>
+							<th>Motivo</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><code>404</code></td>
+							<td>Si falla o no se ha podido encontrar el slug.</td>
+						</tr>
+					<tr>
+						<td><code>405</code></td>
+						<td>Si el método es POST o cualquier otra función.</td>
+					</tr>
+				</tbody>
+				</table>
+				
+				<h3>Obtener iniciativas TIPI por grupo parlamentario</h3>
+
+            	<div class="code-api">
+            	<p>/api/v1/stats/bygroups</p>
+            	</div>
+				<h4>Parámetros</h4>
+            	<div class="info-api">
+	            	<table>
+					<thead>
+					<tr>
+						<th>Parámetro</th>
+						<th>Valor</th>
+						<th>Valor por defecto</th>
+						<th>Descripción</th>
+						<th>Tipo de parámetro</th>
+						<th>Tipo de dato</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<td>slug</td>
+						<td>Opcional</td>
+						<td></td>
+						<td>Slug del diccionario</td>
+						<td></td>
+						<td></td>
+						</tr>
+					</tbody>
+				</table>
+            	</div>
+				<div class="code-api">
+            	<p>/api/v1/stats/bygroups/:slug</p>
+            	</div>
+				<h4>Respuesta</h4>
+            	<div class="info-api">
+            	<p>[</p>
+            	<div class="api-response-1">
+					{<br>
+					<div class="api-response-2">_id: {},<br>
+						autor_diputado: [ ],<br>
+						lugar: "",<br>
+						tipotexto: "",<br>
+						tipo: "",<br>
+						url: "",<br>
+						fecha: "",<br>
+						autor_otro: [ ],<br>
+						contenido: [ ],<br>
+						autor_grupo: [],<br>
+						tramitacion: "",<br>
+						titulo: "",<br>
+						ref: "",<br>
+						fechafin: "",<br>
+						dicts: {<br>
+					</div>
+					]<br>
+            	</div>
+            	</div>
+				<h4>Errores</h4>
+            	<table class="api-errors">
+					<thead>
+						<tr>
+							<th>Código HTTP</th>
+							<th>Motivo</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><code>404</code></td>
+							<td>Si falla o no se ha podido encontrar el slug.</td>
+						</tr>
+					<tr>
+						<td><code>405</code></td>
+						<td>Si el método es POST o cualquier otra función.</td>
+					</tr>
+				</tbody>
+				</table>
+
+				<h3>Obtener cualquier tipo de iniciativa (no sólo TIPI)</h3>
+
+            	<div class="code-api">
+            	<p>api/v1/stats/overall</p>
+            	</div>
+				<h4>Parámetros</h4>
+            	<div class="info-api">
+	            	<table>
+					<thead>
+					<tr>
+						<th>Parámetro</th>
+						<th>Valor</th>
+						<th>Valor por defecto</th>
+						<th>Descripción</th>
+						<th>Tipo de parámetro</th>
+						<th>Tipo de dato</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<td>slug</td>
+						<td>Opcional</td>
+						<td></td>
+						<td>Slug del diccionario</td>
+						<td></td>
+						<td></td>
+						</tr>
+					</tbody>
+				</table>
+            	</div>
+				<div class="code-api">
+            	<p>/api/v1/stats/overall/:slug</p>
+            	</div>
+
+				<h4>Respuesta</h4>
+            	<div class="info-api">
+            	<p>[</p>
+            	<div class="api-response-1">
+					{<br>
+					<div class="api-response-2">_id: {},<br>
+						autor_diputado: [ ],<br>
+						lugar: "",<br>
+						tipotexto: "",<br>
+						tipo: "",<br>
+						url: "",<br>
+						fecha: "",<br>
+						autor_otro: [ ],<br>
+						contenido: [ ],<br>
+						autor_grupo: [],<br>
+						tramitacion: "",<br>
+						titulo: "",<br>
+						ref: "",<br>
+						fechafin: "",<br>
+						dicts: {<br>
+					</div>
+					]<br>
+            	</div>
+            	</div>
+				<h4>Errores</h4>
+            	<table class="api-errors">
+					<thead>
+						<tr>
+							<th>Código HTTP</th>
+							<th>Motivo</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><code>404</code></td>
+							<td>Si falla o no se ha podido encontrar el slug.</td>
+						</tr>
+					<tr>
+						<td><code>405</code></td>
+						<td>Si el método es POST o cualquier otra función.</td>
+					</tr>
+				</tbody>
+				</table>
+
+				<h3>Obtener iniciativas por diputado</h3>
+
+            	<div class="code-api">
+            	<p>/api/v1/stats/bydeputies</p>
+            	</div>
+				<h4>Parámetros</h4>
+            	<div class="info-api">
+	            	<table>
+					<thead>
+					<tr>
+						<th>Parámetro</th>
+						<th>Valor</th>
+						<th>Valor por defecto</th>
+						<th>Descripción</th>
+						<th>Tipo de parámetro</th>
+						<th>Tipo de dato</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<td>slug</td>
+						<td>Opcional</td>
+						<td></td>
+						<td>Slug del diccionario</td>
+						<td></td>
+						<td></td>
+						</tr>
+					</tbody>
+				</table>
+            	</div>
+				<div class="code-api">
+            	<p>/api/v1/stats/bydeputies/:slug</p>
+            	</div>
+				<h4>Respuesta</h4>
+            	<div class="info-api">
+            	<p>[</p>
+            	<div class="api-response-1">
+					{<br>
+					<div class="api-response-2">_id: {},<br>
+						autor_diputado: [ ],<br>
+						lugar: "",<br>
+						tipotexto: "",<br>
+						tipo: "",<br>
+						url: "",<br>
+						fecha: "",<br>
+						autor_otro: [ ],<br>
+						contenido: [ ],<br>
+						autor_grupo: [],<br>
+						tramitacion: "",<br>
+						titulo: "",<br>
+						ref: "",<br>
+						fechafin: "",<br>
+						dicts: {<br>
+					</div>
+					]<br>
+            	</div>
+            	</div>
+				<h4>Errores</h4>
+            	<table class="api-errors">
+					<thead>
+						<tr>
+							<th>Código HTTP</th>
+							<th>Motivo</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><code>404</code></td>
+							<td>Si falla o no se ha podido encontrar el slug.</td>
+						</tr>
+					<tr>
+						<td><code>405</code></td>
+						<td>Si el método es POST o cualquier otra función.</td>
+					</tr>
+				</tbody>
+				</table>
+
+				<h3>Obtener las últimas 20 iniciativas</h3>
+
+            	<div class="code-api">
+            	<p>/api/v1/stats/latest</p>
+            	</div>
+				<h4>Parámetros</h4>
+            	<div class="info-api">
+	            	<table>
+					<thead>
+					<tr>
+						<th>Parámetro</th>
+						<th>Valor</th>
+						<th>Valor por defecto</th>
+						<th>Descripción</th>
+						<th>Tipo de parámetro</th>
+						<th>Tipo de dato</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<td>slug</td>
+						<td>Opcional</td>
+						<td></td>
+						<td>Slug del diccionario</td>
+						<td></td>
+						<td></td>
+						</tr>
+					</tbody>
+				</table>
+            	</div>
+				<div class="code-api">
+            	<p>/api/v1/stats/latest/:slug</p>
+            	</div>
+				<h4>Respuesta</h4>
+            	<div class="info-api">
+            	<p>[</p>
+            	<div class="api-response-1">
+					{<br>
+					<div class="api-response-2">_id: {},<br>
+						autor_diputado: [ ],<br>
+						lugar: "",<br>
+						tipotexto: "",<br>
+						tipo: "",<br>
+						url: "",<br>
+						fecha: "",<br>
+						autor_otro: [ ],<br>
+						contenido: [ ],<br>
+						autor_grupo: [],<br>
+						tramitacion: "",<br>
+						titulo: "",<br>
+						ref: "",<br>
+						fechafin: "",<br>
+						dicts: {<br>
+					</div>
+					]<br>
+            	</div>
+            	</div>
+				<h4>Errores</h4>
+            	<table class="api-errors">
+					<thead>
+						<tr>
+							<th>Código HTTP</th>
+							<th>Motivo</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><code>404</code></td>
+							<td>Si falla o no se ha podido encontrar el slug.</td>
+						</tr>
+					<tr>
+						<td><code>405</code></td>
+						<td>Si el método es POST o cualquier otra función.</td>
+					</tr>
+				</tbody>
+				</table>
             </div>
         </div>
     </div>

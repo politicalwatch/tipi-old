@@ -1,8 +1,12 @@
 <template name="accessDenied">
     <div id="access-denied" class="containerglob darkpatt">
         <div class="text-center">
+           	<img src="images/500.png">
             <h2>Acceso denegado</h2>
             <i>Lo siento pero no tienes acceso a esta página.</i>
         </div>
+        <div class="text-center">
+        	<a href={{pathFor 'login'}} class="btn btn-primary">Volver a la página principal</a>
+		</div>
     </div>
 </template>
