@@ -53,7 +53,7 @@ if (Meteor.isServer) {
             return Dicts.find(
               {group: "tipi"},
               {
-                fields: {name: 1, slug: 1, description: 1,  icon1: 1, icon2: 2}
+                  fields: {name: 1, slug: 1, description: 1,  icon1: 1, icon2: 1, iconb1: 1, iconb2: 1}
               }
             );
     });

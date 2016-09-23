@@ -1,7 +1,7 @@
 ShareIt.configure({
     sites: {
         'facebook': {
-            'appId': null
+            'appId': "1662188644096441"
         },
         'twitter': {},
         'googleplus': null,
