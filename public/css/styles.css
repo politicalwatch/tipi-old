@@ -7118,13 +7118,13 @@ fieldset[disabled] .btn-tipi.focus {
 }
 #home #stats p {
   font-style: italic;
-  color: #FBC239;
+  color: #ecf0f1;
 }
 #home #stats p a {
-  color: #FBC239;
+  color: #ecf0f1;
 }
 #home #stats p a:hover {
-  color: #FBC239;
+  color: #ecf0f1;
 }
 #home #ctas {
   background-color: #FBC239;
