@@ -7360,3 +7360,39 @@ fieldset[disabled] .btn-tipi.focus {
 .alert {
   margin-bottom: 0px;
 }
+.btn-remove-dict {
+  color: #222222;
+  background-color: #FBC239;
+}
+.btn-remove-dict:focus,
+.btn-remove-dict.focus {
+  color: #222222;
+  background-color: #ecf0f1;
+}
+.btn-remove-dict:hover {
+  color: #222222;
+  background-color: #ecf0f1;
+}
+.btn-remove-dict:active,
+.btn-remove-dict.active {
+  color: #222222;
+  background-color: #ecf0f1;
+}
+.btn-add-dict {
+  color: #000;
+  background-color: #ecf0f1;
+}
+.btn-add-dict:focus,
+.btn-add-dict.focus {
+  color: #222222;
+  background-color: #FBC239;
+}
+.btn-add-dict:hover {
+  color: #222222;
+  background-color: #FBC239;
+}
+.btn-add-dict:active,
+.btn-add-dict.active {
+  color: #222222;
+  background-color: #FBC239;
+}
