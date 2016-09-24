@@ -21,10 +21,7 @@ Template.dict.helpers({
         }
     },
     groupsHumanized: function(val) {
-        return parliamentarygroups[val];
-    },
-    colorizedGroup: function(val) {
-        return parliamentarygroups_colors[val];
+        return val;
     },
     deputies: function() {
         dict_array = Dicts.find().fetch();
@@ -48,7 +45,14 @@ Template.dict.helpers({
             return 0;
         });
     },
+    getDescription: function() {
+        return this.dict.description;
+    },
+    getIcon: function() {
+        return this.dict.iconb1;
+    },
     initiatives: function() {
-      return Iniciativas.find();
+        console.log(TipiStats.find({}, {'latest': 1}).fetch());
+        return TipiStats.find({}, {'latest': 1}).fetch();
     }
 });

@@ -13,6 +13,15 @@ if (Meteor.isServer) {
             return TipiStats.find();
     });
 
+    Meteor.publish('tipiStatsByDict', function(islug) {
+        return TipiStats.find(
+                {},
+                {
+                    fields: {'latest.dependencia.items': 1}
+                }
+            );
+    });
+
     Meteor.publish('tipiStatsOverall', function() {
             return TipiStats.find(
                 {},
@@ -71,7 +80,7 @@ if (Meteor.isServer) {
             return Dicts.find(
               {group: "tipi", slug: slug},
               {
-                fields: {name: 1, icon1: 1, icon2: 2}
+                  fields: {name: 1, description: 1, icon1: 1, icon2: 1, iconb1: 1, iconb2: 1}
               }
             );
     });

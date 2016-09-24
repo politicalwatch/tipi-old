@@ -7202,41 +7202,58 @@ fieldset[disabled] .btn-tipi.focus {
 .bullet .subtitle {
   fill: #fdd984;
 }
-#initiative .keyvalues p {
+#dicts .dict {
+  height: 200px;
+}
+#dicts .dict img {
+  width: 75px;
+  height: 75px;
+}
+#initiative .keyvalues p,
+#dict .keyvalues p {
   padding-bottom: 10px;
 }
-#initiative .meta {
+#initiative .meta,
+#dict .meta {
   font-size: 0.9em;
   text-transform: uppercase;
   color: #95a5a6;
 }
-#initiative .value {
+#initiative .value,
+#dict .value {
   font-size: 1.5em;
   font-weight: bold;
 }
-#initiative .value small {
+#initiative .value small,
+#dict .value small {
   font-size: 0.8em;
   font-weight: normal;
 }
-#initiative .capitalize .value {
+#initiative .capitalize .value,
+#dict .capitalize .value {
   text-transform: capitalize;
 }
-#initiative .capitalize .value small {
+#initiative .capitalize .value small,
+#dict .capitalize .value small {
   text-transform: none;
   color: #798d8f;
   font-size: 0.7em;
   padding-left: 15px;
 }
-#initiative .capitalize .value small a {
+#initiative .capitalize .value small a,
+#dict .capitalize .value small a {
   color: #798d8f;
 }
-#initiative .congress-link {
+#initiative .congress-link,
+#dict .congress-link {
   font-size: 1.2em;
 }
-#initiative .congress-link a {
+#initiative .congress-link a,
+#dict .congress-link a {
   color: #222222;
 }
-#initiative .congress-link a:hover {
+#initiative .congress-link a:hover,
+#dict .congress-link a:hover {
   color: #222222;
 }
 #faq-infoblock {

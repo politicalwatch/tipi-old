@@ -1,57 +1,52 @@
 <template name="dict">
-    <div id="dict" class="containerglob darkpatt">
-        <section id="dictionary">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <ul class="breadcrumb">
-                            <li><a href="{{pathFor 'dicts'}}">Temas</a></li>
-                            <li class="active">{{dict.name}}</li>
-                        </ul>
-                    </div>
+    <div id="dict">
+        <div class="container page">
+            <div class="row">
+                <div class="col-sm-2">
+                    <img src="/images/svgs-circles/{{getIcon}}" alt="Imagen de {{dict.name}}">
                 </div>
-                <div class="row">
-                    <div class="col-sm-12 old oldwhite">
-                        <h1 class="text-center">{{dict.name}}</h1>
-                        <hr>
-                    </div>
+                <div class="col-sm-10">
+                    {{> text_element meta='¿De qué trata?' value=getDescription}}
+                    <hr>
                 </div>
-                <div class="row content-row">
-                    <div class="col-sm-6">
-                        <h3>Diputadas/os más activas/os</h3>
-                        {{#each deputies}}
-                          <h4>
-                            <span class="foto mediana">
-                                <img src="{{fotoDip _id}}" />
-                            </span>
-                            {{_id}}
-                          </h4>
-                        {{/each}}
-                    </div>
-                    <div class="col-sm-6">
-                        <h3>Grupos más activos</h3>
-                        {{#each groups}}
-                          <h4><span style="border-bottom: 2px solid {{colorizedGroup _id}};margin-bottom:5px;">{{groupsHumanized _id}}</span></h4>
-                        {{/each}}
-                    </div>
-                </div>
-                <hr>
-                <div class="row content-row">
-                    <div class="col-sm-12">
-                        <h3 class="white-text">Últimas iniciativas</h3>
-                        <div class="row">
-                          {{#each initiatives}}
+            </div>
+            <!-- <div class="row content&#45;row"> -->
+            <!--     <div class="col&#45;sm&#45;6"> -->
+            <!--         <h3>Diputadas/os más activas/os</h3> -->
+            <!--         {{#each deputies}} -->
+            <!--           <h4> -->
+            <!--             <span class="foto mediana"> -->
+            <!--                 <img src="{{fotoDip _id}}" /> -->
+            <!--             </span> -->
+            <!--             {{_id}} -->
+            <!--           </h4> -->
+            <!--         {{/each}} -->
+            <!--     </div> -->
+            <!--     <div class="col&#45;sm&#45;6"> -->
+            <!--         <h3>Grupos más activos</h3> -->
+            <!--         {{#each groups}} -->
+            <!--           <h4><span style="border&#45;bottom: 2px solid {{colorizedGroup _id}};margin&#45;bottom:5px;">{{groupsHumanized _id}}</span></h4> -->
+            <!--         {{/each}} -->
+            <!--     </div> -->
+            <!-- </div> -->
+            <hr>
+            <div class="row content-row">
+                <div class="col-sm-12">
+                    {{#if initiatives}}
+                    <h3 class="white-text">Últimas iniciativas</h3>
+                    <div class="row">
+                      {{#each initiatives}}
                           <div class="col-sm-10">
                             <a href="/t/{{_id}}">{{titulo}}</a> 
                           </div>
                           <div class="col-sm-2">
                             <small class="grey-text">{{relativeDate fecha}}</small>
                           </div>
-                          {{/each}}
-                        </div>
+                      {{/each}}
                     </div>
+                  {{/if}}
                 </div>
             </div>
-        </section>
+        </div>
     </div>
 </template>
