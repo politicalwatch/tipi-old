@@ -13,11 +13,11 @@ if (Meteor.isServer) {
             return TipiStats.find();
     });
 
-    Meteor.publish('tipiStatsByDict', function(islug) {
+    Meteor.publish('tipiStatsByDict', function(slug) {
         return TipiStats.find(
                 {},
                 {
-                    fields: {'latest.dependencia.items': 1}
+                    fields: {'latest': 1}
                 }
             );
     });
@@ -141,7 +141,7 @@ if (Meteor.isServer) {
 
     Meteor.publish('allDeputies', function(username){
             return Diputados.find(
-              {tipi: false},
+              {},
               {
                 sort: {activo: -1, name: 1}
               }

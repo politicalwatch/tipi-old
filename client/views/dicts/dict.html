@@ -3,47 +3,58 @@
         <div class="container page">
             <div class="row">
                 <div class="col-sm-2">
-                    <img src="/images/svgs-circles/{{getIcon}}" alt="Imagen de {{dict.name}}">
+                    <img class="img-responsive" src="/images/svgs-circles/{{getIcon}}" alt="Imagen de {{dict.name}}">
                 </div>
                 <div class="col-sm-10">
                     {{> text_element meta='¿De qué trata?' value=getDescription}}
-                    <hr>
+                    {{>shareit shareData}}
                 </div>
             </div>
-            <!-- <div class="row content&#45;row"> -->
-            <!--     <div class="col&#45;sm&#45;6"> -->
-            <!--         <h3>Diputadas/os más activas/os</h3> -->
-            <!--         {{#each deputies}} -->
-            <!--           <h4> -->
-            <!--             <span class="foto mediana"> -->
-            <!--                 <img src="{{fotoDip _id}}" /> -->
-            <!--             </span> -->
-            <!--             {{_id}} -->
-            <!--           </h4> -->
-            <!--         {{/each}} -->
-            <!--     </div> -->
-            <!--     <div class="col&#45;sm&#45;6"> -->
-            <!--         <h3>Grupos más activos</h3> -->
-            <!--         {{#each groups}} -->
-            <!--           <h4><span style="border&#45;bottom: 2px solid {{colorizedGroup _id}};margin&#45;bottom:5px;">{{groupsHumanized _id}}</span></h4> -->
-            <!--         {{/each}} -->
-            <!--     </div> -->
-            <!-- </div> -->
             <hr>
-            <div class="row content-row">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h4>Diputadas/os más activas/os</h4>
+                    <ul class="list-unstyled">
+                        {{#each deputies}}
+                          <li>
+                            <span class="foto mediana">
+                                <img class="img-responsive" src="{{fotoDip _id}}" />
+                            </span>
+                            <span class="dipname">{{_id}}</span>
+                          </li>
+                        {{/each}}
+                    </ul>
+                </div>
+                <div class="col-sm-6">
+                    <h4>Grupos más activos</h4>
+                    <ul class="list-unstyled">
+                        {{#each groups}}
+                          <li>
+                            <span class="groupname">{{_id}}</span>
+                          </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
                 <div class="col-sm-12">
-                    {{#if initiatives}}
-                    <h3 class="white-text">Últimas iniciativas</h3>
-                    <div class="row">
-                      {{#each initiatives}}
-                          <div class="col-sm-10">
-                            <a href="/t/{{_id}}">{{titulo}}</a> 
-                          </div>
-                          <div class="col-sm-2">
-                            <small class="grey-text">{{relativeDate fecha}}</small>
-                          </div>
-                      {{/each}}
-                    </div>
+                    {{#if latest}}
+                        <h4>Últimas iniciativas</h4>
+                        <table class="table table-striped table-hover">
+                            <tbody>
+                                {{#each latest}}
+                                    <tr>
+                                        <td>
+                                            <a href="/tipis/{{id._str}}">{{titulo}}</a> 
+                                        </td>
+                                        <td>
+                                            <small>{{showDate fecha}}</small>
+                                        </td>
+                                    </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
                   {{/if}}
                 </div>
             </div>

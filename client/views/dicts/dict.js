@@ -9,8 +9,8 @@ Template.dict.helpers({
         dict_array = Dicts.find().fetch();
         return dict_array[0].name;
     },
-    relativeDate: function(fecha) {
-        return moment(fecha).startOf('day').fromNow();
+    showDate: function(fecha) {
+        return moment(this.fecha).format('l');
     },
     fotoDip: function(val) {
         dip = Diputados.findOne({nombre: val});
@@ -37,7 +37,7 @@ Template.dict.helpers({
     },
     latest: function() {
         dict_array = Dicts.find().fetch();
-        l_array = TipiStats.find({}, {fields: {'latest._id': 1, 'latest.items': 1}}).fetch();
+        l_array = TipiStats.find({}, {fields: {'latest._id': 1, 'latest.items': 1}, sort: {'latest.fecha': -1}}).fetch();
         result = _.filter(l_array[0].latest, function(l) { return l._id == dict_array[0].name; });
         return result[0].items.sort(function (a, b) {
             if (a.fecha < b.fecha) return -1;
@@ -51,8 +51,8 @@ Template.dict.helpers({
     getIcon: function() {
         return this.dict.iconb1;
     },
-    initiatives: function() {
-        console.log(TipiStats.find({}, {'latest': 1}).fetch());
-        return TipiStats.find({}, {'latest': 1}).fetch();
+    shareData: function() {
+        str = "Consulta lo último sobre " + this.dict.name + " en";
+        return {title: str, author: Meteor.settings.public.twitter_account, url: window.location.href}
     }
 });

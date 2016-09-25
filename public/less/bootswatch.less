@@ -421,6 +421,25 @@ a {
     text-transform: capitalize;
 }
 
+.foto {
+    border-radius: 50%;
+    border: 3px solid #fbc239;
+    overflow: hidden;
+    padding: 0px;
+    display: inline-block;
+    position: relative;
+}
+.foto.grande {
+    width: 90px;
+    height: 90px;
+}
+.foto.grande img { width: 90px; }
+.foto.mediana {
+    width: 45px;
+    height: 45px;
+}
+.foto.mediana img { width: 45px; }
+
 // Home =================================================================
 
 #home {
@@ -512,7 +531,7 @@ a {
 .bullet .subtitle { fill: lighten(@brand-secondary, 15%);  }
 
 
-// Home =================================================================
+// Dicts =================================================================
 
 #dicts {
     .dict {
@@ -521,6 +540,13 @@ a {
             width: 75px;
             height: 75px;
         }
+    }
+}
+
+#dict {
+    .dipname, .groupname {
+       font-size: 1.2em; 
+       font-weight: bold;
     }
 }
 
