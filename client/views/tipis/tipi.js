@@ -51,6 +51,22 @@ colorizedGroup: function(val) {
             return "";
         }
     },
+    getDipId: function(val) {
+        dip = Diputados.findOne({nombre: val});
+        if (dip) {
+            return dip._id._str;
+        } else {
+            return "";
+        }
+    },
+    getGroupId: function(val) {
+        g = Grupos.findOne({nombre: val});
+        if (g) {
+            return g._id._str;
+        } else {
+            return "";
+        }
+    },
     hasRelated: function() {
         return this.related.length > 0;
     },
