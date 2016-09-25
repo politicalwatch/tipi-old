@@ -70,7 +70,23 @@ Api.addRoute('stats/overall/:slug', {
         if (dict.length>0){
             stat = TipiStats.find({overall:{$elemMatch:{_id:dict[0].name}}},{fields:{overall:1,'_id': false}}).fetch()
             if (stat){
-                return stat
+                res=[]
+                for (item in stat[0].overall) {
+                    element=stat[0].overall[item]
+                    if(element._id==this.urlParams.slug){
+                        res.push(element)
+                        break
+                    }
+                }
+                if (res){
+                    return res
+                }else{
+                    return {
+                        statusCode: 404,
+                        body: []
+                        }
+                }
+
             } else {
                 return {
                         statusCode: 404,
@@ -105,8 +121,25 @@ Api.addRoute('stats/bydeputies/:slug', {
         dict = Dicts.find({slug: this.urlParams.slug, group: "tipi"},{fields: {name: 1}}).fetch();
         if (dict.length>0){
             stat = TipiStats.find({bydeputies:{$elemMatch:{_id:dict[0].name}}},{fields:{bydeputies:1,'_id': false}}).fetch()
+            console.log(stat)
             if (stat){
-                return stat
+                 res=[]
+                for (item in stat[0].bydeputies) {
+                    element=stat[0].bydeputies[item]
+                    if(element._id==this.urlParams.slug){
+                        res.push(element)
+                        break
+                    }
+                }
+                if (res){
+                    return res
+                }else{
+                    return {
+                        statusCode: 404,
+                        body: []
+                        }
+                }
+
             } else {
                 return {
                         statusCode: 404,
@@ -141,7 +174,23 @@ Api.addRoute('stats/bygroups/:slug', {
         if (dict.length>0){
             stat = TipiStats.find({bygroups:{$elemMatch:{_id:dict[0].name}}},{fields:{bygroups:1,'_id': false}}).fetch()
             if (stat){
-                return stat
+                res=[]
+                for (item in stat[0].bygroups) {
+                    element=stat[0].bygroups[item]
+                    if(element._id==this.urlParams.slug){
+                        res.push(element)
+                        break
+                    }
+                }
+                if (res){
+                    return res
+                }else{
+                    return {
+                        statusCode: 404,
+                        body: []
+                        }
+                }
+
             } else {
                 return {
                         statusCode: 404,
@@ -179,7 +228,22 @@ Api.addRoute('stats/latest/:slug', {
         if (dict.length>0){
             stat = TipiStats.find({latest:{$elemMatch:{_id:dict[0].name}}},{fields:{latest:1,'_id': false}}).fetch()
             if (stat){
-                return stat
+                res=[]
+                for (item in stat[0].latest) {
+                    element=stat[0].latest[item]
+                    if(element._id==this.urlParams.slug){
+                        res.push(element)
+                        break
+                    }
+                }
+                if (res){
+                    return res
+                }else{
+                    return {
+                        statusCode: 404,
+                        body: []
+                        }
+                }
             } else {
                 return {
                         statusCode: 404,
