@@ -20,8 +20,21 @@ Template.dict.helpers({
             return "";
         }
     },
-    groupsHumanized: function(val) {
-        return val;
+    getDipId: function(val) {
+        dip = Diputados.findOne({nombre: val});
+        if (dip) {
+            return dip._id._str;
+        } else {
+            return "";
+        }
+    },
+    getGroupId: function(val) {
+        g = Grupos.findOne({nombre: val});
+        if (g) {
+            return g._id._str;
+        } else {
+            return "";
+        }
     },
     deputies: function() {
         dict_array = Dicts.find().fetch();
@@ -55,7 +68,6 @@ Template.dict.helpers({
         return this.dict.iconb1;
     },
     getTerms: function() {
-        console.log(this.dict.terms);
         return _.pluck(this.dict.terms, 'humanterm');
     },
     shareData: function() {

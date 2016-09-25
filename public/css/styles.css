@@ -7106,11 +7106,11 @@ fieldset[disabled] .btn-tipi.focus {
   position: relative;
 }
 .foto.grande {
-  width: 90px;
-  height: 90px;
+  width: 150px;
+  height: 150px;
 }
 .foto.grande img {
-  width: 90px;
+  width: 150px;
 }
 .foto.mediana {
   width: 45px;

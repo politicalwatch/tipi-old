@@ -5,6 +5,12 @@ Template.banners.helpers({
     nonfeaturedbanners: function() {
         return Banners.find({destacado: false},{sort: {ancho: -1}});
     },
+    getSlugByDict: function(dict) {
+        return Dicts.findOne({name: dict}).slug;
+    },
+    getIdByDip: function(dip) {
+        return Diputados.findOne({nombre: dip})._id._str;
+    },
     autobanners: function() {
         // Template is prepared to support two autobanners
         // without breaking the styles (6 columns each)

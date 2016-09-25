@@ -23,7 +23,7 @@
                             <span class="foto mediana">
                                 <img class="img-responsive" src="{{fotoDip _id}}" />
                             </span>
-                            <span class="dipname">{{_id}}</span>
+                            <span class="dipname"><a href="/dip/{{getDipId _id}}">{{_id}}</a></span>
                           </li>
                         {{/each}}
                     </ul>
@@ -33,7 +33,7 @@
                     <ul class="list-unstyled">
                         {{#each groups}}
                           <li>
-                            <span class="groupname">{{_id}}</span>
+                            <span class="groupname"><a href="/grupo/{{getGroupId _id}}">{{_id}}</a></span>
                           </li>
                         {{/each}}
                     </ul>

@@ -1,5 +1,6 @@
 Template.deputy.onCreated(function() {
-    name = Diputados.findOne().name.capitalize();
+    id = generateId(window.location.pathname.split("/")[2]);
+    name = Diputados.findOne({_id: id}).nombre.capitalize();
     $('.page-title h1').html(name);
     document.title = name + ' | ' + document.title;
 });
@@ -10,5 +11,20 @@ Template.deputy.helpers({
     },
     hasTipis: function() {
         return Iniciativas.find().count() > 0;
+    },
+    showDate: function(fecha) {
+        return moment(this.fecha).format('l');
+    },
+    getGroupId: function(val) {
+        g = Grupos.findOne({nombre: val});
+        if (g) {
+            return g._id._str;
+        } else {
+            return "";
+        }
+    },
+    shareData: function() {
+        str = "Consulta la ficha de " + this.deputy.nombre + " en";
+        return {title: str, author: Meteor.settings.public.twitter_account, url: window.location.href}
     }
 });
