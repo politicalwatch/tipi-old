@@ -13,9 +13,9 @@
       {{#each autobanners}}
         <div class="col-sm-6 cta">
             <h3 class="full">
-                <small>¿Quién habla más de <strong>{{dict}}</strong> en el Congreso?</small>
+                <small>¿Quién habla más de <a href="/temas/{{getSlugByDict dict}}"><strong>{{dict}}</strong></a> en el Congreso?</small>
                 <br/>
-                {{deputy}}
+                <a href="/dip/{{getIdByDip deputy}}">{{deputy}}</a>
             </h3>
         </div>
       {{/each}}
