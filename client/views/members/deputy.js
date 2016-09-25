@@ -1,6 +1,6 @@
 Template.deputy.onCreated(function() {
-    name = Diputados.findOne().nombre.capitalize();
-    console.log(Diputados.find().fetch());
+    id = generateId(window.location.pathname.split("/")[2]);
+    name = Diputados.findOne({_id: id}).nombre.capitalize();
     $('.page-title h1').html(name);
     document.title = name + ' | ' + document.title;
 });

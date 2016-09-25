@@ -158,7 +158,6 @@ if (Meteor.isServer) {
     });
 
     Meteor.publish('singleDeputyById', function(id) {
-        console.log(Diputados.find({_id: id}).fetch().length);
         return Diputados.find({_id: id});
     });
 
