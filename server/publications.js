@@ -158,7 +158,8 @@ if (Meteor.isServer) {
     });
 
     Meteor.publish('singleDeputyById', function(id) {
-        return Diputados.find(id);
+        console.log(Diputados.find({_id: id}).fetch().length);
+        return Diputados.find({_id: id});
     });
 
     Meteor.publish('limitedTipiListByDeputy', function(id) {
@@ -177,15 +178,19 @@ if (Meteor.isServer) {
       return;
     });
 
+    Meteor.publish('allGroups', function() {
+        return Grupos.find();
+    });
+
     Meteor.publish('singleGroupById', function(id) {
-        return Grupos.find(id);
+        return Grupos.find({_id: id});
     });
 
     Meteor.publish('limitedTipiListByGroup', function(id) {
       var groupobject = Grupos.findOne(id, {fields: {nombre: 1}});
       if (groupobject) {
         return Iniciativas.find(
-          {autor_grupo: groupobject.acronimo, 'is.tipi': true},
+          {autor_grupo: groupobject.nombre, 'is.tipi': true},
           {  
             fields: {ref: 1, tipotexto: 1, autor_diputado: 1, titulo: 1, 'dicts.tipi': 1, fecha: 1, lugar: 1}, 
             sort: {fecha: 1},

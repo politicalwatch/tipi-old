@@ -7106,11 +7106,11 @@ fieldset[disabled] .btn-tipi.focus {
   position: relative;
 }
 .foto.grande {
-  width: 90px;
-  height: 90px;
+  width: 150px;
+  height: 150px;
 }
 .foto.grande img {
-  width: 90px;
+  width: 150px;
 }
 .foto.mediana {
   width: 45px;
@@ -7239,7 +7239,7 @@ fieldset[disabled] .btn-tipi.focus {
 #dict .showterms {
   font-size: 1.3em;
   font-weight: bold;
-  color: #95a5a6;
+  color: #7b8a8b;
 }
 #initiative .keyvalues p,
 #dict .keyvalues p {
