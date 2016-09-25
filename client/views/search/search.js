@@ -70,14 +70,13 @@ Template.search.helpers({
     },
     grupootro_helper: function() {
         return [
-            {'value': 'Gobierno', 'text': 'Gobierno'},
-            {'value': 'GC-CiU', 'text': 'Grupo Catalán (CiU)'},
-            {'value': 'GIP', 'text': 'G.P. La Izquierda Plural'},
-            {'value': 'GMx', 'text': 'G.P. Mixto'},
-            {'value': 'GP', 'text': 'G.P. Popular'},
-            {'value': 'GS', 'text': 'G.P. Socialista'},
-            {'value': 'GUPyD', 'text': 'G.P. UPyD'},
-            {'value': 'GV (EAJ-PNV)', 'text': 'G.P. Vasco (EAJ-PNV)'},
+            "Grupo Popular",
+            "Grupo Socialista",
+            "Grupo Confederal de Unidos Podemos-En Comúem-En Mare",
+            "Grupo Ciudadanos",
+            "Grupo Vasco - EAJ PNV",
+            "Grupo Esquerra Republicana",
+            "Grupo Mixto",
         ];    
     },
     lugares_helper: function() {

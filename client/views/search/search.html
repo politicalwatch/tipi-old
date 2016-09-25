@@ -40,10 +40,10 @@
                                     <select class="form-control" id="grupootro" name="grupootro">
                                         <option value="">Todos</option>
                                         {{#each grupootro_helper}}
-                                            {{#if eq lastquery.grupootro value }}
-                                                <option value="{{value}}" selected="selected">{{text}}</option>
+                                            {{#if eq lastquery.grupootro this }}
+                                                <option value="{{this}}" selected="selected">{{this}}</option>
                                             {{else}}
-                                                <option value="{{value}}">{{text}}</option>
+                                                <option value="{{this}}">{{this}}</option>
                                             {{/if}}
                                         {{/each}}
                                     </select>
