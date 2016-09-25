@@ -1,2 +1,2 @@
-settings.json
-mup.json
+.deploy/settings.json
+.deploy/mup.json
