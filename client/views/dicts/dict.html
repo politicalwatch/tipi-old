@@ -7,6 +7,9 @@
                 </div>
                 <div class="col-sm-10">
                     {{> text_element meta='¿De qué trata?' value=getDescription}}
+                    <a data-toggle="modal" href="#modalTerms" class="showterms"><i class="fa fa-search-plus"></i> Ampliar info</a>
+                    <br/>
+                    <br/>
                     {{>shareit shareData}}
                 </div>
             </div>
@@ -59,5 +62,33 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal -->
+        <div id="modalTerms" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Términos de {{getName}}</h4>
+              </div>
+              <div class="modal-body">
+                  <p>
+                      <ul class="list-unstyled">
+                          {{#each getTerms}}
+                              <li>
+                                  {{this}}
+                              </li>
+                          {{/each}}
+                      </ul>
+                  </p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
     </div>
 </template>

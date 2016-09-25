@@ -45,11 +45,18 @@ Template.dict.helpers({
             return 0;
         });
     },
+    getName: function() {
+        return this.dict.name;
+    },
     getDescription: function() {
         return this.dict.description;
     },
     getIcon: function() {
         return this.dict.iconb1;
+    },
+    getTerms: function() {
+        console.log(this.dict.terms);
+        return _.pluck(this.dict.terms, 'humanterm');
     },
     shareData: function() {
         str = "Consulta lo último sobre " + this.dict.name + " en";

@@ -7236,6 +7236,11 @@ fieldset[disabled] .btn-tipi.focus {
   font-size: 1.2em;
   font-weight: bold;
 }
+#dict .showterms {
+  font-size: 1.3em;
+  font-weight: bold;
+  color: #95a5a6;
+}
 #initiative .keyvalues p,
 #dict .keyvalues p {
   padding-bottom: 10px;
