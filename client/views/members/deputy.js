@@ -1,9 +1,9 @@
-Template.deputy.onCreated(function() {
+Template.deputy.rendered = function() {
     id = generateId(window.location.pathname.split("/")[2]);
     name = Diputados.findOne({_id: id}).nombre.capitalize();
     $('.page-title h1').html(name);
     document.title = name + ' | ' + document.title;
-});
+};
 
 Template.deputy.helpers({
     group: function() {

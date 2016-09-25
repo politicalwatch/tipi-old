@@ -1,9 +1,9 @@
-Template.group.onCreated(function() {
+Template.group.rendered = function() {
     id = generateId(window.location.pathname.split("/")[2]);
     name = Grupos.findOne({_id: id}).nombre.capitalize();
     $('.page-title h1').html(name);
     document.title = name + ' | ' + document.title;
-});
+}
 
 Template.group.helpers({
     hasTipis: function() {

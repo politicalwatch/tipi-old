@@ -6,11 +6,11 @@ Code related to the tipi template
 
 /+ ---------------------------------------------------- */
 
-Template.tipi.onCreated(function() {
+Template.tipi.rendered = function() {
     title = Iniciativas.findOne().titulo;
     $('.page-title h1').html(title);
     document.title = title + ' | ' + document.title;
-});
+}
 
 Template.tipi.helpers({
     searchUrl: function() {

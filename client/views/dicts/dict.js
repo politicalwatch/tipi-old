@@ -1,8 +1,8 @@
-Template.dict.onCreated(function() {
+Template.dict.rendered = function() {
     name = Dicts.findOne().name.capitalize();
     $('.page-title h1').html(name);
     document.title = name + ' | ' + document.title;
-});
+}
 
 Template.dict.helpers({
     dict: function() {
