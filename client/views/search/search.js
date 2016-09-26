@@ -33,6 +33,35 @@ function getTermsFromDict(d) {
     return res;
 }
 
+
+function transformDataforCsv(d) {
+    res={};
+    res['autor_diputado'] = d.autor_diputado;
+    res['autor_grupo'] = d.autor_grupo;
+    res['autor_otro'] = d.autor_otro;
+    res['fecha'] = d.fecha;
+    res['lugar'] = d.lugar;
+    res['ref'] = d.ref;
+    res['tipotexto'] = d.tipotexto;
+    res['titulo'] = d.titulo;
+
+    arr=[];
+    for (element in d.dicts.tipi){
+        arr.push(d.dicts.tipi[element]);
+    }
+    delete res.dicts;
+    res["dicts"]=arr;
+    arr=[]
+    for (element in d.terms.tipi){
+        arr.push(d.terms.tipi[element].humanterm);
+    }
+    delete  res.terms;
+    res["terms"]=arr;
+    return res;
+
+}
+
+
 Template.search.onCreated(function () {
   var currentPage = new ReactiveVar(Session.get('current-page') || 0);
   this.currentPage = currentPage;
@@ -258,8 +287,13 @@ Template.search.events({
     'click a#exportcsv': function(e) {
         e.preventDefault();
         var query = Session.get("search");
-        var collection_data = Iniciativas.find(cleanTipiQuery(query)).fetch();
-        var data = json2csv(collection_data, true, true);
+        var collection_data = Iniciativas.find().fetch();
+        var forprint = []
+        for (var coll in collection_data){
+            ele= transformDataforCsv(collection_data[coll]);
+            forprint.push(ele);
+        }
+        var data = json2csv(forprint,true,true);
         var blob = new Blob([data], {type: "text/csv;charset=utf-8"});
         saveAs(blob, "tipis.csv");
     },
