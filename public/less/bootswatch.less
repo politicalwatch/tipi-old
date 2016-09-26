@@ -351,8 +351,10 @@ a.list-group-item {
 
 a {
     color: @brand-primary;
+    font-weight: bold;
     &:hover {
         color: @brand-secondary;
+        font-weight: bold;
     }
 }
 
@@ -454,10 +456,13 @@ a {
         }
     }
     #stats {
+        h2 {
+            color: @gray-lighter;
+            padding-top: @padding-base-vertical;
+        }
         background-color: @brand-primary;
         color: @brand-secondary;
         min-height: 400px;
-        padding-top: @padding-base-vertical*4;
         padding-bottom: @padding-base-vertical*4;
         #graph {
             padding-bottom: @padding-base-vertical*2;
@@ -479,6 +484,7 @@ a {
         min-height: 250px;
         padding-top: @padding-base-vertical*4;
         padding-bottom: @padding-base-vertical*4;
+        a { font-weight: normal; }
         .cta > .full {
             background-color: @brand-primary;
             color: @brand-secondary;
@@ -508,6 +514,13 @@ a {
         }
         .cta > .empty.xs {
             height: @padding-base-vertical/4;
+        }
+        .what {
+            padding-top: @padding-base-vertical*6;
+            padding-bottom: @padding-base-vertical*4;
+            hr {
+               border-top: 1px solid @brand-primary; 
+            }
         }
         .subscribe {
             padding-top: @padding-base-vertical*6;
@@ -634,6 +647,7 @@ a {
 
     li > a, a {
       color: @navbar-default-color;
+      font-weight: normal;
 
       &:hover,
       &:focus {
