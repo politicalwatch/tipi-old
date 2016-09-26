@@ -99,6 +99,7 @@ Template.search.helpers({
     },
     grupootro_helper: function() {
         return [
+            "Gobierno",
             "Grupo Popular",
             "Grupo Socialista",
             "Grupo Confederal de Unidos Podemos-En Comúem-En Mare",
