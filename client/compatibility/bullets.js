@@ -41,7 +41,7 @@ function loadChart(data) {
 d3.bullet = function() {
   var orient = "left", // TODO top & bottom
       reverse = false,
-      duration = 1500,
+      duration = 2000,
       ranges = bulletRanges,
       measures = bulletMeasures,
       width = 380,

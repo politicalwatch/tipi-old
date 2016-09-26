@@ -85,13 +85,48 @@ if (Meteor.isServer) {
             );
     });
     
-    Meteor.publish('basicTipis', function(q) {
-        return Iniciativas.find(
-            {'is.tipi': true},
-          {
-            fields: {_id: 1}
-          }
-        );
+    Meteor.publish('basicInitiatives', function() {
+        return Iniciativas.find();
+        // return Iniciativas.find(
+        //   {},
+        //   {
+        //     fields: {_id: 1}
+        //   }
+        // );
+    });
+
+    Meteor.publish("countInitiatives", function () {
+      var self = this;
+      var count = 0;
+      var initializing = true;
+      // observeChanges only returns after the initial `added` callbacks
+      // have run. Until then, we don't want to send a lot of
+      // `self.changed()` messages - hence tracking the
+      // `initializing` state.
+      var handle = Iniciativas.find({}).observeChanges({
+        added: function (id) {
+          count++;
+          if (!initializing)
+            self.changed("counts", {count: count});
+        },
+        removed: function (id) {
+          count--;
+          self.changed("counts", {count: count});
+        }
+        // don't care about changed
+      });
+      // Instead, we'll send one `self.added()` message right after
+      // observeChanges has returned, and mark the subscription as
+      // ready.
+      initializing = false;
+      self.added("counts", {count: count});
+      self.ready();
+      // Stop observing the cursor when client unsubs.
+      // Stopping a subscription automatically takes
+      // care of sending the client any removed messages.
+      self.onStop(function () {
+        handle.stop();
+      });
     });
 
     Meteor.publish('allTipisSearch', function(q) {
