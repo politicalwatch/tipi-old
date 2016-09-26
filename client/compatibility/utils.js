@@ -12,6 +12,30 @@ ShareIt.configure({
     applyColors: true,
 });
 
+var alias_tipi_dicts = {
+    'dependencia': 'Dependencia',
+    'infancia': 'Infancia',
+    'cambio climático y política energética': 'Cambio climático',
+    'vivienda': 'Vivienda',
+    'sanidad': 'Sanidad',
+    'empleo': 'Empleo',
+    'personas sin hogar': 'Sinhogarismo',
+    'educación': 'Educación',
+    'comercio internacional': 'Comercio',
+    'cooperación al desarrollo': 'Cooperación',
+    'transparencia y acceso a información': 'Transparencia',
+    'conductas adictivas': 'Adicciones',
+    'personas mayores': 'Mayores',
+    'población reclusa': 'Reclusos',
+    'migraciones': 'Migraciones',
+    'población gitana': 'Pob. gitana',
+    'conflictos internacionales y construcción de paz': 'Conflictos',
+    'igualdad de género': 'Género',
+    'protección social': 'Protección social',
+    'personas con discapacidad': 'Discapacidad',
+    'fiscalidad': 'Fiscalidad'
+}
+
 var parliamentarygroups = {
     'GP': 'Grupo Popular',
     'GS': 'Grupo Socialista',

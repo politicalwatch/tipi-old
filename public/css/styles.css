@@ -7241,6 +7241,7 @@ fieldset[disabled] .btn-tipi.focus {
 }
 #dicts .dict {
   height: 200px;
+  text-transform: capitalize;
 }
 #dicts .dict img {
   width: 75px;

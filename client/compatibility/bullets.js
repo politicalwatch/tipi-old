@@ -1,6 +1,6 @@
 function loadChart(data) {
-    var margin = {top: 10, right: 60, bottom: 20, left: 60},
-    width = 960 - margin.left - margin.right,
+    var margin = {top: 10, right: 60, bottom: 20, left: 120},
+    width = 1080 - margin.left - margin.right,
     height = 50 - margin.top - margin.bottom;
 
     var chart = d3.bullet()
@@ -23,7 +23,8 @@ function loadChart(data) {
 
     title.append("text")
         .attr("class", "title")
-        .text(function(d) { return d.title; });
+        // .attr("cursor", "pointer")
+        .text(function(d) { return alias_tipi_dicts[d.title]; });
 
     title.append("text")
         .attr("class", "subtitle")
