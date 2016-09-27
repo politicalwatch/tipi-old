@@ -1,0 +1,49 @@
+<template name="tipi">
+    <div id="initiative" class="container page">
+        <div class="row">
+            {{#with tipi}}
+                <div class="col-sm-8 keyvalues">
+                    {{> text_element meta='Tipo de acto parlamentario' value=tipotexto}}
+                    {{#if hasAutor}}
+                        {{> text_element meta='Autor/a' value=getAutor}}
+                    {{/if}}
+                    {{#if autor_grupo}}
+                        {{> text_element meta='Grupo parlamentario' value=getGrupo}}
+                    {{/if}}
+                    {{> text_element meta='Lugar' value=lugar}}
+                    {{> text_element meta='Fecha' value=getFecha}}
+                    <div class="capitalize">
+                        {{> dict_elements meta='Temas tratados' dicts=dicts.tipi terms=terms.tipi }}
+                    </div>
+                    {{> text_element meta='Estado de la tramitación' value=tramitacion}}
+                </div>
+                <div class="col-sm-4 text-center">
+                    {{#if isInRole 'admin'}}
+                        <a class="btn btn-primary btn-block" href="/admin/Tipis/{{_id}}/edit">Edita la iniciativa</a>
+                        <br/>
+                    {{/if}}
+                    <div class="well">
+                        <p class="text-center congress-link">
+                            <a href="{{url}}" target="_blank" title="Ver {{tituto}} en su fuente original">
+                                <i class="fa fa-institution fa-2x"></i><br/>Consulta en la web del Congreso toda la información sobre su tramitación parlamentaria
+                            </a>
+                        </p>
+                    </div>
+                    {{>shareit shareData}}
+                </div>
+            {{/with}}
+        </div>
+        {{#if hasRelated}}
+            <hr>
+            <div class="row">
+                <div class="col-sm-12">
+                    {{> related_elements meta="Actos relacionados durante su tramitación parlamentaria" value=related}}
+                </div>
+            </div>
+        {{/if}}
+    </div>
+    {{#if emptySearch}}
+        {{> faq_infoblock }}
+    {{/if}}
+
+</template>

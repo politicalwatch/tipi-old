@@ -1,0 +1,45 @@
+<template name="scanner">
+    <div id="scanner" class="containerglob darkpatt" style="min-height: 95vh;">
+        <div class="row">
+            <div class="col-sm-6" style="height:650px; padding-top: 25px; padding-bottom: 25px;">
+                <div id="vizz"></div>
+            </div>
+            <div class="col-sm-6" style="padding-top: 25px; padding-bottom: 25px;">
+                <div class="old oldwhite">
+                    <h2 id="scanner-title">Escáner</h2>
+                    <hr>
+                    <div id="scanner-content" class="hidden">
+                        <!-- <h3>Diputados</h3>
+                        <ul>
+                            {{#each diputados }}
+                                <li>{{ name }}</li>
+                            {{/each}}
+                        </ul>
+                        <h3>Grupos parlamentarios</h3>
+                        <ul>
+                            {{#each grupos }}
+                                <li>{{ name }}</li>
+                            {{/each}}
+                        </ul> -->
+                    </div>
+                    <div id="scanner-help">
+                        <p class="white-text">Encuentra de forma fácil y directa toda la actividad parlamentaria en cualquiera de las políticas relevantes para la pobreza y exclusión social.</p>
+                        <p class="white-text">Accede a través de las burbujas interactivas o filtrando por las múltiples categorías del buscador avanzado.</p>
+                        <a href="{{pathFor 'search'}}"><i>Acceder al buscador avanzado</i></a>
+                        <br>
+                        <hr>
+                        <br>
+                        <p class="white-text">Date de alta en nuestro sistema personalizado de alertas y recibe un aviso cuando en el Congreso se hable de tus temas de interés.</p>
+                            <a href="{{pathFor 'login' }}"><i>
+                                {{#if currentUser }}
+                                    Configurar mis áreas de interés
+                                {{else}}
+                                    Quiero darme de alta
+                                {{/if}}
+                            </i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,23 @@
+<template name="dict_elements">
+    {{#if dicts}}
+        <p>
+            <span class="meta">{{meta}}</span>
+            <br>
+            <ul class="list-unstyled">
+                {{#each dicts}}
+                    <li class="value">
+                    <a href="/escaner?dicts={{this}}">{{this}}</a>
+                    <br>
+                    <small>
+                        (Por mencionar:
+                        {{#each getTerms ../terms this}}
+                            <a href="/escaner?terms={{this}}">{{this}}</a>,&nbsp;
+                        {{/each}}
+                        )
+                    </small>
+                    </li>
+                {{/each}}
+            </ul>
+        </p>
+    {{/if}}
+</template>

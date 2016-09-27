@@ -1,0 +1,36 @@
+<template name="group">
+  <div id="group">
+      <div class="container page">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="pull-right">
+                {{>shareit shareData}}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <h4>Últimas iniciativas</h4>
+                {{#if hasTipis}}
+                    <table class="table table-striped table-hover">
+                        <tbody>
+                            {{#each tipis}}
+                                <tr>
+                                    <td>
+                                        <a href="/tipis/{{_id._str}}">{{titulo}}</a> 
+                                    </td>
+                                    <td>
+                                        <small>{{showDate fecha}}</small>
+                                    </td>
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+              {{else}}
+                  <small class="text-muted">No hay iniciativas que mostrar</small>
+              {{/if}}
+            </div>
+        </div>
+      </div>
+  </div>
+</template>

@@ -1,0 +1,51 @@
+<template name="home">
+  <div id="home">
+      <div class="container-fluid" id="intro">
+          <div class="container">
+              <div class="row">
+                  <div class="col-sm-10 col-sm-offset-1 col-xs-12 text-center">
+                      <img class="big-logo" src="/images/logos-tipi/logo4_blanco.svg" />
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div id="stats" class="container-fluid">
+          <div class="container">
+              <div class="row">
+                  <div class="col-sm-12 text-center">
+                      <h2>Las 5 temáticas más populares</h2>
+                      <div id="graph"></div>
+                      <p>Estadísticas extraídas de nuestra base de datos. Consulta todas <a href="{{pathFor 'stats'}}">en este enlace</a>.</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div id="ctas" class="container-fluid">
+          <div class="container">
+              <div class="row">
+                  <div class="col-sm-12">
+                      {{> banners}}
+                  </div>
+              </div>
+              <div class="row what">
+                  <div class="col-sm-10 col-sm-offset-1 col-xs-12 text-center">
+                      <h2>TIPI es sinónimo de transparencia, justicia social, rendición de cuentas, desarrollo sostenible, incidencia política, buen gobierno, derechos humanos, participación, ciudadanía activa, gobierno abierto, información, periodismo de datos, democracia, coherencia de políticas...</h2>
+                      <hr>
+                  </div>
+              </div>
+              <div class="row subscribe">
+                  <div class="col-sm-8">
+                      <h2>Personaliza tu sistema de alertas</h2>
+                      <h4>Las novedades del Congreso de los Diputados en tu correo electrónico</h4>
+                      <p>Date de alta en nuestro Sistema Personalizado de Alertas y mantente informado de cualquier novedad que ocurra en el Congreso de los Diputados sobre tus temas de interés. ¡¡¡Es fácil, práctico y gratis!!!</p>
+                      <a href={{pathFor 'login'}} class="btn btn-primary">Quiero suscribirme</a>
+                  </div>
+                  <div class="col-sm-4 text-center">
+                      <!-- <i class="fa fa&#45;download fa&#45;4x"></i> -->
+                      <span class="glyphicon glyphicon-list-alt icon"></span>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</template>

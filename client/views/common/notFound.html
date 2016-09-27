@@ -1,8 +1,12 @@
 <template name="notFound">
     <div id="not-found" class="containerglob darkpatt">
         <div class="text-center">
+        	<img src="images/404.png">
             <h2>Página no encontrada</h2>
             <i>Lo siento pero lo que buscas no existe.</i>
         </div>
+        <div class="text-center">
+        	<a href={{pathFor 'buscar'}} class="btn btn-primary">Accede al buscador</a>
+		</div>
     </div>
 </template>

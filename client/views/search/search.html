@@ -1,0 +1,178 @@
+<template name="search">
+    <div id="search">
+        <div class="container page">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="well">
+                        <form class="form-horizontal" role="form">
+                          <fieldset>
+                            <div class="form-group">
+                                <label for="dicts" class="col-sm-1 control-label">Tema</label>
+                                <div class="col-sm-3">
+                                    <select class="form-control" id="dicts" name="dicts">
+                                        <option value="">Todos</option>
+                                        {{#each dicts_helper}}
+                                            {{#if eq lastquery.dicts name }}
+                                                <option value="{{name}}" selected="selected">{{name}}</option>
+                                            {{else}}
+                                                <option value="{{name}}">{{name}}</option>
+                                            {{/if}}
+                                        {{/each}}
+                                    </select>
+                                </div>
+                                <label for="terms" class="col-sm-1 control-label">Término</label>
+                                <div class="col-sm-7">
+                                    <select class="form-control" id="terms" name="terms">
+                                        <option value="">Todos</option>
+                                        {{#each terms_helper}}
+                                            {{#if eq lastquery.terms term }}
+                                            <option value="{{humanterm}}" selected="selected">{{humanterm}}</option>
+                                            {{else}}
+                                            <option value="{{humanterm}}">{{humanterm}}</option>
+                                            {{/if}}
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="grupootro" class="col-sm-1 control-label">Autor</label>
+                                <div class="col-sm-3">
+                                    <select class="form-control" id="grupootro" name="grupootro">
+                                        <option value="">Todos</option>
+                                        {{#each grupootro_helper}}
+                                            {{#if eq lastquery.grupootro this }}
+                                                <option value="{{this}}" selected="selected">{{this}}</option>
+                                            {{else}}
+                                                <option value="{{this}}">{{this}}</option>
+                                            {{/if}}
+                                        {{/each}}
+                                    </select>
+                                </div>
+                                <label for="autor" class="col-sm-1 control-label">Diputado/a</label>
+                                <div class="col-sm-7">
+                                    {{> inputAutocomplete settings=dip_autocomplete_settings id="autor" name="autor" class="form-control" placeholder="Apellidos, Nombre" value=lastquery.autor}}
+                                    <!-- <input class="form&#45;control" type="text" id="autor" name="autor" value="{{lastquery.autor}}" placeholder="Escriba el nombre de un/a diputado/a"> -->
+                                </div>
+                            </div>
+                            <div class="adv-search-block">
+                                <div class="form-group">
+                                    <label for="fechadesde" class="col-sm-1 control-label">Desde</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-control" type="text" id="fechadesde" name="fechadesde" value="{{lastquery.fechadesde}}" placeholder="dd/mm/YYYY">
+                                    </div>
+                                    <label for="fechahasta" class="col-sm-1 control-label">Hasta</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-control" type="text" id="fechahasta" name="fechahasta" value="{{lastquery.fechahasta}}" placeholder="dd/mm/YYYY">
+                                    </div>
+                                    <label for="lugar" class="col-sm-1 control-label">Lugar</label>
+                                    <div class="col-sm-3">
+                                        <select class="form-control" id="lugar" name="lugar">
+                                            <option value="">Cualquiera</option>
+                                            {{#each lugares_helper}}
+                                                {{#if eq lastquery.lugar this }}
+                                                    <option value="{{this}}" selected="selected">{{this}}</option>
+                                                {{else}}
+                                                    <option value="{{this}}">{{this}}</option>
+                                                {{/if}}
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ref" class="col-sm-1 control-label">Referencia</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-control" type="text" id="ref" name="ref" value="{{lastquery.ref}}" placeholder="Ej.: 121/000001">
+                                    </div>
+                                    <label for="vtipo" class="col-sm-1 control-label">Tipo</label>
+                                    <div class="col-sm-7">
+                                        <select class="form-control" name="vtipo" id="vtipo">
+                                            <option value="">Cualquiera</option>
+                                            {{#each tipos_helper}}
+                                                {{#if eq lastquery.vtipo this }}
+                                                    <option value="{{this}}" selected="selected">{{this}}</option>
+                                                {{else}}
+                                                    <option value="{{this}}">{{this}}</option>
+                                                {{/if}}
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="tramitacion" class="col-sm-1 control-label">Estado</label>
+                                    <div class="col-sm-3">
+                                        <select class="form-control" name="tramitacion" id="tramitacion">
+                                            <option value="">Cualquiera</option>
+                                            {{#each tramitaciones_helper}}
+                                                {{#if eq lastquery.tramitacion this }}
+                                                    <option value="{{this}}" selected="selected">{{this}}</option>
+                                                {{else}}
+                                                    <option value="{{this}}">{{this}}</option>
+                                                {{/if}}
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                    <label for="titulo" class="col-sm-1 control-label">Título</label>
+                                    <div class="col-sm-7">
+                                        <input class="form-control" type="text" id="titulo" name="titulo" value="{{lastquery.titulo}}" placeholder="Nota: Se admiten expresiones regulares">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12 pull-right">
+                                    <button class="btn btn-primary pull-right" type="submit">Iniciar la búsqueda</button>
+                                    <br>
+                                    <a href="#" class="adv-search-link show-block">
+                                        <i class="fa fa-caret-square-o-down"></i>
+                                        Mostrar búsqueda avanzada
+                                    </a>
+                                    <a href="#" class="adv-search-link hide-block">
+                                        <i class="fa fa-caret-square-o-up"></i>
+                                        Ocultar búsqueda avanzada
+                                    </a>
+                                </div>
+                            </div>
+                          </fieldset>
+                        </form>
+                    </div>
+                    {{#if searched}}
+                        {{#if yesfound}}
+                            <div class="well search-actions">
+                                <a href="{{pathFor 'search'}}">
+                                    <i class="fa fa fa-times-circle-o"></i> Limpiar criterios de búsqueda
+                                </a>
+                                <a href="#" class="pull-right" id="exportcsv">
+                                    <i class="fa fa-download"></i> Exportar datos a CSV
+                                </a>
+                            </div>
+                            {{> reactiveTable class="table table-striped table-hover" collection=tipisfound settings=settings}}
+                            <ul class="pager row">
+                                <li class="col-sm-2">
+                                    {{#if hasPrevious}}
+                                        <a href="#" class="previous">Anterior</a>
+                                    {{/if}}
+                                </li>
+                                <li class="col-sm-8"><strong>Página {{currentPage}} de {{totalPages}}</strong></li>
+                                <li class="col-sm-2 pull-right">
+                                    {{#if hasNext}}
+                                        <a href="#" class="next">Siguiente</a>
+                                    {{/if}}
+                                </li>
+                            </ul>
+
+                            {{! <p class="white-text italic">Nota: en algunos casos en la comparecencias el autor Gobierno incluye comparecencias de otras autoridades y funcionarios.</p> }}
+
+                        {{/if}}
+                    {{else}}
+                        <div class="row">
+                            <div class="col-sm-12 text-center">
+                                <p class="well"><i class="fa fa-lightbulb-o"></i> Tip: <strong>Comience con una búsqueda basica y vaya aprendiendo a usar la herramienta.</strong></p>
+                            </div>
+                        </div>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

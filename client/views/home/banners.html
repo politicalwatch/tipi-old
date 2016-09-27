@@ -1,0 +1,41 @@
+<template name="banners">
+
+    <div class="row">
+      {{#each featuredbanners}}
+        <div class="col-sm-{{ancho}} cta">
+            <h3 class="full">
+                <a href="{{url}}">{{titulo}}</a>
+            </h3>
+        </div>
+      {{/each}}
+    </div>
+    <div class="row">
+      {{#each autobanners}}
+        <div class="col-sm-6 cta">
+            <h3 class="full">
+                <small>¿Quién habla más de <a href="/temas/{{getSlugByDict dict}}"><strong>{{dict}}</strong></a> en el Congreso?</small>
+                <br/>
+                <a href="/dip/{{getIdByDip deputy}}">{{deputy}}</a>
+            </h3>
+        </div>
+      {{/each}}
+    </div>
+    <div class="row">
+      {{#each nonfeaturedbanners}}
+        <div class="col-sm-{{ancho}} cta">
+            <h4 class="full">
+                <a href="{{url}}">{{titulo}}</a>
+            </h4>
+        </div>
+      {{/each}}
+    </div>
+
+  <div class="row">
+      <div class="col-sm-12 cta">
+          <div class="empty"></div>
+          <div class="empty sm"></div>
+          <div class="empty xs"></div>
+      </div>
+  </div>
+
+</template>

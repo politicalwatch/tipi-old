@@ -1,25 +1,94 @@
 <template name="dict">
-    <div class="container">
-        <button class="btn btn-default" id="back">← Back</button>
-        {{#with dict}}
-        <div class="dict">
-                <p class="lead">
-                    {{dict}}
-                    <br>
-                    <span class="label label-info">{{dictgroup}}</span>
-                </p>
-                <p>{{description}}</p>
-                <hr>
-                <p>
-                    Términos:
-                    <ul>
-                    {{#each words}}
-                        <li>{{this}}</li>
-                    {{/each}}
+    <div id="dict">
+        <div class="container page">
+            <div class="row">
+                <div class="col-sm-2">
+                    <img class="img-responsive" src="/images/svgs-circles/{{getIcon}}" alt="Imagen de {{dict.name}}">
+                </div>
+                <div class="col-sm-10">
+                    {{> text_element meta='¿De qué trata?' value=getDescription}}
+                    <a data-toggle="modal" href="#modalTerms" class="showterms"><i class="fa fa-search-plus"></i> Ampliar info</a>
+                    <br/>
+                    <br/>
+                    {{>shareit shareData}}
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-6">
+                    <h4>Diputadas/os más activas/os</h4>
+                    <ul class="list-unstyled">
+                        {{#each deputies}}
+                          <li>
+                            <span class="foto mediana">
+                                <img class="img-responsive" src="{{fotoDip _id}}" />
+                            </span>
+                            <span class="dipname"><a href="/dip/{{getDipId _id}}">{{_id}}</a></span>
+                          </li>
+                        {{/each}}
                     </ul>
-                </p>
-                <p>Última actualización: {{lastUpdate}}</p>
+                </div>
+                <div class="col-sm-6">
+                    <h4>Grupos más activos</h4>
+                    <ul class="list-unstyled">
+                        {{#each groups}}
+                          <li>
+                            <span class="groupname"><a href="/grupo/{{getGroupId _id}}">{{_id}}</a></span>
+                          </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-12">
+                    {{#if latest}}
+                        <h4>Últimas iniciativas</h4>
+                        <table class="table table-striped table-hover">
+                            <tbody>
+                                {{#each latest}}
+                                    <tr>
+                                        <td>
+                                            <a href="/tipis/{{id._str}}">{{titulo}}</a> 
+                                        </td>
+                                        <td>
+                                            <small>{{showDate fecha}}</small>
+                                        </td>
+                                    </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                  {{/if}}
+                </div>
+            </div>
         </div>
-        {{/with}}
+
+        <!-- Modal -->
+        <div id="modalTerms" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Términos de {{getName}}</h4>
+              </div>
+              <div class="modal-body">
+                  <p>
+                      <ul class="list-unstyled">
+                          {{#each getTerms}}
+                              <li>
+                                  {{this}}
+                              </li>
+                          {{/each}}
+                      </ul>
+                  </p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
     </div>
 </template>

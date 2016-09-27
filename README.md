@@ -10,12 +10,12 @@ curl https://install.meteor.com | /bin/sh
 
 Copy *settings.json.example* and rename it as *settings.json*
 
-Note: Probably you need to install nodejs, npm and MongoDB.
+Note: Also you need to install nodejs, npm and MongoDB.
 
 ## Run
 
 ```
-meteor --settings=settings.json
+meteor --settings=.deploy/settings.json
 ```
 
 Open a browser and type [localhost:3000](localhost:3000)

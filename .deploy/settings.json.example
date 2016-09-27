@@ -1,0 +1,19 @@
+{
+    "name": "tipi",
+    "version": "1.0.0",
+    "url": "http://tipiciudadano.es",
+    "public": {
+        "analyticsSettings": {
+            "Google Analytics": {"trackingId": ""}
+        },
+        "reactiveTable": {
+            "rowsPerPage": 20
+        },
+        "queryParams": {
+            "limit": 1000
+        },
+        "twitter_account": "Tipi_Ciudadano"
+    },
+    "mandrillUsername": "",
+    "mandrillKey": ""
+}

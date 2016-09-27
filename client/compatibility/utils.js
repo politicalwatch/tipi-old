@@ -1,3 +1,41 @@
+ShareIt.configure({
+    sites: {
+        'facebook': {
+            'appId': "1662188644096441"
+        },
+        'twitter': {},
+        'googleplus': null,
+        'pinterest': null
+    },
+    classes: "btn",
+    iconOnly: false,
+    applyColors: true,
+});
+
+var alias_tipi_dicts = {
+    'dependencia': 'Dependencia',
+    'infancia': 'Infancia',
+    'cambio climático y política energética': 'Cambio climático',
+    'vivienda': 'Vivienda',
+    'sanidad': 'Sanidad',
+    'empleo': 'Empleo',
+    'personas sin hogar': 'Sinhogarismo',
+    'educación': 'Educación',
+    'comercio internacional': 'Comercio',
+    'cooperación al desarrollo': 'Cooperación',
+    'transparencia y acceso a información': 'Transparencia',
+    'conductas adictivas': 'Adicciones',
+    'personas mayores': 'Mayores',
+    'población reclusa': 'Reclusos',
+    'migraciones': 'Migraciones',
+    'población gitana': 'Pob. gitana',
+    'conflictos internacionales y construcción de paz': 'Conflictos',
+    'igualdad de género': 'Género',
+    'protección social': 'Protección social',
+    'personas con discapacidad': 'Discapacidad',
+    'fiscalidad': 'Fiscalidad'
+}
+
 var parliamentarygroups = {
     'GP': 'Grupo Popular',
     'GS': 'Grupo Socialista',
@@ -21,6 +59,12 @@ var parliamentarygroups_colors = {
 var datepickeroptions = {
     format: "dd/mm/yyyy",
     todayHighlight: true
+}
+
+// Generate app based collection ids
+function generateId(id) {
+    // Id based on Mongo ObjectIds
+    return new Mongo.ObjectID(id);
 }
 
 function builderQueryFrom(type) {
@@ -96,15 +140,21 @@ function builderQueryFrom(type) {
 /* UTILS */
 
 function cleanTipiQuery(cqry) {
-    var fdesde, fhasta, newautor, newgrupootro;
+    var fdesde, fhasta, newautor, newgrupootro, dict, term;
     fdesde = fhasta = null;
-    newautor = newgrupootro = tipo = {};
+    newautor = newgrupootro = tipo = dict = term = {};
     for (var k in cqry) {
-        if( k == "fechadesde" && cqry[k] != "" ) {
+        if (k == "fechadesde" && cqry[k] != "" ) {
             fdesde = cqry[k];
             delete cqry[k];
-        } else if(k == "fechahasta" && cqry[k] != "") {
+        } else if (k == "fechahasta" && cqry[k] != "") {
             fhasta = cqry[k];
+            delete cqry[k];
+        } else if (k == 'dicts' && cqry[k] != "") {
+            dict = {"dicts.tipi": cqry[k]}
+            delete cqry[k];
+        } else if (k == 'terms' && cqry[k] != "") {
+            term = {"terms.tipi.humanterm": cqry[k]}
             delete cqry[k];
         } else if ((k == "autor") && (cqry[k] != "")) {
             newautor = { 'autor_diputado': {$regex: cqry['autor'], $options: "gi"} }
@@ -122,9 +172,16 @@ function cleanTipiQuery(cqry) {
         }
         else if (cqry[k] == "") {
             delete cqry[k];
-        } else if (typeof(cqry[k]) != "object") {
-            cqry[k] = {$regex: cqry[k], $options: "gi"};
         }
+        // else if (typeof(cqry[k]) != "object") {
+        //     cqry[k] = {$regex: cqry[k], $options: "gi"};
+        // }
+    }
+    if (dict != {}) {
+        jQuery.extend(cqry, dict);
+    }
+    if (term != {}) {
+        jQuery.extend(cqry, term);
     }
     if (newautor != {}) {
         jQuery.extend(cqry, newautor);
@@ -149,168 +206,24 @@ function cleanTipiQuery(cqry) {
             $lte: datestringToISODate(fhasta, false)
         };
     }
+    jQuery.extend(cqry, {"is.tipi": true});
     return cqry;
 }
 
 
-function cleanRefQuery(cqry) {
-    var fdesde, fhasta, hayautor, tipoautor;
-    fdesde = fhasta = null;
-    hayautor = false;
-    tipoautor = '';
-    for (var k in cqry) {
-        if( k == "fechadesde" && cqry[k] != "" ) {
-            fdesde = cqry[k];
-            delete cqry[k];
-        } else if(k == "fechahasta" && cqry[k] != "") {
-            fhasta = cqry[k];
-            delete cqry[k];
-        } else if (k == "autor") {
-            hayautor = true;
-        } else if (k == "tipoautor") {
-            tipoautor = cqry[k];
-            delete cqry[k];
-        } else if (cqry[k] == "") {
-            delete cqry[k];
-        } else if (typeof(cqry[k]) != "object") {
-            cqry[k] = {$regex: cqry[k], $options: "gi"};
-        }
+function getOverallStats(n) {
+    if (typeof n !== "undefined") elements_in_vizz = n;
+    else elements_in_vizz = Dicts.find().count();
+    stats = TipiStats.find().fetch()[0];
+    overall = _.sortBy(stats.overall, function(item) { return item.count; });
+    data = [];
+    total = Session.get('total-initiatives');
+    for(i=overall.length-1;i>overall.length-1-elements_in_vizz;i--) {
+        percentage = parseFloat((overall[i]['count']/total)*100).toFixed(2);
+        data.push({'title': overall[i]['_id'], 'subtitle': percentage+"%", 'ranges': [total], 'measures': [overall[i]['count']]});
     }
-    if (fdesde != null && fhasta != null) {
-        cqry["fecha"] = {
-            $gte: datestringToISODate(fdesde, true),
-            $lte: datestringToISODate(fhasta, false)
-        };
-    } else if (fdesde != null && fhasta == null) {
-        cqry["fecha"] = {
-            $gte: datestringToISODate(fdesde, true)
-        };
-    } else if (fdesde == null && fhasta != null) {
-        cqry["fecha"] = {
-            $lte: datestringToISODate(fhasta, false)
-        };
-    }
-    if (hayautor) {
-        newautor = {};
-        if (tipoautor == 'diputado') {
-            newautor = { 'autor.diputado': {$regex: cqry['autor'], $options: "gi"} }
-        } if (tipoautor == 'grupo') {
-            newautor = { 'autor.grupo': {$regex: cqry['autor'], $options: "gi"} }
-        } if (tipoautor == 'otro') {
-            newautor = { 'autor.otro': {$regex: cqry['autor'], $options: "gi"} }
-        } else {
-            //
-        }
-        delete cqry['autor'];
-        jQuery.extend(cqry, newautor);
-    }
-    return cqry;
+    return data;
 }
-
-
-
-/* Clean data funcions */
-
-function cleanBol(el) {
-    if (typeof el.bol !== 'undefined') {
-        if (typeof el.bol.bol !== 'undefined') {return el.bol.bol;
-        } else {
-            return el.bol;
-        }
-    } else {
-        return '';
-    }
-}
-function cleanTramite(el) {
-    if (typeof el.tramite !== 'undefined') {
-        if (typeof el.tramite.tramite !== 'undefined') {
-            return el.tramite.tramite;
-        } else {
-            if (_.isArray(el.tramite)) {
-                return el.tramite[0];
-            } else {
-                return el.tramite;
-            }
-        }
-    } else {
-        return '';
-    }
-}
-function cleanUrl(el) {
-    if (typeof el.url !== 'undefined') {
-        if (typeof el.url.url !== 'undefined') {return el.url.url;
-        } else {
-            // If it has more than one url, it returns just one
-            if (Array.isArray(el.url)) {
-                return el.url[0];
-            } else {
-                return el.url;
-            }
-        }
-    } else {
-        return '';
-    }
-}
-function parseAutorDiputado(el) {
-    if (typeof el.autor !== 'undefined') {
-        if ((typeof el.autor.diputado !== 'undefined') && (el.autor.diputado != '')) {
-            if (Array.isArray(el.autor.diputado)) {
-                els = [];
-                _.each(el.autor.diputado, function(e){
-                    els.push(e);
-                });
-                return els;
-            } else {
-                return [el.autor.diputado];
-            }
-        } else {
-            return [];
-        }
-    } else {
-        return [];
-    }
-}
-function parseAutorGrupo(el) {
-    if (typeof el.autor !== 'undefined') {
-        if ((typeof el.autor.grupo !== 'undefined') && (el.autor.grupo != '')) {
-            if (Array.isArray(el.autor.grupo)) {
-                els = [];
-                _.each(el.autor.grupo, function(e){
-                    els.push(e);
-                });
-                return els;
-            } else {
-                return [el.autor.grupo];
-            }
-            return els;
-        } else {
-            return [];
-        }
-    } else {
-        return [];
-    }
-}
-function parseAutorOtro(el) {
-    if (typeof el.autor !== 'undefined') {
-        if ((typeof el.autor.otro !== 'undefined') && (el.autor.otro != '')) {
-            if (Array.isArray(el.autor.otro)) {
-                els = [];
-                _.each(el.autor.otro, function(e){
-                    els.push(e);
-                });
-                return els;
-            } else {
-                return [el.autor.otro];
-            }
-        } else {
-            return [];
-        }
-    } else {
-        return [];
-    }
-}
-
-
 
 
 // congreso.es URL maker
@@ -328,3 +241,27 @@ function datestringToISODate(d, isfrom) {
         return new Date(dparts[2], dparts[1]-1, dparts[0], 23, 59, 59)
     }
 }
+
+String.prototype.capitalize = function() {
+    return this.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase();  });
+};
+
+Template.faq.events({
+  'click .opened': function(e) {
+    //close all questions
+    $(e.currentTarget).children('.fa').removeClass('fa-angle-right').addClass('fa-angle-down');
+    $(e.currentTarget).removeClass('opened').addClass('closed');
+    $(e.currentTarget).parent().next('.question-text').height('0');
+    /*$(e.currentTarget);
+    $('.question-text').height('auto');
+    $('.question-title a').removeClass('closed').addClass('opened');
+    $('.question-title a .icon').removeClass('icon-angle-right').addClass('icon-angle-down');*/
+  },
+  'click .closed': function(e) {
+    //close all questions
+    $(e.currentTarget).children('.fa').removeClass('fa-angle-down').addClass('fa-angle-right');
+    $(e.currentTarget).removeClass('closed').addClass('opened');
+    $(e.currentTarget).parent().next('.question-text').height('auto');
+  }
+  //open clicked question
+});

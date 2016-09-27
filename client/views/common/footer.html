@@ -1,23 +1,41 @@
 <template name="footer">  
     <div class="container-fluid">
-        <div class="row footer">
-            <div class="col-md-12">
-                <div class="beta text-center">
-                    <i>Soy una versión beta. Trátame con cariño.</i>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank"><img src="/images/cc.png" heigh="50px" alt="Logo de licencia Creative Commons"></a><br>
-                        <small><strong>TIPI</strong> está licenciado bajo <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">Creative Commons 4.0</a></small>
-                        <br>
-                        <small>Hecho con &hearts; por <a href="http://enreda.coop" target="_blank">enreda.coop</a></small>
+        <div class="row" id="footerline">
+            <div class="col-sm-12"></div>
+        </div>
+        <div id="footer" class="row">
+            <div class="col-sm-12">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <a href="http://unmundosalvadorsoler.org/ciecode/" target="_blank"><img src="/images/logociecode.png" alt="Logo Ciecode" width="150"></a>
+                        </div>
+                        <div class="col-sm-4">
+                            <h6>Acerca</h6>
+                            <ul class="list-unstyled">
+                                <li ><a href="{{pathFor 'faq'}}">FAQ</a></li>
+                                <li ><a href="{{pathFor 'apidoc'}}">API</a></li>
+                                <li ><a href="{{pathFor 'cookies'}}">Cookies</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-4">
+                            <h6>Redes Sociales</h6>
+                            <ul class="list-unstyled">
+                                <li><a href="https://facebook.com/tipiciudadano">Facebook</a></li>
+                                <li><a href="https://twitter.com/tipi_ciudadano">Twitter</a></li>
+                                <li ><a href="https://github.com/CIECODE-Madrid">GitHub</a></li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="col-sm-6">
-                        <a class="icon pull-right" href="https://github.com/CIECODE-Madrid/tipi"><i class="fa fa-github-square fa-2x"></i></a>
-                        <a class="icon pull-right" href="https://facebook.com/tipiciudadano"><i class="fa fa-facebook-square fa-2x"></i></a>
-                        <a class="icon pull-right" href="https://twitter.com/tipi_ciudadano"><i class="fa fa-twitter-square fa-2x"></i></a>
-                    </div>
                 </div>
+            </div>
+        </div>
+        <div id="credits" class="row">
+            <div class="col-sm-12 text-center">
+                <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank"><img src="/images/cc.png" heigh="50px" alt="Logo de licencia Creative Commons"></a><br>
+                <small><strong>TIPI</strong> está licenciado bajo <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">Creative Commons 4.0</a></small>
+                <br>
+                <small>Hecho con &hearts; por <a href="http://enreda.coop" target="_blank">enreda.coop</a></small>
             </div>
         </div>
     </div>

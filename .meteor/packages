@@ -3,19 +3,18 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-standard-app-packages
-accounts-base
-accounts-password
-accounts-ui
+standard-app-packages@1.0.9
+email@1.1.17
+accounts-base@1.2.11
+accounts-password@1.3.0
+accounts-ui@1.1.9
 iron:router
 aldeed:collection2
 francocatena:status
 alanning:roles
-xolvio:md-blog
 aldeed:simple-schema
 aldeed:autoform
-aldeed:autoform-select2
-underscore
+underscore@1.0.9
 aslagle:reactive-table
 fortawesome:fontawesome
 wizonesolutions:underscore-string
@@ -36,9 +35,22 @@ aldeed:autoform-bs-datetimepicker
 tsega:bootstrap3-datetimepicker@=3.1.3_3
 twbs:bootstrap
 mizzao:user-status
-percolate:synced-cron
-email
 wylio:mandrill
-# npaton:commands
-edgee:slingshot
 okgrow:analytics
+
+# Deleted packages
+# xolvio:md-blog
+# edgee:slingshot
+# percolate:synced-cron
+standard-minifier-css@1.2.0
+standard-minifier-js@1.2.0
+mizzao:autocomplete
+reactive-var@1.0.10
+nimble:restivus
+shell-server
+joshowens:shareit
+
+
+
+selaias:cookie-consent
+ecmascript

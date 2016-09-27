@@ -1,7 +1,18 @@
 <template name="dicts">
-    <div class="container">
-        <h2>Diccionarios</h2>
-        <!-- <button class="btn btn-primary" id="create"><i class="fa fa-plus"></i> Añadir diccionario</button> -->
-        {{> reactiveTable collection=dicts settings=settings}}
+    <div id="dicts">
+        <div class="container page">
+            <div class="row">
+                <div class="col-sm-12">
+                    {{#each dicts}}
+                        <div class="col-sm-3 col-xs-6 text-center dict">
+                            <a href="{{ pathFor 'dict' slug=slug }}">
+                                <img src="/images/svgs-circles/{{iconb1}}" alt="Imagen de {{name}}" width="75px" height="75px">
+                                <h4>{{name}}</h4>
+                            </a>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
     </div>
 </template>
