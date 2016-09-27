@@ -1,3 +1,12 @@
+
+function getSharedDipName(name, twitter) {
+    if (twitter) {
+        return "@"+twitter.split('/')[3];
+    } else {
+        return name;
+    }
+}
+
 Template.deputy.rendered = function() {
     id = generateId(window.location.pathname.split("/")[2]);
     name = Diputados.findOne({_id: id}).nombre.capitalize();
@@ -24,7 +33,7 @@ Template.deputy.helpers({
         }
     },
     shareData: function() {
-        str = "Consulta la ficha de " + this.deputy.nombre + " en";
+        str = "Consulta la ficha de " + getSharedDipName(this.deputy.nombre, this.deputy.twitter) + " en";
         return {title: str, author: Meteor.settings.public.twitter_account, url: window.location.href}
     }
 });
