@@ -1,30 +1,35 @@
 <template name="signup">
     <div id="signup" class="container page">
             <div class="row">
-                <div class="col-sm-4 col-sm-offset-4">
-                    <form class="text-center form-horizontal">
+                <div class="col-sm-4">
+                    <form class="form-horizontal" role="form">
                         <fielset>
-                            <legend>Forma parte de TIPI</legend>
                             <div class="form-group">
-                                <input id="firstname" class="form-control" name="firstname" type="text" value="" placeholder="Nombre" />
+                                <label for="firstname" class="control-label">Nombre</label>
+                                <input id="firstname" class="form-control" name="firstname" type="text" value="" />
                             </div>
                             <div class="form-group">
-                                <input id="lastname" class="form-control" name="lastname" type="text" value="" placeholder="Apellidos" />
+                                <label for="lastname" class="control-label">Apellidos</label>
+                                <input id="lastname" class="form-control" name="lastname" type="text" value="" />
                             </div>
                             <div class="form-group">
-                                <input id="username" class="form-control" name="username" type="text" value="" placeholder="Elige un nombre de usuario" />
+                                <label for="username" class="control-label">Nombre de usaurio</label>
+                                <input id="username" class="form-control" name="username" type="text" value="" />
                             </div>
                             <div class="form-group">
-                                <input id="email" class="form-control" name="email" type="email" value="" placeholder="Correo electrónico" />
+                                <label for="email" class="control-label">Correo electrónico</label>
+                                <input id="email" class="form-control" name="email" type="email" value="" />
                             </div>
                             <div class="form-group">
-                                <input id="password" class="form-control" name="password" type="password" value="" placeholder="Contraseña" />
+                                <label for="password" class="control-label">Contraseña</label>
+                                <input id="password" class="form-control" name="password" type="password" value="" />
                             </div>
                             <div class="form-group">
-                                <input id="password2" class="form-control" name="password2" type="password" value="" placeholder="Repite la contraseña" />
+                                <label for="password2``" class="control-label">Repite contraseña</label>
+                                <input id="password2" class="form-control" name="password2" type="password" value="" />
                             </div>
-                            <div class="form-actions">
-                                <button type="submit" class="btn btn-block btn-primary">Registrarme</button>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Registrarme</button>
                             </div>  
                         </fielset>
                     </form>
