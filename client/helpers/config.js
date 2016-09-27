@@ -1,9 +1,9 @@
 Meteor.Spinner.options = {
-    lines: 10,
-    length: 1,
-    width: 8,
+    lines: 14,
+    length: 10,
+    width: 7,
     radius: 20,
-    corners: 1,
+    corners: 0,
     rotate: 0,
     direction: 1,
     color: '#222',
