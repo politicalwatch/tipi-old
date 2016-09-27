@@ -7446,7 +7446,8 @@ fieldset[disabled] .btn-tipi.focus {
   background-color: #FBC239;
 }
 .btn-add-dict:active,
-.btn-add-dict.active {
+.btn-remove-dict,
+.btn-remove-dict:hover {
   color: #222222;
   background-color: #FBC239;
 }
