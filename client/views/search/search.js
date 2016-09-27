@@ -102,7 +102,7 @@ Template.search.helpers({
             "Gobierno",
             "Grupo Popular",
             "Grupo Socialista",
-            "Grupo Confederal de Unidos Podemos-En Comúem-En Mare",
+            "Grupo Confederal de Unidos Podemos-En Comú Podem-En Mare",
             "Grupo Ciudadanos",
             "Grupo Vasco - EAJ PNV",
             "Grupo Esquerra Republicana",
