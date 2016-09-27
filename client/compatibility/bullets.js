@@ -23,8 +23,11 @@ function loadChart(data) {
 
     title.append("text")
         .attr("class", "title")
-        // .attr("cursor", "pointer")
-        .text(function(d) { return alias_tipi_dicts[d.title]; });
+        .attr("cursor", "pointer")
+        .text(function(d) { return alias_tipi_dicts[d.title]; })
+        .on("click", function(d) {
+            Router.go('dict', {slug: d.slug});
+        });
 
     title.append("text")
         .attr("class", "subtitle")
