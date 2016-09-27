@@ -7001,6 +7001,9 @@ a:hover {
   color: #FBC239;
   font-weight: bold;
 }
+a.btn:hover {
+  font-weight: normal;
+}
 .page-title {
   background-color: #FBC239;
   padding-top: 10px;
@@ -7148,10 +7151,11 @@ fieldset[disabled] .btn-tipi.focus {
   color: #ecf0f1;
 }
 #home #stats p a {
-  color: #ecf0f1;
+  color: #FBC239;
+  font-size: 1.2em;
 }
 #home #stats p a:hover {
-  color: #ecf0f1;
+  color: #FBC239;
 }
 #home #ctas {
   background-color: #FBC239;
@@ -7351,6 +7355,7 @@ fieldset[disabled] .btn-tipi.focus {
   background-color: #222222;
   padding-top: 40px;
   padding-bottom: 60px;
+  color: #b4bcc2;
 }
 #not-found {
   padding: 10%;

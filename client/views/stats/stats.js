@@ -6,3 +6,9 @@ Template.stats.rendered = function() {
     loadChart(data);
     title = Iniciativas.findOne().titulo;
 }
+
+Template.stats.helpers({
+    shareData: function() {
+        return {title: "¿De que se habla en el @Congreso_es?", author: Meteor.settings.public.twitter_account, url: window.location.href}
+    }
+});

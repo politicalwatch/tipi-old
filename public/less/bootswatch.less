@@ -358,6 +358,8 @@ a {
     }
 }
 
+a.btn:hover { font-weight: normal; }
+
 .page-title {
     background-color: @brand-secondary;
     padding-top: @padding-base-vertical;
@@ -471,9 +473,10 @@ a {
             font-style: italic;
             color: @gray-lighter;
             a {
-                color: @gray-lighter;
+                color: @brand-secondary;
+                font-size: 1.2em;
                 &:hover {
-                    color: @gray-lighter;
+                    color: @brand-secondary;
                 }
             }
         }
@@ -669,6 +672,7 @@ a {
     background-color: @brand-primary;
     padding-top: @padding-base-vertical*4;
     padding-bottom: @padding-base-vertical*6;
+    color: @gray-light;
 }
 
 // Not found =================================================================
