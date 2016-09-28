@@ -173,9 +173,9 @@ function cleanTipiQuery(cqry) {
         else if (cqry[k] == "") {
             delete cqry[k];
         }
-        // else if (typeof(cqry[k]) != "object") {
-        //     cqry[k] = {$regex: cqry[k], $options: "gi"};
-        // }
+        else if (typeof(cqry[k]) != "object") {
+            cqry[k] = {$regex: cqry[k], $options: "gi"};
+        }
     }
     if (dict != {}) {
         jQuery.extend(cqry, dict);
