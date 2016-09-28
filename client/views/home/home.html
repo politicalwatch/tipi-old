@@ -9,21 +9,23 @@
               </div>
           </div>
       </div>
-      <div id="stats" class="container-fluid">
-          <div class="container">
-              <div class="row">
-                  <div class="col-sm-12 text-center">
-                      <h2>Las 5 temáticas más populares</h2>
-                      <div id="graph"></div>
-                      <p>
-                        Los % muestran el peso de cada temática en el conjunto de la actividad del Congreso de los Diputados
-                        <br/>
-                        <a href="{{pathFor 'stats'}}">Consulta todas las estadísticas</a>
-                      </p>
+      {{#if hasStats}}
+          <div id="stats" class="container-fluid">
+              <div class="container">
+                  <div class="row">
+                      <div class="col-sm-12 text-center">
+                          <h2>Las 5 temáticas más populares</h2>
+                          <div id="graph"></div>
+                          <p>
+                            Los % muestran el peso de cada temática en el conjunto de la actividad del Congreso de los Diputados
+                            <br/>
+                            <a href="{{pathFor 'stats'}}">Consulta todas las estadísticas</a>
+                          </p>
+                      </div>
                   </div>
               </div>
           </div>
-      </div>
+      {{/if}}
       <div id="ctas" class="container-fluid">
           <div class="container">
               <div class="row">
