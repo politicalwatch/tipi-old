@@ -4,6 +4,7 @@
             {{#with tipi}}
                 <div class="col-sm-8 keyvalues">
                     {{> text_element meta='Tipo de acto parlamentario' value=tipotexto}}
+                    {{> text_element meta='Referencia' value=ref}}
                     {{#if hasAutor}}
                         {{> text_element meta='Autor/a' value=getAutor}}
                     {{/if}}
