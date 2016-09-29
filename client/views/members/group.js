@@ -12,6 +12,9 @@ Template.group.helpers({
     showDate: function(fecha) {
         return moment(this.fecha).format('l');
     },
+    parseTitle: function(t) {
+        return cutTitle(t);
+    },
     shareData: function() {
         str = "Consulta la ficha de " + this.group.nombre + " en";
         return {title: str, author: Meteor.settings.public.twitter_account, url: window.location.href}

@@ -58,6 +58,9 @@ Template.dict.helpers({
             return 0;
         });
     },
+    parseTitle: function(t) {
+        return cutTitle(t);
+    },
     getName: function() {
         return this.dict.name;
     },
