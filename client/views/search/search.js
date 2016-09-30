@@ -220,7 +220,7 @@ Template.search.helpers({
                             str += '</div>';
                             str += '&nbsp;&nbsp;';
                         }
-                        str += '<a href="/tipis/'+ obj._id + '"><strong>'+cutTitle(val)+'</strong></a>';
+                        str += '<a href="/tipis/'+ obj._id + '"><strong>'+val+'</strong></a>';
                         return Spacebars.SafeString(str);
                     }
                 },

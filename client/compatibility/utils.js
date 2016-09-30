@@ -232,12 +232,3 @@ function datestringToISODate(d, isfrom) {
 String.prototype.capitalize = function() {
     return this.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase();  });
 };
-
-
-function cutTitle(title) {
-    limit = 147;
-    if (title.length > limit)
-        return title.substr(0, limit) + '...';
-    else
-        return title;
-}

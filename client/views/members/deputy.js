@@ -21,9 +21,6 @@ Template.deputy.helpers({
     hasTipis: function() {
         return Iniciativas.find().count() > 0;
     },
-    parseTitle: function(t) {
-        return cutTitle(t);
-    },
     showDate: function(fecha) {
         return moment(this.fecha).format('l');
     },
