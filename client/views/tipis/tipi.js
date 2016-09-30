@@ -39,9 +39,6 @@ Template.tipi.helpers({
         //     groups.push(this.autor_grupo[i]);
         // }
         return Spacebars.SafeString(this.autor_grupo.join([separator = '<br/>']));
-},
-colorizedGroup: function(val) {
-        return parliamentarygroups_colors[val];
     },
     fotoDip: function(val) {
         dip = Diputados.findOne({nombre: val});

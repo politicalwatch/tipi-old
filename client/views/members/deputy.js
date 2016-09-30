@@ -16,7 +16,7 @@ Template.deputy.rendered = function() {
 
 Template.deputy.helpers({
     group: function() {
-        return parliamentarygroups[this.deputy.grupo];
+        return Grupos.findOne({acronimo: this.deputy.grupo}).nombre;
     },
     hasTipis: function() {
         return Iniciativas.find().count() > 0;
