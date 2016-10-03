@@ -7243,6 +7243,10 @@ fieldset[disabled] .btn-tipi.focus {
 .bullet .subtitle {
   fill: #fdd984;
 }
+#graph .title-sm {
+  fill: #FBC239;
+  font-size: 1.6em;
+}
 #dicts .dict {
   height: 200px;
   text-transform: capitalize;

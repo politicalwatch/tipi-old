@@ -2,37 +2,64 @@ function loadChart(data) {
     var margin = {top: 10, right: 60, bottom: 20, left: 120},
     width = 1080 - margin.left - margin.right,
     height = 50 - margin.top - margin.bottom;
+    
+    var isSmall = window.screen.availWidth < 1080;
 
-    var chart = d3.bullet()
-        .width(width)
-        .height(height);
+    if (isSmall) {
 
-    var svg = d3.select("#graph").selectAll("svg")
-        .data(data)
-      .enter().append("svg")
-        .attr("class", "bullet")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-      .call(chart);
+        var svg = d3.select('#graph').selectAll("svg")
+            .data(data)
+          .enter().append("svg")
+            .attr("width", window.screen.availWidth)
+            .attr("height", 50)
+          .append("g")
+            .attr("height", 50)
+            .attr("transform", "translate(" + margin.top + "," + margin.top + ")");
 
-    var title = svg.append("g")
-        .style("text-anchor", "end")
-        .attr("transform", "translate(-6," + height / 2 + ")");
+        svg.append("text")
+            .attr("class", "title-sm")
+            .attr("cursor", "pointer")
+            .text(function(d) { return d.subtitle + " hablan de " + alias_tipi_dicts[d.title]; })
+            .attr("transform", "translate(" + margin.top + "," + margin.top + ")")
+            .on("click", function(d) {
+                Router.go('dict', {slug: d.slug});
+            });
 
-    title.append("text")
-        .attr("class", "title")
-        .attr("cursor", "pointer")
-        .text(function(d) { return alias_tipi_dicts[d.title]; })
-        .on("click", function(d) {
-            Router.go('dict', {slug: d.slug});
-        });
+    } else {
 
-    title.append("text")
-        .attr("class", "subtitle")
-        .attr("dy", "1em")
-        .text(function(d) { return d.subtitle; });
+        var chart = d3.bullet()
+            .width(width)
+            .height(height);
+
+        var svg = d3.select("#graph").selectAll("svg")
+            .data(data)
+          .enter().append("svg")
+            .attr("class", "bullet")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+          .call(chart);
+
+        var title = svg.append("g")
+            .style("text-anchor", "end")
+            .attr("transform", "translate(-6," + height / 2 + ")");
+
+        title.append("text")
+            .attr("class", "title")
+            .attr("cursor", "pointer")
+            .text(function(d) { return alias_tipi_dicts[d.title]; })
+            .on("click", function(d) {
+                Router.go('dict', {slug: d.slug});
+            });
+
+        title.append("text")
+            .attr("class", "subtitle")
+            .attr("dy", "1em")
+            .text(function(d) { return d.subtitle; });
+    
+    }
+
 }
 
 
