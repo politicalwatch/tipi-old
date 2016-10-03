@@ -151,84 +151,8 @@
 					</tr>
 				</tbody>
 				</table>
-				
-				<h3>Obtener estadísticas por grupo parlamentario</h3>
 
-            	<div class="code-api">
-            	<p>/api/v1/stats/bygroups</p>
-            	</div>
-    	        <p> Obtiene las estadísticas para todos los grupos parlamentarios.</p>
-
-				<h4>Parámetros</h4>
-            	<div class="info-api">
-	            	<table>
-					<thead>
-					<tr>
-						<th>Parámetro</th>
-						<th>Valor</th>
-						<th>Valor por defecto</th>
-						<th>Descripción</th>
-					</tr>
-					</thead>
-					<tbody>
-					<tr>
-						<td>slug</td>
-						<td>Opcional</td>
-						<td></td>
-						<td>Slug del grupo parlamentario</td>
-						</tr>
-					</tbody>
-				</table>
-            	</div>
-				<div class="code-api">
-            	<p>/api/v1/stats/bygroups/:slug</p>
-            	</div>
-    	        <p> Obtiene las estadísticas para el grupo parlamentario indicado.</p>
-
-				<h4>Respuesta</h4>
-            	<div class="info-api">
-            	<p>[</p>
-            	<div class="api-response-1">
-					{<br>
-					<div class="api-response-2">_id: {},<br>
-						autor_diputado: [ ],<br>
-						lugar: "",<br>
-						tipotexto: "",<br>
-						tipo: "",<br>
-						url: "",<br>
-						fecha: "",<br>
-						autor_otro: [ ],<br>
-						autor_grupo: [],<br>
-						tramitacion: "",<br>
-						titulo: "",<br>
-						ref: "",<br>
-						fechafin: "",<br>
-						dicts: {<br>
-					</div>
-					]<br>
-            	</div>
-            	</div>
-				<h4>Errores</h4>
-            	<table class="api-errors">
-					<thead>
-						<tr>
-							<th>Código HTTP</th>
-							<th>Motivo</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td><code>404</code></td>
-							<td>Si falla o no se ha podido encontrar el slug.</td>
-						</tr>
-					<tr>
-						<td><code>405</code></td>
-						<td>Si el método es POST o cualquier otra función.</td>
-					</tr>
-				</tbody>
-				</table>
-
-				<h3>Obtener estadísticas de todas las iniciativas</h3>
+								<h3>Obtener estadísticas de todas las iniciativas</h3>
             	<div class="code-api">
             	<p>api/v1/stats/overall</p>
             	</div>
@@ -242,8 +166,6 @@
 						<th>Valor</th>
 						<th>Valor por defecto</th>
 						<th>Descripción</th>
-						<th>Tipo de parámetro</th>
-						<th>Tipo de dato</th>
 					</tr>
 					</thead>
 					<tbody>
@@ -252,8 +174,6 @@
 						<td>Opcional</td>
 						<td></td>
 						<td>Slug del diccionario</td>
-						<td></td>
-						<td></td>
 						</tr>
 					</tbody>
 				</table>
@@ -307,13 +227,13 @@
 					</tr>
 				</tbody>
 				</table>
-
-				<h3>Obtener estadísticas por diputado</h3>
+				
+				<h3>Obtener estadísticas por grupo parlamentario</h3>
 
             	<div class="code-api">
-            	<p>/api/v1/stats/bydeputies</p>
+            	<p>/api/v1/stats/bygroups</p>
             	</div>
-            	<p> Obtiene las estadísticas de todas las iniciativas para cada diputado.</p>
+    	        <p> Obtiene para cada diccionario las últimas 3 iniciativas y sus grupos parlamentarios.</p>
 
 				<h4>Parámetros</h4>
             	<div class="info-api">
@@ -324,8 +244,6 @@
 						<th>Valor</th>
 						<th>Valor por defecto</th>
 						<th>Descripción</th>
-						<th>Tipo de parámetro</th>
-						<th>Tipo de dato</th>
 					</tr>
 					</thead>
 					<tbody>
@@ -334,8 +252,82 @@
 						<td>Opcional</td>
 						<td></td>
 						<td>Slug del diccionario</td>
+						</tr>
+					</tbody>
+				</table>
+            	</div>
+				<div class="code-api">
+            	<p>/api/v1/stats/bygroups/:slug</p>
+            	</div>
+    	        <p>Obtiene para el diccionario indicado las últimas 3 iniciativas y sus grupo parlamentario.</p>
+
+				<h4>Respuesta</h4>
+            	<div class="info-api">
+            	<p>[</p>
+            	<div class="api-response-1">
+					{<br>
+					<div class="api-response-2">_id: {},<br>
+						autor_diputado: [ ],<br>
+						lugar: "",<br>
+						tipotexto: "",<br>
+						tipo: "",<br>
+						url: "",<br>
+						fecha: "",<br>
+						autor_otro: [ ],<br>
+						autor_grupo: [],<br>
+						tramitacion: "",<br>
+						titulo: "",<br>
+						ref: "",<br>
+						fechafin: "",<br>
+						dicts: {<br>
+					</div>
+					]<br>
+            	</div>
+            	</div>
+				<h4>Errores</h4>
+            	<table class="api-errors">
+					<thead>
+						<tr>
+							<th>Código HTTP</th>
+							<th>Motivo</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><code>404</code></td>
+							<td>Si falla o no se ha podido encontrar el slug.</td>
+						</tr>
+					<tr>
+						<td><code>405</code></td>
+						<td>Si el método es POST o cualquier otra función.</td>
+					</tr>
+				</tbody>
+				</table>
+
+				<h3>Obtener estadísticas por diputado</h3>
+
+            	<div class="code-api">
+            	<p>/api/v1/stats/bydeputies</p>
+            	</div>
+            	<p>Obtiene para cada diccionario las últimas 3 iniciativas y el diputado que la realizó.</p>
+
+				<h4>Parámetros</h4>
+            	<div class="info-api">
+	            	<table>
+					<thead>
+					<tr>
+						<th>Parámetro</th>
+						<th>Valor</th>
+						<th>Valor por defecto</th>
+						<th>Descripción</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<td>slug</td>
+						<td>Opcional</td>
 						<td></td>
-						<td></td>
+						<td>Slug del diccionario</td>
 						</tr>
 					</tbody>
 				</table>
@@ -343,7 +335,7 @@
 				<div class="code-api">
             	<p>/api/v1/stats/bydeputies/:slug</p>
             	</div>
-            	<p> Obtiene las estadísticas de todas las iniciativas para el diputado indicado.</p>
+            	<p>Obtiene para el diccionario indicado las últimas 3 iniciativas y sus parlamentarios.</p>
 
 				<h4>Respuesta</h4>
             	<div class="info-api">
@@ -405,8 +397,6 @@
 						<th>Valor</th>
 						<th>Valor por defecto</th>
 						<th>Descripción</th>
-						<th>Tipo de parámetro</th>
-						<th>Tipo de dato</th>
 					</tr>
 					</thead>
 					<tbody>
@@ -415,8 +405,6 @@
 						<td>Opcional</td>
 						<td></td>
 						<td>Slug del diccionario</td>
-						<td></td>
-						<td></td>
 						</tr>
 					</tbody>
 				</table>
