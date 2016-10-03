@@ -457,6 +457,53 @@
 					</tr>
 				</tbody>
 				</table>
+
+				<h3>Obtener diccionarios disponibles</h3>
+
+            	<div class="code-api">
+            	<p>/api/v1/dicts</p>
+            	</div>
+            	<p> Obtiene todos los diccionarios disponibles.</p>
+
+				
+				<h4>Respuesta</h4>
+            	<div class="info-api">
+            	<p>[</p>
+            	<div class="api-response-1">
+					{<br>
+					<div class="api-response-2">
+
+						name: "",<br>
+						slug: ""<br>
+						<br>
+					</div>
+					}<br>
+            	</div>
+				<p>]</p>
+            	</div>
+				<h4>Errores</h4>
+            	<table class="api-errors">
+					<thead>
+						<tr>
+							<th>Código HTTP</th>
+							<th>Motivo</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><code>404</code></td>
+							<td>Si no hay ningun diccionario.</td>
+						</tr>
+					<tr>
+						<td><code>405</code></td>
+						<td>Si el método es POST o cualquier otra función.</td>
+					</tr>
+				</tbody>
+				</table>
+
+
+
+
             </div>
         </div>
         <hr/>
