@@ -3,6 +3,21 @@
 
 if (Meteor.isServer) {
 
+    var field_opts = {
+        autor_diputado: 1,
+        autor_grupo: 1,
+        autor_otro: 1,
+        lugar: 1,
+        tipotexto: 1,
+        tipo: 1,
+        titulo: 1,
+        fecha: 1,
+        ref: 1,
+        tramitacion: 1,
+        'dicts.tipi': 1,
+        'terms.tipi': 1
+    }
+
   // Global API configuration
   var Api = new Restivus({
   	apiPath: 'api/',
@@ -20,7 +35,14 @@ Api.addRoute('tipis/', {
     	if (this.queryParams.dict){
     		dict = Dicts.find({slug: this.queryParams.dict, group: "tipi"},{fields: {name: 1}}).fetch();
     		if (dict.length>0) {
-    			return Iniciativas.find({'is.tipi':true,'dicts.tipi':dict[0].name}, {fields:  {contenido: 0},limit: limit, skip : pag },{_id:1,autor_diputado:1,lugar:1,tipotexto:1,tipo:1}).fetch();
+    			return Iniciativas.find(
+                            {'is.tipi':true,'dicts.tipi':dict[0].name},
+                            {
+                                fields:  field_opts,
+                                sort: {fecha: -1},
+                                limit: limit,
+                                skip : pag
+                            }).fetch();
     		} else {
     			return {
 			    statusCode: 404,
@@ -30,8 +52,13 @@ Api.addRoute('tipis/', {
     	} else {
             
     	    return Iniciativas.find(
-    	    	{}
-    	    	 ,{fields:  {contenido: 0},limit: limit, skip: pag }).fetch();
+    	    	{'is.tipi': true},
+                {
+                    fields:  field_opts,
+                    sort: {fecha: -1},
+                    limit: limit,
+                    skip: pag
+                }).fetch();
     	}
     }
 });
@@ -41,7 +68,11 @@ Api.addRoute('tipis/', {
 Api.addRoute('tipis/:_id', {
 	get: function () {
             var oid = new Meteor.Collection.ObjectID(this.urlParams._id);
-            var tipi=Iniciativas.findOne(oid);
+            var tipi = Iniciativas.findOne(
+                {_id: oid},
+                {
+                    fields: field_opts,
+                });
             if (tipi){
                 return tipi
             } else {
