@@ -294,5 +294,15 @@ Api.addRoute('stats/latest/:slug', {
            
 });
 
+Api.addRoute('dicts/', {
+    get: function () {
+      return Dicts.find({}, {fields:{name:1,slug:1,'_id': false}}).fetch()
+
+    }
+           
+});
+
+
+
 
 }; //end
