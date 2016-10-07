@@ -53,8 +53,8 @@ Template.dict.helpers({
         l_array = TipiStats.find({}, {fields: {'latest._id': 1, 'latest.items': 1}, sort: {'latest.fecha': -1}}).fetch();
         result = _.filter(l_array[0].latest, function(l) { return l._id == dict_array[0].name; });
         return result[0].items.sort(function (a, b) {
-            if (a.fecha < b.fecha) return -1;
-            if (b.fecha < a.fecha) return 1;
+            if (a.fecha < b.fecha) return 1;
+            if (b.fecha < a.fecha) return -1;
             return 0;
         });
     },

@@ -148,6 +148,7 @@ if (Meteor.isServer) {
     });
 
     Meteor.publish('relatedTipis', function(id) {
+        console.log("asas")
         tipiobject = Iniciativas.find({"_id": id, "is.tipi": true}).fetch();
         return Iniciativas.find(
             {ref: tipiobject[0].ref, "is.tipi": true},
@@ -164,8 +165,8 @@ if (Meteor.isServer) {
         return Iniciativas.find(
           {'dicts.tipi': dictobject.name, 'is.tipi': true},
           {  
-            fields: {ref: 1, tipotexto: 1, autor_diputado: 1, autor_grupo: 1, autor_otro: 1, titulo: 1, 'dicts.tiipi': 1, fecha: 1, lugar: 1}, 
-            sort: {fecha: 1},
+            fields: {ref: 1, tipotexto: 1, autor_diputado: 1, autor_grupo: 1, autor_otro: 1, titulo: 1, 'dicts.tipi': 1, fecha: 1, lugar: 1}, 
+            sort: {fecha: -1},
             limit: 20
           }
         );
@@ -203,7 +204,7 @@ if (Meteor.isServer) {
           {autor_diputado: dipobject.nombre, 'is.tipi': true},
           {  
             fields: {ref: 1, tipotexto: 1, titulo: 1, 'dicts.tipi': 1, fecha: 1, lugar: 1}, 
-            sort: {fecha: 1},
+            sort: {fecha: -1},
             limit: 10
           }
         );
@@ -221,13 +222,14 @@ if (Meteor.isServer) {
     });
 
     Meteor.publish('limitedTipiListByGroup', function(id) {
+
       var groupobject = Grupos.findOne(id, {fields: {nombre: 1}});
       if (groupobject) {
         return Iniciativas.find(
           {autor_grupo: groupobject.nombre, 'is.tipi': true},
           {  
             fields: {ref: 1, tipotexto: 1, autor_diputado: 1, titulo: 1, 'dicts.tipi': 1, fecha: 1, lugar: 1}, 
-            sort: {fecha: 1},
+            sort: {fecha: -1},
             limit: 10
           }
         );
