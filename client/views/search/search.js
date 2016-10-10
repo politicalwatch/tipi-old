@@ -205,8 +205,9 @@ Template.search.helpers({
             showNavigation: 'never',
             showFilter: false,
             showColumnToggles: false,
+            multiColumnSort: false,
             fields: [
-                { key: 'titulo', label: 'Titulo', sortable: true, sortOrder: 1, sortDirection: -1, headerClass: 'col-md-6',
+                { key: 'titulo', fieldId: 'titulo', label: 'Titulo', sortable: false, headerClass: 'col-md-6',
                     fn: function(val, obj) {
                         var str = '';
                         if (Roles.userIsInRole(Meteor.user(), ["admin"])) {
@@ -224,7 +225,7 @@ Template.search.helpers({
                         return Spacebars.SafeString(str);
                     }
                 },
-                { key: 'autor_diputado',  label: 'Autor', sortable: false, headerClass: 'col-md-2',
+                { key: 'autor_diputado', fieldId: 'autor', label: 'Autor', sortable: false, headerClass: 'col-md-2',
                     fn: function(val, obj) {
                       if (!_.isNull(val)) {
                         if (val.length > 0) {
@@ -240,7 +241,7 @@ Template.search.helpers({
                       }
                     }
                 },
-                { key: 'autor_grupo', label: 'Grupo', sortable: false, headerClass: 'col-md-1',
+                { key: 'autor_grupo', fieldId: 'grupo', label: 'Grupo', sortable: false, headerClass: 'col-md-1',
                     fn: function(val, obj) {
                         groupsHumanized = [];
                         for(i=0;i<val.length;i++) {
@@ -249,14 +250,14 @@ Template.search.helpers({
                         return groupsHumanized.join([separator = ', ']);
                     }
                 },
-                { key: 'dicts.tipi', label: 'Temas', headerClass: 'col-md-2', cellClass: 'capitalize-text',
+                { key: 'dicts.tipi', fieldId: 'temas', label: 'Temas', sortable: false, headerClass: 'col-md-2', cellClass: 'capitalize-text',
                     fn: function(val, obj) {
                         return val.join(', ');
                     }
                 },
-                { key: 'fecha', label: 'Fecha', sortable: true, sortOrder: 0, sortDirection: -1, headerClass: 'col-md-1',
+                { key: 'fecha', fieldId: 'fecha', label: 'Fecha', sortable: true, sortDirection: 'descending', headerClass: 'col-md-1',
                     fn: function(val, obj) {
-                        return moment(val).format('l');
+                        return new Spacebars.SafeString("<span sort=" + moment(val).format() + ">" + moment(val).format('l') + "</span>");
                     }
                 }
             ]
