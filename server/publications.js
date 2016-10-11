@@ -242,6 +242,22 @@ if (Meteor.isServer) {
         return Meteor.users.find({ username: username }, {fields: {services: 0}});
     });
 
+    Meteor.publish('exportUsers', function(user_type) {
+        if (this.userId) {
+            var user = Meteor.users.findOne({_id:this.userId});
+            if (Roles.userIsInRole(user, ["admin"])) {
+                return Meteor.users.find(
+                        {},
+                        {
+                            fields: {username: 1, 'profile.firstname': 1, 'profile.lastname': 1, 'emails.0.address': 1, 'profile.dicts': 1}
+                        }
+                    );
+            }
+        }
+        this.stop();
+        return;
+    });
+
     Meteor.publish('activeBanners', function() {
         return Banners.find({activo: true});
     });
