@@ -312,18 +312,27 @@ Template.search.events({
     'change #dicts': function(e) {
         Template.instance().currentTerms.set(getTermsFromDict($('#dicts').val()));
     },
+    'click .pager .begin': function(e) {
+        e.preventDefault();
+        movePage(0);
+    },
     'click .pager .previous': function(e) {
         e.preventDefault();
-        Template.instance().currentPage.set(parseInt(Template.instance().currentPage.get()) - 1);
-        Session.set('current-page', Template.instance().currentPage.get());
-        // Go to top after changing currentPage
-        $('body').animate({ scrollTop: 0 }, 0);
+        movePage(parseInt(Template.instance().currentPage.get())-1);
     },
     'click .pager .next': function(e) {
         e.preventDefault();
-        Template.instance().currentPage.set(parseInt(Template.instance().currentPage.get()) + 1);
-        Session.set('current-page', Template.instance().currentPage.get());
-        // Go to top after changing currentPage
-        $('body').animate({ scrollTop: 0 }, 0);
+        movePage(parseInt(Template.instance().currentPage.get())+1);
+    },
+    'click .pager .end': function(e) {
+        e.preventDefault();
+        movePage(Math.ceil(this.count / Meteor.settings.public.reactiveTable.rowsPerPage)-1);
     }
 });
+
+function movePage(number) {
+    Template.instance().currentPage.set(number);
+    Session.set('current-page', Template.instance().currentPage.get());
+    // Go to top after changing currentPage
+    $('body').animate({ scrollTop: 0 }, 0);
+}
