@@ -27,18 +27,24 @@ Template.tipi.helpers({
         if (!_.isEmpty(this.autor_otro)) {
             return this.autor_otro;
         } else {
-            return Spacebars.SafeString(this.autor_diputado.join([separator = '<br/>']));
-;
+            var dips = []
+            _.each(this.autor_diputado, function(d) {
+                dobject = Diputados.findOne({nombre: d});
+                dips.push("<a href='/dips/"+dobject._id._str+"'>"+d+"</a>");
+            });
+            return Spacebars.SafeString(dips.join([separator = '<br/>']));
         }
     },
     getFecha: function() {
         return moment(this.fecha).format('LL');
     },
     getGrupo: function() {
-
-        //     groups.push(this.autor_grupo[i]);
-        // }
-        return Spacebars.SafeString(this.autor_grupo.join([separator = '<br/>']));
+        var groups = []
+        _.each(this.autor_grupo, function(g) {
+            gobject = Grupos.findOne({nombre: g});
+            groups.push("<a href='/grupos/"+gobject._id._str+"'>"+g+"</a>");
+        });
+        return Spacebars.SafeString(groups.join([separator = '<br/>']));
     },
     fotoDip: function(val) {
         dip = Diputados.findOne({nombre: val});
