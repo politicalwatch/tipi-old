@@ -103,10 +103,10 @@
                                         <select class="form-control" name="tramitacion" id="tramitacion">
                                             <option value="">Cualquiera</option>
                                             {{#each tramitaciones_helper}}
-                                                {{#if eq lastquery.tramitacion this }}
-                                                    <option value="{{this}}" selected="selected">{{this}}</option>
+                                                {{#if eq lastquery.tramitacion value }}
+                                                    <option value="{{value}}" selected="selected">{{name}}</option>
                                                 {{else}}
-                                                    <option value="{{this}}">{{this}}</option>
+                                                    <option value="{{value}}">{{name}}</option>
                                                 {{/if}}
                                             {{/each}}
                                         </select>

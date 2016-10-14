@@ -133,12 +133,17 @@ Template.search.helpers({
     },
     tramitaciones_helper: function() {
         return [
-            "Aprobada",
-            "Aprobada con modificaciones",
-            "En tramitación",
-            "Rechazada",
-            "Caducada",
-            "Retirada"
+            {name:"Aprobada", value:"aprobad(a|o)"},
+            {name:"En tramitación", value:"tramitación"},
+            {name:"Rechazada", value:"rechazad(a|o)"},
+            {name:"Caducada", value:"caducad(a|o)"},
+            {name:"Aprobada", value:"aprobad(a|o)"},
+            {name:"Retirada", value:"retirad(a|o)"},
+            {name:"Concluida", value:"concluid(a|o)"},
+            {name:"Retirada", value:"retirad(a|o)"},
+            {name:"Subsumida", value:"subsumid(a|o)"},
+            {name:"Decaída", value:"decaíd(a|o)"},
+            
         ];
     },
     tipos_helper: function() {
