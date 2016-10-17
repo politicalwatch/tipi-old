@@ -140,7 +140,7 @@ Template.search.helpers({
             {name:"Aprobada", value:"aprobad(a|o)"},
             {name:"Retirada", value:"retirad(a|o)"},
             {name:"Concluida", value:"concluid(a|o)"},
-            {name:"Retirada", value:"retirad(a|o)"},
+            {name:"Respondida", value:"respondid(a|o)"},
             {name:"Subsumida", value:"subsumid(a|o)"},
             {name:"Decaída", value:"decaíd(a|o)"},
             
