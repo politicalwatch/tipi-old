@@ -1,0 +1,12 @@
+<template name="news">
+    <div class="row">
+      {{#each news}}
+        <div class="col-sm-8 cta">
+            <h4 class="full">
+                <a href="{{url}}">{{titulo}}</a>
+            <h5>{{medio}}</h5>
+            </h4>
+        </div>
+      {{/each}}
+    </div>
+</template>

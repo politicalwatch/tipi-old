@@ -262,4 +262,7 @@ if (Meteor.isServer) {
         return Banners.find({activo: true});
     });
 
+    Meteor.publish('news', function() {
+        return News.find();
+    });
 }
