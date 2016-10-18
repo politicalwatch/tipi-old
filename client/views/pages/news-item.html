@@ -1,0 +1,10 @@
+<template name="news">
+    <div class="row">
+      {{#each news}}
+        <div class="col-sm-8 news-item">
+            <a href="{{url}}"><h3>{{titulo}}</h3></a>
+            <h6>{{getDate}} | {{medio}}</h6>
+        </div>
+      {{/each}}
+    </div>
+</template>
