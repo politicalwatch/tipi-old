@@ -263,6 +263,8 @@ if (Meteor.isServer) {
     });
 
     Meteor.publish('news', function() {
-        return News.find();
+        return News.find({}, {
+          sort: {fecha: -1 }
+        });
     });
 }
