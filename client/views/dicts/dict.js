@@ -68,7 +68,10 @@ Template.dict.helpers({
         return this.dict.iconb1;
     },
     getTerms: function() {
-        return _.pluck(this.dict.terms, 'humanterm');
+        return _.pluck(
+                _.filter(this.dict.terms, function(t) { return t !== null; }),
+                'humanterm'
+                );
     },
     shareData: function() {
         str = "Consulta lo último sobre " + this.dict.name + " en";
