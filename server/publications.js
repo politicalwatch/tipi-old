@@ -148,7 +148,6 @@ if (Meteor.isServer) {
     });
 
     Meteor.publish('relatedTipis', function(id) {
-        console.log("asas")
         tipiobject = Iniciativas.find({"_id": id, "is.tipi": true}).fetch();
         return Iniciativas.find(
             {ref: tipiobject[0].ref, "is.tipi": true},

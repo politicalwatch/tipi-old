@@ -5,7 +5,7 @@
             <ul class="list-unstyled">
                 {{#each value}}
                     <li class="value">
-                        {{#if value.is.tipi}}
+                        {{#if is.tipi}}
                             <a href="/tipis/{{_id._str}}">{{tipotexto}} <small>({{getAutor}})</small></a>
                         {{else}}
                             <span class="text-muted">{{tipotexto}} <small>({{getAutor}})</small></span>
