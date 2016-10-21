@@ -30,7 +30,7 @@ function getTermsFromDict(d) {
     } else {
         res = [];
     }
-    return res;
+    return res.sort();
 }
 
 

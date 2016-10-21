@@ -71,7 +71,7 @@ Template.dict.helpers({
         return _.pluck(
                 _.filter(this.dict.terms, function(t) { return t !== null; }),
                 'humanterm'
-                );
+                ).sort();
     },
     shareData: function() {
         str = "Consulta lo último sobre " + this.dict.name + " en";
