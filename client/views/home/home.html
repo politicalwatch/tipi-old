@@ -44,7 +44,13 @@
                       <h2>Personaliza tu sistema de alertas</h2>
                       <h4>Las novedades del Congreso de los Diputados en tu correo electrónico</h4>
                       <p>Date de alta en nuestro Sistema Personalizado de Alertas y mantente informado de cualquier novedad que ocurra en el Congreso de los Diputados sobre tus temas de interés. ¡¡¡Es fácil, práctico y gratis!!!</p>
-                      <a href={{pathFor 'login'}} class="btn btn-primary">Quiero suscribirme</a>
+                      <a href={{pathFor 'signup'}} class="btn btn-primary">
+                          {{#if currentUser}}
+                              Accede a tu perfil
+                          {{else}}
+                              Darme de alta
+                          {{/if}}
+                      </a>
                   </div>
                   <div class="col-sm-4 text-center">
                       <!-- <i class="fa fa&#45;download fa&#45;4x"></i> -->
