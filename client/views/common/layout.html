@@ -1,8 +1,6 @@
 <template name="layout">
     {{> header}}
     {{! Note: Pass title value for pageTitle template on child templates}}
-    {{> pageTitle title=title}}
-    {{> messages}}
     <div id="app">
         {{> yield}}
     </div>
