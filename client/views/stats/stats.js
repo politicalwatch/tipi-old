@@ -4,7 +4,6 @@ Template.stats.rendered = function() {
     }
     data = getOverallStats();
     loadChart(data);
-    title = Iniciativas.findOne().titulo;
 }
 
 Template.stats.helpers({
