@@ -162,10 +162,21 @@
                                     {{/if}}
                                 </li>
                             </ul>
-
-                            {{! <p class="white-text italic">Nota: en algunos casos en la comparecencias el autor Gobierno incluye comparecencias de otras autoridades y funcionarios.</p> }}
-
                         {{/if}}
+                        <div class="row">
+                            {{#if lastquery.grupootro}}
+                                {{#if autorgrupo_haslink lastquery.grupootro}}
+                                    <div class="col-sm-6">
+                                        <h4 class="well text-center"><a href="{{autorgrupo_getlink lastquery.grupootro}}">Visita la página del {{lastquery.grupootro}}</a></h4>
+                                    </div>
+                                {{/if}}
+                            {{/if}}
+                            {{#if lastquery.autor}}
+                                <div class="col-sm-6">
+                                    <h4 class="well text-center"><a href="{{autor_getlink lastquery.autor}}">Visita la página de {{lastquery.autor}}</a></h4>
+                                </div>
+                            {{/if}}
+                        </div>
                     {{else}}
                         <div class="row">
                             <div class="col-sm-12 text-center">

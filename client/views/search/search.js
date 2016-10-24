@@ -180,6 +180,17 @@ Template.search.helpers({
             ]
         };
     },
+    autorgrupo_haslink: function(val) {
+        return val != 'Gobierno';
+    },
+    autorgrupo_getlink: function(val) {
+        grupo = Grupos.findOne({'nombre': val});
+        return '/grupos/'+grupo._id._str;
+    },
+    autor_getlink: function(val) {
+        dip = Diputados.findOne({'nombre': val});
+        return '/dips/'+dip._id._str;
+    },
     lastquery: function() {
         return Session.get("search");
     },
