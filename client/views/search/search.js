@@ -174,7 +174,6 @@ Template.search.helpers({
             {number:"4", value:"Escoge un autor de entre los siete Grupos Parlamentarios y el Gobierno."},
             {number:"5", value:"Escoge de entre los 13 tipos de actos parlamentarios a los que TIPI da seguimiento."},
             {number:"6", value:"Si has encontrado la información que buscabas no olvides que puedes descargártela gratis."},
-            {number:"7", value:"Si al acceder a la web del Congreso de los Diputados desde TIPI no se carga la página, se soluciona si refrescas el buscador."},
         ]);
     },
     dip_autocomplete_settings: function() {
