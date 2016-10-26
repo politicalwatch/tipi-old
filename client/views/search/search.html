@@ -182,7 +182,9 @@
                     {{else}}
                         <div class="row">
                             <div class="col-sm-12 text-center">
-                                <p class="well"><i class="fa fa-lightbulb-o"></i> Tip: <strong>Comience con una búsqueda basica y vaya aprendiendo a usar la herramienta.</strong></p>
+                            {{#if tips_helper }}
+                                <p class="well"><i class="fa fa-lightbulb-o"></i> Tip: <strong>{{ tips_helper.value }}</strong></p>
+                            {{/if}}
                             </div>
                         </div>
                     {{/if}}

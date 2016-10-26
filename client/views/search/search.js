@@ -166,6 +166,17 @@ Template.search.helpers({
         "Real Decreto Ley",
       ];
     },
+    tips_helper: function() {
+        return Random.choice([
+            {number:"1", value:"Una vez hayas escogido un tema, se desplegarán todos sus términos asociados."},
+            {number:"2", value:"Los nombres de l@s diputad@s se auto-completan. Introduce una letra y verás."},
+            {number:"3", value:"La 'referencia' es como el DNI de los actos parlamentarios: es un número único que los identifica."},
+            {number:"4", value:"Escoge un autor de entre los siete Grupos Parlamentarios y el Gobierno."},
+            {number:"5", value:"Escoge de entre los 13 tipos de actos parlamentarios a los que TIPI da seguimiento."},
+            {number:"6", value:"Si has encontrado la información que buscabas no olvides que puedes descargártela gratis."},
+            {number:"7", value:"Si al acceder a la web del Congreso de los Diputados desde TIPI no se carga la página, se soluciona si refrescas el buscador."},
+        ]);
+    },
     dip_autocomplete_settings: function() {
         return {
             position: "bottom",
