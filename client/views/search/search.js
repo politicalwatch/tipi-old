@@ -39,7 +39,7 @@ function transformDataforCsv(d) {
     res['autor_diputado'] = d.autor_diputado;
     res['autor_grupo'] = d.autor_grupo;
     res['autor_otro'] = d.autor_otro;
-    res['fecha'] = d.fecha;
+    res['fecha'] = d.actualizacion;
     res['lugar'] = d.lugar;
     res['ref'] = d.ref;
     res['tipotexto'] = d.tipotexto;
@@ -289,7 +289,7 @@ Template.search.helpers({
                         return val.join(', ');
                     }
                 },
-                { key: 'fecha', fieldId: 'fecha', label: 'Fecha', sortable: true, sortDirection: 'descending', headerClass: 'col-md-1',
+                { key: 'actualizacion', fieldId: 'actualizacion', label: 'Fecha', sortable: true, sortDirection: 'descending', headerClass: 'col-md-1',
                     fn: function(val, obj) {
                         return new Spacebars.SafeString("<span sort=" + moment(val).format() + ">" + moment(val).format('l') + "</span>");
                     }

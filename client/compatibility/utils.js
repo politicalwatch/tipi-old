@@ -158,16 +158,16 @@ function cleanTipiQuery(cqry) {
         jQuery.extend(cqry, tipo);
     }
     if (fdesde != null && fhasta != null) {
-        cqry["fecha"] = {
+        cqry["actualizacion"] = {
             $gte: datestringToISODate(fdesde, true),
             $lte: datestringToISODate(fhasta, false)
         };
     } else if (fdesde != null && fhasta == null) {
-        cqry["fecha"] = {
+        cqry["actualizacion"] = {
             $gte: datestringToISODate(fdesde, true)
         };
     } else if (fdesde == null && fhasta != null) {
-        cqry["fecha"] = {
+        cqry["actualizacion"] = {
             $lte: datestringToISODate(fhasta, false)
         };
     }

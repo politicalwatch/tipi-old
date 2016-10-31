@@ -38,6 +38,9 @@ Template.tipi.helpers({
     getFecha: function() {
         return moment(this.fecha).format('LL');
     },
+    getActualizacion: function() {
+        return moment(this.actualizacion).format('LL');
+    },
     getGrupo: function() {
         var groups = []
         _.each(this.autor_grupo, function(g) {

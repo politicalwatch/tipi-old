@@ -133,8 +133,8 @@ if (Meteor.isServer) {
         return Iniciativas.find(
           q,
           {
-            fields: {ref: 1, titulo: 1, tipotexto: 1, autor_diputado: 1, autor_grupo: 1, autor_otro: 1, lugar: 1, dicts: 1, terms: 1, fecha: 1}, 
-            sort: {fecha: 1},
+            fields: {ref: 1, titulo: 1, tipotexto: 1, autor_diputado: 1, autor_grupo: 1, autor_otro: 1, lugar: 1, dicts: 1, terms: 1, actualizacion: 1}, 
+            sort: {actualizacion: 1},
             limit: Meteor.settings.public.queryParams.limit
           }
         );
