@@ -52,63 +52,48 @@ function builderQueryFrom(type) {
   var enmienda = { numenmienda: {$exists: 1, $not: {$size: 0} } }
   var noenmienda = { $or: [{numenmienda: {$exists: 0}}, {numenmienda: {$size: 0}}] }
   switch(type) {
-      case 'Proyecto de Ley':
-          q = {tipo: "121"}
-          jQuery.extend(q, noenmienda);
+      case 'Comparecencias':
+          q = {tipo: {$in: ["212", "210", "213", "219"]}}
           break;
-      case 'Enmienda a Proyecto de Ley':
-          q = {tipo: "121"}
-          jQuery.extend(q, enmienda);
+      case 'Convenios internacionales':
+          q = {tipo: {$in: ["110", "111", "112"]}}
           break;
-      case 'Proposición de Ley':
-          q = {tipo: {$in: ["120", "122", "123", "125"]}}
-          jQuery.extend(q, noenmienda);
+      case 'Creación de comisiones, subcomisiones y ponencias':
+          q = {tipo: {$in: ["151", "152", "153", "154", "155", "156", "157", "158"]}}
           break;
-      case 'Enmienda a Proposición de Ley':
-          q = {tipo: {$in: ["120", "122", "123", "125"]}}
-          jQuery.extend(q, enmienda);
-          break;
-      case 'Real Decreto Ley':
-          q = {tipo: "130"}
-          break;
-      case 'Real Decreto Legislativo':
-          q = {tipo: "132"}
-          break;
-      case 'Comisiones, Subcomisiones y Ponencias':
-          q = {tipo: {$in: ["154", "155", "156", "158"]}}
-          jQuery.extend(q);
-          break;
-      case 'Proposición no de Ley':
-          q = {tipo: {$in: ["161", "162"]}}
-          jQuery.extend(q, noenmienda);
-          break;
-      case 'Enmienda a Proposición no de Ley':
-          q = {tipo: {$in: ["161", "162"]}}
-          jQuery.extend(q, enmienda);
-          break;
-      case 'Interpelación':
+      case 'Interpelación y su respuesta':
           q = {tipo: {$in: ["170", "172"]}}
           break;
-      case 'Moción consecuencia de Interpelación':
+      case 'Moción consecuencia de interpelación y sus enmiendas':
           q = {tipo: "173"}
-          jQuery.extend(q, noenmienda);
           break;
-      case 'Enmienda a Moción':
-          q = {tipo: "173"}
-          jQuery.extend(q, enmienda);
+      case 'Otros actos y sus enmiendas':
+          q = {tipo: {$in: ["200", "140", "120", "095", "189", "187", "410", "156", "193"]}}
           break;
-      case 'Pregunta oral':
-          q = {tipo: {$in: ["178", "180", "181"]}}
-          break;
-      case 'Pregunta para respuesta escrita':
-          q = {tipo: {$in: ["179", "184"]}}
-          break;
-      case 'Comparecencia':
-          q = {tipo: {$in: ["210", "211", "212", "213", "214", "219"]}}
-          break;
-      case 'Planes, Programas y Dictámenes':
+      case 'Planes, programas y dictámenes':
           q = {tipo: "043"}
           break;
+      case 'Pregunta oral y su respuesta':
+          q = {tipo: {$in: ["180", "181"]}}
+          break;
+      case 'Pregunta para respuesta escrita y su respuesta':
+          q = {tipo: "184"}
+          break;
+      case 'Proposición de ley y sus enmiendas':
+          q = {tipo: {$in: ["122", "123", "124", "125"]}}
+          break;
+      case 'Proposición no de ley y sus enmiendas':
+          q = {tipo: {$in: ["161", "162"]}}
+          break;
+      case 'Proyecto de Ley y sus enmiendas':
+          q = {tipo: "121"}
+          break;      
+      case 'Real decreto legislativo':
+          q = {tipo: "132"}
+          break;      
+      case 'Real decreto-ley':
+          q = {tipo: "130"}
+          break;      
       default:
           return {}
           break;
