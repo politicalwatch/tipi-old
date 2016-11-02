@@ -21,8 +21,8 @@ Template.deputy.helpers({
     hasTipis: function() {
         return Iniciativas.find().count() > 0;
     },
-    showDate: function(fecha) {
-        return moment(this.fecha).format('l');
+    showDate: function(date) {
+        return moment(date).format('l');
     },
     getGroupId: function(val) {
         g = Grupos.findOne({nombre: val});

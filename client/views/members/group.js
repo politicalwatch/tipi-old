@@ -9,8 +9,8 @@ Template.group.helpers({
     hasTipis: function() {
         return Iniciativas.find().count() > 0;
     },
-    showDate: function(fecha) {
-        return moment(this.fecha).format('l');
+    showDate: function(date) {
+        return moment(date).format('l');
     },
     shareData: function() {
         str = "Consulta la ficha de " + this.group.nombre + " en";

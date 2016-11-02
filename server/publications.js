@@ -164,8 +164,8 @@ if (Meteor.isServer) {
         return Iniciativas.find(
           {'dicts.tipi': dictobject.name, 'is.tipi': true},
           {  
-            fields: {ref: 1, tipotexto: 1, autor_diputado: 1, autor_grupo: 1, autor_otro: 1, titulo: 1, 'dicts.tipi': 1, fecha: 1, lugar: 1}, 
-            sort: {fecha: -1},
+            fields: {ref: 1, tipotexto: 1, autor_diputado: 1, autor_grupo: 1, autor_otro: 1, titulo: 1, 'dicts.tipi': 1, actualizacion: 1, lugar: 1}, 
+            sort: {actualizacion: -1},
             limit: 20
           }
         );
@@ -202,8 +202,8 @@ if (Meteor.isServer) {
         return Iniciativas.find(
           {autor_diputado: dipobject.nombre, 'is.tipi': true},
           {  
-            fields: {ref: 1, tipotexto: 1, titulo: 1, 'dicts.tipi': 1, fecha: 1, lugar: 1}, 
-            sort: {fecha: -1},
+            fields: {ref: 1, tipotexto: 1, titulo: 1, 'dicts.tipi': 1, actualizacion: 1, lugar: 1}, 
+            sort: {actualizacion: -1},
             limit: 10
           }
         );
@@ -227,8 +227,8 @@ if (Meteor.isServer) {
         return Iniciativas.find(
           {autor_grupo: groupobject.nombre, 'is.tipi': true},
           {  
-            fields: {ref: 1, tipotexto: 1, autor_diputado: 1, titulo: 1, 'dicts.tipi': 1, fecha: 1, lugar: 1}, 
-            sort: {fecha: -1},
+            fields: {ref: 1, tipotexto: 1, autor_diputado: 1, titulo: 1, 'dicts.tipi': 1, actualizacion: 1, lugar: 1}, 
+            sort: {actualizacion: -1},
             limit: 10
           }
         );
@@ -263,7 +263,7 @@ if (Meteor.isServer) {
 
     Meteor.publish('news', function() {
         return News.find({}, {
-          sort: {fecha: -1 }
+          sort: {fechafecha: -1 }
         });
     });
 }

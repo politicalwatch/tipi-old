@@ -9,8 +9,8 @@ Template.dict.helpers({
         dict_array = Dicts.find().fetch();
         return dict_array[0].name;
     },
-    showDate: function(fecha) {
-        return moment(this.fecha).format('l');
+    showDate: function(date) {
+        return moment(date).format('l');
     },
     fotoDip: function(val) {
         dip = Diputados.findOne({nombre: val});
