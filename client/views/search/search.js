@@ -248,9 +248,9 @@ Template.search.helpers({
                             str += '<div class="btn-group">';
                               str += '<a href="#" class="btn btn-secondary btn-xs dropdown-toggle" data-toggle="dropdown"><i class="fa fa-caret-square-o-down"></i></a>';
                               str += '<ul class="dropdown-menu">';
-                                str += '<li><a href="tipis/'+ obj._id + '"><i class="fa fa-file-o"></i> Ver iniciativa</a></li>';
-                                str += '<li><a href="/admin/Tipis/'+ obj._id + '/edit"><i class="fa fa-pencil"></i> Editar iniciativa</a></li>';
-                                str += '<li><a href="'+ obj.url + '"><i class="fa fa-institution"></i> Ver en Congreso.es</a></li>';
+                                str += '<li><a href="tipis/'+ obj._id + '" target="_blank"><i class="fa fa-file-o"></i> Ver iniciativa</a></li>';
+                                str += '<li><a href="/admin/Iniciativas/ObjectID(%22'+ obj._id + '%22)/edit" target="_blank"><i class="fa fa-pencil"></i> Editar iniciativa</a></li>';
+                                str += '<li><a href="'+ generateCongresoUrl(obj.ref) + '" target="_blank"><i class="fa fa-institution"></i> Ver en Congreso.es</a></li>';
                               str += '</ul>';
                             str += '</div>';
                             str += '&nbsp;&nbsp;';

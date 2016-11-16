@@ -23,6 +23,9 @@ Template.tipi.helpers({
     hasAutor: function() {
         return !_.isEmpty(this.autor_otro) || !_.isEmpty(this.autor_diputado);
     },
+    parseCongresoUrl: function() {
+        return generateCongresoUrl(this.ref);
+    },
     getAutor: function() {
         if (!_.isEmpty(this.autor_otro)) {
             return this.autor_otro;

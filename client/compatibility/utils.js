@@ -47,6 +47,15 @@ function generateId(id) {
     return new Mongo.ObjectID(id);
 }
 
+// Generate Congreso url from ref
+// Nota importante: Esta función la necesitamos porque la url que tiene cada objeto de tipo iniciativa no es unívoca
+// ya que contiene un número de orden que cambia dependiendo cuando se haya lanzado su procesamiento por lotes.
+// Con generateCongresoUrl generamos urls unívovas a iniciativas
+function generateCongresoUrl(ref) {
+    sref = ref.split("/");
+    return "http://www.congreso.es/portal/page/portal/Congreso/Congreso/Iniciativas?_piref73_2148295_73_1335437_1335437.next_page=/wc/servidorCGI&CMD=VERLST&BASE=IW12&FMT=INITXDSS.fmt&DOCS=1-1&DOCORDER=FIFO&OPDEF=ADJ&QUERY=("+sref[0]+"%2F"+sref[1]+"*.NDOC.)";
+}
+
 function builderQueryFrom(type) {
   var q = {}
   var enmienda = { numenmienda: {$exists: 1, $not: {$size: 0} } }
