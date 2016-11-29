@@ -105,11 +105,11 @@
 				</tbody>
 				</table>
             	
-            	<h3>Obtener iniciativas por diccionario</h3>
+            	<h3>Obtener detalle de una iniciativa</h3>
             	<div class="code-api">
             	<p>/api/v1/tipis/:_id</p>
             	</div>
-     	    	<p> Obtiene las iniciativas para todos el diccionario indicado.</p>
+     	    	<p> Obtiene todos los datos de una iniciativa concreta.</p>
 
             	<h4>Parámetros</h4>
             	<div class="info-api">
@@ -125,9 +125,9 @@
 					<tbody>
 					<tr>
 						<td>_id</td>
-						<td>Opcional</td>
+						<td>Obligatorio</td>
 						<td></td>
-						<td>ID del diccionaro en la base de datos</td>
+						<td>ID de la iniciativa</td>
 						</tr>
 					</tbody>
 				</table>
@@ -144,7 +144,7 @@
 					<tbody>
 						<tr>
 							<td><code>404</code></td>
-							<td>Si falla o no se ha podido encontrar el slug.</td>
+							<td>Si falla o no se ha podido encontrar el _id.</td>
 						</tr>
 					<tr>
 						<td><code>405</code></td>
