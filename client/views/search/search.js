@@ -120,7 +120,7 @@ Template.search.helpers({
               buttonClass: 'form-control',
               nonSelectedText: 'Pulsa para seleccionar',
               enableFiltering: true,
-              maxHeight: "400px",
+              maxHeight: "400",
               buttonWidth: "100%",
               nSelectedText: "seleccionados",
               numberDisplayed: 2,
