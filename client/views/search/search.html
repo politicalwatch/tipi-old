@@ -22,18 +22,9 @@
                                         {{/each}}
                                     </select>
                                 </div>
-                                <label for="terms" class="col-sm-1 control-label">Término</label>
+                                <label for="terms" class="col-sm-1 control-label">Términos</label>
                                 <div class="col-sm-7">
-                                    <select class="form-control" id="terms" name="terms">
-                                        <option value="">Todos</option>
-                                        {{#each terms_helper}}
-                                            {{#if eq lastquery.terms term }}
-                                            <option value="{{humanterm}}" selected="selected">{{humanterm}}</option>
-                                            {{else}}
-                                            <option value="{{humanterm}}">{{humanterm}}</option>
-                                            {{/if}}
-                                        {{/each}}
-                                    </select>
+                                    {{> MultiSelect id="terms" class="form-control" name="terms[]" multiple="multiple" options=options selectOptions=selectOptions }}
                                 </div>
                             </div>
                             <div class="form-group">

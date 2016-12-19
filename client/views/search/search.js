@@ -4,6 +4,10 @@
 
 /+ ---------------------------------------------------- */
 
+
+    function showCheckboxes() {
+    }
+
 function hasValue(val) {
     return val != '';
 }
@@ -96,6 +100,32 @@ Template.search.helpers({
     },
     terms_helper: function() {
         return Template.instance().currentTerms.get();
+    },
+    options: function() {
+      terms = [];
+      var search = Session.get('search');
+      _.each(Template.instance().currentTerms.get(), function(t) {
+          terms.push({
+                  label: t.humanterm,
+                  value: t.humanterm,
+                  selected: _.indexOf(search.terms, t.humanterm) != -1
+          });
+      });
+      return terms;
+    },
+    selectOptions: function() {
+        return {
+              buttonClass: 'form-control',
+              nonSelectedText: 'Pulsa para seleccionar',
+              enableFiltering: true,
+              maxHeight: "400px",
+              buttonWidth: "100%",
+              nSelectedText: "seleccionados",
+              numberDisplayed: 2,
+              disableIfEmpty: true,
+              filterPlaceholder: "Búsqueda de términos",
+              allSelectedText: "Todos seleccionados",
+        };
     },
     grupootro_helper: function() {
         return [
@@ -315,6 +345,20 @@ Template.search.rendered = function () {
       }
       search = Session.get("search");
       Template.instance().currentTerms.set(getTermsFromDict(search.dicts));
+      //Templating multiselect
+      $(document).ready(function() {
+          $('#terms').multiselect({
+              templates: {
+                  button: '<button type="button" title="xxx" class="multiselect dropdown-toggle form-control" data-toggle="dropdown"></button>',
+                  ul: '<ul class="multiselect-container dropdown-menu"></ul>',
+                  filter: '<li class="multiselect-item filter"><div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span><input class="form-control multiselect-search" type="text"></div></li>',
+                  filterClearBtn: '<span class="input-group-btn"><button class="btn btn-default multiselect-clear-filter" type="button"><i class="glyphicon glyphicon-remove-circle"></i></button></span>',
+                  li: '<li><a href="javascript:void(0);"><label></label></a></li>',
+                  divider: '<li class="multiselect-item divider"></li>',
+                  liGroup: '<li class="multiselect-item group"><label class="multiselect-group"></label></li>'
+              }
+          });
+      });
   }
 };
 
@@ -361,7 +405,7 @@ Template.search.events({
     'click .pager .end': function(e) {
         e.preventDefault();
         movePage(Math.ceil(this.count / Meteor.settings.public.reactiveTable.rowsPerPage)-1);
-    }
+    },
 });
 
 function movePage(number) {
