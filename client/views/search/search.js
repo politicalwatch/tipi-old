@@ -181,7 +181,7 @@ Template.search.helpers({
             {name:"Aprobada", value:"aprobad(a|o)"},
             {name:"Retirada", value:"retirad(a|o)"},
             {name:"Concluida", value:"concluid(a|o)"},
-            {name:"Respondida", value:"respondid(a|o)"},
+            {name:"Respondida", value:"Tramitado por completo sin req. acuerdo o decisión"},
             {name:"Subsumida", value:"subsumid(a|o)"},
             {name:"Decaída", value:"decaíd(a|o)"},
             
