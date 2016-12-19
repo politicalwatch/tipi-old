@@ -62,7 +62,7 @@ function builderQueryFrom(type) {
   var noenmienda = { $or: [{numenmienda: {$exists: 0}}, {numenmienda: {$size: 0}}] }
   switch(type) {
       case 'Comparecencias':
-          q = {tipo: {$in: ["212", "210", "213", "219"]}}
+          q = {tipo: {$in: ["210", "212", "213", "219"]}}
           break;
       case 'Convenios internacionales':
           q = {tipo: {$in: ["110", "111", "112"]}}
@@ -114,7 +114,7 @@ function builderQueryFrom(type) {
 /* UTILS */
 
 function cleanTipiQuery(cqry) {
-    var fdesde, fhasta, newautor, newgrupootro, dict, term;
+    var fdesde, fhasta, newautor, newgrupootro, dict, terms;
     fdesde = fhasta = null;
     newautor = newgrupootro = tipo = dict = term = {};
     for (var k in cqry) {
@@ -128,7 +128,7 @@ function cleanTipiQuery(cqry) {
             dict = {"dicts.tipi": cqry[k]}
             delete cqry[k];
         } else if (k == 'terms' && cqry[k] != "") {
-            term = {"terms.tipi.humanterm": cqry[k]}
+            term = {"terms.tipi.humanterm": {$in: cqry[k]} }
             delete cqry[k];
         } else if ((k == "autor") && (cqry[k] != "")) {
             newautor = { 'autor_diputado': {$regex: cqry['autor'], $options: "gi"} }
