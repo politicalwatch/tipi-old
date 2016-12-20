@@ -1,13 +1,12 @@
 Template.dict.rendered = function() {
     name = Dicts.findOne().name.capitalize();
-    $('.page-title h1').html(name);
     document.title = name + ' | ' + document.title;
 }
 
 Template.dict.helpers({
-    dict: function() {
+    nombre: function() {
         dict_array = Dicts.find().fetch();
-        return dict_array[0].name;
+        return dict_array[0].name.capitalize();
     },
     showDate: function(date) {
         return moment(date).format('l');

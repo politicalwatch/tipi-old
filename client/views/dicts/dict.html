@@ -1,10 +1,10 @@
 <template name="dict">
-    {{> pageTitle title=title}}
+    {{> pageTitle title=nombre}}
     <div id="dict">
         <div class="container page">
             <div class="row">
                 <div class="col-sm-2">
-                    <img class="img-responsive" src="/images/svgs-circles/{{getIcon}}" alt="Imagen de {{dict.name}}">
+                    <img class="img-responsive" src="/images/svgs-circles/{{getIcon}}" alt="Imagen de {{nombre}}">
                 </div>
                 <div class="col-sm-10">
                     {{> text_element meta='¿De qué trata?' value=getDescription}}

@@ -8,11 +8,13 @@ Code related to the tipi template
 
 Template.tipi.rendered = function() {
     title = Iniciativas.findOne().titulo;
-    $('.page-title h1').html(title);
     document.title = title + ' | ' + document.title;
 }
 
 Template.tipi.helpers({
+    titulo: function() {
+        return Iniciativas.findOne().titulo;
+    },
     searchUrl: function() {
         return Session.get('searchUrl') || Router.path('search');
     },
