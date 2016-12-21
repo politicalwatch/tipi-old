@@ -11,7 +11,7 @@
                     <small>
                         (Por mencionar:
                         {{#each getTerms ../terms this}}
-                            <a href="/escaner?terms={{this}}">{{this}}</a>,&nbsp;
+                        <a href="/escaner?dicts={{..}}&terms[]={{this}}">{{this}}</a>,&nbsp;
                         {{/each}}
                         )
                     </small>
