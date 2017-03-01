@@ -32,17 +32,40 @@ Api.addRoute('tipis/', {
     	var pag =  parseInt(this.queryParams.offset) || 0
 
     	
-    	if (this.queryParams.dict){
+    	if (this.queryParams.dict) {
     		dict = Dicts.find({slug: this.queryParams.dict, group: "tipi"},{fields: {name: 1}}).fetch();
     		if (dict.length>0) {
+                    terms = (this.queryParams.terms) ?
+                        (_.isArray(this.queryParams.terms)) ? this.queryParams.terms : [this.queryParams.terms]
+                        : [];
+                    if (terms.length > 0) {
     			return Iniciativas.find(
-                            {'is.tipi':true,'dicts.tipi':dict[0].name},
+                            {
+                                'is.tipi': true,
+                                'dicts.tipi': dict[0].name,
+                                'terms.tipi.humanterm': {$in: terms}
+                            },
                             {
                                 fields:  field_opts,
                                 sort: {fecha: -1},
                                 limit: limit,
                                 skip : pag
                             }).fetch();
+
+                    } else {
+    			return Iniciativas.find(
+                            {
+                                'is.tipi': true,
+                                'dicts.tipi': dict[0].name
+                            },
+                            {
+                                fields:  field_opts,
+                                sort: {fecha: -1},
+                                limit: limit,
+                                skip : pag
+                            }).fetch();
+
+                    }
     		} else {
     			return {
 			    statusCode: 404,
@@ -50,7 +73,6 @@ Api.addRoute('tipis/', {
 			}
 		}			 
     	} else {
-            
     	    return Iniciativas.find(
     	    	{'is.tipi': true},
                 {
