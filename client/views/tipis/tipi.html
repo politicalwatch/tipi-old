@@ -15,10 +15,11 @@
                     {{> text_element meta='Lugar' value=lugar}}
                     {{> text_element meta='Registro' value=getFecha}}
                     {{> text_element meta='Actualización' value=getActualizacion}}
+                    {{> text_element meta='Estado de tramitación' value=humanTramitacion}}
+                    {{> text_element meta='Observaciones de tramitación' value=tramitacion}}
                     <div class="capitalize">
                         {{> dict_elements meta='Temas tratados' dicts=dicts.tipi terms=terms.tipi }}
                     </div>
-                    {{> text_element meta='Estado de la tramitación' value=tramitacion}}
                 </div>
                 <div class="col-sm-4 text-center">
                     {{#if isInRole 'admin'}}

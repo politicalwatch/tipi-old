@@ -174,16 +174,14 @@ Template.search.helpers({
     },
     tramitaciones_helper: function() {
         return [
-            {name:"Aprobada", value:"aprobad(a|o)"},
-            {name:"En tramitación", value:"tramitación"},
-            {name:"Rechazada", value:"rechazad(a|o)"},
-            {name:"Caducada", value:"caducad(a|o)"},
-            {name:"Aprobada", value:"aprobad(a|o)"},
-            {name:"Retirada", value:"retirad(a|o)"},
-            {name:"Concluida", value:"concluid(a|o)"},
-            {name:"Respondida", value:"Tramitado por completo sin req. acuerdo o decisión"},
-            {name:"Subsumida", value:"subsumid(a|o)"},
-            {name:"Decaída", value:"decaíd(a|o)"},
+            {name:"Aprobada", value:"aprobada"},
+            {name:"Rechazada", value:"rechazada"},
+            {name:"En tramitación", value:"tramitacion"},
+            {name:"No admitida a trámite", value:"noadmitida"},
+            {name:"No debatida", value:"nodebatida"},
+            {name:"Retirada", value:"retirada"},
+            {name:"Convertida en otra", value:"convertida"},
+            {name:"Acumulada en otra", value:"acumulada"},
             
         ];
     },

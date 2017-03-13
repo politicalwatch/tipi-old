@@ -81,6 +81,77 @@ Template.tipi.helpers({
     hasRelated: function() {
         return this.related.length > 0;
     },
+    humanTramitacion: function() {
+        if (this.tramitacion.match(/Aprobado con modificaciones/gi)) {
+            return 'Aprobada';
+        }
+        if (this.tramitacion.match(/Aprobado sin modificaciones/gi)) {
+            return 'Aprobada';
+        }
+        if (this.tramitacion.match(/Convalidado/gi)) {
+            return 'Aprobada';
+        }
+        if (this.tramitacion.match(/Tramitado por completo sin/gi)) {
+            return 'Aprobada';
+        }
+        if (this.tramitacion.match(/Convertido/gi)) {
+            return 'Convertida en otra';
+        }
+        if (this.tramitacion.match(/Boletín Oficial de las Cortes Generales Publicación desde/gi)) {
+            return 'En tramitación';
+        }
+        if (this.tramitacion.match(/Comisión.*desde/gi)) {
+            return 'En tramitación';
+        }
+        if (this.tramitacion.match(/Concluído desde/gi)) {
+            return 'En tramitación';
+        }
+        if (this.tramitacion.match(/Gobierno Contestación/gi)) {
+            return 'En tramitación';
+        }
+        if (this.tramitacion.match(/Junta de Portavoces/gi)) {
+            return 'En tramitación';
+        }
+        if (this.tramitacion.match(/Mesa del Congreso Acuerdo/gi)) {
+            return 'En tramitación';
+        }
+        if (this.tramitacion.match(/Mesa del Congreso Requerimiento/gi)) {
+            return 'En tramitación';
+        }
+        if (this.tramitacion.match(/Pleno Aprobación desde/gi)) {
+            return 'En tramitación';
+        }
+        if (this.tramitacion.match(/Pleno desde/gi)) {
+            return 'En tramitación';
+        }
+        if (this.tramitacion.match(/Pleno Toma en consideración/gi)) {
+            return 'En tramitación';
+        }
+        if (this.tramitacion.match(/Solicitud de amparo/gi)) {
+            return 'En tramitación';
+        }
+        if (this.tramitacion.match(/Respuesta.*Gobierno/gi)) {
+            return 'En tramitación';
+        }
+        if (this.tramitacion.match(/Senado desde/gi)) {
+            return 'En tramitación';
+        }
+        if (this.tramitacion.match(/Subsumido en otra iniciativa/gi)) {
+            return 'Acumulada en otra';
+        }
+        if (this.tramitacion.match(/Inadmitido a trámite/gi)) {
+            return 'No admitida a trámite';
+        }
+        if (this.tramitacion.match(/Decaído/gi)) {
+            return 'No debatida';
+        }
+        if (this.tramitacion.match(/Rechazado/gi)) {
+            return 'Rechazada';
+        }
+        if (this.tramitacion.match(/Retirado/gi)) {
+            return 'Retirada';
+        }
+    },
     qpcClass: function() {
         if (this.quepasocon.toLowerCase() == 'cumplido') {
             return 'complete';

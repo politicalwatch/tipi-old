@@ -110,13 +110,66 @@ function builderQueryFrom(type) {
   return q;
 }
 
+//Query que traduce el estado de tramitacion en las regex posibles
+function builderQueryByState(state) {
+  var q = {}
+  switch(state) {
+      case 'aprobada':
+          q = {$or: [
+                  {tramitacion: {$regex: "Aprobado con modificaciones", $options: "gi"}},
+                  {tramitacion: {$regex: "Aprobado sin modificaciones", $options: "gi"}},
+                  {tramitacion: {$regex: "Convalidado", $options: "gi"}},
+                  {tramitacion: {$regex: "Tramitado por completo sin", $options: "gi"}}
+              ]}
+          break;
+      case 'rechazada':
+          q = {tramitacion: {$regex: "Rechazado", $options: "gi"}}
+          break;
+      case 'tramitacion':
+          q = {$or: [
+                  {tramitacion: {$regex: "Boletín Oficial de las Cortes Generales Publicación desde", $options: "gi"}},
+                  {tramitacion: {$regex: "Comisión.*desde", $options: "gi"}},
+                  {tramitacion: {$regex: "Concluido desde", $options: "gi"}},
+                  {tramitacion: {$regex: "Gobierno Contestación", $options: "gi"}},
+                  {tramitacion: {$regex: "Junta de Portavoces", $options: "gi"}},
+                  {tramitacion: {$regex: "Mesa del Congreso Acuerdo", $options: "gi"}},
+                  {tramitacion: {$regex: "Mesa del Congreso Requerimiento", $options: "gi"}},
+                  {tramitacion: {$regex: "Pleno Aprobación desde", $options: "gi"}},
+                  {tramitacion: {$regex: "Pleno desde", $options: "gi"}},
+                  {tramitacion: {$regex: "Pleno Toma en consideración", $options: "gi"}},
+                  {tramitacion: {$regex: "Solicitud de amparo", $options: "gi"}},
+                  {tramitacion: {$regex: "Respuesta.*Gobierno", $options: "gi"}},
+                  {tramitacion: {$regex: "Senado desde", $options: "gi"}}
+              ]}
+          break;
+      case 'noadmitida':
+          q = {tramitacion: {$regex: "Inadmitido a trámite", $options: "gi"}}
+          break;
+      case 'nodebatida':
+          q = {tramitacion: {$regex: "Decaído", $options: "gi"}}
+          break;
+      case 'retirada':
+          q = {tramitacion: {$regex: "Retirado", $options: "gi"}}
+          break;
+      case 'convertida':
+          q = {tramitacion: {$regex: "Convertido", $options: "gi"}}
+          break;
+      case 'acumulada':
+          q = {tramitacion: {$regex: "Subsumido en otra iniciativa", $options: "gi"}}
+          break;
+      default:
+          return {}
+          break;
+  }
+  return q;
+}
 
 /* UTILS */
 
 function cleanTipiQuery(cqry) {
-    var fdesde, fhasta, newautor, newgrupootro, dict, terms;
+    var fdesde, fhasta, newautor, newgrupootro, dict, terms, tramitacion;
     fdesde = fhasta = null;
-    newautor = newgrupootro = tipo = dict = term = {};
+    newautor = newgrupootro = tipo = dict = term = tramitacion = {};
     for (var k in cqry) {
         if (k == "fechadesde" && cqry[k] != "" ) {
             fdesde = cqry[k];
@@ -140,8 +193,11 @@ function cleanTipiQuery(cqry) {
                 newgrupootro = { 'autor_grupo': cqry['grupootro'] }
             }
             delete cqry[k];
-        } else if( k == "vtipo" && cqry[k] != "" ) {
+        } else if ( k == "vtipo" && cqry[k] != "" ) {
             tipo = builderQueryFrom(cqry[k]);
+            delete cqry[k];
+        } else if ( k == "tramitacion" && cqry[k] != "" ) {
+            tramitacion = builderQueryByState(cqry[k]);
             delete cqry[k];
         }
         else if (cqry[k] == "") {
@@ -151,8 +207,11 @@ function cleanTipiQuery(cqry) {
             cqry[k] = {$regex: cqry[k], $options: "gi"};
         }
     }
-    if (dict != {}) {
-        jQuery.extend(cqry, dict);
+    if (tramitacion != {}) {
+        jQuery.extend(cqry, tramitacion);
+    }
+    if (term != {}) {
+        jQuery.extend(cqry, term);
     }
     if (term != {}) {
         jQuery.extend(cqry, term);
