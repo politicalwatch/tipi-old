@@ -210,8 +210,8 @@ function cleanTipiQuery(cqry) {
     if (tramitacion != {}) {
         jQuery.extend(cqry, tramitacion);
     }
-    if (term != {}) {
-        jQuery.extend(cqry, term);
+    if (dict != {}) {
+        jQuery.extend(cqry, dict);
     }
     if (term != {}) {
         jQuery.extend(cqry, term);
@@ -240,6 +240,7 @@ function cleanTipiQuery(cqry) {
         };
     }
     jQuery.extend(cqry, {"is.tipi": true});
+    console.log(cqry);
     return cqry;
 }
 
