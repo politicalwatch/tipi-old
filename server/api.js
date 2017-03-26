@@ -176,7 +176,6 @@ Api.addRoute('stats/bydeputies/:slug', {
         dict = Dicts.find({slug: this.urlParams.slug, group: "tipi"},{fields: {name: 1}}).fetch();
         if (dict.length>0){
             stat = TipiStats.find({bydeputies:{$elemMatch:{_id:dict[0].name}}},{fields:{bydeputies:1,'_id': false}}).fetch()
-            console.log(stat)
             if (stat){
                  res=[]
                 for (item in stat[0].bydeputies) {
