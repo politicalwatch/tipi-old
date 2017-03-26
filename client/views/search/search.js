@@ -48,6 +48,8 @@ function transformDataforCsv(d) {
     res['ref'] = d.ref;
     res['tipotexto'] = d.tipotexto;
     res['titulo'] = d.titulo;
+    res['estado_tramitacion'] = getHumanState(d.tramitacion);
+    res['observaciones_tramitacion'] = d.tramitacion;
 
     arr=[];
     for (element in d.dicts.tipi){
@@ -370,7 +372,7 @@ Template.search.events({
         var collection_data = Iniciativas.find().fetch();
         var forprint = []
         for (var coll in collection_data){
-            ele= transformDataforCsv(collection_data[coll]);
+            ele = transformDataforCsv(collection_data[coll]);
             forprint.push(ele);
         }
         var data = json2csv(forprint,true,true);

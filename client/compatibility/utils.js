@@ -56,6 +56,83 @@ function generateCongresoUrl(ref) {
     return "http://www.congreso.es/portal/page/portal/Congreso/Congreso/Iniciativas?_piref73_2148295_73_1335437_1335437.next_page=/wc/servidorCGI&CMD=VERLST&BASE=IW12&FMT=INITXDSS.fmt&DOCS=1-1&DOCORDER=FIFO&OPDEF=ADJ&QUERY=("+sref[0]+"%2F"+sref[1]+"*.NDOC.)";
 }
 
+
+// Return initiative human state
+function getHumanState(state) {
+    if (state.match(/Aprobado con modificaciones/gi)) {
+        return 'Aprobada';
+    }
+    if (state.match(/Aprobado sin modificaciones/gi)) {
+        return 'Aprobada';
+    }
+    if (state.match(/Convalidado/gi)) {
+        return 'Aprobada';
+    }
+    if (state.match(/Tramitado por completo sin/gi)) {
+        return 'Aprobada';
+    }
+    if (state.match(/Convertido/gi)) {
+        return 'Convertida en otra';
+    }
+    if (state.match(/Boletín Oficial de las Cortes Generales Publicación desde/gi)) {
+        return 'En tramitación';
+    }
+    if (state.match(/Comisión.*desde/gi)) {
+        return 'En tramitación';
+    }
+    if (state.match(/Concluído desde/gi)) {
+        return 'En tramitación';
+    }
+    if (state.match(/Gobierno Contestación/gi)) {
+        return 'En tramitación';
+    }
+    if (state.match(/Junta de Portavoces/gi)) {
+        return 'En tramitación';
+    }
+    if (state.match(/Mesa del Congreso Acuerdo/gi)) {
+        return 'En tramitación';
+    }
+    if (state.match(/Mesa del Congreso Requerimiento/gi)) {
+        return 'En tramitación';
+    }
+    if (state.match(/Pleno Aprobación desde/gi)) {
+        return 'En tramitación';
+    }
+    if (state.match(/Pleno desde/gi)) {
+        return 'En tramitación';
+    }
+    if (state.match(/Pleno Toma en consideración/gi)) {
+        return 'En tramitación';
+    }
+    if (state.match(/Solicitud de amparo/gi)) {
+        return 'En tramitación';
+    }
+    if (state.match(/Respuesta.*Gobierno/gi)) {
+        return 'En tramitación';
+    }
+    if (state.match(/Senado desde/gi)) {
+        return 'En tramitación';
+    }
+    if (state.match(/Subsumido en otra iniciativa/gi)) {
+        return 'Acumulada en otra';
+    }
+    if (state.match(/Inadmitido a trámite/gi)) {
+        return 'No admitida a trámite';
+    }
+    if (state.match(/Decaído/gi)) {
+        return 'No debatida';
+    }
+    if (state.match(/Rechazado/gi)) {
+        return 'Rechazada';
+    }
+    if (state.match(/Retirado/gi)) {
+        return 'Retirada';
+    }
+    return '';
+}
+
+
+
 function builderQueryFrom(type) {
   var q = {}
   var enmienda = { numenmienda: {$exists: 1, $not: {$size: 0} } }
@@ -240,7 +317,6 @@ function cleanTipiQuery(cqry) {
         };
     }
     jQuery.extend(cqry, {"is.tipi": true});
-    console.log(cqry);
     return cqry;
 }
 
