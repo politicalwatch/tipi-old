@@ -85,16 +85,6 @@ if (Meteor.isServer) {
             );
     });
     
-    Meteor.publish('basicInitiatives', function() {
-        return Iniciativas.find();
-        // return Iniciativas.find(
-        //   {},
-        //   {
-        //     fields: {_id: 1}
-        //   }
-        // );
-    });
-
     Meteor.publish("countInitiatives", function () {
       var self = this;
       var count = 0;

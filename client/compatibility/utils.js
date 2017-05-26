@@ -328,7 +328,7 @@ function getOverallStats(n) {
     overall = _.sortBy(stats.overall, function(item) { return item.count; });
     dicts = Dicts.find().fetch();
     data = [];
-    total = Session.get('total-initiatives');
+    total = stats.initiatives.all;
     for(i=overall.length-1;i>overall.length-1-elements_in_vizz;i--) {
         percentage = parseFloat((overall[i]['count']/total)*100).toFixed(2);
         data.push({
