@@ -15,5 +15,7 @@ Template.header.helpers({
 Template.header.events({
     'click .logout': function() {
         Meteor.logout();
+        $('#main-menu').collapse('hide');
+
     }
 });
