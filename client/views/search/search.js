@@ -5,8 +5,8 @@
 /+ ---------------------------------------------------- */
 
 
-    function showCheckboxes() {
-    }
+function showCheckboxes() {
+}
 
 function hasValue(val) {
     return val != '';
@@ -379,6 +379,58 @@ Template.search.events({
         var blob = new Blob([data], {type: "text/csv;charset=utf-8"});
         saveAs(blob, "tipis.csv");
     },
+    'click a#exportxls': function(tableID){
+    var tab_text="<table border='2px'><tr bgcolor='#87AFC6' style='height: 75px; text-align: center; width: 250px'>";
+    var textRange;
+    var query = Session.get("search");
+    var collection_data = Iniciativas.find().fetch();
+    tab_text = tab_text + '<td>Actualización</td>'+'<td>Autor</td>'+'<td>Grupo</td>'+'<td>Otro</td>'+'<td>Diccionario</td>'+'<td>Lugar</td>'+'<td>Ref</td>'+'<td>Términos</td>'+'<td>Tipo</td>'+'<td>Título</td>'+'<td>Tramitación</td></tr>'
+    for (var coll in collection_data){
+        ele = collection_data[coll]
+        tab_text=tab_text;
+        terms = collection_data[coll].terms
+        tab_text=tab_text + '<td>' + collection_data[coll].actualizacion + '</td>'
+        tab_text=tab_text + '<td>' + collection_data[coll].autor_diputado + '</td>'
+        tab_text=tab_text + '<td>' + collection_data[coll].autor_grupo + '</td>'
+        tab_text=tab_text + '<td>' + collection_data[coll].autor_otro + '</td>'
+        tab_text=tab_text + '<td>' + collection_data[coll].dicts.tipi.toString() + '</td>'
+        tab_text=tab_text + '<td>' + collection_data[coll].lugar + '</td>'
+        tab_text=tab_text + '<td>' + collection_data[coll].ref + '</td>'
+        tab_text=tab_text + '<td>'
+        for(var j=0; j < terms.tipi.length;j++){ 
+          tab_text = tab_text + terms.tipi[j].term 
+        }
+        tab_text = tab_text + '</td>'
+        tab_text=tab_text + '<td>' + collection_data[coll].tipotexto + '</td>'
+        tab_text=tab_text + '<td>' + collection_data[coll].titulo + '</td>'
+        tab_text=tab_text + '<td>' + collection_data[coll].tramitacion + '</td>'
+        tab_text=tab_text + "</tr>";
+
+      }
+
+    tab_text= tab_text+"</table>";
+    tab_text= tab_text.replace(/<img[^>]*>/gi,""); //remove if u want images in your table
+    tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); //remove input params
+
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf("MSIE ");
+
+    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
+
+    {
+        txtArea1.document.open("txt/html","replace");
+        txtArea1.document.write( 'sep=,\r\n' + tab_text);
+        txtArea1.document.close();
+        txtArea1.focus();
+        sa=txtArea1.document.execCommand("SaveAs",true,"sudhir123.txt");
+    }
+
+    else {
+       sa = window.open('data:application/vnd.ms-excel;charset=utf-8,' + encodeURIComponent(tab_text));
+    }
+    
+    return (sa);
+},
     'click .adv-search-link': function(e) {
         e.preventDefault();
         $(e.currentTarget).hide();
@@ -416,3 +468,4 @@ function movePage(number) {
     // Go to top after changing currentPage
     $('body').animate({ scrollTop: 0 }, 0);
 }
+
