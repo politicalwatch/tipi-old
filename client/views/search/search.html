@@ -135,12 +135,25 @@
                                 <a href="{{pathFor 'search'}}">
                                     <i class="fa fa fa-times-circle-o"></i> Limpiar criterios de búsqueda
                                 </a>
-                                <a href="#" class="pull-right" id="exportxls">
-                                    <i class="fa fa-download"></i> Exportar datos a XLS
-                                </a>
-                                <a href="#" class="pull-right" id="exportcsv">
-                                    <i class="fa fa-download"></i> Exportar datos a CSV
-                                </a>
+                                <span class="dropdown pull-right">
+                                    <a class="dropdown-toggle pull-right" data-toggle="dropdown" href="#">
+                                        <i class="fa fa-download"></i> Descargar datos <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a href="#" class="pull-right" id="exportxls">
+                                                en Excel
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="pull-right" id="exportcsv">
+                                                en CSV
+                                            </a>
+                                        </li>
+                                        
+                                    </ul>
+                                </span>
+                                
                             </div>
                             {{> reactiveTable class="table table-striped table-hover" collection=tipisfound settings=settings}}
                             <ul class="pager row">
