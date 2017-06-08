@@ -416,7 +416,6 @@ Template.search.events({
         var msie = ua.indexOf("MSIE ");
 
         if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
-
         {
             txtArea1.document.open("txt/html","replace");
             txtArea1.document.write( 'sep=,\r\n' + tab_text);
@@ -424,26 +423,26 @@ Template.search.events({
             txtArea1.focus();
             sa=txtArea1.document.execCommand("SaveAs",true,"sudhir123.txt");
         }
-
         else {
-        var myBlob = new Blob([tab_text], {
-          type: 'application/vnd.ms-excel'
-        });
-        var url = window.URL.createObjectURL(myBlob);
-        var a = document.createElement("a");
-        document.body.appendChild(a);
-        a.href = url;
-        a.download = "tipis.xls";
-        a.click();
-        //adding some delay in removing the dynamically created link solved the problem in FireFox
-        setTimeout(function() {
-          window.URL.revokeObjectURL(url);
-        }, 0);           
+            tab_text = encodeURIComponent(tab_text)
+            var myBlob = new Blob([tab_text], {
+              type: 'application/vnd.ms-excel;charset=utf-8'
+            });
+            var url = window.URL.createObjectURL(myBlob);
+            var a = document.createElement("a");
+            document.body.appendChild(a);
+            a.href = url;
+            a.download = "tipis.xls";
+            a.click();
+            //adding some delay in removing the dynamically created link solved the problem in FireFox
+            setTimeout(function() {
+              window.URL.revokeObjectURL(url);
+            }, 0);           
            //sa = window.open('data:application/vnd.ms-excel;charset=utf-8,' + encodeURIComponent(tab_text));
         }
         
         return (sa);
-},
+    },
     'click .adv-search-link': function(e) {
         e.preventDefault();
         $(e.currentTarget).hide();
