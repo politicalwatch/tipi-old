@@ -122,6 +122,7 @@ Template.search.helpers({
               buttonClass: 'form-control',
               nonSelectedText: 'Pulsa para seleccionar',
               enableFiltering: true,
+              enableCaseInsensitiveFiltering: true,
               maxHeight: "400",
               buttonWidth: "100%",
               nSelectedText: "seleccionados",
@@ -381,7 +382,6 @@ Template.search.events({
     },
     'click a#exportxls': function(tableID){
         var tab_text="<table border='2px'><tr bgcolor='#87AFC6' style='height: 75px; text-align: center; width: 250px'>";
-        tab_text = tab_text + '<head><meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8"></head>'
         var textRange;
         var query = Session.get("search");
         var collection_data = Iniciativas.find().fetch();
@@ -417,7 +417,6 @@ Template.search.events({
         var msie = ua.indexOf("MSIE ");
 
         if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
-
         {
             txtArea1.document.open("txt/html","replace");
             txtArea1.document.write( 'sep=,\r\n' + tab_text);
@@ -425,26 +424,26 @@ Template.search.events({
             txtArea1.focus();
             sa=txtArea1.document.execCommand("SaveAs",true,"sudhir123.txt");
         }
-
         else {
-        var myBlob = new Blob([tab_text], {
-          type: 'application/vnd.ms-excel;charset=utf-16'
-        });
-        var url = window.URL.createObjectURL(myBlob);
-        var a = document.createElement("a");
-        document.body.appendChild(a);
-        a.href = url;
-        a.download = "tipis.xls";
-        a.click();
-        //adding some delay in removing the dynamically created link solved the problem in FireFox
-        setTimeout(function() {
-          window.URL.revokeObjectURL(url);
-        }, 0);           
+            tab_text = encodeURIComponent(tab_text)
+            var myBlob = new Blob([tab_text], {
+              type: 'application/vnd.ms-excel;charset=utf-8'
+            });
+            var url = window.URL.createObjectURL(myBlob);
+            var a = document.createElement("a");
+            document.body.appendChild(a);
+            a.href = url;
+            a.download = "tipis.xls";
+            a.click();
+            //adding some delay in removing the dynamically created link solved the problem in FireFox
+            setTimeout(function() {
+              window.URL.revokeObjectURL(url);
+            }, 0);           
            //sa = window.open('data:application/vnd.ms-excel;charset=utf-8,' + encodeURIComponent(tab_text));
         }
         
         return (sa);
-},
+    },
     'click .adv-search-link': function(e) {
         e.preventDefault();
         $(e.currentTarget).hide();
