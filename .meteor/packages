@@ -29,7 +29,6 @@ rajit:bootstrap3-datepicker
 dburles:collection-helpers
 mrt:mongodb-aggregation
 meteorhacks:aggregate
-yogiben:admin
 aldeed:autoform-bs-datetimepicker
 tsega:bootstrap3-datetimepicker@=3.1.3_3
 twbs:bootstrap
@@ -49,6 +48,8 @@ nimble:restivus
 shell-server
 joshowens:shareit
 
+# ADMIN
+yogiben:admin
 
 
 selaias:cookie-consent
