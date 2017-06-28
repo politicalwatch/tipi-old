@@ -32,7 +32,7 @@ Template.deputy.helpers({
         }
     },
     shareData: function() {
-        str = "Consulta la ficha de " + getSharedDipName(this.deputy.nombre, this.deputy.twitter) + " en";
-        return {title: str, author: Meteor.settings.public.twitter_account, url: window.location.href}
+        str = "Información parlamentaria de " + getSharedDipName(this.deputy.nombre, this.deputy.twitter);
+        return {title: str, author: Meteor.settings.public.twitter_account, url: window.location.href, description: "Infórmate sobre la actividad parlamentaria de " + getSharedDipName(this.deputy.nombre, this.deputy.twitter) + " (últimas iniciativas, e-mail, cuenta de Twitter, etc)."}
     }
 });

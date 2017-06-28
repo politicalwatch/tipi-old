@@ -108,7 +108,7 @@ Template.tipi.helpers({
         }
     },
     shareData: function() {
-        return {title: this.titulo, author: Meteor.settings.public.twitter_account, url: window.location.href}
+        return {title: this.titulo, author: Meteor.settings.public.twitter_account, url: window.location.href, description: "Accede a la información más relevante de esta iniciativa parlamentaria (autor, temáticas relacionadas, link al texto del Congreso, etc)."}
     }
 });
 

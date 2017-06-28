@@ -8,7 +8,7 @@ ShareIt.configure({
         'pinterest': null
     },
     classes: "btn",
-    iconOnly: false,
+    iconOnly: true,
     applyColors: true,
 });
 

@@ -73,8 +73,8 @@ Template.dict.helpers({
                 ).sort();
     },
     shareData: function() {
-        str = "Consulta lo último sobre " + this.dict.name + " en";
-        return {title: str, author: Meteor.settings.public.twitter_account, url: window.location.href}
+        str = this.dict.name;
+        return {title: str.toUpperCase(), author: Meteor.settings.public.twitter_account, url: window.location.href, description: 'Accede a la descripción de la temática, los diputados y partidos más activos y las últimas iniciativas parlamentarias registradas.'}
     }
 });
 

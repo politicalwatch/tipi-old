@@ -12,7 +12,7 @@ Template.group.helpers({
         return moment(date).format('l');
     },
     shareData: function() {
-        str = "Consulta la ficha de " + this.group.nombre + " en";
-        return {title: str, author: Meteor.settings.public.twitter_account, url: window.location.href}
+        str = "Actividad parlamentaria del " + this.group.nombre;
+        return {title: str, author: Meteor.settings.public.twitter_account, url: window.location.href, description: "Accede a las últimas iniciativas parlamentarias del " + this.group.nombre + " sobre las 21 temáticas TiPi."}
     }
 });
