@@ -34,7 +34,7 @@ function getTermsFromDict(d) {
     } else {
         res = [];
     }
-    return res.sort();
+    return _.sortBy(_.filter(res, function(t) { return t !== null; }), 'humanterm');
 }
 
 
