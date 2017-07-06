@@ -11,6 +11,11 @@
             <div class="col-sm-10">
                 <h3><a href="/grupos/{{getGroupId group}}">{{group}}</a></h3>
                 <ul class="list-unstyled">
+                {{#each deputy.cargos}}
+                    <li class="text-muted"><strong>{{this}}</strong></li>
+                {{/each}}
+                </ul>
+                <ul class="list-unstyled">
                     {{#if deputy.correo}}
                     <li><a href="mailto:{{deputy.correo}}" target="_blank"><i class="fa fa-envelope"></i> {{deputy.correo}}</a></li>
                     {{/if}}
