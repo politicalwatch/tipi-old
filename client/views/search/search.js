@@ -104,7 +104,6 @@ Template.search.helpers({
         str = "Actividad parlamentaria del ";
         str_query = window.location.search
         url2 = "http://tipiciudadano.es" + window.location.pathname + decodeURIComponent(window.location.search.replace(/[^=&]+=(&|$)/g,"").replace(/&$/,""));
-        console.log(url2);
         return {title: str, author: Meteor.settings.public.twitter_account, url: url2, description: "Accede a las últimas iniciativas parlamentarias del "}
     },
     terms_helper: function() {

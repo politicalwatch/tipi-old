@@ -4,14 +4,55 @@
     <div id="apidoc" class="container page">
         <div class="row">
             <div class="col-sm-8">
+
+                <h3>Obtener diccionarios disponibles</h3>
+            	<div class="code-api">
+            	<p>/api/v1/dicts</p>
+            	</div>
+            	<p> Obtiene todos los diccionarios disponibles.</p>
+
+				
+				<h4>Respuesta</h4>
+            	<div class="info-api">
+            	<p>[</p>
+            	<div class="api-response-1">
+					{<br>
+					<div class="api-response-2">
+						name: ""<br>
+					</div>
+					},<br>
+					...<br>
+            	</div>
+				<p>]</p>
+            	</div>
+				<h4>Errores</h4>
+            	<table class="api-errors">
+					<thead>
+						<tr>
+							<th>Código HTTP</th>
+							<th>Motivo</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><code>404</code></td>
+							<td>Si no hay ningun diccionario.</td>
+						</tr>
+					<tr>
+						<td><code>405</code></td>
+						<td>Si el método es POST o cualquier otra función.</td>
+					</tr>
+				</tbody>
+				</table>
+
             	<h3>Obtener iniciativas</h3>
 
             	<div class="code-api">
             	<p>/api/v1/tipis</p>
             	</div>
-    	        <p> Obtiene las últimas 10 iniciativas para todos los diccionarios.</p>
+    	        <p> Obtiene las últimas 20 iniciativas para todos los diccionarios.</p>
 
-				<h4>Parámetros</h4>
+                <h4>Parámetros</h4>
             	<div class="info-api">
 	            	<table>
 					<thead>
@@ -27,7 +68,13 @@
 						<td>dict</td>
 						<td>Opcional</td>
 						<td></td>
-						<td>Slug del diccionario</td>
+						<td>diccionario</td>
+						</tr>
+					<tr>
+						<td>terms</td>
+						<td>Opcional</td>
+						<td></td>
+						<td>término (uno o más de uno)</td>
 						</tr>
 					<tr>
 						<td>limit</td>
@@ -45,11 +92,11 @@
 				</table>
             	</div>
 				<div class="code-api">
-            	<p>/api/v1/tipis?offset=1&limit=1</p>
+            	<p>/api/v1/tipis?dict=igualdad+de+género&limit=5</p>
             	</div>
-    	        <p> Obtiene las últimas iniciativas con el offset indicados para todos los diccionarios o el diccionario indicado.</p>
+    	        <p> Obtiene las últimas iniciativas para todos los diccionarios o el diccionario/terminos indicado/os.</p>
 
-				<h4>Respuesta</h4>
+                <h4>Respuesta</h4>
             	<div class="info-api">
             	<p>[</p>
             	<div class="api-response-1">
@@ -66,18 +113,10 @@
 						titulo: "",<br>
 						ref: "",<br>
 						fechafin: "",<br>
-						dicts: {<br>
-						tipi: [ ]<br>
-						},<br>
-						terms: {<br>
-						tipi: [ ]<br>
-						},<br>
-						is: {<br>
-						tipi: <br>
-						},<br>
-						annotate: {<br>
-						tipi: <br>
-						}<br>
+						dicts: { tipi: [ ] },<br>
+						terms: { tipi: [] },<br>
+						is: { tipi: },<br>
+						annotate: { tipi: }<br>
 					</p>
 					}<br>
 				</div>
@@ -85,7 +124,7 @@
             	</div>
 
 
-				<h4>Errores</h4>
+                <h4>Errores</h4>
             	<table class="api-errors">
 					<thead>
 						<tr>
@@ -133,6 +172,29 @@
 				</table>
             	</div>
 
+                <h4>Respuesta</h4>
+            	<div class="info-api">
+                                    {<br>
+                                    <p class="api-response-1">_id: {},<br>
+                                            autor_diputado: [ ],<br>
+                                            lugar: "",<br>
+                                            tipotexto: "",<br>
+                                            tipo: "",<br>
+                                            url: "",<br>
+                                            fecha: "",<br>
+                                            autor_otro: [ ],<br>
+                                            tramitacion: "",<br>
+                                            titulo: "",<br>
+                                            ref: "",<br>
+                                            fechafin: "",<br>
+                                            dicts: { tipi: [ ] },<br>
+                                            terms: { tipi: [] },<br>
+                                            is: { tipi: },<br>
+                                            annotate: { tipi: }<br>
+                                    </p>
+                                    }<br>
+            	</div>
+
 				<h4>Errores</h4>
 				<table class="api-errors">
 					<thead>
@@ -153,12 +215,12 @@
 				</tbody>
 				</table>
 
-								<h3>Obtener estadísticas de todas las iniciativas</h3>
+                <h3>Obtener estadísticas de todas las iniciativas</h3>
             	<div class="code-api">
             	<p>api/v1/stats/overall</p>
             	</div>
-            	<p> Obtiene las estadísticas de todas las iniciativas para cada diccionario.</p>
-				<h4>Parámetros</h4>
+            	<p> Obtiene las estadísticas de todas las iniciativas para cada diccionario o para el diccionario indicado.</p>
+                <h4>Parámetros</h4>
             	<div class="info-api">
 	            	<table>
 					<thead>
@@ -171,119 +233,28 @@
 					</thead>
 					<tbody>
 					<tr>
-						<td>slug</td>
+						<td>dict</td>
 						<td>Opcional</td>
 						<td></td>
-						<td>Slug del diccionario</td>
+						<td>diccionario</td>
 						</tr>
 					</tbody>
 				</table>
             	</div>
-				<div class="code-api">
-            	<p>/api/v1/stats/overall/:slug</p>
-            	</div>
-            	<p> Obtiene las estadísticas de todas las iniciativas para el diccionario indicado.</p>
 
-
-				<h4>Respuesta</h4>
+                <h4>Respuesta</h4>
             	<div class="info-api">
             	<p>[</p>
             	<div class="api-response-1">
 					{<br>
-					<div class="api-response-2">_id: {},<br>
-						autor_diputado: [ ],<br>
-						lugar: "",<br>
-						tipotexto: "",<br>
-						tipo: "",<br>
-						url: "",<br>
-						fecha: "",<br>
-						autor_otro: [ ],<br>
-						contenido: [ ],<br>
-						autor_grupo: [],<br>
-						tramitacion: "",<br>
-						titulo: "",<br>
-						ref: "",<br>
-						fechafin: "",<br>
-						dicts: {<br>
-					</div>
-					]<br>
+					<p class="api-response-2">
+                                                _id: "",<br>
+						count: ""<br>
+					</p>
+                                        }<br>
+                                        ...
             	</div>
-            	</div>
-				<h4>Errores</h4>
-            	<table class="api-errors">
-					<thead>
-						<tr>
-							<th>Código HTTP</th>
-							<th>Motivo</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td><code>404</code></td>
-							<td>Si falla o no se ha podido encontrar el slug.</td>
-						</tr>
-					<tr>
-						<td><code>405</code></td>
-						<td>Si el método es POST o cualquier otra función.</td>
-					</tr>
-				</tbody>
-				</table>
-				
-				<h3>Obtener estadísticas por grupo parlamentario</h3>
-
-            	<div class="code-api">
-            	<p>/api/v1/stats/bygroups</p>
-            	</div>
-    	        <p> Obtiene para cada diccionario las últimas 3 iniciativas y sus grupos parlamentarios.</p>
-
-				<h4>Parámetros</h4>
-            	<div class="info-api">
-	            	<table>
-					<thead>
-					<tr>
-						<th>Parámetro</th>
-						<th>Valor</th>
-						<th>Valor por defecto</th>
-						<th>Descripción</th>
-					</tr>
-					</thead>
-					<tbody>
-					<tr>
-						<td>slug</td>
-						<td>Opcional</td>
-						<td></td>
-						<td>Slug del diccionario</td>
-						</tr>
-					</tbody>
-				</table>
-            	</div>
-				<div class="code-api">
-            	<p>/api/v1/stats/bygroups/:slug</p>
-            	</div>
-    	        <p>Obtiene para el diccionario indicado las últimas 3 iniciativas y sus grupo parlamentario.</p>
-
-				<h4>Respuesta</h4>
-            	<div class="info-api">
-            	<p>[</p>
-            	<div class="api-response-1">
-					{<br>
-					<div class="api-response-2">_id: {},<br>
-						autor_diputado: [ ],<br>
-						lugar: "",<br>
-						tipotexto: "",<br>
-						tipo: "",<br>
-						url: "",<br>
-						fecha: "",<br>
-						autor_otro: [ ],<br>
-						autor_grupo: [],<br>
-						tramitacion: "",<br>
-						titulo: "",<br>
-						ref: "",<br>
-						fechafin: "",<br>
-						dicts: {<br>
-					</div>
-					]<br>
-            	</div>
+                ]<br>
             	</div>
 				<h4>Errores</h4>
             	<table class="api-errors">
@@ -305,12 +276,13 @@
 				</tbody>
 				</table>
 
-				<h3>Obtener estadísticas por diputado</h3>
+
+				<h3>Obtener estadísticas por diputada/o</h3>
 
             	<div class="code-api">
             	<p>/api/v1/stats/bydeputies</p>
             	</div>
-            	<p>Obtiene para cada diccionario las últimas 3 iniciativas y el diputado que la realizó.</p>
+            	<p>Obtiene las/os 3 diputadas/os más activas/os de todos los diccionarios o para el indicado.</p>
 
 				<h4>Parámetros</h4>
             	<div class="info-api">
@@ -325,162 +297,31 @@
 					</thead>
 					<tbody>
 					<tr>
-						<td>slug</td>
+						<td>dict</td>
 						<td>Opcional</td>
 						<td></td>
-						<td>Slug del diccionario</td>
+						<td>diccionario</td>
 						</tr>
 					</tbody>
 				</table>
             	</div>
-				<div class="code-api">
-            	<p>/api/v1/stats/bydeputies/:slug</p>
-            	</div>
-            	<p>Obtiene para el diccionario indicado las últimas 3 iniciativas y sus parlamentarios.</p>
 
-				<h4>Respuesta</h4>
-            	<div class="info-api">
-            	<p>[</p>
-            	<div class="api-response-1">
-					{<br>
-					<div class="api-response-2">_id: {},<br>
-						autor_diputado: [ ],<br>
-						lugar: "",<br>
-						tipotexto: "",<br>
-						tipo: "",<br>
-						url: "",<br>
-						fecha: "",<br>
-						autor_otro: [ ],<br>
-						contenido: [ ],<br>
-						autor_grupo: [],<br>
-						tramitacion: "",<br>
-						titulo: "",<br>
-						ref: "",<br>
-						fechafin: "",<br>
-						dicts: {<br>
-					</div>
-					]<br>
-            	</div>
-            	</div>
-				<h4>Errores</h4>
-            	<table class="api-errors">
-					<thead>
-						<tr>
-							<th>Código HTTP</th>
-							<th>Motivo</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td><code>404</code></td>
-							<td>Si falla o no se ha podido encontrar el slug.</td>
-						</tr>
-					<tr>
-						<td><code>405</code></td>
-						<td>Si el método es POST o cualquier otra función.</td>
-					</tr>
-				</tbody>
-				</table>
-
-				<h3>Obtener estadísticas de las últimas 20 iniciativas</h3>
-
-            	<div class="code-api">
-            	<p>/api/v1/stats/latest</p>
-            	</div>
-            	<p> Obtiene las estadísticas de las últimas 20 iniciativas para cada diccionario.</p>
-
-				<h4>Parámetros</h4>
-            	<div class="info-api">
-	            	<table>
-					<thead>
-					<tr>
-						<th>Parámetro</th>
-						<th>Valor</th>
-						<th>Valor por defecto</th>
-						<th>Descripción</th>
-					</tr>
-					</thead>
-					<tbody>
-					<tr>
-						<td>slug</td>
-						<td>Opcional</td>
-						<td></td>
-						<td>Slug del diccionario</td>
-						</tr>
-					</tbody>
-				</table>
-            	</div>
-				<div class="code-api">
-            	<p>/api/v1/stats/latest/:slug</p>
-            	</div>
-            	<p> Obtiene las estadísticas de las últimas iniciativas para el diccionario indicado.</p>
-
-				<h4>Respuesta</h4>
-            	<div class="info-api">
-            	<p>[</p>
-            	<div class="api-response-1">
-					{<br>
-					<div class="api-response-2">_id: {},<br>
-						autor_diputado: [ ],<br>
-						lugar: "",<br>
-						tipotexto: "",<br>
-						tipo: "",<br>
-						url: "",<br>
-						fecha: "",<br>
-						autor_otro: [ ],<br>
-						contenido: [ ],<br>
-						autor_grupo: [],<br>
-						tramitacion: "",<br>
-						titulo: "",<br>
-						ref: "",<br>
-						fechafin: "",<br>
-						dicts: {<br>
-					</div>
-					]<br>
-            	</div>
-            	</div>
-				<h4>Errores</h4>
-            	<table class="api-errors">
-					<thead>
-						<tr>
-							<th>Código HTTP</th>
-							<th>Motivo</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td><code>404</code></td>
-							<td>Si falla o no se ha podido encontrar el slug.</td>
-						</tr>
-					<tr>
-						<td><code>405</code></td>
-						<td>Si el método es POST o cualquier otra función.</td>
-					</tr>
-				</tbody>
-				</table>
-
-				<h3>Obtener diccionarios disponibles</h3>
-
-            	<div class="code-api">
-            	<p>/api/v1/dicts</p>
-            	</div>
-            	<p> Obtiene todos los diccionarios disponibles.</p>
-
-				
-				<h4>Respuesta</h4>
+                <h4>Respuesta</h4>
             	<div class="info-api">
             	<p>[</p>
             	<div class="api-response-1">
 					{<br>
 					<div class="api-response-2">
-
-						name: "",<br>
-						slug: ""<br>
-						<br>
+                                            bydeputies: [
+                                            <div class="api-response-2">
+                                                {deputies: [ {count: "", _id: "" }, ... ],<br>
+                                                _id: ""},<br>
+                                                ...<br>
+                                            </div>
 					</div>
-					}<br>
+                                        }<br>
             	</div>
-				<p>]</p>
+                ]<br>
             	</div>
 				<h4>Errores</h4>
             	<table class="api-errors">
@@ -493,7 +334,73 @@
 					<tbody>
 						<tr>
 							<td><code>404</code></td>
-							<td>Si no hay ningun diccionario.</td>
+							<td>Si falla o no se ha podido encontrar el slug.</td>
+						</tr>
+					<tr>
+						<td><code>405</code></td>
+						<td>Si el método es POST o cualquier otra función.</td>
+					</tr>
+				</tbody>
+				</table>
+				
+                <h3>Obtener estadísticas por grupo parlamentario</h3>
+
+            	<div class="code-api">
+            	<p>/api/v1/stats/bygroups</p>
+            	</div>
+            	<p>Obtiene los 3 grupos parlamentarios más activos de todos los diccionarios o para el indicado.</p>
+
+                <h4>Parámetros</h4>
+            	<div class="info-api">
+	            	<table>
+					<thead>
+					<tr>
+						<th>Parámetro</th>
+						<th>Valor</th>
+						<th>Valor por defecto</th>
+						<th>Descripción</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<td>dict</td>
+						<td>Opcional</td>
+						<td></td>
+						<td>diccionario</td>
+						</tr>
+					</tbody>
+				</table>
+            	</div>
+
+                <h4>Respuesta</h4>
+            	<div class="info-api">
+            	<p>[</p>
+            	<div class="api-response-1">
+					{<br>
+					<div class="api-response-2">
+                                            bygroups: [
+                                            <div class="api-response-2">
+                                                {groups: [ {count: "", _id: "" }, ... ],<br>
+                                                _id: ""},<br>
+                                                ...<br>
+                                            </div>
+					</div>
+                                        }<br>
+            	</div>
+                ]<br>
+            	</div>
+				<h4>Errores</h4>
+            	<table class="api-errors">
+					<thead>
+						<tr>
+							<th>Código HTTP</th>
+							<th>Motivo</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><code>404</code></td>
+							<td>Si falla o no se ha podido encontrar el slug.</td>
 						</tr>
 					<tr>
 						<td><code>405</code></td>
@@ -503,30 +410,6 @@
 				</table>
 
 
-
-
-            </div>
-        </div>
-        <hr/>
-        <div class="row">
-            <div class="col-sm-8">
-                <h4>Diccionarios disponibles</h4>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Slug (a usar)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {{#each dicts}}
-                      <tr>
-                          <td>{{name}}</td>
-                          <td>{{slug}}</td>
-                      </tr>
-                    {{/each}}
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>

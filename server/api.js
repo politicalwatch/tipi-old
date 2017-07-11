@@ -1,5 +1,14 @@
 if (Meteor.isServer) {
 
+    var dict_decode = function(dict) {
+        return dict.replace(/\+/g, ' ');
+    }
+    var terms_decode = function(term) {
+        return dict_decode(term);
+    }
+
+
+
     var field_opts = {
         autor_diputado: 1,
         autor_grupo: 1,
@@ -23,14 +32,14 @@ if (Meteor.isServer) {
         prettyJson: true
     });
   
-    //TIPIS
+    //TIPIS (Params: limit, offset, dict, terms)
     Api.addRoute('tipis/', {
         get: function () {
-            var limit =  parseInt(this.queryParams.limit) || 10
+            var limit =  parseInt(this.queryParams.limit) || 20
             var pag =  parseInt(this.queryParams.offset) || 0
             if (this.queryParams.dict) {
-                dict = Dicts.find({slug: this.queryParams.dict, group: "tipi"},{fields: {name: 1}}).fetch();
-                if (dict.length>0) {
+                dict = this.queryParams.dict;
+                if (dict.length > 0) {
                     terms = (this.queryParams.terms) ?
                         (_.isArray(this.queryParams.terms)) ? this.queryParams.terms : [this.queryParams.terms]
                         : [];
@@ -38,7 +47,7 @@ if (Meteor.isServer) {
                         return Iniciativas.find(
                             {
                                 'is.tipi': true,
-                                'dicts.tipi': dict[0].name,
+                                'dicts.tipi': dict,
                                 'terms.tipi.humanterm': {$in: terms}
                             },
                             {
@@ -51,7 +60,7 @@ if (Meteor.isServer) {
                         return Iniciativas.find(
                             {
                                 'is.tipi': true,
-                                'dicts.tipi': dict[0].name
+                                'dicts.tipi': dict
                             },
                             {
                                 fields:  field_opts,
@@ -97,45 +106,32 @@ if (Meteor.isServer) {
 	}
     });
 
+
     //STATS
-    //overall
+
+    //overall (Params: dict)
     Api.addRoute('stats/overall', {
         get: function () {
-            return TipiStats.find(
-                {},
-                {
-                    fields: {
-                        overall:1,
-                        '_id': false
-                    }
-                }).fetch();
-        }
-    });
-
-
-    //overall (by dict)
-    Api.addRoute('stats/overall/:slug', {
-        get: function () {
-            dict = Dicts.find({slug: this.urlParams.slug, group: "tipi"},{fields: {name: 1}}).fetch();
-            if (dict.length > 0) {
+            if (this.queryParams.dict) {
+                dict = this.queryParams.dict;
                 stat = TipiStats.find(
-                    {overall:{$elemMatch:{_id:dict[0].name}}},
+                    {'overall._id':dict},
                     {
                         fields:{
                             overall:1,
                             '_id': false
                         }
                     }).fetch();
-                if (stat) {
+                if (stat.length > 0) {
                     res = [];
                     for (item in stat[0].overall) {
                         element = stat[0].overall[item];
-                        if(element._id == dict[0].name) {
+                        if(element._id == dict) {
                             res.push(element);
                             break;
                         }
                     }
-                    if (res)
+                    if (res.length > 0)
                         return res;
                     else
                         return {
@@ -150,52 +146,42 @@ if (Meteor.isServer) {
                     }
             }
             else
-                return {
-                    statusCode: 404,
-                    body: []
-                }
-        }       
-    });
-
-
-    //bydeputies
-    Api.addRoute('stats/bydeputies', {
-        get: function () {
-            return TipiStats.find(
-                {},
-                {
-                    fields:{
-                        bydeputies:1,
-                        '_id': false
-                    }
-                }).fetch();
+                return TipiStats.find(
+                    {},
+                    {
+                        fields: {
+                            overall:1,
+                            '_id': false
+                        }
+                    }).fetch();
         }
     });
 
 
-    //bydeputies (by dict)
-    Api.addRoute('stats/bydeputies/:slug', {
+    //bydeputies (Params dict)
+    Api.addRoute('stats/bydeputies', {
         get: function () {
-            dict = Dicts.find({slug: this.urlParams.slug, group: "tipi"},{fields: {name: 1}}).fetch();
-            if (dict.length > 0) {
+            if (this.queryParams.dict) {
+                dict = this.queryParams.dict;
                 stat = TipiStats.find(
-                    {bydeputies:{$elemMatch:{_id:dict[0].name}}},
+                    {'bydeputies._id':dict},
                     {
                         fields:{
                             bydeputies:1,
                             '_id': false
                         }
                     }).fetch();
-                if (stat){
+                if (stat.length > 0){
                     res = [];
                     for (item in stat[0].bydeputies) {
                         element = stat[0].bydeputies[item];
-                        if(element._id == dict[0].name) {
+                        if(element._id == dict) {
                             res.push(element);
                             break;
                         }
                     }
-                    if (res) return res;
+                    if (res.length > 0)
+                        return res;
                     else
                         return {
                             statusCode: 404,
@@ -210,51 +196,40 @@ if (Meteor.isServer) {
                     }
             }
             else
-                return {
-                    statusCode: 404,
-                    body: []
-                }
+                return TipiStats.find(
+                    {},
+                    {
+                        fields:{
+                            bydeputies:1,
+                            '_id': false
+                        }
+                    }).fetch();
         }
     });
 
-    //bygroups
+    //bygroups (Params: dict)
     Api.addRoute('stats/bygroups', {
         get: function () {
-            return TipiStats.find(
-                {},
-                {
-                    fields: {
-                        bygroups:1,
-                        '_id': false
-                    }
-                }).fetch();
-        }
-    });
-
-
-    //bygroups (by dict)
-    Api.addRoute('stats/bygroups/:slug', {
-        get: function () {
-            dict = Dicts.find({slug: this.urlParams.slug, group: "tipi"},{fields: {name: 1}}).fetch();
-            if (dict.length>0) {
+            if (this.queryParams.dict) {
+                dict = this.queryParams.dict;
                 stat = TipiStats.find(
-                    {bygroups:{$elemMatch:{_id:dict[0].name}}},
+                    {'bygroups._id':dict},
                     {
                         fields:{
                             bygroups:1,
                             '_id': false
                         }
                     }).fetch();
-                if (stat) {
+                if (stat.length > 0) {
                     res=[];
                     for (item in stat[0].bygroups) {
                         element=stat[0].bygroups[item]
-                        if(element._id == dict[0].name) {
+                        if(element._id == dict) {
                             res.push(element);
                             break;
                         }
                     }
-                    if (res)
+                    if (res.length > 0)
                         return res
                     else
                         return {
@@ -267,74 +242,20 @@ if (Meteor.isServer) {
                         statusCode: 404,
                         body: []
                     }
+                    //
             }
             else
-                return {
-                    statusCode: 404,
-                    body: []
-                }
-        }
-    });
-
-
-    //latest
-    Api.addRoute('stats/latest', {
-        get: function () {
-            return TipiStats.find(
-                {},
-                {
-                    fields:{
-                        latest:1,
-                        '_id': false
-                    }
-                }).fetch();
-        }
-               
-    });
-
-    //latest (by dict)
-    Api.addRoute('stats/latest/:slug', {
-        get: function () {
-            dict = Dicts.find({slug: this.urlParams.slug, group: "tipi"},{fields: {name: 1}}).fetch();
-            if (dict.length > 0){
-                stat = TipiStats.find(
-                    {latest:{$elemMatch:{_id:dict[0].name}}},
+                return TipiStats.find(
+                    {},
                     {
-                        fields:{
-                            latest:1,
+                        fields: {
+                            bygroups:1,
                             '_id': false
                         }
-                    }).fetch();
-                if (stat) {
-                    res=[];
-                    for (item in stat[0].latest) {
-                        element=stat[0].latest[item]
-                        if(element._id == dict[0].name){
-                            res.push(element);
-                            break;
-                        }
-                    }
-                    if (res)
-                        return res;
-                    else
-                        return {
-                            statusCode: 404,
-                            body: []
-                        }
-                }
-                else
-                    return {
-                        statusCode: 404,
-                        body: []
-                    }
-            }
-            else
-                return {
-                    statusCode: 404,
-                    body: []
-                }
+                }).fetch();
         }
     });
+
 
     //dicts
     Api.addRoute('dicts/', {
@@ -344,7 +265,6 @@ if (Meteor.isServer) {
               {
                   fields:{
                       name:1,
-                      slug:1,
                       '_id': false
                   }
               }).fetch();
