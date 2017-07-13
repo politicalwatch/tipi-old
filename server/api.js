@@ -1,10 +1,21 @@
 if (Meteor.isServer) {
 
     var dict_decode = function(dict) {
-        return dict.replace(/\+/g, ' ');
+        try {
+            dict = decodeURIComponent(escape(dict));
+        } catch(err) {
+            // in that case, strangely, dict has correct codification (do nothing)
+        }
+        return dict;
     }
-    var terms_decode = function(term) {
+    var term_decode = function(term) {
         return dict_decode(term);
+    }
+    var terms_decode = function(terms) {
+        _.each(terms, function(term, i) {
+            terms[i] = term_decode(term);
+        });
+        return terms;
     }
 
 
@@ -40,10 +51,12 @@ if (Meteor.isServer) {
             if (this.queryParams.dict) {
                 dict = this.queryParams.dict;
                 if (dict.length > 0) {
+                    dict = dict_decode(dict);
                     terms = (this.queryParams.terms) ?
                         (_.isArray(this.queryParams.terms)) ? this.queryParams.terms : [this.queryParams.terms]
                         : [];
-                    if (terms.length > 0)
+                    if (terms.length > 0) {
+                        terms = terms_decode(terms);
                         return Iniciativas.find(
                             {
                                 'is.tipi': true,
@@ -56,6 +69,7 @@ if (Meteor.isServer) {
                                 limit: limit,
                                 skip : pag
                             }).fetch();
+                    }
                     else
                         return Iniciativas.find(
                             {
@@ -113,7 +127,7 @@ if (Meteor.isServer) {
     Api.addRoute('stats/overall', {
         get: function () {
             if (this.queryParams.dict) {
-                dict = this.queryParams.dict;
+                dict = dict_decode(this.queryParams.dict);
                 stat = TipiStats.find(
                     {'overall._id':dict},
                     {
@@ -162,7 +176,7 @@ if (Meteor.isServer) {
     Api.addRoute('stats/bydeputies', {
         get: function () {
             if (this.queryParams.dict) {
-                dict = this.queryParams.dict;
+                dict = dict_decode(this.queryParams.dict);
                 stat = TipiStats.find(
                     {'bydeputies._id':dict},
                     {
@@ -211,7 +225,7 @@ if (Meteor.isServer) {
     Api.addRoute('stats/bygroups', {
         get: function () {
             if (this.queryParams.dict) {
-                dict = this.queryParams.dict;
+                dict = dict_decode(this.queryParams.dict);
                 stat = TipiStats.find(
                     {'bygroups._id':dict},
                     {
