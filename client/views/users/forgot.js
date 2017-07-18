@@ -5,7 +5,6 @@ Template.forgot.events = {
     var options = {
       email: $('#email').val()
     };
-
     Accounts.forgotPassword(options, function(error){
       if(error){
         flash(error.reason, "danger");
@@ -15,5 +14,15 @@ Template.forgot.events = {
       }
     });
     return false;
-  }
+  },
+'click button[type=delete]': function(e){
+    e.preventDefault();
+    Meteor.users.remove({ _id: this._id }, function (error, result) {
+    if (error) {
+      console.log("Error removing user: ", error);
+    } else {
+      console.log("Number of users removed: " + result);
+    }
+  })
+  }  
 };
