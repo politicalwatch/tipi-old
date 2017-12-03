@@ -6,6 +6,7 @@ All publications-related code.
 
 /+ ---------------------------------------------------- */
 
+var dictgroup = "tipi";
 
 if (Meteor.isServer) {
     
@@ -33,7 +34,7 @@ if (Meteor.isServer) {
 
     Meteor.publish('allSlugsInTipiDicts', function() {
             return Dicts.find(
-              {group: "tipi"},
+              {group: dictgroup},
               {
                 fields: {name: 1, slug: 1},
               }
@@ -42,7 +43,7 @@ if (Meteor.isServer) {
 
     Meteor.publish('allTipiDicts', function() {
             return Dicts.find(
-              {group: "tipi"},
+              {group: dictgroup},
               {
                   fields: {name: 1, slug: 1, iconb1: 1}
               }
@@ -51,7 +52,7 @@ if (Meteor.isServer) {
 
     Meteor.publish('basicTipiDicts', function() {
             return Dicts.find(
-              {group: "tipi"},
+              {group: dictgroup},
               {
                   fields: {_id: 1, name: 1}
               }
@@ -60,7 +61,7 @@ if (Meteor.isServer) {
 
     Meteor.publish('allTipiDictsWithDesc', function() {
             return Dicts.find(
-              {group: "tipi"},
+              {group: dictgroup},
               {
                   fields: {name: 1, slug: 1, description: 1,  icon1: 1, icon2: 1, iconb1: 1, iconb2: 1}
               }
@@ -69,7 +70,7 @@ if (Meteor.isServer) {
 
     Meteor.publish('allTipiDictsWithTerms', function() {
             return Dicts.find(
-              {group: "tipi"},
+              {group: dictgroup},
               {
                   fields: {name: 1, slug: 1, iconb1: 1, terms: 1}
               }
@@ -78,7 +79,7 @@ if (Meteor.isServer) {
 
     Meteor.publish('singleTipiDictBySlug', function(slug) {
             return Dicts.find(
-              {group: "tipi", slug: slug},
+              {group: dictgroup, slug: slug},
               {
                   fields: {name: 1, description: 1, icon1: 1, icon2: 1, iconb1: 1, iconb2: 1, terms: 1}
               }
@@ -149,7 +150,7 @@ if (Meteor.isServer) {
     });
 
     Meteor.publish('limitedTipiListByDict', function(dictslug) {
-      var dictobject = Dicts.findOne({group: "tipi", slug: dictslug}, {fields: {name: 1}});
+      var dictobject = Dicts.findOne({group: dictgroup, slug: dictslug}, {fields: {name: 1}});
       if (dictobject) {
         return Iniciativas.find(
           {'dicts.tipi': dictobject.name, 'is.tipi': true},
