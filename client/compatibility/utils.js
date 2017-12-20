@@ -195,12 +195,15 @@ function builderQueryByState(state) {
           q = {$or: [
                   {tramitacion: {$regex: "Aprobado con modificaciones", $options: "gi"}},
                   {tramitacion: {$regex: "Aprobado sin modificaciones", $options: "gi"}},
-                  {tramitacion: {$regex: "Convalidado", $options: "gi"}},
-                  {tramitacion: {$regex: "Tramitado por completo sin", $options: "gi"}}
+                  {tramitacion: {$regex: "Convalidado", $options: "gi"}}
+                  // {tramitacion: {$regex: "Tramitado por completo sin", $options: "gi"}}
               ]}
           break;
       case 'rechazada':
           q = {tramitacion: {$regex: "Rechazado", $options: "gi"}}
+          break;
+      case 'respondida':
+          q = {tramitacion: {$regex: "Tramitado por completo sin", $options: "gi"}}
           break;
       case 'tramitacion':
           q = {$or: [

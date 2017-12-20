@@ -185,6 +185,7 @@ Template.search.helpers({
         return [
             {name:"Aprobada", value:"aprobada"},
             {name:"Rechazada", value:"rechazada"},
+            {name:"Respondida", value:"respondida"},
             {name:"En tramitación", value:"tramitacion"},
             {name:"No admitida a trámite", value:"noadmitida"},
             {name:"No debatida", value:"nodebatida"},
