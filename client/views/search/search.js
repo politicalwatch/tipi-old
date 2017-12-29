@@ -51,20 +51,19 @@ function transformDataforCsv(d) {
     res['estado_tramitacion'] = getHumanState(d.tramitacion);
     res['observaciones_tramitacion'] = d.tramitacion;
 
-    arr=[];
+    arr = [];
     for (element in d.dicts.tipi){
         arr.push(d.dicts.tipi[element]);
     }
     delete res.dicts;
-    res["dicts"]=arr;
-    arr=[]
+    res["dicts"] = arr;
+    arr = []
     for (element in d.terms.tipi){
         arr.push(d.terms.tipi[element].humanterm);
     }
     delete  res.terms;
-    res["terms"]=arr;
+    res["terms"] = arr;
     return res;
-
 }
 
 
@@ -383,7 +382,7 @@ Template.search.events({
             forprint.push(ele);
         }
         var data = json2csv(forprint,true,true);
-        var blob = new Blob([data], {type: "text/csv;charset=utf-8"});
+        var blob = new Blob([data], {type: "text/csv;charset=utf-8;"});
         saveAs(blob, "tipis.csv");
     },
     'click a#exportxls': function(tableID){
@@ -439,7 +438,7 @@ Template.search.events({
             var a = document.createElement("a");
             document.body.appendChild(a);
             a.href = url;
-            a.download = "tipis.xls";
+            a.download = "tipis.xlsx";
             a.click();
             //adding some delay in removing the dynamically created link solved the problem in FireFox
             setTimeout(function() {
