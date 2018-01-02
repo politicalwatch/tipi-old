@@ -37,6 +37,9 @@ function getTermsFromDict(d) {
     return _.sortBy(_.filter(res, function(t) { return t !== null; }), 'humanterm');
 }
 
+function clean_str(s) {
+    return s.replace(/\n|\t/g, '');
+}
 
 function transformDataforCsv(d) {
     res={};
@@ -48,8 +51,8 @@ function transformDataforCsv(d) {
     res['ref'] = d.ref;
     res['tipotexto'] = d.tipotexto;
     res['titulo'] = d.titulo;
-    res['estado_tramitacion'] = getHumanState(d.tramitacion);
-    res['observaciones_tramitacion'] = d.tramitacion;
+    res['estado_tramitacion'] = getHumanState(d.tramitacion).text;
+    res['observaciones_tramitacion'] = clean_str(d.tramitacion);
 
     arr = [];
     for (element in d.dicts.tipi){
