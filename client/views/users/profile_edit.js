@@ -19,5 +19,9 @@ Template.profileEdit.events = {
     },
     'click .btn-remove-dict': function(e) {
         Meteor.call('removeDictToUser', $(e.target).attr('user'), $(e.target).attr('dict'));
+    },
+    'click .delete-user': function(e) {
+        e.preventDefault();
+        Meteor.call('removeUser', Meteor.userId());
     }
 };

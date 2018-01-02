@@ -7566,3 +7566,11 @@ fieldset[disabled] .btn-tipi.focus {
 #checkboxes label:hover {
   background-color: #FBC239;
 }
+
+.delete-user {
+    color: #E74C3C;
+}
+.delete-user:hover, .delete-user:active {
+    color: #E74C3C !important;
+    text-decoration: underline;
+}
