@@ -9,6 +9,7 @@ Code related to the tipi template
 Template.tipi.rendered = function() {
     title = Iniciativas.findOne().titulo;
     document.title = title + ' | ' + document.title;
+    $(function () { $("[data-toggle='tooltip']").tooltip(); });
 }
 
 Template.tipi.helpers({

@@ -59,76 +59,126 @@ function generateCongresoUrl(ref) {
 
 // Return initiative human state
 function getHumanState(state) {
+    var approved = {
+        'text': 'Aprobada',
+        'icon': 'check-circle',
+        'color': 'green'
+    }
+    var converted = {
+        'text': 'Convertida en otra',
+        'icon': 'copy',
+        'color': 'green'
+    }
+    var inprocess = {
+        'text': 'En tramitación',
+        'icon': 'gears',
+        'color': 'black'
+    }
+    var cumulative = {
+        'text': 'Acumulada en otra',
+        'icon': 'copy',
+        'color': 'green'
+    }
+    var cumulative = {
+        'text': 'Acumulada en otra',
+        'icon': 'copy',
+        'color': 'green'
+    }
+    var cumulative = {
+        'text': 'Acumulada en otra',
+        'icon': 'copy',
+        'color': 'green'
+    }
+    var notadmitted = {
+        'text': 'No admitida a trámite',
+        'icon': 'times-circle',
+        'color': 'red'
+    }
+    var notdebated = {
+        'text': 'No debatida',
+        'icon': 'times-circle',
+        'color': 'red'
+    }
+    var rejected = {
+        'text': 'Rechazada',
+        'icon': 'times-circle',
+        'color': 'red'
+    }
+    var withdrawal = {
+        'text': 'Retirada',
+        'icon': 'times-circle',
+        'color': 'red'
+    }
     if (state.match(/Aprobado con modificaciones/gi)) {
-        return 'Aprobada';
+        return approved;
     }
     if (state.match(/Aprobado sin modificaciones/gi)) {
-        return 'Aprobada';
+        return approved;
     }
     if (state.match(/Convalidado/gi)) {
-        return 'Aprobada';
+        return approved;
     }
     if (state.match(/Tramitado por completo sin/gi)) {
-        return 'Aprobada';
+        return approved;
     }
     if (state.match(/Convertido/gi)) {
-        return 'Convertida en otra';
+        return converted;
     }
     if (state.match(/Boletín Oficial de las Cortes Generales Publicación desde/gi)) {
-        return 'En tramitación';
+        return inprocess;
     }
     if (state.match(/Comisión.*desde/gi)) {
-        return 'En tramitación';
+        return inprocess;
     }
     if (state.match(/Concluído desde/gi)) {
-        return 'En tramitación';
+        return inprocess;
     }
     if (state.match(/Gobierno Contestación/gi)) {
-        return 'En tramitación';
+        return inprocess;
     }
     if (state.match(/Junta de Portavoces/gi)) {
-        return 'En tramitación';
+        return inprocess;
     }
     if (state.match(/Mesa del Congreso Acuerdo/gi)) {
-        return 'En tramitación';
+        return inprocess;
     }
     if (state.match(/Mesa del Congreso Requerimiento/gi)) {
-        return 'En tramitación';
+        return inprocess;
     }
     if (state.match(/Pleno Aprobación desde/gi)) {
-        return 'En tramitación';
+        return inprocess;
     }
     if (state.match(/Pleno desde/gi)) {
-        return 'En tramitación';
+        return inprocess;
     }
     if (state.match(/Pleno Toma en consideración/gi)) {
-        return 'En tramitación';
+        return inprocess;
     }
     if (state.match(/Solicitud de amparo/gi)) {
-        return 'En tramitación';
+        return inprocess;
     }
     if (state.match(/Respuesta.*Gobierno/gi)) {
-        return 'En tramitación';
+        return inprocess;
     }
     if (state.match(/Senado desde/gi)) {
-        return 'En tramitación';
+        return inprocess;
     }
     if (state.match(/Subsumido en otra iniciativa/gi)) {
-        return 'Acumulada en otra';
+        return cumulative;
     }
     if (state.match(/Inadmitido a trámite/gi)) {
-        return 'No admitida a trámite';
+        return notadmitted;
     }
     if (state.match(/Decaído/gi)) {
-        return 'No debatida';
+        return notdebated;
     }
     if (state.match(/Rechazado/gi)) {
-        return 'Rechazada';
+        return rejected;
     }
     if (state.match(/Retirado/gi)) {
-        return 'Retirada';
+        return withdrawal;
     }
-    return '';
+    return {};
 }
 
 

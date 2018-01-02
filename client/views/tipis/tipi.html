@@ -15,8 +15,6 @@
                     {{> text_element meta='Lugar' value=lugar}}
                     {{> text_element meta='Registro' value=getFecha}}
                     {{> text_element meta='Actualización' value=getActualizacion}}
-                    {{> text_element meta='Estado de tramitación' value=humanTramitacion}}
-                    {{> text_element meta='Observaciones de tramitación' value=tramitacion}}
                     <div class="capitalize">
                         {{> dict_elements meta='Temas tratados' dicts=dicts.tipi terms=terms.tipi }}
                     </div>
@@ -26,6 +24,11 @@
                         <a class="btn btn-primary btn-block" href="/admin/Iniciativas/{{_id}}/edit">Edita la iniciativa</a>
                         <br/>
                     {{/if}}
+                    {{#with humanTramitacion }} 
+                        <div class="state well color-{{this.color}}">
+                            <strong>{{this.text}} <sup data-toggle="tooltip" data-placement="bottom" title="" data-original-title="{{ ../tramitacion }}"><i class="fa fa-question-circle"></i></sup></strong>
+                        </div>
+                    {{/with }}
                     <div class="well">
                         <p class="text-center congress-link">
                             <a href="{{parseCongresoUrl}}" target="_blank" title="Ver {{tituto}} en su fuente original">

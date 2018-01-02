@@ -7308,6 +7308,21 @@ fieldset[disabled] .btn-tipi.focus {
 #dict .congress-link a {
   color: #222222;
 }
+#initiative .state strong {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+#initiative .color-green {
+  background-color: #5cb85c;
+  color: #fff;
+}
+#initiative .color-black {
+  color: #222;
+}
+#initiative .color-red {
+  background-color: #E74C3C;
+  color: #fff;
+}
 #initiative .congress-link a:hover,
 #dict .congress-link a:hover {
   color: #222222;
