@@ -293,10 +293,10 @@ function builderQueryByState(state) {
 
 /* UTILS */
 
-function cleanTipiQuery(cqry) {
-    var fdesde, fhasta, newautor, newgrupootro, dict, terms, tramitacion;
+function builderQuery(cqry) {
+    var fdesde, fhasta, newautor, newgrupootro, dict, tramitacion;
     fdesde = fhasta = null;
-    newautor = newgrupootro = tipo = dict = term = tramitacion = {};
+    newautor = newgrupootro = tipo = dict = tramitacion = {};
     for (var k in cqry) {
         if (k == "fechadesde" && cqry[k] != "" ) {
             fdesde = cqry[k];
@@ -308,7 +308,7 @@ function cleanTipiQuery(cqry) {
             dict = {"dicts.tipi": cqry[k]}
             delete cqry[k];
         } else if (k == 'terms' && cqry[k] != "") {
-            term = {"terms.tipi.humanterm": {$in: cqry[k]} }
+            terms = cqry[k]
             delete cqry[k];
         } else if ((k == "autor") && (cqry[k] != "")) {
             newautor = { 'autor_diputado': {$regex: cqry['autor'], $options: "gi"} }
@@ -340,8 +340,12 @@ function cleanTipiQuery(cqry) {
     if (dict != {}) {
         jQuery.extend(cqry, dict);
     }
-    if (term != {}) {
-        jQuery.extend(cqry, term);
+    if (terms != []) {
+        console.log(terms);
+        if (dict != {}) {
+            var termsbydict = {"terms.tipi": {$elemMatch: {"humanterm": {$in: terms}, "dict": dict["dicts.tipi"]}}}
+            jQuery.extend(cqry, termsbydict);
+        }
     }
     if (newautor != {}) {
         jQuery.extend(cqry, newautor);
