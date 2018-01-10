@@ -7015,6 +7015,9 @@ a.btn:hover {
   margin-top: 40px;
   margin-bottom: 60px;
 }
+#csv-page img {
+    padding: 20px;
+}
 #messages {
   margin-top: 20px;
   margin-bottom: -30px;
