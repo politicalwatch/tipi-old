@@ -184,111 +184,141 @@ function getHumanState(state) {
 
 
 function builderQueryFrom(type) {
-  var q = {}
-  var enmienda = { numenmienda: {$exists: 1, $not: {$size: 0} } }
-  var noenmienda = { $or: [{numenmienda: {$exists: 0}}, {numenmienda: {$size: 0}}] }
-  switch(type) {
-      case 'Comparecencias':
-          q = {tipo: {$in: ["210", "212", "213", "219"]}}
-          break;
-      case 'Convenios internacionales':
-          q = {tipo: {$in: ["110", "111", "112"]}}
-          break;
-      case 'Creación de comisiones, subcomisiones y ponencias':
-          q = {tipo: {$in: ["151", "152", "153", "154", "155", "156", "157", "158"]}}
-          break;
-      case 'Interpelación y su respuesta':
-          q = {tipo: {$in: ["170", "172"]}}
-          break;
-      case 'Moción consecuencia de interpelación y sus enmiendas':
-          q = {tipo: "173"}
-          break;
-      case 'Otros actos y sus enmiendas':
-          q = {tipo: {$in: ["200", "140", "120", "095", "189", "187", "410", "156", "193"]}}
-          break;
-      case 'Planes, programas y dictámenes':
-          q = {tipo: "043"}
-          break;
-      case 'Pregunta oral y su respuesta':
-          q = {tipo: {$in: ["180", "181"]}}
-          break;
-      case 'Pregunta para respuesta escrita y su respuesta':
-          q = {tipo: "184"}
-          break;
-      case 'Proposición de ley y sus enmiendas':
-          q = {tipo: {$in: ["122", "123", "124", "125"]}}
-          break;
-      case 'Proposición no de ley y sus enmiendas':
-          q = {tipo: {$in: ["161", "162"]}}
-          break;
-      case 'Proyecto de Ley y sus enmiendas':
-          q = {tipo: "121"}
-          break;      
-      case 'Real decreto legislativo':
-          q = {tipo: "132"}
-          break;      
-      case 'Real decreto-ley':
-          q = {tipo: "130"}
-          break;      
-      default:
-          return {}
-          break;
-  }
-  return q;
+    var q = {}
+    var enmienda = { numenmienda: {$exists: 1, $not: {$size: 0} } }
+    var noenmienda = { $or: [{numenmienda: {$exists: 0}}, {numenmienda: {$size: 0}}] }
+    switch(type) {
+        case 'Comparecencias':
+            q = {tipo: {$in: ["210", "212", "213", "219"]}}
+            break;
+        case 'Convenios internacionales':
+            q = {tipo: {$in: ["110", "111", "112"]}}
+            break;
+        case 'Creación de comisiones, subcomisiones y ponencias':
+            q = {tipo: {$in: ["151", "152", "153", "154", "155", "156", "157", "158"]}}
+            break;
+        case 'Interpelación y su respuesta':
+            q = {tipo: {$in: ["170", "172"]}}
+            break;
+        case 'Moción consecuencia de interpelación y sus enmiendas':
+            q = {tipo: "173"}
+            break;
+        case 'Otros actos y sus enmiendas':
+            q = {tipo: {$in: ["200", "140", "120", "095", "189", "187", "410", "156", "193"]}}
+            break;
+        case 'Planes, programas y dictámenes':
+            q = {tipo: "043"}
+            break;
+        case 'Pregunta oral y su respuesta':
+            q = {tipo: {$in: ["180", "181"]}}
+            break;
+        case 'Pregunta para respuesta escrita y su respuesta':
+            q = {tipo: "184"}
+            break;
+        case 'Proposición de ley y sus enmiendas':
+            q = {tipo: {$in: ["122", "123", "124", "125"]}}
+            break;
+        case 'Proposición no de ley y sus enmiendas':
+            q = {tipo: {$in: ["161", "162"]}}
+            break;
+        case 'Proyecto de Ley y sus enmiendas':
+            q = {tipo: "121"}
+            break;      
+        case 'Real decreto legislativo':
+            q = {tipo: "132"}
+            break;      
+        case 'Real decreto-ley':
+            q = {tipo: "130"}
+            break;      
+        default:
+            return {}
+            break;
+    }
+    return q;
 }
 
-//Query que traduce el estado de tramitacion en las regex posibles
+// Query que traduce el estado de tramitacion en las regex posibles
 function builderQueryByState(state) {
-  var q = {}
-  switch(state) {
-      case 'aprobada':
-          q = {$or: [
-                  {tramitacion: {$regex: "Aprobado con modificaciones", $options: "gi"}},
-                  {tramitacion: {$regex: "Aprobado sin modificaciones", $options: "gi"}},
-                  {tramitacion: {$regex: "Convalidado", $options: "gi"}},
-                  {tramitacion: {$regex: "Tramitado por completo sin", $options: "gi"}}
-              ]}
-          break;
-      case 'rechazada':
-          q = {tramitacion: {$regex: "Rechazado", $options: "gi"}}
-          break;
-      case 'tramitacion':
-          q = {$or: [
-                  {tramitacion: {$regex: "Boletín Oficial de las Cortes Generales Publicación desde", $options: "gi"}},
-                  {tramitacion: {$regex: "Comisión.*desde", $options: "gi"}},
-                  {tramitacion: {$regex: "Concluido desde", $options: "gi"}},
-                  {tramitacion: {$regex: "Gobierno Contestación", $options: "gi"}},
-                  {tramitacion: {$regex: "Junta de Portavoces", $options: "gi"}},
-                  {tramitacion: {$regex: "Mesa del Congreso Acuerdo", $options: "gi"}},
-                  {tramitacion: {$regex: "Mesa del Congreso Requerimiento", $options: "gi"}},
-                  {tramitacion: {$regex: "Pleno Aprobación desde", $options: "gi"}},
-                  {tramitacion: {$regex: "Pleno desde", $options: "gi"}},
-                  {tramitacion: {$regex: "Pleno Toma en consideración", $options: "gi"}},
-                  {tramitacion: {$regex: "Solicitud de amparo", $options: "gi"}},
-                  {tramitacion: {$regex: "Respuesta.*Gobierno", $options: "gi"}},
-                  {tramitacion: {$regex: "Senado desde", $options: "gi"}}
-              ]}
-          break;
-      case 'noadmitida':
-          q = {tramitacion: {$regex: "Inadmitido a trámite", $options: "gi"}}
-          break;
-      case 'nodebatida':
-          q = {tramitacion: {$regex: "Decaído", $options: "gi"}}
-          break;
-      case 'retirada':
-          q = {tramitacion: {$regex: "Retirado", $options: "gi"}}
-          break;
-      case 'convertida':
-          q = {tramitacion: {$regex: "Convertido", $options: "gi"}}
-          break;
-      case 'acumulada':
-          q = {tramitacion: {$regex: "Subsumido en otra iniciativa", $options: "gi"}}
-          break;
-      default:
-          return {}
-          break;
-  }
-  return q;
+    var q = {}
+    switch(state) {
+        case 'aprobada':
+            q = {$or: [
+                {tramitacion: {$regex: "Aprobado con modificaciones", $options: "gi"}},
+                {tramitacion: {$regex: "Aprobado sin modificaciones", $options: "gi"}},
+                {tramitacion: {$regex: "Convalidado", $options: "gi"}},
+                {tramitacion: {$regex: "Tramitado por completo sin", $options: "gi"},
+                    tipotexto: {$in: [
+                        "Información sobre Convenios Internacionales",
+                        "Otros asuntos relativos a Convenios Internacionales",
+                        "Real Decreto Legislativo",
+                        "Declaración Institucional",
+                        "Solicitud de Comparecencia ante el Pleno",
+                        "Solicitud de comparecencia en Comisión",
+                        "Solicitud de comparecencia de autoridades y funcionarios en Comisión",
+                        "Solicitud de comparecencia del Gobierno en Comisión",
+                        "Solicitud de Comparecencia en Comisión"
+                    ]}
+                }
+            ]}
+            break;
+        case 'rechazada':
+            q = {tramitacion: {$regex: "Rechazado", $options: "gi"}}
+            break;
+        case 'respondida':
+            q = {tramitacion: {$regex: "Tramitado por completo sin", $options: "gi"}, tipotexto: {$in: [
+                "Interpelación urgente",
+                "Pregunta oral en Pleno",
+                "Pregunta oral al Gobierno en Comisión",
+                "Pregunta al Gobierno con respuesta escrita"
+                ]}
+            }
+            break;
+        case 'celebrada':
+            q = {tramitacion: {$regex: "Tramitado por completo sin", $options: "gi"}, tipotexto: {$in: [
+                "Comparecencia en Comisión",
+                "Comparecencia de autoridades y funcionarios en Comisión",
+                "Comparecencia del Gobierno en Comisión",
+                "Otras comparecencias en Comisión"
+                ]}
+            }
+            break;
+        case 'tramitacion':
+            q = {$or: [
+                {tramitacion: {$regex: "Boletín Oficial de las Cortes Generales Publicación desde", $options: "gi"}},
+                {tramitacion: {$regex: "Comisión.*desde", $options: "gi"}},
+                {tramitacion: {$regex: "Concluido desde", $options: "gi"}},
+                {tramitacion: {$regex: "Gobierno Contestación", $options: "gi"}},
+                {tramitacion: {$regex: "Junta de Portavoces", $options: "gi"}},
+                {tramitacion: {$regex: "Mesa del Congreso Acuerdo", $options: "gi"}},
+                {tramitacion: {$regex: "Mesa del Congreso Requerimiento", $options: "gi"}},
+                {tramitacion: {$regex: "Pleno Aprobación desde", $options: "gi"}},
+                {tramitacion: {$regex: "Pleno desde", $options: "gi"}},
+                {tramitacion: {$regex: "Pleno Toma en consideración", $options: "gi"}},
+                {tramitacion: {$regex: "Solicitud de amparo", $options: "gi"}},
+                {tramitacion: {$regex: "Respuesta.*Gobierno", $options: "gi"}},
+                {tramitacion: {$regex: "Senado desde", $options: "gi"}}
+            ]}
+            break;
+        case 'noadmitida':
+            q = {tramitacion: {$regex: "Inadmitido a trámite", $options: "gi"}}
+            break;
+        case 'nodebatida':
+            q = {tramitacion: {$regex: "Decaído", $options: "gi"}}
+            break;
+        case 'retirada':
+            q = {tramitacion: {$regex: "Retirado", $options: "gi"}}
+            break;
+        case 'convertida':
+            q = {tramitacion: {$regex: "Convertido", $options: "gi"}}
+            break;
+        case 'acumulada':
+            q = {tramitacion: {$regex: "Subsumido en otra iniciativa", $options: "gi"}}
+            break;
+        default:
+            return {}
+            break;
+    }
+    return q;
 }
 
 /* UTILS */
@@ -370,6 +400,7 @@ function builderQuery(cqry) {
         };
     }
     jQuery.extend(cqry, {"is.tipi": true});
+    console.log(cqry);
     return cqry;
 }
 

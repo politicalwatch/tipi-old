@@ -186,11 +186,13 @@ Template.search.helpers({
     tramitaciones_helper: function() {
         return [
             {name:"Aprobada", value:"aprobada"},
-            {name:"Rechazada", value:"rechazada"},
+            {name:"Respondida", value:"respondida"},
+            {name:"Celebrada", value:"celebrada"},
             {name:"En tramitación", value:"tramitacion"},
+            {name:"Rechazada", value:"rechazada"},
+            {name:"Retirada", value:"retirada"},
             {name:"No admitida a trámite", value:"noadmitida"},
             {name:"No debatida", value:"nodebatida"},
-            {name:"Retirada", value:"retirada"},
             {name:"Convertida en otra", value:"convertida"},
             {name:"Acumulada en otra", value:"acumulada"},
             
