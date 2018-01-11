@@ -26,6 +26,10 @@ Template.tipi.helpers({
     hasAutor: function() {
         return !_.isEmpty(this.autor_otro) || !_.isEmpty(this.autor_diputado);
     },
+    hasAutorGrupo: function() {
+        if (this.tipotexto == 'Proyecto de ley') return false;
+        return !_.isEmpty(this.autor_grupo)
+    },
     parseCongresoUrl: function() {
         return generateCongresoUrl(this.ref);
     },

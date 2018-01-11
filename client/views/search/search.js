@@ -304,6 +304,7 @@ Template.search.helpers({
                 },
                 { key: 'autor_diputado', fieldId: 'autor', label: 'Autor', sortable: false, headerClass: 'col-md-2',
                     fn: function(val, obj) {
+                        if (obj.tipotexto == "Proyecto de ley") return Spacebars.SafeString(obj.autor_otro.join([separator = '<br/>']));
                       if (!_.isNull(val)) {
                         if (val.length > 0) {
                             return Spacebars.SafeString(val.join([separator = '<br/>']));
@@ -320,6 +321,7 @@ Template.search.helpers({
                 },
                 { key: 'autor_grupo', fieldId: 'grupo', label: 'Grupo', sortable: false, headerClass: 'col-md-1',
                     fn: function(val, obj) {
+                        if (obj.tipotexto == "Proyecto de ley") return '';
                         groupsHumanized = [];
                         for(i=0;i<val.length;i++) {
                             groupsHumanized.push(val[i]);
