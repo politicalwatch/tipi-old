@@ -58,9 +58,19 @@ function generateCongresoUrl(ref) {
 
 
 // Return initiative human state
-function getHumanState(state) {
+function getHumanState(state, type) {
     var approved = {
         'text': 'Aprobada',
+        'icon': 'check-circle',
+        'color': 'green'
+    }
+    var answered = {
+        'text': 'Respondida',
+        'icon': 'check-circle',
+        'color': 'green'
+    }
+    var celebrated = {
+        'text': 'Celebrada',
         'icon': 'check-circle',
         'color': 'green'
     }
@@ -69,25 +79,15 @@ function getHumanState(state) {
         'icon': 'copy',
         'color': 'green'
     }
+    var cumulative = {
+        'text': 'Acumulada en otra',
+        'icon': 'copy',
+        'color': 'green'
+    }
     var inprocess = {
         'text': 'En tramitación',
         'icon': 'gears',
         'color': 'black'
-    }
-    var cumulative = {
-        'text': 'Acumulada en otra',
-        'icon': 'copy',
-        'color': 'green'
-    }
-    var cumulative = {
-        'text': 'Acumulada en otra',
-        'icon': 'copy',
-        'color': 'green'
-    }
-    var cumulative = {
-        'text': 'Acumulada en otra',
-        'icon': 'copy',
-        'color': 'green'
     }
     var notadmitted = {
         'text': 'No admitida a trámite',
@@ -119,7 +119,9 @@ function getHumanState(state) {
         return approved;
     }
     if (state.match(/Tramitado por completo sin/gi)) {
-        return approved;
+        if (_.indexOf(["171", "180", "181", "184"], type) != -1) return answered;
+        if (_.indexOf(["212", "213", "214", "219"], type) != -1) return celebrated;
+        else return approved;
     }
     if (state.match(/Convertido/gi)) {
         return converted;
@@ -400,7 +402,6 @@ function builderQuery(cqry) {
         };
     }
     jQuery.extend(cqry, {"is.tipi": true});
-    console.log(cqry);
     return cqry;
 }
 

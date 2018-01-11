@@ -84,7 +84,7 @@ Template.tipi.helpers({
     },
     humanTramitacion: function() {
         // Call getHumanState global function
-        return getHumanState(this.tramitacion);
+        return getHumanState(this.tramitacion, this.tipo);
     },
     qpcClass: function() {
         if (this.quepasocon.toLowerCase() == 'cumplido') {

@@ -51,7 +51,7 @@ function transformDataforCsv(d) {
     res['ref'] = d.ref;
     res['tipotexto'] = d.tipotexto;
     res['titulo'] = d.titulo;
-    res['estado_tramitacion'] = getHumanState(d.tramitacion).text;
+    res['estado_tramitacion'] = getHumanState(d.tramitacion, d.tipo).text;
     res['observaciones_tramitacion'] = clean_str(d.tramitacion);
 
     arr = [];
