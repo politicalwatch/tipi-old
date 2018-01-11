@@ -132,7 +132,7 @@ function getHumanState(state, type) {
     if (state.match(/Comisión.*desde/gi)) {
         return inprocess;
     }
-    if (state.match(/Concluído desde/gi)) {
+    if (state.match(/Concluido desde/gi)) {
         return inprocess;
     }
     if (state.match(/Gobierno Contestación/gi)) {
