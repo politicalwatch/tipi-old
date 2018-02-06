@@ -254,7 +254,7 @@ if (Meteor.isServer) {
 
     Meteor.publish('news', function() {
         return News.find({}, {
-          sort: {fechafecha: -1 }
+          sort: {fecha: -1 }
         });
     });
 }
