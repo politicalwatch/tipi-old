@@ -1,7 +1,7 @@
 {
     "name": "tipi",
     "version": "1.0.0",
-    "url": "http://tipiciudadano.es",
+    "url": "https://tipiciudadano.es",
     "public": {
         "analyticsSettings": {
             "Google Analytics": {"trackingId": ""}
