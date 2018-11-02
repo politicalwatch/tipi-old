@@ -7596,19 +7596,8 @@ fieldset[disabled] .btn-tipi.focus {
 
 .announce {
   width: 100%;
-  height: 30px;
-  line-height: 30px;
-  color: #222;
-  background: #f8f8f8;
+  padding: 10px;
+  color: #f8f8f8;
+  background: #1b1b1b;
   text-align: center;
-  font-weight: bold;
-}
-.announce a:hover {
-  color: #222;
-}
-
-.cascade {
-  width: 100%;
-  height: 10px;
-  background: url(http://www.parlamento2030.es/img/cascade.png) repeat-x;
 }
